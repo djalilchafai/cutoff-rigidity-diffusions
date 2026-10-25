@@ -279,3 +279,5 @@ Comparator (35 theorems, 43 definitions) pass. The statement has had no audit be
 `lsi_of_CD` (`Riemann/DiffLSI.lean`) no longer takes the spectral-gap hypothesis: its Poincaré step now uses `poincare_of_CD`
 (`Extra/RiemannLichnerowicz.lean`; `DiffLSI` imports it). Gap attainment in `DiffFinal.lean` still uses `hgap`, as in Theorem 1.9.
 Build, readiness check, axiom check of all 35 theorems and the sandboxed Comparator pass again.
+
+`mSpectralGap_ge_of_CD` was audited by one independent AI agent (`verification/audit-extra-E.md`): no defect found. Not a human review.

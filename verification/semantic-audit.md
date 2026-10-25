@@ -488,3 +488,10 @@ the TV mixing time; `ou_lp_infty_fails` and `ou_mean_start_cutoff` state slightl
 `hB`/`hL` carrier hypotheses (`IsStdBrownian`, `IsLangevin`) remain conditional on a Brownian motion, which Lean cannot instantiate
 at this Mathlib revision (residual risk R-a of the first audit). Auditors A, B and D did not run Lean; C used scratch checks.
 Joint satisfiability was argued by hand for the Langevin-based statements; only the Riemannian hypotheses have a Lean witness.
+
+## Audit of `mSpectralGap_ge_of_CD` (AI, 25 October 2026)
+
+One independent AI auditor (`verification/audit-extra-E.md`; statements and definitions only, no Lean run) found no defect: the
+definitions of `mgrad`, `carre`, `CD`, `IsWeightedVolume` and `mSpectralGap` match the manuscript; the amendment
+`0 < finrank ℝ F` is necessary and sufficient; the hypotheses are satisfied by the Gaussian witness (flat case only, so
+curved examples are untested). This is an AI audit, not a human review.
