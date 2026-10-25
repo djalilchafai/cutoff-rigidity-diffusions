@@ -466,3 +466,25 @@ The sandboxed Comparator was rerun and accepts the solution
 (`verification/comparator-sandboxed.log`). The manuscript fixes were then applied in `cutcur-lean.tex` (abstract and Lp display restricted to finite `p`; Theorem 3.6 states that `(M',g',μ')` is connected, complete, without boundary). The `V∘Φ⁻¹` identity was added to the manuscript, and later to `riemannian_gaussian_splitting` in `Challenge.lean` (together with `ConnectedSpace N` and `CompleteSpace N`); it is proved.
 
 **Scope note.** This audit covers the original 12 theorems. The 22 theorems added afterwards (Remarks 3.4/3.5, Section 4 items, Lichnerowicz, moment bounds, entropy decay, OU facts, ...) and the strengthened splitting statement have NOT been audited by anyone; see `extra-status/integration.md` for their flagged amendments (`0 < d`, `IsStdBrownian`/`IsLangevin` carrier hypotheses, the test-function class for the optimal constants).
+
+## Audit of the 22 added statements and the strengthened splitting (AI, 25 October 2026)
+
+Four independent AI auditors (separate agents, brief in `verification/AUDIT_BRIEF.md`) read the statements and
+definitions against the manuscript; they did not rely on the proofs. This is an AI audit, not a human review.
+Reports: `audit-extra-A.md` (Remarks 3.4/3.5, mixing time, OU from the mean, `p = ∞`), `audit-extra-B.md`
+(Lichnerowicz, (R2)⇒(R1), optimal constants, pairwise interaction, OU eigenspace), `audit-extra-C.md`
+(OU Fisher information, normalization, temperature, heat-kernel score), `audit-extra-D.md` (moment bounds,
+`sup Λ`, W₂ contraction, entropy decay, Pinsker, Talagrand/LSI, strengthened splitting).
+
+**Result: no defect found** in any of the 23 statements; all judged faithful or faithful with remarks. Remarks acted on:
+* `heat_kernel_score` now also asserts `Differentiable ℝ u` (avoids reading the gradient identity through a junk value).
+* Docstring of `langevin_entropy_decay` reworded (the constant is exactly the printed one); docstring of
+  `normalization_cutoff` states that the `κ → ακ` part is arithmetic only.
+
+Remarks left as is (informational): `rigidity_of_gaussian_factor` omits the 'all eigenfunctions affine' part (converse
+direction, covered by Theorem 3.1); `optimal_constants_extremal` asserts equality with the constants optimal on the
+bounded test class and does not itself assert the inequality for the unbounded `h`, `e^{αh}`; `mixing_time_rigid` covers only
+the TV mixing time; `ou_lp_infty_fails` and `ou_mean_start_cutoff` state slightly stronger/more precise forms than the prose;
+`hB`/`hL` carrier hypotheses (`IsStdBrownian`, `IsLangevin`) remain conditional on a Brownian motion, which Lean cannot instantiate
+at this Mathlib revision (residual risk R-a of the first audit). Auditors A, B and D did not run Lean; C used scratch checks.
+Joint satisfiability was argued by hand for the Langevin-based statements; only the Riemannian hypotheses have a Lean witness.

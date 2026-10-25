@@ -261,3 +261,10 @@ Challenge.lean now has 34 theorems and 43 definitions: the original 12 plus 22 f
 (con-ron 88377 declarations, nanoda, Lean kernel; `verification/comparator-sandboxed.log`), the full build passes,
 and all 34 theorems use only `propext`, `Classical.choice`, `Quot.sound`. The added statements are unaudited by humans
 and by the earlier AI audit. Human review is still absent.
+
+## AI audit of the added statements (25 October 2026)
+
+Four independent AI auditors reviewed the 22 added statements and the strengthened splitting
+(`verification/audit-extra-{A,B,C,D}.md`, summarized in `verification/semantic-audit.md`): no defect found; one statement
+strengthened (`heat_kernel_score` asserts differentiability), two docstrings corrected. Build, readiness check and sandboxed
+Comparator were rerun and pass. This is not a human review; `review.status` remains `unchecked`.

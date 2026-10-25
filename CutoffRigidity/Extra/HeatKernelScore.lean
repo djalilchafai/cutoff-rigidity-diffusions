@@ -18,12 +18,12 @@ open scoped ENNReal
 
 variable {d : ℕ}
 
-/-- If `ν = p dx` with `p > 0` continuous and differentiable, then `ν ≪ μ = e^{-V}dx`, a version of
+/-- If `ν = p dx` with `p > 0` continuous and differentiable, then `ν ≪ μ = e^{-V}dx`, a differentiable version of
 `log dν/dμ` is `log p + V` and its gradient is `∇ log p + ∇V`. -/
 theorem heat_kernel_score {V p : CutCur.Rd d → ℝ} (hVc : Continuous V) (hVd : Differentiable ℝ V)
     (hpc : Continuous p) (hpd : Differentiable ℝ p) (hp : ∀ x, 0 < p x) :
     let ν : MeasureTheory.Measure (CutCur.Rd d) := volume.withDensity fun x => ENNReal.ofReal (p x)
-    ∃ u : CutCur.Rd d → ℝ, ν ≪ CutCur.gibbs V ∧
+    ∃ u : CutCur.Rd d → ℝ, Differentiable ℝ u ∧ ν ≪ CutCur.gibbs V ∧
       (∀ᵐ x ∂CutCur.gibbs V, u x = Real.log (ν.rnDeriv (CutCur.gibbs V) x).toReal) ∧
       ∀ x, gradient u x = gradient (fun y => Real.log (p y)) x + gradient V x := by
   intro ν
@@ -44,7 +44,8 @@ theorem heat_kernel_score {V p : CutCur.Rd d → ℝ} (hVc : Continuous V) (hVd 
     rw [← ENNReal.ofReal_mul (Real.exp_nonneg _), ← Real.exp_add]
     congr 1
     rw [show -V x + (Real.log (p x) + V x) = Real.log (p x) by ring, Real.exp_log (hp x)]
-  refine ⟨fun x => Real.log (p x) + V x, ?_, ?_, ?_⟩
+  refine ⟨fun x => Real.log (p x) + V x,
+    (hpd.log (fun y => (hp y).ne')).add hVd, ?_, ?_, ?_⟩
   · rw [hν]; exact withDensity_absolutelyContinuous _ _
   · have : SigmaFinite (CutCur.gibbs V) := by unfold CutCur.gibbs; infer_instance
     have hu' := llr_exponentialDensityMeasure (μ := CutCur.gibbs V)

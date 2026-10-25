@@ -353,7 +353,8 @@ the dimension), the time-changed processes `X^{(α)}_t = X_{αt}` satisfy: cutof
 worst-case profile at `t_*` for `X` is equivalent to cutoff at `t_*/α` for `X^{(α)}`
 (same limits before and after); the mixing time of `X^{(α)}` is `t₀/α`; and the product condition
 `κ t₀ → ∞` of Theorem 1.7 is invariant, `κ` being replaced by `α κ` (the curvature of the
-generator `α 𝓛`). -/
+generator `α 𝓛`; this last part is arithmetic only, and the claim that `X^{(α)}` solves the scaled SDE is not
+formalized). -/
 theorem normalization_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n} {S : ∀ n, Set (Rd n)}
     {α : ℕ → ℝ} (hα : ∀ n, 0 < α n) :
@@ -397,12 +398,12 @@ theorem temperature_bakry_emery {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 
       ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z := by
   apply CutoffRigidity.Paper.temperature_bakry_emery <;> assumption
 
-/-- If `ν = p dx` with `p > 0` continuous and differentiable, then `ν ≪ μ = e^{-V}dx`, a version of
+/-- If `ν = p dx` with `p > 0` continuous and differentiable, then `ν ≪ μ = e^{-V}dx`, a differentiable version of
 `log dν/dμ` is `log p + V` and its gradient is `∇ log p + ∇V`. -/
 theorem heat_kernel_score {d : ℕ} {V p : Rd d → ℝ} (hVc : Continuous V) (hVd : Differentiable ℝ V)
     (hpc : Continuous p) (hpd : Differentiable ℝ p) (hp : ∀ x, 0 < p x) :
     let ν : MeasureTheory.Measure (Rd d) := volume.withDensity fun x => ENNReal.ofReal (p x)
-    ∃ u : Rd d → ℝ, ν ≪ gibbs V ∧
+    ∃ u : Rd d → ℝ, Differentiable ℝ u ∧ ν ≪ gibbs V ∧
       (∀ᵐ x ∂gibbs V, u x = Real.log (ν.rnDeriv (gibbs V) x).toReal) ∧
       ∀ x, gradient u x = gradient (fun y => Real.log (p y)) x + gradient V x := by
   apply CutoffRigidity.Paper.heat_kernel_score <;> assumption
@@ -529,8 +530,8 @@ theorem langevin_w2_contraction {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V :
 
 /-- **Entropy decay and regularization** (eq. expdecH, eq. HWsmallt, eq. HtWX0, CKP, Fisher
 information; manuscript proof of Corollary 1.4) under `Hess V ≥ ρ I`, `ρ > 0`, for an arbitrary
-initial law `ν`, `μ_t := Law(X_t) = ν.bind fun x => P.map (X x t)`. Amendment: `0 < d`. The manuscript constant in
-(HWsmallt) is stated here as printed; the formalization proves a sharper one. -/
+initial law `ν`, `μ_t := Law(X_t) = ν.bind fun x => P.map (X x t)`. Amendment: `0 < d`. The constant in (HWsmallt) is exactly the printed one (not the sharper constant that the
+formalized proof can reach). -/
 theorem langevin_entropy_decay {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ} {B : ℝ≥0 → Ω → Rd d}
     {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d}
     (hL : IsLangevin V B P X) (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
