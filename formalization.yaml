@@ -112,7 +112,7 @@ automation:
     mathematical review or source-author endorsement has been asserted.
 fidelity:
   divergences: >-
-    Amendments in the additional statements: 0 < d is assumed where the formal objects are degenerate for d = 0 (spectral_gap_ge_curvature, ou_first_eigenspace, optimal_constants_extremal, langevin_entropy_decay, talagrand_logSobolev); optimal_lsi_twice_pi, optimal_constants_extremal, langevin_entropy_decay and talagrand_logSobolev carry an IsStdBrownian or IsLangevin hypothesis that the manuscript does not mention (an artefact of the proofs); temperature_cd takes the smoothness of the standard metric of R^d as an instance argument; langevin_entropy_decay states the printed constants of the regularization inequality although the formalization proves a sharper one.     The diffusion of Theorem 1.9 is encoded by IsDiffusionSemigroup (Markov, semigroup law, Kolmogorov equation on C_c^infty); uniqueness of such semigroups under CD(rho,infty) is proved, not assumed. The paper-level development is incomplete. Any conditional transfer theorem
+    Amendments in the additional statements: 0 < d is assumed where the formal objects are degenerate for d = 0 (spectral_gap_ge_curvature, mSpectralGap_ge_of_CD (finrank), ou_first_eigenspace, optimal_constants_extremal, langevin_entropy_decay, talagrand_logSobolev); optimal_lsi_twice_pi, optimal_constants_extremal, langevin_entropy_decay and talagrand_logSobolev carry an IsStdBrownian or IsLangevin hypothesis that the manuscript does not mention (an artefact of the proofs); temperature_cd takes the smoothness of the standard metric of R^d as an instance argument; langevin_entropy_decay states the printed constants of the regularization inequality although the formalization proves a sharper one.     The diffusion of Theorem 1.9 is encoded by IsDiffusionSemigroup (Markov, semigroup law, Kolmogorov equation on C_c^infty); uniqueness of such semigroups under CD(rho,infty) is proved, not assumed. The paper-level development is incomplete. Any conditional transfer theorem
     or special case must be labelled as such and cannot replace the original
     statements in the final Comparator interface. The source audit reports an
     invalid inference from a curvature product condition to divergence of time
@@ -142,6 +142,7 @@ alignment:
     - lean: CutCur.wasserstein_cutoff_weak  # Remark 3.4
     - lean: CutCur.information_cutoff_weak  # Remark 3.5
     - lean: CutCur.spectral_gap_ge_curvature  # eq. (1.7), Lichnerowicz/Bakry-Emery, Euclidean
+    - lean: CutCur.mSpectralGap_ge_of_CD  # Lichnerowicz/Bakry-Emery, weighted Riemannian manifolds (lines 619-627)
     - lean: CutCur.rigidity_of_gaussian_factor  # (R2) => (R1), Section 1.3
     - lean: CutCur.pairwise_interaction  # pairwise interaction example, after (1.5)
     - lean: CutCur.ou_first_eigenspace  # OU first eigenspace, after (1.4)

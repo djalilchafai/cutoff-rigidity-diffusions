@@ -618,6 +618,16 @@ theorem temperature_cd {d : ℕ}
 variable [IsRiemannianManifold 𝓘(ℝ, F) M] [ConnectedSpace M] [CompleteSpace M]
   [MeasurableSpace M] [BorelSpace M]
 
+/-- **Lichnerowicz / Bakry–Émery spectral gap bound** (manuscript lines 619–627, `λ₁ ≥ ρ`): on a
+smooth, connected, complete weighted Riemannian manifold with probability measure `μ = e^{-V} vol`,
+`CD(ρ,∞)` with `ρ > 0` implies `λ₁ ≥ ρ`. Amendment: `0 < finrank ℝ F` is needed (on a point
+manifold the Rayleigh set is empty, `sInf ∅ = 0`, while every other hypothesis holds). -/
+theorem mSpectralGap_ge_of_CD (hF : 0 < Module.finrank ℝ F) {V : M → ℝ}
+    (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)
+    {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ)
+    (hCD : CD F ρ V) : ρ ≤ mSpectralGap F μ := by
+  apply CutoffRigidity.Paper.mSpectralGap_ge_of_CD <;> assumption
+
 /-- **Theorem 1.9** (Wasserstein estimate on a smooth, connected, complete weighted Riemannian
 manifold without boundary), including the ball refinement. -/
 theorem riemannian_wasserstein_estimate {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)

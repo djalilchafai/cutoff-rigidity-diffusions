@@ -3,16 +3,16 @@
 This project is a Lean 4 formalization of the manuscript [cutcur-lean.tex](cutcur-lean.tex)
 by Chafaï–Fathi, based on [arXiv:2412.15969v4](https://arxiv.org/abs/2412.15969v4).
 
-**Status (25 October 2026).** `Challenge.lean` states 34 theorems: the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
-3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and 22 further claims of the
-manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound, (R2) => (R1), examples, proof ingredients such as W2
+**Status (25 October 2026).** `Challenge.lean` states 35 theorems: the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
+3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and 23 further claims of the
+manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound (Euclidean and Riemannian), (R2) => (R1), examples, proof ingredients such as W2
 contraction, entropy decay, Pinsker and Talagrand, the optimal constants, and the Section 4 items; see
 [PALOMAR.md](PALOMAR.md)). `Solution.lean` proves all of them (no `sorry`, axioms `propext`,
 `Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepted the first 12; the
 extended 34-theorem pair has not yet been run through the Comparator. The splitting theorem now also states the
 potential identity of Theorem 3.6 and the connectedness and completeness of the factor.
 Not formalized: Question 1.10 (open), eq. (loggradbound) (conjectural), the SDE time change and Brownian scaling
-of Section 4.2, the Riemannian Lichnerowicz bound, the Fisher decay `I(μ_t) ≤ e^{-2ρ(t-t₁)} I(μ_{t₁})` for general
+of Section 4.2, the Fisher decay `I(μ_t) ≤ e^{-2ρ(t-t₁)} I(μ_{t₁})` for general
 laws, the derivative identities `dH/dt = -I`, the W2 and entropy mixing-time sentence, and the Rothaus remark. Theorem 1.9 is proved for every
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
 log-Sobolev, gap attainment and the Kuwada contraction are formalized (see [PALOMAR.md](PALOMAR.md)).
@@ -169,7 +169,7 @@ for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fre
    ```sh
    python3 scripts/check-palomar.py --ready
    ```
-3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 34 endpoint theorems
+3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 35 endpoint theorems
    (`CutoffRigidity.Paper.*`), run a `#print axioms` on each from a scratch file importing `Solution`; each
    should depend only on `propext`, `Classical.choice`, `Quot.sound`. The Comparator in step 4 enforces the
    same permitted axioms.
@@ -223,8 +223,8 @@ is not part of the project sources.
 
 [PALOMAR.md](PALOMAR.md) records the official requirements and the detailed status.
 
-- **Challenge/Solution pair:** `Challenge.lean` states 34 theorems; `Solution.lean` proves all of
-  them. `comparator.json` lists the 34 theorems and 43 definitions. The Comparator runs below were made for the
+- **Challenge/Solution pair:** `Challenge.lean` states 35 theorems; `Solution.lean` proves all of
+  them. `comparator.json` lists the 35 theorems and 43 definitions. The Comparator runs below were made for the
   earlier 12-theorem pair and must be repeated for the extended one.
 - **Comparator (12-theorem pair, before the extension):** `lake comparator` accepted the solution (con-ron, nanda and the Lean kernel; 88114
   declarations), both without a sandbox (`verification/comparator-final.log`) and inside the bwrap

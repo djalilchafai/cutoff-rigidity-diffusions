@@ -174,7 +174,7 @@ Proof architecture (about 150 files `Riemann/Diff*.lean`):
 
 All twelve Challenge theorems have proofs of exactly the Challenge type; `Solution.lean` builds with
 no `sorry`, and each depends only on `propext`, `Classical.choice`, `Quot.sound`. `comparator.json`
-lists 34 theorems and 43 definitions (12 original theorems and 39 definitions at the time of the first Comparator run). `lake comparator` accepted the solution
+lists 35 theorems and 43 definitions (12 original theorems and 39 definitions at the time of the first Comparator run). `lake comparator` accepted the solution
 (`verification/comparator-final.log`: con-ron, nanoda and the Lean kernel all accept, 88114 declarations).
 The run was repeated inside the official bwrap sandbox (`verification/comparator-sandboxed.log`,
 same result: con-ron, nanoda and the Lean kernel accept). On this machine `/home` is a symlink to
@@ -245,8 +245,7 @@ Amendments and flags (all recorded in the docstrings in `Challenge.lean`):
 - `normalization_cutoff` concerns the time-changed laws `X_{αt}` only.
 
 Not formalized: Question 1.10 (open problem); eq. (loggradbound) and its consequences (conjectural); the claim that
-`X_{αt}` solves the SDE with generator `α𝓛` (Brownian scaling is not available); the Riemannian Lichnerowicz bound
-(every available Riemannian tool assumes `mSpectralGap = ρ`); eq. (expdecI) for general initial laws (only
+`X_{αt}` solves the SDE with generator `α𝓛` (Brownian scaling is not available); eq. (expdecI) for general initial laws (only
 monotonicity of `I` and `I(μ_{s+t}) ≤ H(μ_s)/t` are proved); the derivative identities `dH/dt = -I` and
 `dI/dt ≤ -2ρI` (only integrated consequences); the W2 and entropy mixing-time sentence; the Rothaus alternative
 (literature); `m` as the centre of mass for coordinates `i ≥ k₁`; the Dyson-OU, sphere and KLS discussions.
@@ -268,3 +267,11 @@ Four independent AI auditors reviewed the 22 added statements and the strengthen
 (`verification/audit-extra-{A,B,C,D}.md`, summarized in `verification/semantic-audit.md`): no defect found; one statement
 strengthened (`heat_kernel_score` asserts differentiability), two docstrings corrected. Build, readiness check and sandboxed
 Comparator were rerun and pass. This is not a human review; `review.status` remains `unchecked`.
+
+## Riemannian Lichnerowicz (25 October 2026)
+
+`mSpectralGap_ge_of_CD` (`CD ρ` with `ρ > 0` implies `ρ ≤ mSpectralGap`, amended by `0 < finrank ℝ F`) was added as the
+35th Challenge theorem (`CutoffRigidity/Extra/RiemannLichnerowicz.lean`). It does not use the old `hgap` hypothesis:
+ergodicity of the canonical kernel is derived from the Bakry–Émery gradient bound. Build, readiness check, axiom check and the sandboxed
+Comparator (35 theorems, 43 definitions) pass. The statement has had no audit beyond the author agent's own report
+(`extra-status/rlich.md`); no human review.

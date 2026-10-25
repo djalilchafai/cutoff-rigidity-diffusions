@@ -197,6 +197,7 @@ The numbering below follows the common theorem/remark/definition counter in the 
 | Source item | Lean statement | Status |
 | --- | --- | --- |
 | Display (1.7), Lichnerowicz, Euclidean | `CutCur.spectral_gap_ge_curvature` | Proved, with `0 < d` |
+| Lichnerowicz, weighted Riemannian (lines 619-627) | `CutCur.mSpectralGap_ge_of_CD` | Proved, with `0 < finrank ℝ F` (a point manifold has an empty Rayleigh set) |
 | Display (1.7), Riemannian | none | Not formalized: available Riemannian tools assume `mSpectralGap = ρ` |
 | (R2) ⇒ (R1), Section 1.3 | `CutCur.rigidity_of_gaussian_factor` | Proved at the level of the potential (u, m, U), not as a product measure; "all eigenfunctions are affine" is Theorem 3.1 |
 | Pairwise interaction example | `CutCur.pairwise_interaction` | Proved (evenness of `h` not needed) |
