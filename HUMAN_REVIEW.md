@@ -57,8 +57,8 @@ deviation to judge. AI audit: `verification/semantic-audit.md` (12 original), `a
 | 12 | `information_cutoff_weak` | Rem 3.5 | reading of `d^{o(1)}` |
 | 13 | `spectral_gap_ge_curvature` | (1.7), L519-548 | `0 < d` |
 | 14 | `rigidity_of_gaussian_factor` | (R2)⇒(R1) | Gaussian factor stated on the potential; no "all eigenfunctions affine" part |
-| 15 | `optimal_lsi_twice_pi` | "Optimal constants" | Brownian hypothesis; test class |
-| 16 | `optimal_constants_extremal` | "Optimal constants" | `0 < d`; Brownian hypothesis; equality with constants optimal on the bounded class |
+| 15 | `optimal_lsi_twice_pi` | "Optimal constants" | test class |
+| 16 | `optimal_constants_extremal` | "Optimal constants" | `0 < d`; equality with constants optimal on the bounded class |
 | 17 | `ou_fisher_information` | Sect. 4.1 | |
 | 18 | `normalization_cutoff` | Sect. 4 Normalization | `κ → ακ` is arithmetic; SDE claim not formalized |
 | 19 | `temperature_bakry_emery` | Sect. 4 Temperature | invariance only in the weak form `∫L f dμ = 0`; process not formalized |
@@ -71,9 +71,9 @@ deviation to judge. AI audit: `verification/semantic-audit.md` (12 original), `a
 | 26 | `langevin_moment_bounds` | proofs of 1.1, 1.3, 1.4 | |
 | 27 | `sup_eigenLambda_ball` | proof of 1.1 | |
 | 28 | `langevin_w2_contraction` | proof of 1.1 | `ρ ≥ 0` |
-| 29 | `langevin_entropy_decay` | proof of Cor 1.4 | `0 < d`; Brownian hypothesis; printed (non-sharp) constants |
+| 29 | `langevin_entropy_decay` | proof of Cor 1.4 | `0 < d`; `IsLangevin` for the process `X`; printed (non-sharp) constants |
 | 30 | `pinsker_tvDist` | (CKP) | |
-| 31 | `talagrand_logSobolev` | (Talagrand, LSI) | `0 < d`; Brownian hypothesis |
+| 31 | `talagrand_logSobolev` | (Talagrand, LSI) | `0 < d` |
 | 32 | `temperature_cd` | Sect. 4 Temperature | redundant instance argument for the metric on `Rd d` |
 | 33 | `mSpectralGap_ge_of_CD` | L619-663 | `0 < finrank ℝ F` |
 | 34 | `riemannian_wasserstein_estimate` | Thm 1.9 | semigroup encoded by `IsDiffusionSemigroup`; SDE replaced |
@@ -83,7 +83,7 @@ deviation to judge. AI audit: `verification/semantic-audit.md` (12 original), `a
 - [ ] **Vacuity.** Only the Riemannian hypotheses have a Lean witness (`Riemann/WitnessMain.lean`, Gaussian on ℝᵏ, flat only).
       For the Langevin-based statements, joint satisfiability rests on classical existence of Brownian motion and strong solutions, which
       Lean cannot instantiate. Decide whether that is acceptable, and whether a curved Riemannian witness is wanted.
-- [ ] **Each amendment** (`0 < d`, `0 < finrank`, Brownian carrier hypotheses, Thm 1.7, `hS`) necessary and harmless?
+- [ ] **Each amendment** (`0 < d`, `0 < finrank`, Thm 1.7, `hS`) necessary and harmless?
 - [ ] **Manuscript vs printed paper.** The local `cutcur-lean.tex` differs from arXiv:2412.15969v4 (Thm 1.7 hypotheses, completeness and
       connectedness in the Riemannian setting, finite `p`, Thm 3.6). Judge whether the corrections are mathematically right
       (`PAPER_AUDIT.md`: the Ornstein–Uhlenbeck counterexample to Thm 1.7 is a written derivation, not checked in Lean) and agree with the authors' intent.

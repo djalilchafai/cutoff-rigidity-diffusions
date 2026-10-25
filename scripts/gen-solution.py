@@ -11,8 +11,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 lines = (ROOT / "Challenge.lean").read_text(encoding="utf-8").split("\n")
 # Theorems whose universe/type `Ω` is not determined by the conclusion (it only occurs in the
 # hypotheses about Brownian motion): pass it explicitly to `apply`.
-EXPLICIT = {"optimal_lsi_twice_pi": "(Ω := Ω)", "optimal_constants_extremal": "(Ω := Ω)",
-            "talagrand_logSobolev": "(Ω := Ω)"}
+EXPLICIT = {}
 out = []
 i = 0
 name = None

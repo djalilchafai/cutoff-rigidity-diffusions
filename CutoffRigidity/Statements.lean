@@ -175,7 +175,7 @@ def mixingTime {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
 /-! ## Further results of the manuscript (remarks, examples, proof ingredients, Section 4)
 
 Statements of intermediate claims of the manuscript that are not part of the numbered theorems
-above. Amendments with respect to the printed text (`0 < d`, an `IsStdBrownian` hypothesis) are
+above. Amendments with respect to the printed text (`0 < d`) are
 flagged in the docstrings. -/
 
 /-- Entropy `Ent_μ(g) = ∫ g log g dμ - (∫ g dμ) log (∫ g dμ)`. -/

@@ -60,7 +60,7 @@ theorem pinsker_tvDist {α : Type*} [MeasurableSpace α] (μ ν : Measure α)
 
 /-- **Talagrand** `ρ W₂(ν,μ)² ≤ 2 H(ν | μ)` and **logarithmic Sobolev** `H(ν | μ) ≤ I(ν | μ)/(2ρ)`
 (eq. LSI) under `Hess V ≥ ρ I`, for every initial probability law. -/
-theorem talagrand_logSobolev {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d} {P : Measure Ω}
+theorem talagrand_logSobolev_carrier {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d} {P : Measure Ω}
     {X : CutCur.Rd d → ℝ≥0 → Ω → CutCur.Rd d} (hL : CutCur.IsLangevin V B P X) (hd : 0 < d)
     {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)

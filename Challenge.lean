@@ -328,7 +328,7 @@ theorem eigenmap_is_ou {Ω : Type*} [MeasurableSpace Ω] {d : ℕ}
 /-! ## Further results of the manuscript (remarks, examples, proof ingredients, Section 4)
 
 Statements of intermediate claims of the manuscript that are not part of the numbered theorems
-above. Amendments with respect to the printed text (`0 < d`, an `IsStdBrownian` hypothesis) are
+above. Amendments with respect to the printed text (`0 < d`) are
 flagged in the docstrings. -/
 
 /-- **Remark 3.4** (weaker assumption in Corollary 1.3): the hypothesis `liminf λ₁ > 0`
@@ -410,12 +410,8 @@ def optimalLSI {d : ℕ} (V : Rd d → ℝ) : ℝ :=
 
 /-- **Optimal constants** (manuscript subsection "Optimal constants"): under rigidity
 (`Hess V ≥ λ₁ I`, `λ₁ > 0`), the optimal Poincaré constant is `1/λ₁` and the optimal
-logarithmic Sobolev constant is twice the optimal Poincaré constant. Amendment: the hypothesis
-`hB : IsStdBrownian B P` is not in the manuscript; it is needed only because the formalized proof
-of the logarithmic Sobolev inequality goes through the Langevin semigroup, and standard Brownian
-motions exist (the statement never mentions `B` or `P`). -/
-theorem optimal_lsi_twice_pi {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {B : ℝ≥0 → Ω → Rd d}
-    {P : Measure Ω} (hB : IsStdBrownian B P) {V : Rd d → ℝ}
+logarithmic Sobolev constant is twice the optimal Poincaré constant. -/
+theorem optimal_lsi_twice_pi {d : ℕ} {V : Rd d → ℝ}
     (hV : ContDiff ℝ 2 V) (hp : IsProbabilityMeasure (gibbs V))
     (hR : RigidCurvature V) :
     optimalPI V = (spectralGap V)⁻¹ ∧ optimalLSI V = 2 * optimalPI V := by
@@ -424,11 +420,10 @@ theorem optimal_lsi_twice_pi {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {B : �
 /-- **Extremal functions** (manuscript subsection "Optimal constants"): in the convex-interaction
 setting `V = ρ|x|²/2 + W`, the function `x ↦ x₁+⋯+x_d` is extremal for the Poincaré inequality
 (equality with the optimal constant), and `x ↦ e^{α(x₁+⋯+x_d)}` is extremal for the logarithmic
-Sobolev inequality (equality with the optimal constant), for every real `α`. Both functions lie outside the bounded test class, so the statement asserts
-finiteness of all the integrals involved. Amendments: `0 < d` and `hB : IsStdBrownian B P`
-(as for `optimal_lsi_twice_pi`). -/
-theorem optimal_constants_extremal {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {B : ℝ≥0 → Ω → Rd d}
-    {P : Measure Ω} (hB : IsStdBrownian B P) (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
+Sobolev inequality (equality with the optimal constant), for every real `α`. Both functions lie outside
+the bounded test class, so the statement asserts finiteness of all the integrals involved.
+Amendment: `0 < d`. -/
+theorem optimal_constants_extremal {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
     {W : Rd d → ℝ} (hW : ContDiff ℝ 2 W) (hconv : ConvexOn ℝ univ W)
     (hinv : ∀ x (s : ℝ), W (x + s • diagonal d) = W x)
     (hp : IsProbabilityMeasure (gibbs fun x => ρ / 2 * ‖x‖ ^ 2 + W x)) :
@@ -686,11 +681,9 @@ theorem pinsker_tvDist {α : Type*} [MeasurableSpace α] (μ ν : Measure α)
   sorry
 
 /-- **Talagrand** `ρ W₂(ν,μ)² ≤ 2 H(ν | μ)` and **logarithmic Sobolev** `H(ν | μ) ≤ I(ν | μ)/(2ρ)`
-(eq. LSI) under `Hess V ≥ ρ I`, for every initial probability law. Amendments: `0 < d` and `hL : IsLangevin V B P X`
-(the latter only provides the Brownian motion used by the formalized proofs; the conclusion does
-not depend on `B, P, X`). -/
-theorem talagrand_logSobolev {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ} {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω}
-    {X : Rd d → ℝ≥0 → Ω → Rd d} (hL : IsLangevin V B P X) (hd : 0 < d)
+(eq. LSI) under `Hess V ≥ ρ I`, for every probability law `ν`. Amendment: `0 < d`. -/
+theorem talagrand_logSobolev {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V)
+    (hp : IsProbabilityMeasure (gibbs V)) (hd : 0 < d)
     {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :

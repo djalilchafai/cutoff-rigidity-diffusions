@@ -428,7 +428,7 @@ end Validity
 /-- **Optimal constants** (manuscript subsection "Optimal constants"): under rigidity
 (`Hess V ≥ λ₁ I`, `λ₁ > 0`), the optimal Poincaré constant is `1/λ₁` and the optimal
 logarithmic Sobolev constant is twice the optimal Poincaré constant. -/
-theorem optimal_lsi_twice_pi {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {B : ℝ≥0 → Ω → CutCur.Rd d}
+theorem optimal_lsi_twice_pi_carrier {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {B : ℝ≥0 → Ω → CutCur.Rd d}
     {P : Measure Ω} (hB : CutCur.IsStdBrownian B P) {V : CutCur.Rd d → ℝ}
     (hV : ContDiff ℝ 2 V) (hp : IsProbabilityMeasure (CutCur.gibbs V))
     (hR : CutCur.RigidCurvature V) :
@@ -503,7 +503,7 @@ set_option maxHeartbeats 1000000 in
 setting `V = ρ|x|²/2 + W`, the function `x ↦ x₁+⋯+x_d` is extremal for the Poincaré inequality
 (equality with the optimal constant), and `x ↦ e^{α(x₁+⋯+x_d)}` is extremal for the logarithmic
 Sobolev inequality (equality with the optimal constant), for every real `α`. -/
-theorem optimal_constants_extremal {Ω : Type*} [MeasurableSpace Ω] {B : ℝ≥0 → Ω → CutCur.Rd d}
+theorem optimal_constants_extremal_carrier {Ω : Type*} [MeasurableSpace Ω] {B : ℝ≥0 → Ω → CutCur.Rd d}
     {P : Measure Ω} (hB : CutCur.IsStdBrownian B P) (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
     {W : CutCur.Rd d → ℝ} (hW : ContDiff ℝ 2 W) (hconv : ConvexOn ℝ univ W)
     (hinv : ∀ x (s : ℝ), W (x + s • CutCur.diagonal d) = W x)

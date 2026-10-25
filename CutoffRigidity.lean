@@ -351,3 +351,4 @@ public import CutoffRigidity.Extra.SplitPotential
 public import CutoffRigidity.Extra.Temperature
 public import CutoffRigidity.Extra.WassersteinCutoffWeak
 public import CutoffRigidity.Extra.RiemannLichnerowicz
+public import CutoffRigidity.Extra.NoBmStatements

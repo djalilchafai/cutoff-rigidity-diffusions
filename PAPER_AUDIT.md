@@ -207,8 +207,8 @@ The numbering below follows the common theorem/remark/definition counter in the 
 | Mixing time of rigid sequences, product condition holds | `CutCur.mixing_time_rigid` | Proved for the TV mixing time; the W2 and entropy mixing-time sentence is not formalized |
 | Moments, `Λ` on balls (proofs of Thm 1.1, Cor. 1.3) | `CutCur.langevin_moment_bounds`, `CutCur.sup_eigenLambda_ball` | Proved |
 | W2 contraction, arbitrary laws | `CutCur.langevin_w2_contraction` | Proved |
-| Entropy decay, regularization, CKP, Fisher bounds | `CutCur.langevin_entropy_decay`, `CutCur.pinsker_tvDist`, `CutCur.talagrand_logSobolev` | Proved (`0 < d`, Langevin carrier hypothesis); eq. (expdecI) for general laws and `dH/dt = -I`, `dI/dt ≤ -2ρI` not stated |
-| Optimal constants (PI `1/λ₁`, LSI twice PI, extremals) | `CutCur.optimal_lsi_twice_pi`, `CutCur.optimal_constants_extremal` | Proved with an `IsStdBrownian` hypothesis and a smooth bounded Lipschitz test class; Rothaus remark not formalized |
+| Entropy decay, regularization, CKP, Fisher bounds | `CutCur.langevin_entropy_decay`, `CutCur.pinsker_tvDist`, `CutCur.talagrand_logSobolev` | Proved (`0 < d`; the first is stated for the Langevin process `X`; the Talagrand/LSI statement has no process); eq. (expdecI) for general laws and `dH/dt = -I`, `dI/dt ≤ -2ρI` not stated |
+| Optimal constants (PI `1/λ₁`, LSI twice PI, extremals) | `CutCur.optimal_lsi_twice_pi`, `CutCur.optimal_constants_extremal` | Proved (no Brownian hypothesis) with a smooth bounded Lipschitz test class; Rothaus remark not formalized |
 | Section 4.1, Fisher information of the OU kernel; score of the heat kernel | `CutCur.ou_fisher_information`, `CutCur.heat_kernel_score` | Proved; eq. (loggradbound) conjectural, not formalized |
 | Section 4.2, normalization | `CutCur.normalization_cutoff` | Proved for time-changed laws; the SDE time change and Brownian scaling are not formalized |
 | Section 4.4, temperature | `CutCur.temperature_bakry_emery`, `CutCur.temperature_cd` | Proved; invariance only infinitesimally (`∫ L_σ f dμ_σ = 0`), no SDE with temperature |

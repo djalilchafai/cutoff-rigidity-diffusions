@@ -112,7 +112,7 @@ automation:
     mathematical review or source-author endorsement has been asserted.
 fidelity:
   divergences: >-
-    Amendments in the additional statements: 0 < d is assumed where the formal objects are degenerate for d = 0 (spectral_gap_ge_curvature, mSpectralGap_ge_of_CD (finrank), ou_first_eigenspace, optimal_constants_extremal, langevin_entropy_decay, talagrand_logSobolev); optimal_lsi_twice_pi, optimal_constants_extremal, langevin_entropy_decay and talagrand_logSobolev carry an IsStdBrownian or IsLangevin hypothesis that the manuscript does not mention (an artefact of the proofs); temperature_cd takes the smoothness of the standard metric of R^d as an instance argument; langevin_entropy_decay states the printed constants of the regularization inequality although the formalization proves a sharper one.     The diffusion of Theorem 1.9 is encoded by IsDiffusionSemigroup (Markov, semigroup law, Kolmogorov equation on C_c^infty); uniqueness of such semigroups under CD(rho,infty) is proved, not assumed. The paper-level development is incomplete. Any conditional transfer theorem
+    Amendments in the additional statements: 0 < d is assumed where the formal objects are degenerate for d = 0 (spectral_gap_ge_curvature, mSpectralGap_ge_of_CD (finrank), ou_first_eigenspace, optimal_constants_extremal, langevin_entropy_decay, talagrand_logSobolev); the statements about the process X (langevin_entropy_decay, langevin_w2_contraction and the Langevin-based cutoff statements) take the IsLangevin hypothesis, which is part of what they assert; optimal_lsi_twice_pi, optimal_constants_extremal and talagrand_logSobolev have no Brownian hypothesis; temperature_cd takes the smoothness of the standard metric of R^d as an instance argument; langevin_entropy_decay states the printed constants of the regularization inequality although the formalization proves a sharper one.     The diffusion of Theorem 1.9 is encoded by IsDiffusionSemigroup (Markov, semigroup law, Kolmogorov equation on C_c^infty); uniqueness of such semigroups under CD(rho,infty) is proved, not assumed. The paper-level development is incomplete. Any conditional transfer theorem
     or special case must be labelled as such and cannot replace the original
     statements in the final Comparator interface. The source audit reports an
     invalid inference from a curvature product condition to divergence of time
@@ -155,8 +155,8 @@ alignment:
     - lean: CutCur.langevin_entropy_decay  # entropy decay, regularization, Fisher bounds, proof of Cor. 1.4 (eq:expdecI general not covered)
     - lean: CutCur.pinsker_tvDist  # Csiszar-Kullback-Pinsker, proof of Cor. 1.4
     - lean: CutCur.talagrand_logSobolev  # Talagrand and log-Sobolev, proof of Cor. 1.4
-    - lean: CutCur.optimal_lsi_twice_pi  # subsection Optimal constants (amendment: IsStdBrownian hypothesis)
-    - lean: CutCur.optimal_constants_extremal  # subsection Optimal constants, extremal functions (amendments: 0 < d, IsStdBrownian)
+    - lean: CutCur.optimal_lsi_twice_pi  # subsection Optimal constants (no Brownian hypothesis)
+    - lean: CutCur.optimal_constants_extremal  # subsection Optimal constants, extremal functions (amendment: 0 < d)
     - lean: CutCur.ou_fisher_information  # Section 4.1, Fisher information of the OU heat kernel
     - lean: CutCur.heat_kernel_score  # Section 4.1, score of the heat kernel
     - lean: CutCur.normalization_cutoff  # Section 4.2, normalization (time change only; Brownian scaling not formalized)

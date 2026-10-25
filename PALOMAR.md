@@ -231,10 +231,10 @@ New theorems (manuscript item, module):
 Amendments and flags (all recorded in the docstrings in `Challenge.lean`):
 - `0 < d` is assumed in `spectral_gap_ge_curvature`, `ou_first_eigenspace`, `optimal_constants_extremal`,
   `langevin_entropy_decay`, `talagrand_logSobolev`: for `d = 0` the Rayleigh set is empty and `spectralGap = sInf ∅ = 0`.
-- `optimal_lsi_twice_pi` and `optimal_constants_extremal` carry `hB : IsStdBrownian B P`, and
-  `langevin_entropy_decay` and `talagrand_logSobolev` carry `hL : IsLangevin V B P X`, none of which is in the
-  manuscript: the library proofs of the logarithmic Sobolev inequality and Talagrand go through the Langevin
-  semigroup, and the conclusions do not involve `B, P, X`.
+- `optimal_lsi_twice_pi`, `optimal_constants_extremal` and `talagrand_logSobolev` have NO Brownian carrier hypothesis
+  (removed on 25 October 2026; Brownian-free proofs via the Riemannian machinery on `ℝ^d` plus mollification of `C²` potentials,
+  `Extra/NoBm*.lean`). `langevin_entropy_decay` and `langevin_w2_contraction` keep `IsLangevin V B P X`: their conclusions are
+  statements about the law of the process `X`, so it is part of the claim.
 - `temperature_cd` takes the smoothness of Mathlib's standard Riemannian metric on `ℝ^d` as an instance argument
   (a Prop), because the global instance proving it lives in `Riemann/WitnessGeometry`, outside the Challenge.
 - `langevin_entropy_decay` states the printed (non-sharp) constants of the regularization inequality.
@@ -281,3 +281,11 @@ Comparator (35 theorems, 43 definitions) pass. The statement has had no audit be
 Build, readiness check, axiom check of all 35 theorems and the sandboxed Comparator pass again.
 
 `mSpectralGap_ge_of_CD` was audited by one independent AI agent (`verification/audit-extra-E.md`): no defect found. Not a human review.
+
+## Brownian carrier hypotheses removed (25 October 2026)
+
+`optimal_lsi_twice_pi`, `optimal_constants_extremal` and `talagrand_logSobolev` no longer assume a Brownian motion
+(`hB : IsStdBrownian B P` / `hL : IsLangevin V B P X`), and have the full `C²` hypothesis on `V`. The proofs go through the Riemannian
+`lsi_of_CD` on `ℝ^d` (no gap hypothesis, no Brownian motion) and a mollification of `C²` potentials (`CutoffRigidity/Extra/NoBm*.lean`).
+The older carrier versions are kept as `*_carrier` in `Extra/OptimalConstants.lean` and `Extra/Dynamics.lean`. These three statements changed
+after the AI audits of group B and D, and have not been re-audited. Build, readiness check, axiom check and the sandboxed Comparator were rerun.
