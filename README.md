@@ -1,35 +1,29 @@
 # Cutoff via rigidity: Lean development
 
-**Manuscript correction on 23 October 2026:** the local Riemannian setup and
-theorems now explicitly assume completeness, connectedness, and no boundary.
-The rigidity proof explains where completeness supplies a global flow and
-product splitting. This addresses the punctured-plane counterexample found
-by two agents; see [PAPER_AUDIT.md](PAPER_AUDIT.md). The correction has not
-yet been formalized in Lean.
-
-This project targets the local manuscript [cutcur-lean.tex](cutcur-lean.tex)
+This project is a Lean 4 formalization of the manuscript [cutcur-lean.tex](cutcur-lean.tex)
 by Chafaï–Fathi, based on [arXiv:2412.15969v4](https://arxiv.org/abs/2412.15969v4).
-**The full paper has not been formalized.** The existing source audit concerns
-the archived arXiv version, where it found a counterexample to the Wasserstein
-and Fisher conclusions of Theorem 1.7 as printed. The local target adds a
-time-divergence hypothesis to that theorem and the Riemannian assumptions
-described above. Full source alignment with the Lean development remains
-incomplete.
 
 **Status (25 October 2026).** `Challenge.lean` states 12 theorems; `Solution.lean` proves all
 of them (no `sorry`, axioms `propext`, `Classical.choice`, `Quot.sound` only), and a
 `lake comparator` run inside the bwrap sandbox accepts it. Theorem 1.9 is proved for every
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
-log-Sobolev, gap attainment and the Kuwada contraction are formalized (see PALOMAR.md). The older
-paragraphs below describe intermediate stages.
-For the Ornstein–Uhlenbeck potential `V_d(x)=d|x|²/2+C_d` and singleton initial
-set `{sqrt(d)e₁}`, curvature is `d`, equilibrium is `N(0,I_d/d)`, and the TV
-mixing time is asymptotic to `log(d)/d`. The printed hypotheses hold, yet for
-`epsilon=1/4`, Wasserstein distance at `3t0/4` tends to zero and Fisher
-information at `5t0/4` tends to infinity. See [PAPER_AUDIT.md](PAPER_AUDIT.md)
-for explicit estimates using the actual TV threshold mixing time and the
-complete theorem inventory. This probabilistic counterexample is a written
-mathematical derivation; it has not been fully checked in Lean.
+log-Sobolev, gap attainment and the Kuwada contraction are formalized (see [PALOMAR.md](PALOMAR.md)).
+No human semantic review has taken place; the statements were checked only by an AI audit
+(`verification/semantic-audit.md`).
+
+**Corrections to the printed paper**, both reflected in the local manuscript and in the Lean statements
+(details in [PAPER_AUDIT.md](PAPER_AUDIT.md)):
+- *Theorem 1.7.* The arXiv v4 statement is false as printed. For the Ornstein–Uhlenbeck potential
+  `V_d(x)=d|x|²/2+C_d` and singleton initial set `{sqrt(d)e₁}`, curvature is `d`, equilibrium is
+  `N(0,I_d/d)`, and the TV mixing time is asymptotic to `log(d)/d`. The printed hypotheses hold, yet for
+  `epsilon=1/4`, Wasserstein distance at `3t0/4` tends to zero and Fisher information at `5t0/4` tends to
+  infinity. The Lean statement (`product_condition_cutoff`) adds the hypotheses `liminf κ > 0` and
+  `t₀ → ∞` for the Fisher and Wasserstein conclusions. The counterexample is a written derivation, not
+  checked in Lean.
+- *Riemannian theorems.* The setup assumes completeness, connectedness and no boundary; a punctured plane
+  is a counterexample otherwise. This is formalized in the Lean statements.
+
+The sections below under "Checked scope" describe the supporting development, written in stages.
 
 ## Checked scope
 
