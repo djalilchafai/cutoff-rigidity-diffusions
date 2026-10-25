@@ -356,3 +356,6 @@ invisible to the rest of the project; the full build shows no declaration clash.
 Comparator: NOT rerun after this integration (the earlier spike accepted a mini pair with the same libraries in the sandbox, with all three
 kernels; the full pair must be rerun; con-ron will count the vendored declarations too). The new statements have had no AI audit and no human review
 (`review.status` stays `unchecked`).
+
+`exists_stdBrownian` and `exists_langevin` were audited by one independent AI agent (`verification/audit-extra-J.md`): no defect. Not a human review.
+The current Challenge pair has 48 theorems and 51 definitions; the sandboxed Comparator accepts it (con-ron 91128 declarations, nanoda, Lean kernel).

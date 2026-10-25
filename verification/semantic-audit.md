@@ -531,3 +531,12 @@ Two independent AI auditors (statements and definitions only; no Lean scratch fi
   Ornstein–Uhlenbeck potential; the fourth conjunct of `mixing_time_w2_rigid` must be an implication (with `ρ ~ log n` the mixing time stays bounded). One wording fix applied:
   the docstring of `temperature_sde` now says `Z_σ = 1` instead of "normalizable".
 This is an AI audit, not a human review.
+
+## Audit of `exists_stdBrownian` and `exists_langevin` (AI, 25 October 2026)
+
+One independent AI auditor (`audit-extra-J.md`) found no defect, and proved two small facts in scratch files (not in the repository): no constant process (hence no zero process,
+one-point space or Dirac `P`) satisfies Mathlib's `IsBrownianReal`, and for `d > 0` `IsStdBrownian` already forces `P` to be a probability measure (the extra
+`IsProbabilityMeasure P` is only needed for `d = 0`). `IsLangevinSolution` has real content (a.s. continuity and the integral equation on `[0,t]`, integrand continuous, pathwise unique by Gronwall),
+so `X` is the actual SDE solution; `V = ‖x‖²/2 + c` satisfies the hypotheses of `exists_langevin`. Scope: `exists_langevin` covers convex `V` only and shows each single `V`
+is satisfiable; it does not show that every combined hypothesis set of a downstream theorem is satisfiable. The Challenge closure is Mathlib-only (no vendor names in `Challenge.lean`).
+This is an AI audit, not a human review.

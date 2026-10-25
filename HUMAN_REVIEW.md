@@ -10,12 +10,12 @@ What Lean already guarantees (machine-checked, rerunnable, see README "How to re
 definitions* mean what the manuscript says. That is what a reviewer must establish.
 
 ## AI audits done so far (to reuse, not to trust)
-Every one of the first 46 statements has had at least one AI audit (the two Brownian existence statements, nos. 47-48, have had none) (statements and definitions read against the manuscript; proofs not read):
+Every one of the 48 statements has had at least one AI audit (statements and definitions read against the manuscript; proofs not read):
 - original 12: `verification/semantic-audit.md` (first audit) and independent second audits `audit-second-1.md` (theorems 1-7),
   `audit-second-2.md` (theorems 9-12 and the Riemannian definitions);
 - 22 added statements: `audit-extra-A.md` (sequence cutoffs), `-B.md` (spectral gap, constants), `-C.md` (OU, time change, temperature),
   `-D.md` (dynamics, strengthened splitting);
-  `-H.md` (Ricci/Bochner/CD, `k₁` bounds, Riemannian Poincaré/LSI, `entropyOf`), `-I.md` (Fisher decay/Dini, `normalization_sde`, temperature, W₂/entropy mixing times);
+  `-H.md` (Ricci/Bochner/CD, `k₁` bounds, Riemannian Poincaré/LSI, `entropyOf`), `-I.md` (Fisher decay/Dini, `normalization_sde`, temperature, W₂/entropy mixing times), `-J.md` (`exists_stdBrownian`, `exists_langevin`);
 - later changes: `-E.md` (`mSpectralGap_ge_of_CD`), `-F.md` (the three statements without Brownian carrier), `-G.md` (Thm 1.7 `hS`
   weakening, `heat_kernel_score`).
 No audit found a defect; remarks and agreements are in those files. Limits: each statement was read by one or two agents, mostly by hand (few

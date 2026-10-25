@@ -4,12 +4,12 @@ This project is a Lean 4 formalization of the manuscript [cutcur-lean.tex](cutcu
 by Chafaï–Fathi, based on [arXiv:2412.15969v4](https://arxiv.org/abs/2412.15969v4).
 
 **Status (25 October 2026).** `Challenge.lean` states 48 theorems: the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
-3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and 23 further claims of the
+3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and 36 further claims of the
 manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound (Euclidean and Riemannian), (R2) => (R1), examples, proof ingredients such as W2
 contraction, entropy decay, Pinsker and Talagrand, the optimal constants, and the Section 4 items; see
 [PALOMAR.md](PALOMAR.md)). `Solution.lean` proves all of them (no `sorry`, axioms `propext`,
-`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepted the first 12; the
-extended 46-theorem pair has not yet been run through the Comparator. The splitting theorem now also states the
+`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 48-theorem pair
+(con-ron, nanoda and the Lean kernel). The splitting theorem now also states the
 potential identity of Theorem 3.6 and the connectedness and completeness of the factor.
 A further block of 11 statements (Bochner identity and `CD ⇔ Ric + Hess V ≥ ρ`, Riemannian `k₁` bounds and Poincaré/log-Sobolev, Fisher
 decay for all laws and its Dini form, Brownian scaling at the SDE level, the temperature SDE and cutoffs, W2 and entropy mixing times) is
