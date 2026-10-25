@@ -34,6 +34,7 @@ sources:
 related_formalizations: []
 status:
   scope: >-
+    Update 25 October 2026 (later): Challenge.lean now states 34 theorems (the 12 above plus 22 further manuscript claims: Remarks 3.4 and 3.5, the Lichnerowicz bound and (R2) => (R1), examples, proof ingredients and Section 4 items), all proved in Solution.lean with only the standard axioms. The splitting theorem now also states the potential identity and the connectedness and completeness of the factor. Not formalized: Question 1.10 (open), eq:loggradbound (conjectural), the SDE time change and Brownian scaling, the Riemannian Lichnerowicz bound, eq:expdecI for general laws, derivative identities dH/dt = -I, W2 and entropy mixing times, the Rothaus remark. Not yet run through Comparator after this extension.
     Update 25 October 2026: all twelve Challenge theorems are proved in Solution.lean with only
     the standard axioms, and a sandboxed Comparator run accepts them. Theorem 1.9 (Riemannian Wasserstein estimate) is proved for every diffusion semigroup in the sense of IsDiffusionSemigroup, with no extra hypotheses.
     Historical scope notes follow. The full paper remains incomplete. The actual Euclidean Langevin process,
@@ -111,7 +112,7 @@ automation:
     mathematical review or source-author endorsement has been asserted.
 fidelity:
   divergences: >-
-    The diffusion of Theorem 1.9 is encoded by IsDiffusionSemigroup (Markov, semigroup law, Kolmogorov equation on C_c^infty); uniqueness of such semigroups under CD(rho,infty) is proved, not assumed. The paper-level development is incomplete. Any conditional transfer theorem
+    Amendments in the additional statements: 0 < d is assumed where the formal objects are degenerate for d = 0 (spectral_gap_ge_curvature, ou_first_eigenspace, optimal_constants_extremal, langevin_entropy_decay, talagrand_logSobolev); optimal_lsi_twice_pi, optimal_constants_extremal, langevin_entropy_decay and talagrand_logSobolev carry an IsStdBrownian or IsLangevin hypothesis that the manuscript does not mention (an artefact of the proofs); temperature_cd takes the smoothness of the standard metric of R^d as an instance argument; langevin_entropy_decay states the printed constants of the regularization inequality although the formalization proves a sharper one.     The diffusion of Theorem 1.9 is encoded by IsDiffusionSemigroup (Markov, semigroup law, Kolmogorov equation on C_c^infty); uniqueness of such semigroups under CD(rho,infty) is proved, not assumed. The paper-level development is incomplete. Any conditional transfer theorem
     or special case must be labelled as such and cannot replace the original
     statements in the final Comparator interface. The source audit reports an
     invalid inference from a curvature product condition to divergence of time
@@ -138,8 +139,30 @@ alignment:
     - lean: CutCur.product_condition_cutoff
     - lean: CutCur.euclidean_gaussian_factorization
     - lean: CutCur.eigenmap_is_ou
+    - lean: CutCur.wasserstein_cutoff_weak  # Remark 3.4
+    - lean: CutCur.information_cutoff_weak  # Remark 3.5
+    - lean: CutCur.spectral_gap_ge_curvature  # eq. (1.7), Lichnerowicz/Bakry-Emery, Euclidean
+    - lean: CutCur.rigidity_of_gaussian_factor  # (R2) => (R1), Section 1.3
+    - lean: CutCur.pairwise_interaction  # pairwise interaction example, after (1.5)
+    - lean: CutCur.ou_first_eigenspace  # OU first eigenspace, after (1.4)
+    - lean: CutCur.ou_mean_start_cutoff  # OU started from the mean, after Cor. 1.3
+    - lean: CutCur.ou_lp_infty_fails  # p = infinity fails for OU, after (1.25)
+    - lean: CutCur.mixing_time_rigid  # mixing time of rigid sequences, after Cor. 1.6 and product condition subsection (TV only)
+    - lean: CutCur.langevin_moment_bounds  # moment bounds in the proofs of Thm 1.1, Cor. 1.3, 1.4
+    - lean: CutCur.sup_eigenLambda_ball  # supremum of Lambda on balls, proof of Thm 1.1 and Cor. 1.3
+    - lean: CutCur.langevin_w2_contraction  # W2 contraction for arbitrary initial laws, proof of Thm 1.1
+    - lean: CutCur.langevin_entropy_decay  # entropy decay, regularization, Fisher bounds, proof of Cor. 1.4 (eq:expdecI general not covered)
+    - lean: CutCur.pinsker_tvDist  # Csiszar-Kullback-Pinsker, proof of Cor. 1.4
+    - lean: CutCur.talagrand_logSobolev  # Talagrand and log-Sobolev, proof of Cor. 1.4
+    - lean: CutCur.optimal_lsi_twice_pi  # subsection Optimal constants (amendment: IsStdBrownian hypothesis)
+    - lean: CutCur.optimal_constants_extremal  # subsection Optimal constants, extremal functions (amendments: 0 < d, IsStdBrownian)
+    - lean: CutCur.ou_fisher_information  # Section 4.1, Fisher information of the OU heat kernel
+    - lean: CutCur.heat_kernel_score  # Section 4.1, score of the heat kernel
+    - lean: CutCur.normalization_cutoff  # Section 4.2, normalization (time change only; Brownian scaling not formalized)
+    - lean: CutCur.temperature_bakry_emery  # Section 4.4, temperature, Bakry-Emery operators
+    - lean: CutCur.temperature_cd  # Section 4.4, temperature, CD condition (instance argument for the metric smoothness)
     - lean: CutCur.riemannian_wasserstein_estimate
-    - lean: CutCur.riemannian_gaussian_splitting
+    - lean: CutCur.riemannian_gaussian_splitting  # Thm 3.6 and Lemma 3.7, with the V o Phi^{-1} identity and connected, complete factor
 
 acknowledgements: >-
   Mathematical source: Djalil Chafaï and Max Fathi. Dependencies: Lean and Mathlib.

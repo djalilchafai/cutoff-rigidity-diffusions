@@ -53,7 +53,7 @@ theorem riemannian_wasserstein_estimate_of_canonical {V : M → ℝ}
   have hPt : Kk = Pt := funext fun s => (Kernel.ext (hPK s)).symm
   subst hPt
   obtain ⟨F', _, _, _, N, _, _, _, _, _, _, _, _, _, _, V', μ', Φ, hprops, hdist, hmap, hrep,
-    horth⟩ := riemannian_gaussian_splitting F hV hμ hρ hCD hgap
+    horth⟩ := riemannian_gaussian_splitting_base F hV hμ hρ hCD hgap
   have hΦc : Continuous Φ := Φ.contMDiff.continuous
   have hΦm : Measurable (fun x => Φ x) :=
     (hΦc.fst.measurable).prodMk (hΦc.snd.measurable)

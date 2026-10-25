@@ -121,7 +121,7 @@ theorem riemannian_wasserstein_estimate_amended {V : M → ℝ} (hV : ContMDiff 
     ∀ (m : M) (R : ℝ), 0 ≤ R → mLambda F μ V m = 0 →
       lower (ENNReal.ofReal (ρ * R ^ 2)) ≤ ⨆ x₀ ∈ {x | edist m x ≤ ENNReal.ofReal R}, W x₀ := by
   obtain ⟨F', _, _, _, N, _, _, _, _, _, _, _, _, _, _, V', μ', Φ, hprops, hdist, hmap, hrep, horth⟩ :=
-    riemannian_gaussian_splitting F hV hμ hρ hCD hgap
+    riemannian_gaussian_splitting_base F hV hμ hρ hCD hgap
   have hΦc : Continuous Φ := Φ.contMDiff.continuous
   have hΦm : Measurable (fun x => Φ x) :=
     (hΦc.fst.measurable).prodMk (hΦc.snd.measurable)

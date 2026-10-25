@@ -172,6 +172,32 @@ def mixingTime {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
     (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
   ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => .ofReal (tvDist ν μ)) t ≤ .ofReal η), (t : ℝ≥0∞)
 
+/-! ## Further results of the manuscript (remarks, examples, proof ingredients, Section 4)
+
+Statements of intermediate claims of the manuscript that are not part of the numbered theorems
+above. Amendments with respect to the printed text (`0 < d`, an `IsStdBrownian` hypothesis) are
+flagged in the docstrings. -/
+
+/-- Entropy `Ent_μ(g) = ∫ g log g dμ - (∫ g dμ) log (∫ g dμ)`. -/
+def entropyOf {d : ℕ} (μ : Measure (Rd d)) (g : Rd d → ℝ) : ℝ :=
+  (∫ x, g x * Real.log (g x) ∂μ) - (∫ x, g x ∂μ) * Real.log (∫ x, g x ∂μ)
+
+/-- Test functions for the optimal constants: smooth, bounded and Lipschitz. -/
+def IsTestFunction {d : ℕ} (f : Rd d → ℝ) : Prop :=
+  ContDiff ℝ ∞ f ∧ (∃ M : ℝ, ∀ x, |f x| ≤ M) ∧ ∃ L : ℝ≥0, LipschitzWith L f
+
+/-- Optimal Poincaré constant: the infimum of the `C ≥ 0` with `Var_μ f ≤ C ∫|∇f|² dμ` for all
+test functions `f`. -/
+def optimalPI {d : ℕ} (V : Rd d → ℝ) : ℝ :=
+  sInf {C : ℝ | 0 ≤ C ∧ ∀ f : Rd d → ℝ, IsTestFunction f →
+    variance f (gibbs V) ≤ C * ∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V}
+
+/-- Optimal logarithmic Sobolev constant: the infimum of the `C ≥ 0` with
+`Ent_μ(f²) ≤ C ∫|∇f|² dμ` for all test functions `f`. -/
+def optimalLSI {d : ℕ} (V : Rd d → ℝ) : ℝ :=
+  sInf {C : ℝ | 0 ≤ C ∧ ∀ f : Rd d → ℝ, IsTestFunction f →
+    entropyOf (gibbs V) (fun x => f x ^ 2) ≤ C * ∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V}
+
 /-! ## Weighted Riemannian manifolds (Section 1.4)
 
 `M` is a smooth manifold without boundary modelled on a finite-dimensional inner product

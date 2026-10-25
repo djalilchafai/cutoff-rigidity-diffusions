@@ -1,7 +1,7 @@
 {
   "manuscript": "cutcur-lean.tex",
   "manuscript_sha256": "67e29c7382cf912f22d790d2b28f18d33a5ba89c95ea6c132606c5efeb7b4050",
-  "scope": "Declaration inventory and proof dependency map for the corrected local manuscript. kernel_checked_endpoint records local source-level endpoint coverage, not external semantic review or a full-paper Comparator. Update 25 October 2026: all 12 Challenge theorems are proved; Theorem 1.9 (main_thm_riem) is proved without extra hypotheses on the diffusion; lake comparator accepted (no-sandbox, see verification/comparator-final.log).",
+  "scope": "Declaration inventory and proof dependency map for the corrected local manuscript. kernel_checked_endpoint records local source-level endpoint coverage, not external semantic review or a full-paper Comparator. Update 25 October 2026: all 34 Challenge theorems are proved (12 original + 22 added from the remaining manuscript claims; see extra-status/integration.md); Theorem 1.9 (main_thm_riem) is proved without extra hypotheses on the diffusion; lake comparator accepted in the bwrap sandbox on the 34-theorem pair (verification/comparator-sandboxed.log).",
   "statements": [
     {
       "paper_label": "th:maineucl",

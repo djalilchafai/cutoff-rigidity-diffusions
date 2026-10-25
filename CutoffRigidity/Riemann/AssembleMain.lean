@@ -28,7 +28,7 @@ variable (F : Type) [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDime
   [IsRiemannianManifold 𝓘(ℝ, F) M] [ConnectedSpace M] [CompleteSpace M]
   [MeasurableSpace M] [BorelSpace M]
 
-theorem riemannian_gaussian_splitting {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)
+theorem riemannian_gaussian_splitting_base {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)
     {μ : Measure M} [IsProbabilityMeasure μ] (hμ : CutCur.IsWeightedVolume F μ V) {ρ : ℝ}
     (hρ : 0 < ρ)
     (hCD : CutCur.CD F ρ V) (hgap : CutCur.mSpectralGap F μ = ρ) :

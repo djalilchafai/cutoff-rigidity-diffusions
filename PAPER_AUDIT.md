@@ -187,10 +187,31 @@ The numbering below follows the common theorem/remark/definition counter in the 
 | Theorem 3.1, `thm_split_eucl` | Gaussian splitting of dimension k₁ and affine first eigenfunctions | Integrated Bochner, regularity and full support, affine rigidity, measure factorization, maximality of factor | Proved (`CutCur.euclidean_gaussian_factorization`; see `Challenge.lean`) |
 | Remark 3.2, `rem_eigen_grad` | Affine gradient normalization | Integration by parts on eigenfunction domain | Proved (`CutCur.euclidean_gaussian_factorization`; see `Challenge.lean`) |
 | Lemma 3.3, `lem_proj_ou` | A normalized multi-eigenmap sends the diffusion to scaled OU | Chain rule/generator intertwining plus Markov/martingale-problem uniqueness or direct SDE argument | Proved (`CutCur.eigenmap_is_ou`; see `Challenge.lean`) |
-| Remark 3.4 | Relaxed inverse-gap growth condition | Quantitative version of scalar cutoff asymptotics | Unproved; supplementary |
-| Remark 3.5 | Relaxed `λ_d=d^{o(1)}` assumption | Dimension-dependent regularization time and prefactors | Unproved; supplementary |
-| Theorem 3.6, `thm_split_cz` | Weighted Riemannian Gaussian splitting | Cheng–Zhou theorem, global geometric splitting, weighted-volume factorization | Proved (`riemannian_gaussian_splitting`) |
+| Remark 3.4 | Relaxed inverse-gap growth condition | Quantitative version of scalar cutoff asymptotics | Proved (`CutCur.wasserstein_cutoff_weak`) |
+| Remark 3.5 | Relaxed `λ_d=d^{o(1)}` assumption | Dimension-dependent regularization time and prefactors | Proved (`CutCur.information_cutoff_weak`) |
+| Theorem 3.6, `thm_split_cz` | Weighted Riemannian Gaussian splitting | Cheng–Zhou theorem, global geometric splitting, weighted-volume factorization | Proved (`riemannian_gaussian_splitting`), now including the identity `V∘Φ⁻¹(p,y) = ρ|p|²/2 + V'(y) + (k₁/2) log(2π/ρ)` and the connectedness and completeness of the factor |
 | Lemma 3.7, `lem_rig` | Affine first eigenfunctions through splitting, gradient norm and orthogonality | Integrated Bochner, regularity, parallel vector fields, splitting and polarization | Proved (inside `riemannian_gaussian_splitting`) |
+
+### Further manuscript items covered by the extended Challenge (25 October 2026)
+
+| Source item | Lean statement | Status |
+| --- | --- | --- |
+| Display (1.7), Lichnerowicz, Euclidean | `CutCur.spectral_gap_ge_curvature` | Proved, with `0 < d` |
+| Display (1.7), Riemannian | none | Not formalized: available Riemannian tools assume `mSpectralGap = ρ` |
+| (R2) ⇒ (R1), Section 1.3 | `CutCur.rigidity_of_gaussian_factor` | Proved at the level of the potential (u, m, U), not as a product measure; "all eigenfunctions are affine" is Theorem 3.1 |
+| Pairwise interaction example | `CutCur.pairwise_interaction` | Proved (evenness of `h` not needed) |
+| OU first eigenspace `k₁ = d` | `CutCur.ou_first_eigenspace` | Proved, `0 < d` |
+| OU from the mean, cutoff at `log d/(4λ₁)` | `CutCur.ou_mean_start_cutoff` | Proved for W2 only, plus non-cutoff at `t*` |
+| `p = ∞` fails for OU | `CutCur.ou_lp_infty_fails` | Proved for balls `B(m, c√n)`; false from a single point (the ratio is bounded there) |
+| Mixing time of rigid sequences, product condition holds | `CutCur.mixing_time_rigid` | Proved for the TV mixing time; the W2 and entropy mixing-time sentence is not formalized |
+| Moments, `Λ` on balls (proofs of Thm 1.1, Cor. 1.3) | `CutCur.langevin_moment_bounds`, `CutCur.sup_eigenLambda_ball` | Proved |
+| W2 contraction, arbitrary laws | `CutCur.langevin_w2_contraction` | Proved |
+| Entropy decay, regularization, CKP, Fisher bounds | `CutCur.langevin_entropy_decay`, `CutCur.pinsker_tvDist`, `CutCur.talagrand_logSobolev` | Proved (`0 < d`, Langevin carrier hypothesis); eq. (expdecI) for general laws and `dH/dt = -I`, `dI/dt ≤ -2ρI` not stated |
+| Optimal constants (PI `1/λ₁`, LSI twice PI, extremals) | `CutCur.optimal_lsi_twice_pi`, `CutCur.optimal_constants_extremal` | Proved with an `IsStdBrownian` hypothesis and a smooth bounded Lipschitz test class; Rothaus remark not formalized |
+| Section 4.1, Fisher information of the OU kernel; score of the heat kernel | `CutCur.ou_fisher_information`, `CutCur.heat_kernel_score` | Proved; eq. (loggradbound) conjectural, not formalized |
+| Section 4.2, normalization | `CutCur.normalization_cutoff` | Proved for time-changed laws; the SDE time change and Brownian scaling are not formalized |
+| Section 4.4, temperature | `CutCur.temperature_bakry_emery`, `CutCur.temperature_cd` | Proved; invariance only infinitesimally (`∫ L_σ f dμ_σ = 0`), no SDE with temperature |
+| Question 1.10 | none | Open question |
 
 The unnumbered Lᵖ conclusion (1.25) additionally depends on Chen–Saloff-Coste's general Markov Lᵖ cutoff theorem, Salez's p=1 result, identification of mixing times, and a precise convention for p (the finite-p regime must be checked rather than silently extending to infinity).
 

@@ -80,7 +80,7 @@ theorem splitting_applies (k : ℕ) (hk : 0 < k) (ρ : ℝ) (hρ : 0 < ρ) :
   have := isProbabilityMeasure_gibbs_gaussPot (k := k) ρ hρ
   have hgap : mSpectralGap (Rd k) (gibbs (gaussPot k ρ)) = ρ := by
     rw [mSpectralGap_rd, spectralGap_gaussPot ρ hρ hk]
-  have h := Paper.riemannian_gaussian_splitting (Rd k) (msmooth_gaussPot ρ)
+  have h := Paper.riemannian_gaussian_splitting_base (Rd k) (msmooth_gaussPot ρ)
     (isWeightedVolume_gibbs _) hρ (cd_gaussPot ρ) hgap
   obtain ⟨F', i1, i2, i3, N, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, V', μ', Φ, h1, h2, h3, -⟩ := h
   exact ⟨F', i1, i2, i3, N, i4, i5, i6, i7, i8, i9, i10, i11, i12, i13, V', μ', Φ, h1, h2, h3⟩

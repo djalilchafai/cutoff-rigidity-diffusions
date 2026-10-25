@@ -174,7 +174,7 @@ Proof architecture (about 150 files `Riemann/Diff*.lean`):
 
 All twelve Challenge theorems have proofs of exactly the Challenge type; `Solution.lean` builds with
 no `sorry`, and each depends only on `propext`, `Classical.choice`, `Quot.sound`. `comparator.json`
-lists the 12 theorems and 39 definitions. `lake comparator` accepted the solution
+lists 34 theorems and 43 definitions (12 original theorems and 39 definitions at the time of the first Comparator run). `lake comparator` accepted the solution
 (`verification/comparator-final.log`: con-ron, nanoda and the Lean kernel all accept, 88114 declarations).
 The run was repeated inside the official bwrap sandbox (`verification/comparator-sandboxed.log`,
 same result: con-ron, nanoda and the Lean kernel accept). On this machine `/home` is a symlink to
@@ -201,3 +201,63 @@ steps and attestation of responsible humans remain to be done by people; none is
 `hS` of Theorem 1.7 (`product_condition_cutoff`) was weakened from `∀ n, (S n).Nonempty` to
 `∀ n, 0 < n → (S n).Nonempty`. The full build, `scripts/check-palomar.py --ready`, and the sandboxed
 `lake comparator` (con-ron 88115 declarations, nanoda, Lean kernel) pass after the change. Human review is still absent.
+
+## Further manuscript claims (25 October 2026)
+
+`Challenge.lean` was extended from 12 to 34 theorems and from 39 to 43 definitions; the new items are
+`CutCur.entropyOf`, `IsTestFunction`, `optimalPI`, `optimalLSI`. Each new statement has a proof
+`CutoffRigidity.Paper.<name>` of exactly the Challenge type in `CutoffRigidity/Extra/*.lean`, wired in
+`Solution.lean`; each depends only on `propext`, `Classical.choice`, `Quot.sound`. The full `lake build`,
+`scripts/check-palomar.py --ready` and the axiom check of all 34 theorems pass. The Comparator has NOT been
+rerun on the extended pair, and the new statements have had no AI statement audit comparable to
+`verification/semantic-audit.md` and no human review. The old Paper-side theorem
+`riemannian_gaussian_splitting` was renamed `riemannian_gaussian_splitting_base`; the Paper theorem of the
+original name now has the strengthened statement and is proved from
+`riemannian_gaussian_splitting_potential` (`Extra/SplitPotential.lean`).
+
+New theorems (manuscript item, module):
+- Theorem 3.6, strengthened `riemannian_gaussian_splitting` (replaces the old statement): adds
+  `V x = ρ|Φ(x).1|²/2 + V'(Φ x).2 + (k₁/2) log(2π/ρ)` and `ConnectedSpace N`, `CompleteSpace N` (`SplitPotential`).
+- Remark 3.4 `wasserstein_cutoff_weak`; Remark 3.5 `information_cutoff_weak` (`WassersteinCutoffWeak`, `InformationCutoffWeak`).
+- Display (1.7) `spectral_gap_ge_curvature` and (R2) => (R1) `rigidity_of_gaussian_factor` (`Lichnerowicz`).
+- Examples and introduction: `pairwise_interaction`, `ou_first_eigenspace`, `ou_mean_start_cutoff`,
+  `ou_lp_infty_fails`, `mixing_time_rigid` (`PairwiseInteraction`, `OUEigen`, `OUMeanStart`, `OUInfty`, `MixingTime`).
+- Proof ingredients: `langevin_moment_bounds`, `sup_eigenLambda_ball` (`Moments`); `langevin_w2_contraction`,
+  `langevin_entropy_decay`, `pinsker_tvDist`, `talagrand_logSobolev` (`Dynamics`).
+- Optimal constants: `optimal_lsi_twice_pi`, `optimal_constants_extremal` (`OptimalConstants`).
+- Section 4: `ou_fisher_information` (`OUFisher`), `heat_kernel_score` (`HeatKernelScore`), `normalization_cutoff`
+  (`Normalization`), `temperature_bakry_emery`, `temperature_cd` (`Temperature`).
+
+Amendments and flags (all recorded in the docstrings in `Challenge.lean`):
+- `0 < d` is assumed in `spectral_gap_ge_curvature`, `ou_first_eigenspace`, `optimal_constants_extremal`,
+  `langevin_entropy_decay`, `talagrand_logSobolev`: for `d = 0` the Rayleigh set is empty and `spectralGap = sInf ∅ = 0`.
+- `optimal_lsi_twice_pi` and `optimal_constants_extremal` carry `hB : IsStdBrownian B P`, and
+  `langevin_entropy_decay` and `talagrand_logSobolev` carry `hL : IsLangevin V B P X`, none of which is in the
+  manuscript: the library proofs of the logarithmic Sobolev inequality and Talagrand go through the Langevin
+  semigroup, and the conclusions do not involve `B, P, X`.
+- `temperature_cd` takes the smoothness of Mathlib's standard Riemannian metric on `ℝ^d` as an instance argument
+  (a Prop), because the global instance proving it lives in `Riemann/WitnessGeometry`, outside the Challenge.
+- `langevin_entropy_decay` states the printed (non-sharp) constants of the regularization inequality.
+- `ou_lp_infty_fails`: the `L^∞` distance from a single point can be finite; the manuscript claim is true for the balls
+  `B(m, c√n)`, `c > 0`, which is how it is stated. `ou_mean_start_cutoff` adds the non-cutoff at `log n/(2λ₁)`
+  and treats only the Wasserstein distance. `mixing_time_rigid` treats only the total variation mixing time.
+- Test class of `optimalPI`, `optimalLSI`: smooth, bounded, Lipschitz functions; the manuscript does not fix one.
+- `normalization_cutoff` concerns the time-changed laws `X_{αt}` only.
+
+Not formalized: Question 1.10 (open problem); eq. (loggradbound) and its consequences (conjectural); the claim that
+`X_{αt}` solves the SDE with generator `α𝓛` (Brownian scaling is not available); the Riemannian Lichnerowicz bound
+(every available Riemannian tool assumes `mSpectralGap = ρ`); eq. (expdecI) for general initial laws (only
+monotonicity of `I` and `I(μ_{s+t}) ≤ H(μ_s)/t` are proved); the derivative identities `dH/dt = -I` and
+`dI/dt ≤ -2ρI` (only integrated consequences); the W2 and entropy mixing-time sentence; the Rothaus alternative
+(literature); `m` as the centre of mass for coordinates `i ≥ k₁`; the Dyson-OU, sphere and KLS discussions.
+
+`scripts/gen-solution.py` now passes `(Ω := Ω)` to `apply` for the three theorems where `Ω` occurs only in
+hypotheses (`EXPLICIT` table in the script).
+
+## Extended Challenge (25 October 2026)
+
+Challenge.lean now has 34 theorems and 43 definitions: the original 12 plus 22 further manuscript claims
+(see `extra-status/integration.md`). The sandboxed `lake comparator` accepted the extended pair
+(con-ron 88377 declarations, nanoda, Lean kernel; `verification/comparator-sandboxed.log`), the full build passes,
+and all 34 theorems use only `propext`, `Classical.choice`, `Quot.sound`. The added statements are unaudited by humans
+and by the earlier AI audit. Human review is still absent.
