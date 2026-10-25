@@ -1,0 +1,70 @@
+{
+  "scope": "Five intermediate actual self-adjoint-operator/stochastic-generator results and their dependency closure. Export replay only, not full-paper Comparator or semantic coverage.",
+  "checked_at_utc": "2026-10-23T19:59:48.313903+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-operator-proof-export.ndjson",
+    "sha256": "92ed578efc34af5ebf57d2e9ad9796917c44678ccf6000bc3883c44d83e6c9c7",
+    "bytes": 482470851,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.gibbsPositiveGenerator_selfAdjoint",
+      "CutoffRigidity.classicalL2Eigenspace_le_gibbsOperatorEigenspace",
+      "CutoffRigidity.neg_compactGibbsGenerator_le_positiveGenerator",
+      "CutoffRigidity.langevinKernel_generator_tendsto",
+      "CutoffRigidity.euclideanBrownianSupNorm_fourth_moment_le"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-operator-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-operator-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/operator-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-operator-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/operator-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-operator-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/operator-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

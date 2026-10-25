@@ -1,0 +1,73 @@
+{
+  "scope": "Eight actual Euclidean invariant/generator/Wasserstein and full log-Sobolev endpoints plus complete parallel trajectory existence, with full exported dependency closure. This is not a full-paper Comparator or external semantic review.",
+  "checked_at_utc": "2026-10-23T22:38:31.119799+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-endpoints-proof-export.ndjson",
+    "sha256": "47cb29a81cea8b5d7c8e5bde4f35d8de868e131a9e54aac6541913967d455378",
+    "bytes": 603204964,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.langevinKernel_gibbs_invariant",
+      "CutoffRigidity.langevinL2Operator_eq_gibbsHeatSemigroup",
+      "CutoffRigidity.langevinL2Operator_hasDerivWithinAt_zero_iff_graph",
+      "CutoffRigidity.euclidean_wasserstein_theorem",
+      "CutoffRigidity.barycenter_wasserstein_before_cutoff",
+      "CutoffRigidity.cube_wasserstein_after_cutoff",
+      "CutoffRigidity.logSobolev_relativeFisherInformation",
+      "CutoffRigidity.exists_unit_parallel_gradient_curve_unique_zero"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-endpoints-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-endpoints-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/endpoints-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-endpoints-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/endpoints-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-endpoints-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/endpoints-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

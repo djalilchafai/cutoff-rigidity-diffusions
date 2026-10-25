@@ -1,0 +1,71 @@
+{
+  "scope": "Six intermediate actual compactness/spectral-gap, martingale and information results and their dependency closure. Export replay only, not full-paper Comparator or semantic coverage.",
+  "checked_at_utc": "2026-10-23T21:00:28.193639+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-spectral-proof-export.ndjson",
+    "sha256": "6311dd86897c1d599fa523b0a40318ecf8b5bc7d8d836ac7739f14b7c0de5037",
+    "bytes": 506308785,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.gibbsL2Resolvent_isCompactOperator",
+      "CutoffRigidity.gibbsSpectralGap_attained",
+      "CutoffRigidity.hasSmoothPoincare_gibbsSpectralGap",
+      "CutoffRigidity.langevinDynkinProcess_martingale",
+      "CutoffRigidity.relativeFisherInformation_withDensity_square",
+      "CutoffRigidity.salez_reverse_pinsker"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-spectral-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-spectral-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/spectral-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-spectral-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/spectral-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-spectral-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/spectral-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

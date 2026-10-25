@@ -1,0 +1,71 @@
+{
+  "scope": "Six intermediate development theorems and their exported dependency closure; not a full-paper Comparator check.",
+  "checked_at_utc": "2026-10-23T17:44:15.818728+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-development-proof-export.ndjson",
+    "sha256": "437951b6e05113070b6868b3e2e58ae71df24ceb0875163d8893aca0d95d31fe",
+    "bytes": 409879377,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.squaredWasserstein_ou_marginal",
+      "CutoffRigidity.squaredWasserstein_map_le",
+      "CutoffRigidity.eigenmapLinear_ball_sup",
+      "CutoffRigidity.langevinDifferentialOperator_coordinateSum",
+      "CutoffRigidity.eq_affine_of_contDiff_two_of_hessian_zero",
+      "CutoffRigidity.sum_abs_sq_evaluation_basis_independent"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-development-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-development-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/development-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-development-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/development-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-development-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/development-con-ron.log"
+    }
+  ],
+  "comparator": "not run; paper-level Challenge/Solution endpoints remain incomplete",
+  "source_snapshot": "No Git commit is available in this workspace. The export hash identifies the proof stream checked; no immutable source-to-export alignment is claimed."
+}

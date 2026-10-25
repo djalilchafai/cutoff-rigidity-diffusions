@@ -1,0 +1,70 @@
+{
+  "scope": "Five newer intermediate Euclidean rigidity, stochastic kernel and distance results and their dependency closure. This is exported-proof replay, not paper-level Comparator or semantic coverage.",
+  "checked_at_utc": "2026-10-23T19:16:23.413763+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-core-proof-export.ndjson",
+    "sha256": "4bc56013122470cea1dfd50ba78740fd1caa2369a5a09cbbb9dd23b086c71c01",
+    "bytes": 487031984,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.c2_L2_eigenfunction_is_affine",
+      "CutoffRigidity.langevinKernel_comp",
+      "CutoffRigidity.langevinProcess_eigenmap_hasLaw",
+      "CutoffRigidity.affine_langevin_wasserstein_lower",
+      "CutoffRigidity.totalVariationDistance_sq_le_klDiv"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-core-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-core-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/core-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-core-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/core-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-core-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/core-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution endpoints remain incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

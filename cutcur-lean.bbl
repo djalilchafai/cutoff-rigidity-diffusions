@@ -1,0 +1,279 @@
+\begin{thebibliography}{39}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bakry and {\'E}mery(1985)]{BE85}
+D.~Bakry and M.~{\'E}mery.
+\newblock Diffusions hypercontractives.
+\newblock S{\'e}min. de probabilit{\'e}s {XIX}, {Univ}. {Strasbourg} 1983/84,
+  {Proc}., {Lect}. {Notes} {Math}. 1123, 177-206 (1985)., 1985.
+
+\bibitem[Bakry and Qian(2000)]{zbMATH01545688}
+D.~Bakry and Z.~Qian.
+\newblock Some new results on eigenvectors via dimension, diameter, and {Ricci}
+  curvature.
+\newblock \emph{Adv. Math.}, 155\penalty0 (1):\penalty0 98--153, 2000.
+\newblock \doi{10.1006/aima.2000.1932}.
+
+\bibitem[Bakry et~al.(2014)Bakry, Gentil, and Ledoux]{BGL14}
+D.~Bakry, I.~Gentil, and M.~Ledoux.
+\newblock \emph{Analysis and geometry of {Markov} diffusion operators}, volume
+  348 of \emph{Grundlehren Math. Wiss.}
+\newblock Springer, 2014.
+\newblock \doi{10.1007/978-3-319-00227-9}.
+
+\bibitem[Barrera(2018)]{MR3770869}
+G.~Barrera.
+\newblock Abrupt convergence for a family of {O}rnstein-{U}hlenbeck processes.
+\newblock \emph{Braz. J. Probab. Stat.}, 32\penalty0 (1):\penalty0 188--199,
+  2018.
+\newblock \doi{10.1214/16-BJPS337}.
+
+\bibitem[Barrera et~al.(2006)Barrera, Lachaud, and Ycart]{MR2260742}
+J.~Barrera, B.~Lachaud, and B.~Ycart.
+\newblock Cut-off for {$n$}-tuples of exponentially converging processes.
+\newblock \emph{Stochastic Process. Appl.}, 116\penalty0 (10):\penalty0
+  1433--1446, 2006.
+\newblock \doi{10.1016/j.spa.2006.03.003}.
+
+\bibitem[Barthe and Klartag(2020)]{BaKl20}
+F.~Barthe and B.~Klartag.
+\newblock Spectral gaps, symmetries and log-concave perturbations.
+\newblock \emph{Bull. Hell. Math. Soc.}, 64:\penalty0 1--31, 2020.
+\newblock URL \url{bulletin.math.uoc.gr/vol/64/64-1-31.pdf}.
+
+\bibitem[Bertrand and Fathi(2022)]{BF22}
+J.~Bertrand and M.~Fathi.
+\newblock Stability of eigenvalues and observable diameter in {RCD}{{\((1,
+  \infty)\)}} spaces.
+\newblock \emph{J. Geom. Anal.}, 32\penalty0 (11):\penalty0 38, 2022.
+\newblock \doi{10.1007/s12220-022-00999-9}.
+\newblock Id/No 270.
+
+\bibitem[Bobkov et~al.(2001)Bobkov, Gentil, and Ledoux]{BGL01}
+S.~G. Bobkov, I.~Gentil, and M.~Ledoux.
+\newblock Hypercontractivity of {Hamilton}-{Jacobi} equations.
+\newblock \emph{J. Math. Pures Appl. (9)}, 80\penalty0 (7):\penalty0 669--696,
+  2001.
+\newblock \doi{10.1016/S0021-7824(01)01208-9}.
+
+\bibitem[Boursier et~al.(2023)Boursier, Chafa{\"{\i}}, and Labb{\'e}]{BCL23}
+J.~Boursier, D.~Chafa{\"{\i}}, and C.~Labb{\'e}.
+\newblock Universal cutoff for {Dyson} {Ornstein} {Uhlenbeck} process.
+\newblock \emph{Probab. Theory Relat. Fields}, 185\penalty0 (1-2):\penalty0
+  449--512, 2023.
+\newblock \doi{10.1007/s00440-022-01158-5}.
+
+\bibitem[Chafaï(2024)]{blog-saloff}
+D.~Chafaï, 2024.
+\newblock
+  \url{https://djalil.chafai.net/blog/2024/01/27/cutoff-for-markov-processes/}.
+
+\bibitem[Chafaï and Lehec(2020)]{MR4175749}
+D.~Chafaï and J.~Lehec.
+\newblock On {P}oincar\'e{} and logarithmic {S}obolev inequalities for a class
+  of singular {G}ibbs measures.
+\newblock In \emph{Geometric aspects of functional analysis. {V}ol. {I}},
+  volume 2256 of \emph{Lecture Notes in Math.}, pages 219--246. Springer, 2020.
+\newblock \doi{10.1007/978-3-030-36020-7\_10}.
+
+\bibitem[Chen and Saloff-Coste(2008)]{MR2375599}
+G.-Y. Chen and L.~Saloff-Coste.
+\newblock The cutoff phenomenon for ergodic {M}arkov processes.
+\newblock \emph{Electron. J. Probab.}, 13:\penalty0 no. 3, 26--78, 2008.
+\newblock \doi{10.1214/EJP.v13-474}.
+
+\bibitem[Chen et~al.(2023)Chen, Li, and Wu]{MR4546623}
+X.~Chen, X.-M. Li, and B.~Wu.
+\newblock Logarithmic heat kernel estimates without curvature restrictions.
+\newblock \emph{Ann. Probab.}, 51\penalty0 (2):\penalty0 442--477, 2023.
+\newblock \doi{10.1214/22-aop1599}.
+
+\bibitem[Cheng and Zhou(2017)]{CZ17}
+X.~Cheng and D.~Zhou.
+\newblock Eigenvalues of the drifted {Laplacian} on complete metric measure
+  spaces.
+\newblock \emph{Commun. Contemp. Math.}, 19\penalty0 (1):\penalty0 17, 2017.
+\newblock \doi{10.1142/S0219199716500012}.
+\newblock Id/No 1650001.
+
+\bibitem[Courtade and Fathi(2020)]{CF20}
+T.~A. Courtade and M.~Fathi.
+\newblock Stability of the {Bakry}-{\'e}mery theorem on {{\(\mathbb{R}^n\)}}.
+\newblock \emph{J. Funct. Anal.}, 279\penalty0 (2):\penalty0 28, 2020.
+\newblock \doi{10.1016/j.jfa.2020.108523}.
+\newblock Id/No 108523.
+
+\bibitem[De~Philippis and Figalli(2017)]{DPF17}
+G.~De~Philippis and A.~Figalli.
+\newblock Rigidity and stability of {Caffarelli}'s log-concave perturbation
+  theorem.
+\newblock \emph{Nonlinear Anal., Theory Methods Appl., Ser. A, Theory Methods},
+  154:\penalty0 59--70, 2017.
+\newblock \doi{10.1016/j.na.2016.10.006}.
+
+\bibitem[Engoulatov(2006)]{MR2253731}
+A.~Engoulatov.
+\newblock A universal bound on the gradient of logarithm of the heat kernel for
+  manifolds with bounded {R}icci curvature.
+\newblock \emph{J. Funct. Anal.}, 238\penalty0 (2):\penalty0 518--529, 2006.
+\newblock \doi{10.1016/j.jfa.2006.02.013}.
+
+\bibitem[Evans(2010)]{Evans10}
+L.~C. Evans.
+\newblock \emph{Partial Differential Equations}, volume~19 of \emph{Graduate
+  Studies in Mathematics}.
+\newblock American Mathematical Society, Providence, RI, 2 edition, 2010.
+
+\bibitem[Fathi et~al.(2024)Fathi, Gentil, and Serres]{FGS24}
+M.~Fathi, I.~Gentil, and J.~Serres.
+\newblock Stability estimates for the sharp spectral gap bound under a
+  curvature-dimension condition.
+\newblock \emph{Ann. Inst. Fourier}, 74\penalty0 (6):\penalty0 2425--2459,
+  2024.
+\newblock \doi{10.5802/aif.3608}.
+
+\bibitem[Gigli et~al.(2015)Gigli, Mondino, and Savar{\'e}]{GMS15}
+N.~Gigli, A.~Mondino, and G.~Savar{\'e}.
+\newblock Convergence of pointed non-compact metric measure spaces and
+  stability of {Ricci} curvature bounds and heat flows.
+\newblock \emph{Proc. Lond. Math. Soc. (3)}, 111\penalty0 (5):\penalty0
+  1071--1129, 2015.
+\newblock \doi{10.1112/plms/pdv047}.
+
+\bibitem[Gigli et~al.(2020)Gigli, Ketterer, Kuwada, and Ohta]{GKKO20}
+N.~Gigli, C.~Ketterer, K.~Kuwada, and S.-I. Ohta.
+\newblock Rigidity for the spectral gap on {{\(\mathrm{RCD}(K,
+  \infty)\)}}-spaces.
+\newblock \emph{Am. J. Math.}, 142\penalty0 (5):\penalty0 1559--1594, 2020.
+\newblock \doi{10.1353/ajm.2020.0039}.
+
+\bibitem[Grigor'yan(2009)]{Grig}
+A.~Grigor'yan.
+\newblock \emph{Heat kernel and analysis on manifolds}, volume~47 of
+  \emph{AMS/IP Stud. Adv. Math.}
+\newblock American Mathematical Society (AMS), 2009.
+
+\bibitem[Hsu(2002)]{Hsu}
+E.~P. Hsu.
+\newblock \emph{Stochastic analysis on manifolds}, volume~38 of \emph{Grad.
+  Stud. Math.}
+\newblock American Mathematical Society, 2002.
+
+\bibitem[Klartag(2023)]{klartag}
+B.~Klartag.
+\newblock Logarithmic bounds for isoperimetry and slices of convex sets.
+\newblock \emph{Ars Inven. Anal.}, pages Paper No. 4, 17, 2023.
+\newblock ISSN 2769-8505.
+
+\bibitem[Lachaud(2005)]{MR2203823}
+B.~Lachaud.
+\newblock Cut-off and hitting times of a sample of {O}rnstein-{U}hlenbeck
+  processes and its average.
+\newblock \emph{J. Appl. Probab.}, 42\penalty0 (4):\penalty0 1069--1080, 2005.
+\newblock \doi{10.1239/jap/1134587817}.
+
+\bibitem[Lassalle(1991)]{MR1133488}
+M.~Lassalle.
+\newblock Polyn\^omes de {H}ermite g\'en\'eralis\'es.
+\newblock \emph{C. R. Acad. Sci. Paris S\'er. I Math.}, 313\penalty0
+  (9):\penalty0 579--582, 1991.
+
+\bibitem[Lichn{\'e}rowicz(1958)]{Lic58}
+A.~Lichn{\'e}rowicz.
+\newblock \emph{G{\'e}om{\'e}trie des groupes de transformations}, volume~3 of
+  \emph{Trav. Rech. Math.}
+\newblock Dunod, Paris, 1958.
+
+\bibitem[Mai and Ohta(2021)]{MO21}
+C.~H. Mai and S.-I. Ohta.
+\newblock Quantitative estimates for the {Bakry}-{Ledoux} isoperimetric
+  inequality.
+\newblock \emph{Comment. Math. Helv.}, 96\penalty0 (4):\penalty0 693--739,
+  2021.
+\newblock \doi{10.4171/CMH/523}.
+
+\bibitem[M{\'e}liot(2014)]{Meliot14}
+P.-L. M{\'e}liot.
+\newblock The cut-off phenomenon for {Brownian} motions on compact symmetric
+  spaces.
+\newblock \emph{Potential Anal.}, 40\penalty0 (4):\penalty0 427--509, 2014.
+\newblock \doi{10.1007/s11118-013-9356-7}.
+
+\bibitem[Obata(1962)]{zbMATH03188146}
+M.~Obata.
+\newblock Certain conditions for a {Riemannian} manifold to be isometric with a
+  sphere.
+\newblock \emph{J. Math. Soc. Japan}, 14:\penalty0 333--340, 1962.
+\newblock \doi{10.2969/jmsj/01430333}.
+
+\bibitem[Ollivier(2013)]{Oll13}
+Y.~Ollivier.
+\newblock A visual introduction to {Riemannian} curvatures and some discrete
+  generalizations.
+\newblock In \emph{Analysis and geometry of metric measure spaces. Lecture
+  notes of the 50th S\'eminaire de Math\'ematiques Sup\'erieures (SMS),
+  Montr\'eal, Canada, June 27 -- July 8, 2011}, pages 197--220. American
+  Mathematical Society, 2013.
+
+\bibitem[Pedrotti and Salez(2025)]{pedrotti-2025}
+F.~Pedrotti and J.~Salez.
+\newblock A new cutoff criterion for non-negatively curved chains.
+\newblock preprint
+  \href{https://arXiv.org/abs/2501.13079v1}{arXiv:2501.13079v1}, 2025.
+
+\bibitem[Rothaus(1981)]{MR620581}
+O.~S. Rothaus.
+\newblock Diffusion on compact {R}iemannian manifolds and logarithmic {S}obolev
+  inequalities.
+\newblock \emph{J. Functional Analysis}, 42\penalty0 (1):\penalty0 102--109,
+  1981.
+\newblock \doi{10.1016/0022-1236(81)90049-5}.
+
+\bibitem[Salez(2024)]{Salez24}
+J.~Salez.
+\newblock Cutoff for non-negatively curved {Markov} chains.
+\newblock \emph{J. Eur. Math. Soc. (JEMS)}, 26\penalty0 (11):\penalty0
+  4375--4392, 2024.
+\newblock \doi{10.4171/JEMS/1348}.
+
+\bibitem[Salez(2025)]{salez-2025}
+J.~Salez.
+\newblock Cutoff for non-negatively curved diffusions.
+\newblock preprint
+  \href{https://arXiv.org/abs/2501.01304v1}{arXiv:2501.01304v1}, 2025.
+
+\bibitem[Saloff-Coste(1994)]{Saloff94}
+L.~Saloff-Coste.
+\newblock Precise estimates on the rate at which certain diffusions tend to
+  equilibrium.
+\newblock \emph{Math. Z.}, 217\penalty0 (4):\penalty0 641--677, 1994.
+\newblock \doi{10.1007/BF02571965}.
+
+\bibitem[Saloff-Coste(1997)]{MR1490046}
+L.~Saloff-Coste.
+\newblock Lectures on finite {M}arkov chains.
+\newblock In \emph{{S}aint-{F}lour summer school 1996}, volume 1665 of
+  \emph{Lecture Notes in Math.}, pages 301--413. Springer, 1997.
+\newblock \doi{10.1007/BFb0092621}.
+
+\bibitem[Santambrogio(2015)]{MR3409718}
+F.~Santambrogio.
+\newblock \emph{Optimal transport for applied mathematicians}, volume~87 of
+  \emph{Progress in Nonlinear Differential Equations and their Applications}.
+\newblock Birkh\"auser/Springer, 2015.
+\newblock \doi{10.1007/978-3-319-20828-2}.
+\newblock Calculus of variations, PDEs, and modeling.
+
+\bibitem[von Renesse and Sturm(2005)]{vRS05}
+M.-K. von Renesse and K.-T. Sturm.
+\newblock Transport inequalities, gradient estimates, entropy and {Ricci}
+  curvature.
+\newblock \emph{Commun. Pure Appl. Math.}, 58\penalty0 (7):\penalty0 923--940,
+  2005.
+\newblock \doi{10.1002/cpa.20060}.
+
+\end{thebibliography}

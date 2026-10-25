@@ -1,0 +1,65 @@
+{
+  "manuscript": "cutcur-lean.tex",
+  "manuscript_sha256": "67e29c7382cf912f22d790d2b28f18d33a5ba89c95ea6c132606c5efeb7b4050",
+  "checked_at_utc": "2026-10-23T22:31:45.549417+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "scope": "Corrected local manuscript: completed Euclidean Wasserstein and information cutoffs including both-set all-distance convex-interaction corollary; source-only product-condition TV, entropy and Fisher endpoints and actual varentropy/Salez window; genuine parallel-flow isometries and actual regular-level manifold. Product-condition Wasserstein-after, full Gaussian product splitting, finite-p extension and full Riemannian theorem remain incomplete; see alignment.json.",
+  "checks": [
+    {
+      "command": [
+        "lake",
+        "build"
+      ],
+      "exit_code": 0,
+      "log": "verification/build.txt"
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "verification/Audit.lean"
+      ],
+      "exit_code": 0,
+      "log": "verification/axiom-audit.txt"
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "verification/Alignment.lean"
+      ],
+      "exit_code": 0,
+      "log": "verification/alignment-check.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/check-palomar.py"
+      ],
+      "exit_code": 0,
+      "log": "verification/source-check.txt"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "independent_kernel_replay": {
+    "scope": "62 distinct results across ten proof streams. Latest stream includes actual product-condition TV/entropy/Fisher endpoints, actual Salez window, Sobolev domain and regular-level manifold. Full-paper Comparator and remaining endpoints are unfinished.",
+    "reports": [
+      "verification/development-replay.json",
+      "verification/core-replay.json",
+      "verification/operator-replay.json",
+      "verification/spectral-replay.json",
+      "verification/curvature-replay.json",
+      "verification/rigidity-replay.json",
+      "verification/endpoints-replay.json",
+      "verification/information-replay.json",
+      "verification/cutoffs-replay.json",
+      "verification/product-replay.json"
+    ]
+  },
+  "registry_submission": "not attempted",
+  "source_snapshot": "Local file hashes only; no Git commit is available.",
+  "root_import_closure_project_modules": 273
+}

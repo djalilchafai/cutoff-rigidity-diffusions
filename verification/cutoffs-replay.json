@@ -1,0 +1,73 @@
+{
+  "scope": "Eight completed Euclidean cutoff/evolution and manifold-flow endpoints with full exported dependency closure. Includes both-set all-distance normalized convex-interaction cutoff and genuine parallel-flow isometry. This does not certify the full product-condition theorem, finite-p extension or full Riemannian theorem.",
+  "checked_at_utc": "2026-10-23T23:26:15.808582+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-cutoffs-proof-export.ndjson",
+    "sha256": "7bd9fbbf4c837390f0bec6e69fcaf18fe7f00aa44bf3f3b78515a07b29ee4d88",
+    "bytes": 635201662,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.meanBall_information_cutoff",
+      "CutoffRigidity.convexCube_information_cutoff",
+      "CutoffRigidity.normalized_convexInteraction_four_distance_cutoff",
+      "CutoffRigidity.normalized_convexInteraction_theorem",
+      "CutoffRigidity.langevinKernel_entropy_contraction",
+      "CutoffRigidity.langevinKernel_fisher_entropy_endpoint",
+      "CutoffRigidity.langevinKernel_hasLocalSmoothPoincare_time",
+      "CutoffRigidity.parallelFlowIsometryEquiv"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-cutoffs-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-cutoffs-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/cutoffs-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-cutoffs-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/cutoffs-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-cutoffs-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/cutoffs-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

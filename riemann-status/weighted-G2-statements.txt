@@ -1,0 +1,66 @@
+import CutoffRigidity.Riemann.WeightedBochnerDefs
+open Bundle Filter Set VectorField
+open scoped Manifold ContDiff Topology
+set_option backward.isDefEq.respectTransparency false
+namespace CutCur.WBoch
+variable (F : Type) [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F]
+  {M : Type} [EMetricSpace M] [ChartedSpace F M] [IsManifold 𝓘(ℝ, F) ∞ M]
+  [RiemannianBundle (fun x : M => TangentSpace 𝓘(ℝ, F) x)]
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F (fun x : M => TangentSpace 𝓘(ℝ, F) x)]
+
+
+theorem mvfderiv_mlieBracket {φ : M → ℝ} {X Y : (y : M) → TangentSpace 𝓘(ℝ, F) y} {x : M}
+    (hφ : ContMDiffAt 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ φ x) (hX : SmAt F X x) (hY : SmAt F Y x) :
+    mvfderiv 𝓘(ℝ, F) φ x (mlieBracket 𝓘(ℝ, F) X Y x) =
+      mvfderiv 𝓘(ℝ, F) (fun y => mvfderiv 𝓘(ℝ, F) φ y (Y y)) x (X x)
+        - mvfderiv 𝓘(ℝ, F) (fun y => mvfderiv 𝓘(ℝ, F) φ y (X y)) x (Y x) := sorry
+
+theorem hessian_eq_fields {φ : M → ℝ} (hφ : MSmooth F φ) {X Y : (y : M) → TangentSpace 𝓘(ℝ, F) y}
+    {x : M} (hX : SmAt F X x) (hY : SmAt F Y x) :
+    inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F φ) x (X x)) (Y x) =
+      mvfderiv 𝓘(ℝ, F) (fun y => mvfderiv 𝓘(ℝ, F) φ y (Y y)) x (X x)
+        - mvfderiv 𝓘(ℝ, F) φ x (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Y x (X x)) := sorry
+
+theorem hessian_symm {φ : M → ℝ} (hφ : MSmooth F φ) (x : M) (v w : TangentSpace 𝓘(ℝ, F) x) :
+    inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F φ) x v) w = inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F φ) x w) v := sorry
+
+theorem exists_test_function (x : M) (v : TangentSpace 𝓘(ℝ, F) x) :
+    ∃ g : M → ℝ, MSmooth F g ∧ mgrad F g x = v ∧ mHessNormSq F g x = 0 := sorry
+
+theorem curv_congr_left (hN : NabSmooth F M) {X X' Y Z : (y : M) → TangentSpace 𝓘(ℝ, F) y} {x : M}
+    (hX : SmAt F X x) (hX' : SmAt F X' x) (hY : SmAt F Y x) (hZ : SmAt F Z x)
+    (h : X x = X' x) : curv F X Y Z x = curv F X' Y Z x := sorry
+
+theorem curv_congr_right (hN : NabSmooth F M) {X Y Z Z' : (y : M) → TangentSpace 𝓘(ℝ, F) y} {x : M}
+    (hX : SmAt F X x) (hY : SmAt F Y x) (hZ : SmAt F Z x) (hZ' : SmAt F Z' x)
+    (h : Z x = Z' x) : curv F X Y Z x = curv F X Y Z' x := sorry
+
+theorem exists_frame_trace (hN : NabSmooth F M) (x : M) :
+    ∃ Z : Fin (Module.finrank ℝ (TangentSpace 𝓘(ℝ, F) x)) → (y : M) → TangentSpace 𝓘(ℝ, F) y,
+      (∀ i, SmAt F (Z i) x) ∧
+      (∀ i, Z i x = stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i) ∧
+      ∀ f : M → ℝ, MSmooth F f → ∀ v : TangentSpace 𝓘(ℝ, F) x,
+        mvfderiv 𝓘(ℝ, F) (mlaplacian F f) x v =
+          ∑ i, inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (nab F (Z i) (mgrad F f)) x v - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (Z i) x v))
+            (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i) := sorry
+
+theorem mlaplacian_carre_self (hN : NabSmooth F M) {f : M → ℝ} (hf : MSmooth F f) (x : M)
+    (Z : Fin (Module.finrank ℝ (TangentSpace 𝓘(ℝ, F) x)) → (y : M) → TangentSpace 𝓘(ℝ, F) y)
+    (hZ : ∀ i, SmAt F (Z i) x)
+    (hZx : ∀ i, Z i x = stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i) :
+    mlaplacian F (carre F f f) x / 2 =
+      ∑ i, (inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (nab F (Z i) (mgrad F f)) x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)
+          - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (Z i) x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)))
+          (mgrad F f x)
+        + ‖CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)‖ ^ 2) := sorry
+
+theorem msmooth_mlaplacian (hN : NabSmooth F M) {f : M → ℝ} (hf : MSmooth F f) :
+    MSmooth F (mlaplacian F f) := sorry
+
+theorem carre2_eq (hN : NabSmooth F M) {V f : M → ℝ} (hV : MSmooth F V) (hf : MSmooth F f) (x : M) :
+    carre2 F V f x = mlaplacian F (carre F f f) x / 2
+      - mvfderiv 𝓘(ℝ, F) (mlaplacian F f) x (mgrad F f x)
+      + inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F V) x (mgrad F f x)) (mgrad F f x) := sorry
+
+theorem nabSmooth : NabSmooth F M := sorry
+end CutCur.WBoch

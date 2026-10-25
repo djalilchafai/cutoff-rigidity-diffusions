@@ -1,0 +1,1 @@
+Local source checks passed for 362 Lean files; official verification remains required.

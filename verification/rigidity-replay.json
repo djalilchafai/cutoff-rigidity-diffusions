@@ -1,0 +1,72 @@
+{
+  "scope": "Seven intermediate actual weak-rigidity/spectral-cutoff, stochastic gradient, stopping, evolution-uniqueness and occupation-density results, with dependency closure. Export replay only; not full-paper Comparator or semantic coverage.",
+  "checked_at_utc": "2026-10-23T22:00:03.191301+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-rigidity-proof-export.ndjson",
+    "sha256": "505d1aff2945754bda158a08df14d7b28ed6a66006c312eeeaeed76ce0cf0da2",
+    "bytes": 564251383,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.gibbsOperatorEigenspace_eq_classicalL2Eigenspace",
+      "CutoffRigidity.spectral_wasserstein_before_cutoff",
+      "CutoffRigidity.spectral_totalVariation_before_cutoff",
+      "CutoffRigidity.langevinKernel_gradient_sq_le",
+      "CutoffRigidity.langevinSpacetimeDynkinProcess_integral_stopping_time",
+      "CutoffRigidity.gibbsHeatSemigroup_unique_strong_solution",
+      "CutoffRigidity.gibbs_brownian_killedOccupation_le_volume"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-rigidity-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-rigidity-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/rigidity-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-rigidity-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/rigidity-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-rigidity-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/rigidity-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

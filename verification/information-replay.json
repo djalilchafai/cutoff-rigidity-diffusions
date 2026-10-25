@@ -1,0 +1,71 @@
+{
+  "scope": "Six actual full-information and manifold-flow endpoints with exported dependency closure: full Fisher decay, arbitrary-law entropy-cost regularization, positive-time transition absolute continuity, genuine compact-test entropy variational criterion, complete C\u00b9 flow and mean-ball Fisher lower cutoff. Not a full-paper Comparator.",
+  "checked_at_utc": "2026-10-23T23:00:54.365856+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-information-proof-export.ndjson",
+    "sha256": "85ef353c5f09d608c37fd28a54ce32fa6f6e14c69cda8963f8574cf3685b8d6b",
+    "bytes": 600470474,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.relativeFisherInformation_langevinKernel_le",
+      "CutoffRigidity.klDiv_langevinKernel_le_squaredWasserstein",
+      "CutoffRigidity.langevinKernel_absolutelyContinuous_gibbs",
+      "CutoffRigidity.klDiv_le_of_compact_c2_tests",
+      "CutoffRigidity.contMDiff_completeBoundedFlow_timeSlice",
+      "CutoffRigidity.meanBallFisher_before_cutoff"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-information-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-information-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/information-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-information-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/information-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-information-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/information-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

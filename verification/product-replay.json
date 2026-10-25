@@ -1,0 +1,72 @@
+{
+  "scope": "Seven actual product-condition information/domain endpoints and the actual regular level manifold. Does not certify Wasserstein-after transfer, full Gaussian product splitting, finite-p extension or full Riemannian theorem.",
+  "checked_at_utc": "2026-10-23T23:58:19.620193+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-product-proof-export.ndjson",
+    "sha256": "5e653faed2ff37f3904eb153c4ddc6db84b91a0d176f79113dfc5b315662d639",
+    "bytes": 601577523,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.curvature_product_condition_tv_entropy",
+      "CutoffRigidity.curvature_product_condition_fisher",
+      "CutoffRigidity.langevinKernel_salez_entropy_window",
+      "CutoffRigidity.langevinKernel_varentropy_le_time_fisher",
+      "CutoffRigidity.langevinKernel_entropy_fisher_drop",
+      "CutoffRigidity.exists_gibbsSobolev_of_bounded_lipschitz",
+      "CutoffRigidity.isManifold_parallelGradientLevel"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-product-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-product-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/product-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-product-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/product-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-product-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/product-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

@@ -1,0 +1,130 @@
+# Not yet a submission: no human semantic review or sandboxed official Comparator run.
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: v0.4
+project:
+  name: Cutoff via rigidity for curved diffusions
+  description: >-
+    Work in progress towards a Lean formalization of Chafaï and Fathi,
+    the local manuscript cutcur-lean.tex, based on arXiv:2412.15969v4.
+    The target includes Wasserstein estimates, high-dimensional
+    cutoff, rigidity, convex interactions, and Riemannian extensions. Current
+    supporting results must not be read as proofs of these paper-level claims.
+  authors: [Djalil Chafaï]
+  responsible_maintainers: [Djalil Chafaï]
+  license: Apache-2.0
+classification:
+  arxiv: [math.PR, math.DG]
+  msc2020: ['60J60', '47D07', '53C21', '58J50']
+sources:
+  - title: On cutoff via rigidity for high-dimensional curved diffusions
+    authors: [Djalil Chafaï, Max Fathi]
+    id: arXiv:2412.15969v4
+    type: paper
+    location: https://arxiv.org/abs/2412.15969v4
+    relationship: formalizes
+    note: >-
+      Background source: the 24 March 2026 postpublication revision.
+      The current formalization target is the local manuscript cutcur-lean.tex,
+      which adds a time-divergence hypothesis to Theorem 1.7 and explicitly
+      assumes complete, connected manifolds without boundary for the
+      Riemannian results. PAPER_AUDIT.md records the archived-source audit
+      and the local completeness correction. Formalization is incomplete;
+      see PALOMAR.md.
+    license: CC-BY-4.0
+related_formalizations: []
+status:
+  scope: >-
+    Update 25 October 2026: all twelve Challenge theorems are proved in Solution.lean with only
+    the standard axioms, and a local Comparator run (no sandbox) accepts them. Theorem 1.9 (Riemannian Wasserstein estimate) is proved for every diffusion semigroup in the sense of IsDiffusionSemigroup, with no extra hypotheses.
+    Historical scope notes follow. The full paper remains incomplete. The actual Euclidean Langevin process,
+    measurable Brownian kernel, Markov semigroup and coupling contraction are
+    constructed. Actual Gaussian projection laws, compact weak Bochner
+    rigidity, compact weighted H¹ embedding, the nonnegative self-adjoint form
+    operator, attained first gap and sharp Poincare are proved. At curvature
+    equality, actual operator eigenfunctions have affine representatives and
+    the full first eigenspace agrees with the classical one. Genuine Gibbs
+    invariance of the constructed stochastic kernel is derived by its actual
+    weak backward PDE and strong L² evolution, operator-domain identification,
+    nonnegative-graph uniqueness and finite-measure equality on compact tests.
+    The stochastic and canonical form semigroups agree on all Gibbs L², with
+    equality of their full generator domains. The final Euclidean Wasserstein
+    set/ball theorem uses the actual first gap, eigenspace and evaluation Lambda,
+    with no supplied invariance or regularity premise. Wasserstein cutoff on
+    balls about the actual barycenter and convex-interaction spectral/ball
+    results are checked. Entropy/TV lower cutoffs, actual C¹ relative Fisher
+    formulae, Fisher decay, density evolution and de Bruijn for normalized
+    bounded-positive constant-plus-compact initial densities are proved.
+    The full log-Sobolev inequality holds for arbitrary probability laws by
+    actual closed-gradient approximation and Fatou. Fisher decay holds for
+    every probability law. Full entropy-cost regularization for arbitrary laws
+    follows from the genuine optimized-path logarithmic interpolation and
+    compact C² entropy variational representation; actual positive-time Dirac
+    transitions have finite entropy and genuine RN densities. Full entropy
+    contraction and Fisher entropy-endpoint estimates use constructed finite-KL
+    approximants. Euclidean information upper cutoffs and the fixed-curvature
+    convex-interaction corollary on both source sets are proved. The full product-condition theorem packages all eight actual TV/H/I/W2
+    cutoff limits, using actual varentropy, Salez window and Talagrand proofs.
+    Full Gaussian product splitting identifies the actual first eigenspace
+    dimension and normalized product in finite coordinates. The Lp extension and the Riemannian theorems are now proved (see the update above). Actual complete bounded global
+    flows are C¹ diffeomorphisms; parallel gradient trajectories and the product
+    homeomorphism are proved. No Euclidean result is advertised as the manifold
+    theorem.
+    Sixty-two results across ten proof streams pass Lean,
+    NanoDa and con-ron replay. Full-paper Comparator and human semantic review
+    remain outstanding. See verification/alignment.json for current scope.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+automation:
+  methods:
+    - method: agent
+      models: [GPT-6]
+      framework: Codex
+      tool_setup: >-
+        Coordinated agents for source audit, formal proof development and
+        Palomar preparation; local Lean kernel checking and official web sources.
+      cost:
+        wall_time: not tracked
+        spend_usd: not tracked
+        hardware: local Linux environment and model API
+      prompting_notes: >-
+        User requested full formalization using agents and Palomar standards.
+  spend_usd: not tracked
+  notes: >-
+    AI contributions are recorded here, not as human authorship. No human
+    mathematical review or source-author endorsement has been asserted.
+fidelity:
+  divergences: >-
+    The diffusion of Theorem 1.9 is encoded by IsDiffusionSemigroup (Markov, semigroup law, Kolmogorov equation on C_c^infty); uniqueness of such semigroups under CD(rho,infty) is proved, not assumed. The paper-level development is incomplete. Any conditional transfer theorem
+    or special case must be labelled as such and cannot replace the original
+    statements in the final Comparator interface. The source audit reports an
+    invalid inference from a curvature product condition to divergence of time
+    in the archived proof of Theorem 1.7. The local target adds time divergence
+    and explicit Riemannian completeness assumptions; its rigidity proof now
+    explains how completeness gives the global flow used in splitting.
+    These manuscript amendments are not new Lean proofs; see PAPER_AUDIT.md.
+review:
+  status: unchecked
+  reviewers: []
+  notes: >-
+    Preparatory source and standards audit only. No external semantic review,
+    registry verification or completed-paper proof audit has occurred.
+alignment:
+  namespace: CutoffRigidity
+  statements:
+    - lean: CutCur.main_wasserstein_estimate
+    - lean: CutCur.eigenspace_dim_and_lambda
+    - lean: CutCur.wasserstein_cutoff
+    - lean: CutCur.information_cutoff
+    - lean: CutCur.lp_cutoff
+    - lean: CutCur.convex_interaction
+    - lean: CutCur.convex_interaction_cutoff
+    - lean: CutCur.product_condition_cutoff
+    - lean: CutCur.euclidean_gaussian_factorization
+    - lean: CutCur.eigenmap_is_ou
+    - lean: CutCur.riemannian_wasserstein_estimate
+    - lean: CutCur.riemannian_gaussian_splitting
+
+acknowledgements: >-
+  Mathematical source: Djalil Chafaï and Max Fathi. Dependencies: Lean and Mathlib.
+  Preparation guidance: official Palomar submission policy and template.

@@ -1,0 +1,13 @@
+Chafaï, Djalil and Fathi, Max.
+On cutoff via rigidity for high-dimensional curved diffusions.
+arXiv:2412.15969v4, 24 March 2026.
+https://arxiv.org/abs/2412.15969v4
+https://arxiv.org/src/2412.15969v4
+Downloaded 23 October 2026.
+Source licence: CC BY 4.0 (arXiv record).
+The archived source files retain their original ownership and licence.
+
+SHA256 source archive:
+ce1ecb26d6e017360aeb1169f3d36e0417423ae023db001fa24536e75be5f5b5
+SHA256 cutcur-arxiv-v4-260324.tex:
+1bcc6502c9e18c8843ea6bc877603cd02a827a095eecd9003d31d4e02e172cf3

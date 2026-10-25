@@ -1,0 +1,1 @@
+Inventory contains 163 existing declarations.

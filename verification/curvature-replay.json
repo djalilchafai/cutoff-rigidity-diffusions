@@ -1,0 +1,69 @@
+{
+  "scope": "Four intermediate actual weak-Bochner curvature-gap/convex-interaction-gap and canonical-heat results and dependency closure. Export replay only, not full-paper Comparator or semantic coverage.",
+  "checked_at_utc": "2026-10-23T21:17:22.184072+00:00",
+  "toolchain": "leanprover/lean4:v4.35.0-rc2",
+  "mathlib_commit": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
+  "export": {
+    "local_path": "/tmp/cutoff-curvature-proof-export.ndjson",
+    "sha256": "f5b82416ab18f55a4c90cabb622335be3d0dabb68c8d67d02bc82d864a9316eb",
+    "bytes": 446971751,
+    "module": "CutoffRigidity",
+    "declarations": [
+      "CutoffRigidity.gibbsOperatorEigen_positive_rate_ge_curvature",
+      "CutoffRigidity.normalized_convexInteraction_spectralGap_eq",
+      "CutoffRigidity.gibbsHeatSemigroup_weak_compact_integral",
+      "CutoffRigidity.gibbsHeatSemigroup_preserves_nonneg"
+    ]
+  },
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "nanoda_configuration": {
+    "export_file_path": "/tmp/cutoff-curvature-proof-export.ndjson",
+    "permitted_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unpermitted_axiom_hard_error": true,
+    "num_threads": 1,
+    "nat_extension": true,
+    "string_extension": true
+  },
+  "checks": [
+    {
+      "checker": "leanchecker",
+      "command": [
+        "leanchecker",
+        "--from-export",
+        "/tmp/cutoff-curvature-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/curvature-leanchecker.log"
+    },
+    {
+      "checker": "nanoda",
+      "command": [
+        "nanoda_bin",
+        "/tmp/cutoff-curvature-nanoda.json"
+      ],
+      "exit_code": 0,
+      "log": "verification/curvature-nanoda.log"
+    },
+    {
+      "checker": "con-ron",
+      "command": [
+        "con-ron",
+        "--verified",
+        "--jobs=1",
+        "/tmp/cutoff-curvature-proof-export.ndjson"
+      ],
+      "exit_code": 0,
+      "log": "verification/curvature-con-ron.log"
+    }
+  ],
+  "comparator": "not run; full-paper Challenge/Solution incomplete",
+  "source_snapshot": "No Git commit is available. The export hash identifies the checked proof stream; no immutable source-to-export alignment is claimed."
+}

@@ -1,0 +1,7 @@
+.lake/
+__pycache__/
+*.pyc
+*.fls
+*.fdb_latexmk
+*.aux
+*.log
