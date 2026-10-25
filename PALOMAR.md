@@ -176,5 +176,9 @@ All twelve Challenge theorems have proofs of exactly the Challenge type; `Soluti
 no `sorry`, and each depends only on `propext`, `Classical.choice`, `Quot.sound`. `comparator.json`
 lists the 12 theorems and 39 definitions. `lake comparator` accepted the solution
 (`verification/comparator-final.log`: con-ron, nanoda and the Lean kernel all accept, 88114 declarations).
-It was run with `--inadvisably-no-sandbox`, because `bwrap` fails on this machine (`/home` is a symlink to
-`chome/`); the official sandboxed run, human semantic review and registry steps remain to be done.
+The run was repeated inside the official bwrap sandbox (`verification/comparator-sandboxed.log`,
+same result: con-ron, nanoda and the Lean kernel accept). On this machine `/home` is a symlink to
+`chome/`, so `lake comparator`'s `bwrap --tmpfs /home` fails; `scripts/bwrap-home-symlink-wrapper.sh`
+(placed first in `PATH` as `bwrap`) hides the resolved home tree instead and re-binds read-only the
+local mathlib packages that `.lake/packages` points to. Human semantic review and the registry steps
+remain to be done.

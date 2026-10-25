@@ -35,7 +35,7 @@ related_formalizations: []
 status:
   scope: >-
     Update 25 October 2026: all twelve Challenge theorems are proved in Solution.lean with only
-    the standard axioms, and a local Comparator run (no sandbox) accepts them. Theorem 1.9 (Riemannian Wasserstein estimate) is proved for every diffusion semigroup in the sense of IsDiffusionSemigroup, with no extra hypotheses.
+    the standard axioms, and a sandboxed Comparator run accepts them. Theorem 1.9 (Riemannian Wasserstein estimate) is proved for every diffusion semigroup in the sense of IsDiffusionSemigroup, with no extra hypotheses.
     Historical scope notes follow. The full paper remains incomplete. The actual Euclidean Langevin process,
     measurable Brownian kernel, Markov semigroup and coupling contraction are
     constructed. Actual Gaussian projection laws, compact weak Bochner

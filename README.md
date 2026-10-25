@@ -17,8 +17,8 @@ described above. Full source alignment with the Lean development remains
 incomplete.
 
 **Status (25 October 2026).** `Challenge.lean` states 12 theorems; `Solution.lean` proves all
-of them (no `sorry`, axioms `propext`, `Classical.choice`, `Quot.sound` only), and a local
-`lake comparator` run (without the bwrap sandbox) accepts it. Theorem 1.9 is proved for every
+of them (no `sorry`, axioms `propext`, `Classical.choice`, `Quot.sound` only), and a
+`lake comparator` run inside the bwrap sandbox accepts it. Theorem 1.9 is proved for every
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
 log-Sobolev, gap attainment and the Kuwada contraction are formalized (see PALOMAR.md). The older
 paragraphs below describe intermediate stages.
