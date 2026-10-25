@@ -182,3 +182,16 @@ same result: con-ron, nanoda and the Lean kernel accept). On this machine `/home
 (placed first in `PATH` as `bwrap`) hides the resolved home tree instead and re-binds read-only the
 local mathlib packages that `.lake/packages` points to. Human semantic review and the registry steps
 remain to be done.
+
+## Statement audit and non-vacuity witness (25 October 2026)
+
+`verification/semantic-audit.md` is an independent AI audit (not a human review) of the 12 Challenge
+statements against the paper: no defect found; remarks on the classical definition of the first
+eigenspace, Brownian-motion existence, and the `p < ∞` amendment of display (1.25) are recorded there
+and in `Challenge.lean` docstrings. `Riemann/WitnessMain.lean` (`exists_riemannian_instance`) proves
+that the hypotheses of the Riemannian theorems hold together for the Gaussian on `ℝ^k`
+(`IsWeightedVolume`, `CD ρ`, `mSpectralGap = ρ`, `mFirstEigenDim = k`), so they are not vacuous through a
+definition error. No `IsDiffusionSemigroup` instance is constructed for Theorem 1.9 beyond the canonical
+kernel `Kk` of `exists_kernel` on any manifold satisfying the standing hypotheses. The sandboxed
+Comparator was rerun after these changes with the same result. Human semantic review, registry
+steps and attestation of responsible humans remain to be done by people; none is claimed here.

@@ -89,6 +89,22 @@ automation:
         hardware: local Linux environment and model API
       prompting_notes: >-
         User requested full formalization using agents and Palomar standards.
+    - method: agent
+      models: [Claude Sonnet 5.5]
+      framework: Claude Code
+      tool_setup: >-
+        A lead session coordinating subagents: Euclidean statement bridges, the Riemannian splitting,
+        the diffusion programme (Friedrichs/cfc semigroup, elliptic regularity, canonical kernel,
+        uniqueness of the diffusion, Bakry-Emery, log-Sobolev, gap attainment, Kuwada contraction),
+        Palomar scaffolding and an independent statement-fidelity audit. Local Lean kernel checking,
+        lake comparator inside bwrap (see PALOMAR.md), con-ron and nanoda.
+      cost:
+        wall_time: not tracked
+        spend_usd: not tracked
+        hardware: local Linux environment and model API
+      prompting_notes: >-
+        The owner asked for full formalization of every Challenge statement using agents, then
+        for removal of the extra diffusion hypotheses that an intermediate version carried.
   spend_usd: not tracked
   notes: >-
     AI contributions are recorded here, not as human authorship. No human

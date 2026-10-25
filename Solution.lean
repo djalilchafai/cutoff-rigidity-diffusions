@@ -15,6 +15,12 @@ Conventions. `ℝ^d` is `EuclideanSpace ℝ (Fin d)`. Suprema of nonnegative
 discrepancies over sets of initial conditions are taken in `ℝ≥0∞`, so that
 infinite values are meaningful. Laws of processes at a real time `t` use the
 time `t.toNNReal`; all times appearing in the statements are nonnegative.
+
+Remark on the definitions of the first eigenspace. `E₁`, `k₁`, `Λ` and `λ₁` are defined
+classically: `λ₁` as the infimum of the Rayleigh quotient over smooth compactly supported
+functions, and `E₁` through `C²` (Euclidean) or smooth (Riemannian) `L²` eigenfunctions. They agree
+with the spectral objects of the paper through elliptic regularity and essential self-adjointness;
+the Lean `E₁` is contained in the spectral one, so any discrepancy could only weaken a lower bound.
 -/
 
 open MeasureTheory ProbabilityTheory Filter Topology Set

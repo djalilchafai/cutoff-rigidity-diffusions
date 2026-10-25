@@ -15,6 +15,12 @@ Conventions. `ℝ^d` is `EuclideanSpace ℝ (Fin d)`. Suprema of nonnegative
 discrepancies over sets of initial conditions are taken in `ℝ≥0∞`, so that
 infinite values are meaningful. Laws of processes at a real time `t` use the
 time `t.toNNReal`; all times appearing in the statements are nonnegative.
+
+Remark on the definitions of the first eigenspace. `E₁`, `k₁`, `Λ` and `λ₁` are defined
+classically: `λ₁` as the infimum of the Rayleigh quotient over smooth compactly supported
+functions, and `E₁` through `C²` (Euclidean) or smooth (Riemannian) `L²` eigenfunctions. They agree
+with the spectral objects of the paper through elliptic regularity and essential self-adjointness;
+the Lean `E₁` is contained in the spectral one, so any discrepancy could only weaken a lower bound.
 -/
 
 open MeasureTheory ProbabilityTheory Filter Topology Set
@@ -86,7 +92,9 @@ def IsLangevinSolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d →
     X t w = x₀ - (∫ s in (0 : ℝ)..(t : ℝ), gradient V (X s.toNNReal w)) + Real.sqrt 2 • B t w
 
 /-- The standing assumptions of the Euclidean setting: `V` is `C²`, `μ = e^{-V}` is a
-probability measure, `B` is a standard Brownian motion and `X x₀` solves (1.1) from `x₀`. -/
+probability measure, `B` is a standard Brownian motion and `X x₀` solves (1.1) from `x₀`.
+(The existence of a Brownian motion on some probability space is classical and is not proved
+here; it is part of what makes the hypothesis satisfiable.) -/
 def IsLangevin {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B : ℝ≥0 → Ω → Rd d)
     (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d) : Prop :=
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsStdBrownian B P ∧
@@ -400,7 +408,10 @@ def mLambda [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) (x : M) : ℝ�
 
 /-- The diffusion (1.26) with generator `𝓛`, through its transition kernels `Pₜ(x, ·) = Law(Xₜ)`
 from `X₀ = x`: a Markov semigroup solving Kolmogorov's equation
-`Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for smooth compactly supported `f`. -/
+`Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for smooth compactly supported `f`. Under the standing
+hypotheses of the Riemannian theorems (completeness, `CD(ρ,∞)`, `ρ > 0`) there is exactly one such
+semigroup, the minimal and conservative diffusion; this is proved in the formalization
+(`Riemann/DiffKer*`, `DiffPerron*`) and not assumed. -/
 def IsDiffusionSemigroup [MeasurableSpace M] (V : M → ℝ) (Pt : ℝ≥0 → Kernel M M) : Prop :=
   (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
     ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → HasCompactSupport f → ∀ (x : M) (t : ℝ≥0),
