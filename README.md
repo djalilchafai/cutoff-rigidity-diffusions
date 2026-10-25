@@ -219,20 +219,26 @@ is not part of the project sources.
 
 ## Palomar status
 
-[PALOMAR.md](PALOMAR.md) records the official requirements and remaining checks.
-The metadata and Comparator configuration are explicitly incomplete drafts;
-there is no paper-level Challenge/Solution pair. Sixty-two results across ten exports passed
-proof replay by Lean, NanoDa and con-ron; see
-[the first report](verification/development-replay.json) and
-[the core report](verification/core-replay.json) and
-[the operator report](verification/operator-replay.json), and
-[the spectral report](verification/spectral-replay.json), and
-[the curvature report](verification/curvature-replay.json), and
-[the rigidity report](verification/rigidity-replay.json).
-No full-paper Comparator run, registry registration, or human semantic review
-is claimed.
-A corrected Theorem 1.7 must be labeled as amended; `t0_d → infinity` is one
-possible added hypothesis for the specific Wasserstein/Fisher transfer steps.
+[PALOMAR.md](PALOMAR.md) records the official requirements and the detailed status.
+
+- **Challenge/Solution pair:** `Challenge.lean` states 12 theorems; `Solution.lean` proves all of
+  them. `comparator.json` lists the 12 theorems and 39 definitions.
+- **Comparator:** `lake comparator` accepts the solution (con-ron, nanda and the Lean kernel; 88114
+  declarations), both without a sandbox (`verification/comparator-final.log`) and inside the bwrap
+  sandbox (`verification/comparator-sandboxed.log`). Only `propext`, `Classical.choice` and
+  `Quot.sound` are used.
+- **Statement audit:** an AI audit of the 12 statements found no defect
+  (`verification/semantic-audit.md`). A Gaussian witness (`Riemann/WitnessMain.lean`) shows the
+  Riemannian hypotheses are jointly satisfiable.
+- **Amendments:** Theorem 1.7 is stated with the amendment described in [PAPER_AUDIT.md](PAPER_AUDIT.md),
+  since the printed version has a counterexample. The Riemannian setting assumes completeness and
+  connectedness. Theorem 1.9 has no extra hypothesis on `Pt` beyond `IsDiffusionSemigroup`.
+- **Not done:** no human semantic review (`review.status: unchecked` in `formalization.yaml`), no
+  registry submission, and no responsible-human attestation. `formalization.yaml` is therefore not yet a submission.
+- **Earlier replay reports** (62 results across ten exports; superseded by the full run above):
+  [development](verification/development-replay.json), [core](verification/core-replay.json),
+  [operator](verification/operator-replay.json), [spectral](verification/spectral-replay.json),
+  [curvature](verification/curvature-replay.json), [rigidity](verification/rigidity-replay.json).
 
 New project code is Apache-2.0. The archived paper in `paper/` retains its
 separate CC BY 4.0 licence and attribution; see `paper/SOURCE.txt`.
