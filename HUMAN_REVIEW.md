@@ -1,6 +1,6 @@
 # Human review checklist (draft)
 
-Status (updated 25 October 2026, after the Brownian-free integration): **no human review has taken place.** The AI audits listed below were written for the previous (Brownian-carrier) text of 21 statements (nos. 1, 11, 12, 28, 3, 4, 5, 7, 8, 10, 17, 18, 23, 24, 25, 29, 40, 41, 44, 45, 46) and have not been repeated for the kernel statements. This file is a checklist for the people who will do it. It records nothing
+Status (updated 25 October 2026, after the Brownian-free integration): **no human review has taken place.** The 21 statements converted to kernel form were re-audited by two AI agents after the conversion (`audit-extra-K.md`, `audit-extra-L.md`; earlier audits of the same statements concerned the Brownian-carrier text). This file is a checklist for the people who will do it. It records nothing
 as reviewed, and the sign-off block at the end is intentionally blank. Everything below that is marked "AI" was done by
 language-model agents and is not a substitute for a person.
 
@@ -15,7 +15,7 @@ Every one of the 48 statements has had at least one AI audit (statements and def
   `audit-second-2.md` (theorems 9-12 and the Riemannian definitions);
 - 22 added statements: `audit-extra-A.md` (sequence cutoffs), `-B.md` (spectral gap, constants), `-C.md` (OU, time change, temperature),
   `-D.md` (dynamics, strengthened splitting);
-  `-H.md` (Ricci/Bochner/CD, `k₁` bounds, Riemannian Poincaré/LSI, `entropyOf`), `-I.md` (Fisher decay/Dini, `normalization_sde`, temperature, W₂/entropy mixing times), `-J.md` (`exists_stdBrownian`, `exists_langevin`);
+  `-H.md` (Ricci/Bochner/CD, `k₁` bounds, Riemannian Poincaré/LSI, `entropyOf`), `-I.md` (Fisher decay/Dini, `normalization_sde`, temperature, W₂/entropy mixing times), `-J.md` (`exists_stdBrownian`, `exists_langevin`), `-K.md` (kernel definitions `IsEuclideanDiffusion`/`IsEuclideanLangevin`/`IsSigma*`/`worstK`/`mixingTime*K`/`IsRigidSequenceK`, and the kernel versions of Thm 1.1, Cor 1.3, 1.4, 1.6, (1.25), Thm 1.7, Remarks 3.4/3.5; C^∞ trade-off), `-L.md` (`eigenmap_is_ou` law form, mixing times, OU statements, Langevin decay statements, `normalization_cutoff`, `temperature_cutoff`);
 - later changes: `-E.md` (`mSpectralGap_ge_of_CD`), `-F.md` (the three statements without Brownian carrier), `-G.md` (Thm 1.7 `hS`
   weakening, `heat_kernel_score`).
 No audit found a defect; remarks and agreements are in those files. Limits: each statement was read by one or two agents, mostly by hand (few

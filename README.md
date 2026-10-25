@@ -168,6 +168,8 @@ information, entropy/Fisher decay and Dini form, normalization and temperature c
 and Lemma 3.3 is stated in law form. The Brownian versions remain as `*_carrier` theorems used inside the proofs. The only statements still mentioning Brownian motion are the SDE-level
 `normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`. See `PALOMAR.md`. Not yet re-run through Comparator; no human review.
 
+**Trade-off of the Brownian-free statements.** The Euclidean process statements are now stated for `C^∞` potentials (kernel formulation `IsEuclideanLangevin`), not for the manuscript's convex `C²` potentials. Potentials that are `C²` but not `C^∞` (for example `Σ|xᵢ|³`, Huber-type interactions) are therefore not covered by the Challenge. The `C²` versions are still proved in the repository as the `*_carrier` theorems in `CutoffRigidity/Paper` and `Extra`, but they are not part of the Challenge, so the Comparator does not check their statements.
+
 ## How to rebuild and verify
 
 Prerequisites: `elan` (the toolchain `v4.35.0-rc2` is read from `lean-toolchain`), `python3`, and,

@@ -540,3 +540,17 @@ one-point space or Dirac `P`) satisfies Mathlib's `IsBrownianReal`, and for `d >
 so `X` is the actual SDE solution; `V = ‖x‖²/2 + c` satisfies the hypotheses of `exists_langevin`. Scope: `exists_langevin` covers convex `V` only and shows each single `V`
 is satisfiable; it does not show that every combined hypothesis set of a downstream theorem is satisfiable. The Challenge closure is Mathlib-only (no vendor names in `Challenge.lean`).
 This is an AI audit, not a human review.
+
+## Audit of the Brownian-free (kernel) statements (AI, 25 October 2026)
+
+Two independent AI auditors (statements and definitions only; scratch Lean checks by both; reports `audit-extra-K.md`, `audit-extra-L.md`) re-audited the 21 statements whose
+Brownian-motion hypothesis was replaced by `IsEuclideanLangevin V Pt` and the nine new definitions: no defect found.
+* **Encoding.** `IsEuclideanDiffusion` (Markov kernels, semigroup law, Dynkin identity on `C_c^∞` with generator `Δ − ∇V·∇`) is faithful because the project proves uniqueness for `C^∞` `V` with a probability Gibbs measure
+  (`isEuclideanDiffusion_unique`), existence (`exists_euclideanLangevin`) and the transfer to a Brownian carrier with `Pt t x₀ = P.map (X x₀ t)`; the Dynkin clause has no junk values that could be exploited. `IsSigmaDiffusion` matches
+  `dY = −∇V dt + √2σ dB` (generator `σ²Δ − ∇V·∇`). Non-vacuity was proved in scratch for the Gaussian potential (and `IsSigmaDiffusion V 1 Pt ↔ IsEuclideanDiffusion V Pt`); satisfiability of `IsSigmaLangevin` for `σ ≠ 1` is argued by hand only.
+* **Statements.** Against the previous commit the only changes are the kernel replacement (`worst → worstK`, `P.map (X x t) → Pt t x`, `mixingTime* → mixingTime*K`) and `C^∞` inside `IsEuclideanLangevin`; for Cor 1.6 also `W n` is `C^∞`.
+* **Lemma 3.3.** `eigenmap_is_ou` is now the law form `(Pt t x₀).map Tv = N(e^{−ρt} Tv x₀, (1−e^{−2ρt})I)`. It is the lumping criterion (`P_s(g∘Tv)(x) = (Q_s g)(Tv x)`), so Markov property of `T(X)` follows from the semigroup law; the
+  manuscript's proof of Thm 1.1 uses only the time-`t` marginal. What is lost is the Brownian `β` of the old pathwise statement, which the manuscript never asserts.
+* **Trade-off, stated plainly.** The Challenge no longer covers potentials that are `C²` but not `C^∞` (e.g. `Σ|xᵢ|³`, `Σ|xᵢ|^{5/2}`, Huber-type interactions, convex `C²` pair potentials that are not `C³`), which the manuscript admits (line 92, Cor 1.6). The `C²` versions
+  remain proved in the repository as the `*_carrier` Paper theorems (using the old `IsLangevin`); they are outside the Challenge and `comparator.json`, so the Comparator does not check their statements.
+This is an AI audit, not a human review.

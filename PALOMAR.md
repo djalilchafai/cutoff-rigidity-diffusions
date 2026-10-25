@@ -387,3 +387,6 @@ Proofs. Each `CutoffRigidity.Paper.<name>` is an `alias` of the kernel theorem `
 Remaining SDE-level statements (Brownian motion by hypothesis): `normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`; they are pathwise/SDE-level by nature.
 
 Status: Comparator NOT rerun after this change (the 48-theorem counts are unchanged; the definitions list changed, see `comparator.json`); the 18 kernel statements have had no AI audit and no human review.
+
+The kernel (Brownian-free) statements and the new definitions were audited by two independent AI agents (`verification/audit-extra-K.md`, `audit-extra-L.md`): no defect.
+Trade-off: `C^∞` instead of `C²` for the process statements; the `C²` versions survive only as `*_carrier` theorems, which the Comparator does not check. Not a human review.
