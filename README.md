@@ -152,6 +152,53 @@ isometries; the zero level has a constructed C² manifold, induced metric and
 actual product diffeomorphism. The complete paper is not yet formalized. Project proofs use only
 `propext`, `Classical.choice` and `Quot.sound`, and contain no proof placeholders.
 
+## How to rebuild and verify
+
+Prerequisites: `elan` (the toolchain `v4.35.0-rc2` is read from `lean-toolchain`), `python3`, and,
+for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fresh checkout.
+
+1. **Build everything** (about 9650 jobs; this is long on a cold cache):
+   ```sh
+   lake exe cache get
+   lake build
+   ```
+2. **Source and metadata checks** (no `sorry`/`axiom`/`native_decide` in the Solution side,
+   `comparator.json` and `formalization.yaml` consistent with `Challenge.lean`):
+   ```sh
+   python3 scripts/check-palomar.py --ready
+   ```
+3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 12 endpoint theorems
+   (`CutoffRigidity.Paper.*`), run a `#print axioms` on each from a scratch file importing `Solution`; each
+   should depend only on `propext`, `Classical.choice`, `Quot.sound`. The Comparator in step 4 enforces the
+   same permitted axioms.
+   ```sh
+   lake env lean verification/Audit.lean
+   ```
+4. **Official Comparator** (Lean kernel, nanoda and con-ron replay of `Solution.lean` against
+   `Challenge.lean`):
+   ```sh
+   scripts/verify-comparator.sh
+   ```
+   Expect "Your solution is okay!". Logs from our runs: `verification/comparator-final.log`
+   (no sandbox) and `verification/comparator-sandboxed.log` (bwrap sandbox).
+   - If `bwrap` fails with `Can't mount on symlink destination /home` (when `/home` is a symlink),
+     install the wrapper and put it first in `PATH`:
+     ```sh
+     mkdir -p /tmp/bwrapfix && cp scripts/bwrap-home-symlink-wrapper.sh /tmp/bwrapfix/bwrap
+     chmod +x /tmp/bwrapfix/bwrap
+     PATH=/tmp/bwrapfix:$PATH scripts/verify-comparator.sh
+     ```
+     It re-exposes the local `.lake/packages` read-only and otherwise leaves the sandbox unchanged.
+5. **After editing `Challenge.lean`**, regenerate the derived files and repeat steps 1–4:
+   ```sh
+   python3 scripts/sync-statements.py   # CutoffRigidity/Statements.lean
+   python3 scripts/gen-solution.py      # Solution.lean
+   ```
+
+These checks establish that the Lean proofs are kernel-valid and match the Challenge statements. They do
+not replace human review that the statements faithfully formalize the paper; none has taken place
+(`review.status: unchecked` in `formalization.yaml`; the AI audit is in `verification/semantic-audit.md`).
+
 ## Reproduction
 
 The project pins Lean `v4.35.0-rc2` and Mathlib commit
