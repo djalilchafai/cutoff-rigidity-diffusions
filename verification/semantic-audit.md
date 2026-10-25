@@ -495,3 +495,12 @@ One independent AI auditor (`verification/audit-extra-E.md`; statements and defi
 definitions of `mgrad`, `carre`, `CD`, `IsWeightedVolume` and `mSpectralGap` match the manuscript; the amendment
 `0 < finrank ℝ F` is necessary and sufficient; the hypotheses are satisfied by the Gaussian witness (flat case only, so
 curved examples are untested). This is an AI audit, not a human review.
+
+## Audit of the three Brownian-free statements (AI, 25 October 2026)
+
+One independent AI auditor (`verification/audit-extra-F.md`; by hand, no Lean scratch files, so non-vacuity is argued rather than
+instantiated) re-audited `optimal_lsi_twice_pi`, `optimal_constants_extremal`, `talagrand_logSobolev` in their form without the
+Brownian carrier, with the definitions `entropyOf`, `IsTestFunction`, `optimalPI`, `optimalLSI`: no defect found. The statements
+keep exactly the two facts that `IsLangevin` used to bundle (`C²` and `IsProbabilityMeasure (gibbs V)`) and are strictly stronger than
+the old ones; `0 < d` is necessary for the extremal theorem and harmless for Talagrand/LSI; the Gaussian-shift case gives equality in
+both Talagrand and LSI. This is an AI audit, not a human review.

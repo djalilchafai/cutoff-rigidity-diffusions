@@ -289,3 +289,5 @@ Build, readiness check, axiom check of all 35 theorems and the sandboxed Compara
 `lsi_of_CD` on `ℝ^d` (no gap hypothesis, no Brownian motion) and a mollification of `C²` potentials (`CutoffRigidity/Extra/NoBm*.lean`).
 The older carrier versions are kept as `*_carrier` in `Extra/OptimalConstants.lean` and `Extra/Dynamics.lean`. These three statements changed
 after the AI audits of group B and D, and have not been re-audited. Build, readiness check, axiom check and the sandboxed Comparator were rerun.
+
+The three Brownian-free statements were re-audited by one independent AI agent (`verification/audit-extra-F.md`): no defect. Not a human review.
