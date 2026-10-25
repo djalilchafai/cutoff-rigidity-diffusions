@@ -359,3 +359,4 @@ public import CutoffRigidity.Extra.FisherDecayGeneral
 public import CutoffRigidity.Extra.BrownianScaling
 public import CutoffRigidity.Extra.TemperatureSDE
 public import CutoffRigidity.Extra.MixingTimeW2KL
+public import CutoffRigidity.Paper.ExistsBrownian

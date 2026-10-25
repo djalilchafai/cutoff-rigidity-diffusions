@@ -3,7 +3,7 @@
 This project is a Lean 4 formalization of the manuscript [cutcur-lean.tex](cutcur-lean.tex)
 by Chafaï–Fathi, based on [arXiv:2412.15969v4](https://arxiv.org/abs/2412.15969v4).
 
-**Status (25 October 2026).** `Challenge.lean` states 46 theorems: the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
+**Status (25 October 2026).** `Challenge.lean` states 48 theorems: the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
 3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and 23 further claims of the
 manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound (Euclidean and Riemannian), (R2) => (R1), examples, proof ingredients such as W2
 contraction, entropy decay, Pinsker and Talagrand, the optimal constants, and the Section 4 items; see
@@ -14,8 +14,11 @@ potential identity of Theorem 3.6 and the connectedness and completeness of the 
 A further block of 11 statements (Bochner identity and `CD ⇔ Ric + Hess V ≥ ρ`, Riemannian `k₁` bounds and Poincaré/log-Sobolev, Fisher
 decay for all laws and its Dini form, Brownian scaling at the SDE level, the temperature SDE and cutoffs, W2 and entropy mixing times) is
 stated and proved too (see PALOMAR.md, section "Cheap block integration"; flags are in the docstrings).
+Two further theorems, `exists_stdBrownian` and `exists_langevin`, show that a standard Brownian motion exists and that the standing hypothesis
+`IsLangevin` of all Langevin statements is satisfiable (for `C²` `V` with `Hess V ≥ 0`, the paper's convexity assumption, and probability Gibbs
+measure); they rely on the vendored Brownian motion library of Degenne et al. (see Credits below).
 Not formalized: Question 1.10 (open), eq. (loggradbound) (conjectural), the derivative identities `dH/dt = -I` for general laws, Theorem 1.7
-on manifolds, the sphere and Dyson examples, Gaussian isoperimetry, the existence of Brownian motion, the Leibniz identity for the carré du
+on manifolds, the sphere and Dyson examples, Gaussian isoperimetry, the Leibniz identity for the carré du
 champ, the vector form of the Bochner identity, and the Rothaus remark. Theorem 1.9 is proved for every
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
 log-Sobolev, gap attainment and the Kuwada contraction are formalized (see [PALOMAR.md](PALOMAR.md)).
@@ -172,7 +175,7 @@ for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fre
    ```sh
    python3 scripts/check-palomar.py --ready
    ```
-3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 46 endpoint theorems
+3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 48 endpoint theorems
    (`CutoffRigidity.Paper.*`), run a `#print axioms` on each from a scratch file importing `Solution`; each
    should depend only on `propext`, `Classical.choice`, `Quot.sound`. The Comparator in step 4 enforces the
    same permitted axioms.
@@ -230,8 +233,8 @@ is not part of the project sources.
 
 [PALOMAR.md](PALOMAR.md) records the official requirements and the detailed status.
 
-- **Challenge/Solution pair:** `Challenge.lean` states 46 theorems; `Solution.lean` proves all of
-  them. `comparator.json` lists the 46 theorems and 51 definitions. The Comparator runs below were made for the
+- **Challenge/Solution pair:** `Challenge.lean` states 48 theorems; `Solution.lean` proves all of
+  them. `comparator.json` lists the 48 theorems and 51 definitions. The Comparator runs below were made for the
   earlier 12-theorem pair and must be repeated for the extended one.
 - **Comparator (12-theorem pair, before the extension):** `lake comparator` accepted the solution (con-ron, nanda and the Lean kernel; 88114
   declarations), both without a sandbox (`verification/comparator-final.log`) and inside the bwrap
@@ -250,5 +253,13 @@ is not part of the project sources.
   [operator](verification/operator-replay.json), [spectral](verification/spectral-replay.json),
   [curvature](verification/curvature-replay.json), [rigidity](verification/rigidity-replay.json).
 
-New project code is Apache-2.0. The archived paper in `paper/` retains its
+## Credits and licensing
+
+New project code is Apache-2.0. The existence of Brownian motion (`exists_stdBrownian`, `exists_langevin`) uses the library
+*Formalization of Brownian motion in Lean* by Rémy Degenne, Sebastian Ledvinka, Etienne Marion and Peter Pfaffelhuber
+([arXiv:2511.20118](https://arxiv.org/abs/2511.20118); [brownian-motion](https://github.com/RemyDegenne/brownian-motion) and
+[kolmogorov_extension4](https://github.com/RemyDegenne/kolmogorov_extension4)), Apache-2.0. The needed 29 modules are vendored under
+[`vendor/`](vendor/README.md) with minimal porting patches (3 library files lightly patched, plus one added Mathlib backport module), with
+their licence texts and origin commits; the Challenge does not depend on them. Only the new module `CutoffRigidity/Paper/ExistsBrownian.lean`
+imports them (privately). The archived paper in `paper/` retains its The archived paper in `paper/` retains its
 separate CC BY 4.0 licence and attribution; see `paper/SOURCE.txt`.

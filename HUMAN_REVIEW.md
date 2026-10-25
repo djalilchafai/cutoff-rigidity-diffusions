@@ -4,13 +4,13 @@ Status (updated 25 October 2026): **no human review has taken place.** This file
 as reviewed, and the sign-off block at the end is intentionally blank. Everything below that is marked "AI" was done by
 language-model agents and is not a substitute for a person.
 
-What Lean already guarantees (machine-checked, rerunnable, see README "How to rebuild and verify"): the 35 theorems of
+What Lean already guarantees (machine-checked, rerunnable, see README "How to rebuild and verify"): the 48 theorems of
 `Challenge.lean` are proved by `Solution.lean` with the same statements, using only `propext`, `Classical.choice`,
 `Quot.sound`; the Comparator (Lean kernel, nanoda, con-ron) accepts. What it does NOT guarantee: that the *statements and
 definitions* mean what the manuscript says. That is what a reviewer must establish.
 
 ## AI audits done so far (to reuse, not to trust)
-Every one of the 35 statements has had at least one AI audit (statements and definitions read against the manuscript; proofs not read):
+Every one of the first 46 statements has had at least one AI audit (the two Brownian existence statements, nos. 47-48, have had none) (statements and definitions read against the manuscript; proofs not read):
 - original 12: `verification/semantic-audit.md` (first audit) and independent second audits `audit-second-1.md` (theorems 1-7),
   `audit-second-2.md` (theorems 9-12 and the Riemannian definitions);
 - 22 added statements: `audit-extra-A.md` (sequence cutoffs), `-B.md` (spectral gap, constants), `-C.md` (OU, time change, temperature),
@@ -27,7 +27,7 @@ reports to see what was already examined, but should form their own verdict firs
 - [ ] Run steps 1-4 of README "How to rebuild and verify"; note any failure.
 - [ ] Confirm that `Solution.lean` imports `CutoffRigidity.Statements` (generated verbatim from `Challenge.lean`'s
       definitions; `python3 scripts/sync-statements.py --check`) and contains no definitions of its own.
-- [ ] Confirm that `comparator.json` lists exactly the 46 theorems and 51 definitions of `Challenge.lean`.
+- [ ] Confirm that `comparator.json` lists exactly the 48 theorems and 51 definitions of `Challenge.lean`.
 
 ## 1. Definitions (highest priority: an error here silently changes every theorem)
 Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `mgrad`, about line 712).
@@ -38,7 +38,9 @@ Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `
       `IsEigenbasis`. Compare with Remark 1.2 and Definition 1.8.
 - [ ] `RigidCurvature` (Hess V ≥ λ₁ I with λ₁ > 0).
 - [ ] `IsStdBrownian`, `IsLangevinSolution`, `IsLangevin`: do they describe the SDE `dX = -∇V dt + √2 dB`?
-      Check that the Brownian motion is a hypothesis, not constructed (Lean/Mathlib cannot construct one at this revision).
+      The Brownian motion is a hypothesis in the theorems; its existence is the separate theorems nos. 47-48 (vendored library, see section 5).
+- [ ] Confirm that Mathlib's `IsBrownianReal` (a.s. continuous paths and the Gaussian finite-dimensional laws of `IsPreBrownianReal`) is the intended
+      definition of real Brownian motion, and that `IsStdBrownian` (independent real coordinates) is a standard Brownian motion on `ℝ^d`.
 - [ ] `wasserstein2` (couplings; value in `[0,∞]`), `tvDist` (sup over sets), `fisherInfo` (convention and junk values),
       `relLp` (L^p norm of density ratio minus 1; p = ⊤ is an essential sup), `klDiv` (Mathlib's).
 - [ ] `worst`, `HasCutoff`, `meanBall`, `meanCube`, `criticalTime`, `mixingTime`, `mixingTimeW2`, `mixingTimeKL` (`⨅ ∅ = ⊤`), `IsRigidSequence`, `IsSDESolution`.
@@ -51,7 +53,7 @@ Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `
 - [ ] Optimal constants: `entropyOf`, `IsTestFunction` (smooth bounded Lipschitz), `optimalPI`, `optimalLSI` and the factor-2
       convention (`Var f ≤ C∫|∇f|²`, `Ent(f²) ≤ C∫|∇f|²`).
 
-## 2. The 46 statements against the manuscript
+## 2. The 48 statements against the manuscript
 For each: read the statement and its docstring, find the manuscript item, tick when statement = claim. "Flag" = known
 deviation to judge. AI audits: see the list above.
 
@@ -103,12 +105,16 @@ deviation to judge. AI audits: see the list above.
 | 44 | `temperature_cutoff` | Sect. 4.4 | hypothesis `ρₙ = σ² λ₁(Vₙ/σ²)`; `liminf ρₙ > 0`; information cutoffs under `ρ = o(log n)` |
 | 45 | `mixing_time_w2_rigid` | summary after Cor 1.6 | last conjunct an implication (`t₀ → ∞` only if `λ₁ = o(log n)`); any `η > 0` |
 | 46 | `mixing_time_kl_rigid` | summary after Cor 1.6 | needs `λ₁ = o(log n)`; any `η > 0` |
+| 47 | `exists_stdBrownian` | existence of Brownian motion (classical) | proved from the vendored library; space `Ω : Type`; no AI audit yet |
+| 48 | `exists_langevin` | non-vacuity of `IsLangevin` | assumes `Hess V ≥ 0` (convexity, the paper's standing assumption; for non-convex `V` no global solution is claimed) and `IsProbabilityMeasure (gibbs V)`; `X x₀` is the project's selected pathwise solution; no AI audit yet |
 
 ## 3. Cross-cutting questions
 - [ ] **Vacuity.** Only the Riemannian hypotheses have a Lean witness in the repository (`Riemann/WitnessMain.lean`, Gaussian on ℝᵏ, flat
       only). The second audit of Thm 1.9 reports having proved in scratch files (not committed) that the witness also admits the semigroup `Pt`
-      via `isDiffusionSemigroup_Kk`; consider committing that check. For the Langevin-based statements, joint satisfiability rests on classical existence of Brownian motion and strong solutions, which
-      Lean cannot instantiate. Decide whether that is acceptable, and whether a curved Riemannian witness is wanted.
+      via `isDiffusionSemigroup_Kk`; consider committing that check. For the Langevin-based statements, `exists_langevin` (no. 48) now shows that `IsLangevin V B P X` is satisfiable
+      for every `C²` `V` with `Hess V ≥ 0` and probability Gibbs measure. Check that its hypotheses are no stronger than needed to be non-vacuous
+      (all Langevin theorems also assume a curvature condition) and that the conclusion is the full `IsLangevin`, not a weakening. Decide whether a curved
+      Riemannian witness is wanted.
 - [ ] **Each amendment** (`0 < d`, `0 < finrank`, Thm 1.7, `hS`) necessary and harmless?
 - [ ] **Manuscript vs printed paper.** The local `cutcur-lean.tex` differs from arXiv:2412.15969v4 (Thm 1.7 hypotheses, completeness and
       connectedness in the Riemannian setting, finite `p`, Thm 3.6). Judge whether the corrections are mathematically right
@@ -116,7 +122,7 @@ deviation to judge. AI audits: see the list above.
 - [ ] **Global instance.** `Riemann/WitnessGeometry.lean` adds `instIsContMDiffRiemannianBundleRd`; confirm it cannot change the meaning of
       any Challenge statement (Comparator accepts; `temperature_cd` is the only statement touching it).
 - [ ] **Not formalized** (honestly listed in `PALOMAR.md`): Question 1.10 (open); `eq:loggradbound` (conjecture); `dH/dt = -I` for general laws;
-      Theorem 1.7 on manifolds; sphere, Dyson, Gaussian isoperimetry; existence of Brownian motion; Leibniz identity for the carré du champ;
+      Theorem 1.7 on manifolds; sphere, Dyson, Gaussian isoperimetry; Leibniz identity for the carré du champ;
       vector-form Bochner; the Rothaus remark. Decide whether any is required for the intended submission.
 - [ ] **Cosmetic/lint:** deprecation warnings (`if_pos`, `if_neg`, `haveI`, `Set.mem_setOf_eq`) are harmless.
 
@@ -126,7 +132,17 @@ deviation to judge. AI audits: see the list above.
 - [ ] Authors/responsible humans decide on registry submission and sign the attestation. Nothing was submitted or attested by the AI agents.
 - [ ] Decide on the license/attribution statement for the archived paper (CC BY 4.0, `paper/SOURCE.txt`) and the project's Apache-2.0.
 
+## 5. Vendored third-party code (Brownian existence)
+The item "existence of Brownian motion" moved from not formalized to formalized, by vendoring (`vendor/`, `vendor/README.md`).
+- [ ] Review the provenance in `vendor/README.md`: upstream repositories, commits `546d77295fdf8ae7f44cec14ec5df7959c4e3617` (brownian-motion) and
+      `c20f168ed693537c78111ffeabc2ab5f384e35d6` (kolmogorov_extension4); diff the 26 + 3 vendored files against those commits and check that the only
+      differences are the listed patches (3 added `have hqd_nonneg` lines, 1 dropped `.aemeasurable`, 1 added import line, and the `-- MODIFIED` comment lines).
+- [ ] Review the added module `vendor/kolmogorov_extension4/Compat/CompactSystemExtra.lean` (backport of Mathlib material, not upstream).
+- [ ] Licence: upstream Apache-2.0 texts are in `vendor/*/LICENSE`, headers kept; the project root keeps exactly one licence file.
+- [ ] The Challenge closure stays Mathlib-only (the Brownian existence statements use only Challenge definitions); the vendored code is imported only
+      (privately) by `CutoffRigidity/Paper/ExistsBrownian.lean`. Check that it adds no axiom (`#print axioms CutCur.exists_stdBrownian`).
+
 ## Sign-off (to be completed by humans; left blank on purpose)
 Reviewer(s): ____________  Date: ____________  Commit reviewed: ____________
-Scope reviewed (definitions / statements 1-46 / other): ____________
+Scope reviewed (definitions / statements 1-48 / vendored code / other): ____________
 Findings and decision: ____________

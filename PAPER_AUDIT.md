@@ -229,6 +229,13 @@ Cheap block (25 October 2026; statements in `Challenge.lean`, proofs `CutoffRigi
 | Temperature, cutoffs (σ-independence of the critical time) | `CutCur.temperature_cutoff` | Proved with the hypothesis `ρₙ = σ² λ₁(Vₙ/σ²)`; information cutoffs under `ρ = o(log n)` |
 | W2 and entropy mixing times (summary after Cor. 1.6) | `CutCur.mixing_time_w2_rigid`, `CutCur.mixing_time_kl_rigid` | Proved; for W2 `t₀ → ∞` only under `λ₁ = o(log n)` (an implication; false otherwise) |
 
+Brownian existence (25 October 2026; vendored Degenne et al. library, `vendor/README.md`; no AI audit of the statements yet, no human review):
+
+| Source item | Lean statement | Status |
+| --- | --- | --- |
+| Existence of a standard Brownian motion (classical; implicit in Section 1.1) | `CutCur.exists_stdBrownian` | Proved by vendoring; Mathlib `IsBrownianReal` coordinates, independent, on a probability space of type `Type` |
+| Satisfiability of the standing Langevin hypothesis | `CutCur.exists_langevin` | Proved for `C²` `V` with `Hess V ≥ 0` and probability Gibbs measure (convexity, the paper's standing assumption); solutions from the project's deterministic global existence |
+
 The unnumbered Lᵖ conclusion (1.25) additionally depends on Chen–Saloff-Coste's general Markov Lᵖ cutoff theorem, Salez's p=1 result, identification of mixing times, and a precise convention for p (the finite-p regime must be checked rather than silently extending to infinity).
 
 ## Dependency architecture for a faithful development

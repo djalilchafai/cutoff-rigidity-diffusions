@@ -31,9 +31,24 @@ sources:
       and the local completeness correction. Formalization is incomplete;
       see PALOMAR.md.
     license: CC-BY-4.0
-related_formalizations: []
+related_formalizations:
+  - id: https://github.com/RemyDegenne/brownian-motion
+    relationship: adapts
+    note: >-
+      Degenne, Ledvinka, Marion, Pfaffelhuber, Formalization of Brownian motion in Lean (arXiv:2511.20118).
+      The 26 modules of the Gaussian, Continuity and Auxiliary closure of BrownianMotion.Gaussian.BrownianMotion
+      (commit 546d77295fdf8ae7f44cec14ec5df7959c4e3617) are vendored under vendor/brownian-motion with minimal
+      porting patches (3 added lines in IsKolmogorovProcess.lean, 1 dropped `.aemeasurable` in KolmogorovChentsov.lean; see vendor/README.md).
+      Apache-2.0. Used only to prove CutCur.exists_stdBrownian and CutCur.exists_langevin.
+  - id: https://github.com/RemyDegenne/kolmogorov_extension4
+    relationship: adapts
+    note: >-
+      Kolmogorov extension theorem (3 modules, commit c20f168ed693537c78111ffeabc2ab5f384e35d6) vendored under
+      vendor/kolmogorov_extension4, with one added import line in CompactSystem.lean and the added Mathlib backport
+      module Compat/CompactSystemExtra.lean (vendor/README.md). Apache-2.0.
 status:
   scope: >-
+    Update 25 October 2026 (Brownian existence): Challenge.lean now also states exists_stdBrownian (a standard Brownian motion on R^d exists on some probability space) and exists_langevin (for C^2 V with Hess V >= 0 and probability Gibbs measure, IsLangevin V B P X holds for some space, B, P, X), 48 theorems in all, proved in Solution.lean with only the standard axioms. The standing hypothesis IsLangevin of every Langevin statement is therefore shown satisfiable (for convex V, the paper's standing assumption). The proof vendors the Brownian motion library of Degenne, Ledvinka, Marion and Pfaffelhuber (vendor/, Apache-2.0, with minimal porting patches; see vendor/README.md). Brownian existence is no longer in the not-formalized list. Not yet run through Comparator after this extension.
     Update 25 October 2026 (cheap block): Challenge.lean now states 46 theorems and 51 definitions: 11 further statements (Bochner identity and CD iff Ric + Hess V >= rho, Riemannian k1 bounds, Riemannian Poincare and log-Sobolev, Fisher decay for all initial laws and its Dini form, Brownian scaling at the SDE level, temperature SDE and cutoffs, W2 and entropy mixing times), all proved in Solution.lean with only the standard axioms; `entropyOf` is now stated on any measurable space. Divergences flagged in the docstrings: temperature_sde adds Hess V >= rho > 0; temperature_cutoff takes rho_n = sigma^2 spectralGap(V_n/sigma^2) as hypothesis; the last conjunct of mixing_time_w2_rigid is an implication (t0 -> infinity only under lambda_1 = o(log n)); riemannian_k1_bounds needs the gap hypothesis; solutions of SDEs and Brownian motions are given by hypothesis; the Dini form is stated on toReal at times with finite Fisher information. Not formalized: Question 1.10 (open), eq:loggradbound (conjectural), dH/dt = -I for general laws, Theorem 1.7 on manifolds, sphere, Dyson, Gaussian isoperimetry, Brownian existence, Leibniz identity for the carre du champ, vector-form Bochner, the Rothaus remark. Not yet run through Comparator after this extension.
     Update 25 October 2026 (later): Challenge.lean then stated 34 theorems (the 12 above plus 22 further manuscript claims: Remarks 3.4 and 3.5, the Lichnerowicz bound and (R2) => (R1), examples, proof ingredients and Section 4 items), all proved in Solution.lean with only the standard axioms. The splitting theorem now also states the potential identity and the connectedness and completeness of the factor. (Superseded list of non-formalized items: see the cheap block update above.)
     Update 25 October 2026: all twelve Challenge theorems are proved in Solution.lean with only
@@ -130,6 +145,8 @@ review:
 alignment:
   namespace: CutoffRigidity
   statements:
+    - lean: CutCur.exists_stdBrownian  # existence of a standard Brownian motion on R^d (vendored Degenne et al. library; Mathlib IsBrownianReal)
+    - lean: CutCur.exists_langevin  # non-vacuity of IsLangevin: assumes Hess V >= 0 (convexity, standing assumption) and probability Gibbs measure
     - lean: CutCur.main_wasserstein_estimate
     - lean: CutCur.eigenspace_dim_and_lambda
     - lean: CutCur.wasserstein_cutoff
@@ -179,4 +196,8 @@ alignment:
 
 acknowledgements: >-
   Mathematical source: Djalil Chafaï and Max Fathi. Dependencies: Lean and Mathlib.
+  Credits: the existence of Brownian motion relies on the library of Rémy Degenne, Sebastian Ledvinka,
+  Etienne Marion and Peter Pfaffelhuber, Formalization of Brownian motion in Lean (arXiv:2511.20118,
+  https://github.com/RemyDegenne/brownian-motion and https://github.com/RemyDegenne/kolmogorov_extension4),
+  vendored under vendor/ with minimal porting patches (Apache-2.0; vendor/README.md).
   Preparation guidance: official Palomar submission policy and template.

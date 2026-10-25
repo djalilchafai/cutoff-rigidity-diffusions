@@ -17,3 +17,50 @@ roots = ["Challenge"]
 [[lean_lib]]
 name = "Solution"
 roots = ["Solution"]
+
+# Vendored third-party code (Apache-2.0), see vendor/README.md. Only the transitive closure of
+# `BrownianMotion.Gaussian.BrownianMotion` is vendored; `globs` (not `roots`) builds all listed siblings.
+[[lean_lib]]
+name = "Compat"
+srcDir = "vendor/kolmogorov_extension4"
+leanOptions = {autoImplicit = false, relaxedAutoImplicit = false}
+globs = ["Compat.CompactSystemExtra"]
+
+[[lean_lib]]
+name = "KolmogorovExtension4"
+srcDir = "vendor/kolmogorov_extension4"
+leanOptions = {autoImplicit = false, relaxedAutoImplicit = false}
+globs = ["KolmogorovExtension4.CompactSystem", "KolmogorovExtension4.KolmogorovExtension", "KolmogorovExtension4.RegularContent"]
+
+[[lean_lib]]
+name = "BrownianMotion"
+srcDir = "vendor/brownian-motion"
+leanOptions = {autoImplicit = false, relaxedAutoImplicit = false}
+globs = [
+  "BrownianMotion.Auxiliary.Algebra",
+  "BrownianMotion.Auxiliary.ContinuousBilinForm",
+  "BrownianMotion.Auxiliary.DenseCountable",
+  "BrownianMotion.Auxiliary.ENNReal",
+  "BrownianMotion.Auxiliary.FiniteInf",
+  "BrownianMotion.Auxiliary.HasLaw",
+  "BrownianMotion.Auxiliary.LinearAlgebra",
+  "BrownianMotion.Auxiliary.MeanInequalities",
+  "BrownianMotion.Auxiliary.MeasureTheory",
+  "BrownianMotion.Auxiliary.Metric",
+  "BrownianMotion.Auxiliary.NNReal",
+  "BrownianMotion.Auxiliary.Topology",
+  "BrownianMotion.Continuity.Chaining",
+  "BrownianMotion.Continuity.CoveringNumber",
+  "BrownianMotion.Continuity.HasBoundedInternalCoveringNumber",
+  "BrownianMotion.Continuity.IsKolmogorovProcess",
+  "BrownianMotion.Continuity.KolmogorovChentsov",
+  "BrownianMotion.Continuity.KolmogorovChentsovInequality",
+  "BrownianMotion.Continuity.LimitModification",
+  "BrownianMotion.Gaussian.BrownianMotion",
+  "BrownianMotion.Gaussian.CovMatrix",
+  "BrownianMotion.Gaussian.Gaussian",
+  "BrownianMotion.Gaussian.GaussianProcess",
+  "BrownianMotion.Gaussian.Moment",
+  "BrownianMotion.Gaussian.ProjectiveLimit",
+  "BrownianMotion.Gaussian.StochasticProcesses"
+]

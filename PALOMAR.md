@@ -246,7 +246,7 @@ Amendments and flags (all recorded in the docstrings in `Challenge.lean`):
 
 Not formalized (updated after the cheap block integration below): Question 1.10 (open problem); eq. (loggradbound) and its consequences
 (conjectural); the derivative identity `dH/dt = -I` for general laws; Theorem 1.7 on manifolds; the sphere, Dyson and KLS discussions; Gaussian
-isoperimetry; existence of Brownian motion; the Leibniz identity for the carré du champ; the vector form of the Bochner identity; the Rothaus
+isoperimetry; (existence of Brownian motion is now formalized, see "Vendored Brownian motion library"); the Leibniz identity for the carré du champ; the vector form of the Bochner identity; the Rothaus
 alternative (literature); `m` as the centre of mass for coordinates `i ≥ k₁`. (Formerly listed here and now covered: the SDE-level
 Brownian scaling, eq. (expdecI) for general laws and its Dini form, W2 and entropy mixing times, the Riemannian Bochner/CD equivalence.)
 
@@ -333,3 +333,26 @@ import `CutoffRigidity.Statements`); `mEntropy` was dropped in favour of the gen
 Challenge.lean: 46 theorems, 51 definitions (998 lines, 68 KB; limits 1000 lines / 100 KiB). Full `lake build` (9683 jobs), `check-palomar.py --ready` (767 Lean files),
 axiom check (all 46 theorems use only `propext`, `Classical.choice`, `Quot.sound`, none uses `sorryAx`) and the sandboxed Comparator (con-ron, nanoda, Lean kernel) all pass.
 The 11 added statements were audited by two independent AI agents (`verification/audit-extra-H.md`, `audit-extra-I.md`): no defect. Not a human review.
+
+## Vendored Brownian motion library (25 October 2026)
+
+`Challenge.lean` now states 48 theorems (51 definitions unchanged): `exists_stdBrownian` and `exists_langevin`, proved in `Solution.lean` by
+`CutoffRigidity.Paper.exists_stdBrownian` and `CutoffRigidity.Paper.exists_langevin` (`CutoffRigidity/Paper/ExistsBrownian.lean`), with only
+`propext`, `Classical.choice`, `Quot.sound`. The Challenge closure is still Lean core + Mathlib: the statements use only Challenge definitions.
+
+Vendoring (see `vendor/README.md`, `scope-status/bmx.md`, `extra-status/integration3.md`). The proof of `exists_stdBrownian` uses `isBrownianReal_brownian`
+from the Brownian motion library of Degenne, Ledvinka, Marion and Pfaffelhuber (arXiv:2511.20118), whose upstream needs a newer Mathlib than
+this project. Rather than bump Mathlib (17+ broken modules) or fork, the 29 needed modules (26 of `BrownianMotion`, 3 of `KolmogorovExtension4`)
+are copied under `vendor/`, plus one added module. Origins: brownian-motion `546d77295fdf8ae7f44cec14ec5df7959c4e3617`, kolmogorov_extension4
+`c20f168ed693537c78111ffeabc2ab5f384e35d6`. Patches: `IsKolmogorovProcess.lean` (three added `have hqd_nonneg` lines), `KolmogorovChentsov.lean`
+(one `.aemeasurable` dropped), `KolmogorovExtension4/CompactSystem.lean` (one added import), new `Compat/CompactSystemExtra.lean` (backport of Mathlib
+PRs 36089, 36225, 36160; delete when Mathlib is bumped). Each patched file carries a `-- MODIFIED` comment. They are declared as `[[lean_lib]]`
+entries with `srcDir` and `globs` in `lakefile.toml` (`roots` would not build sibling modules); `lake-manifest.json`, the packages directory and the
+sandbox wrapper are unchanged. Every vendored file uses `module` and is below 10000 lines; no `sorry`, `axiom`, `native_decide`;
+`scripts/check-palomar.py` needed no change. Licences: upstream Apache-2.0 texts live in `vendor/*/LICENSE` (the root keeps exactly one licence file).
+Only `CutoffRigidity/Paper/ExistsBrownian.lean` imports the vendored library, with a private `import`, so vendored root-namespace lemmas are
+invisible to the rest of the project; the full build shows no declaration clash.
+
+Comparator: NOT rerun after this integration (the earlier spike accepted a mini pair with the same libraries in the sandbox, with all three
+kernels; the full pair must be rerun; con-ron will count the vendored declarations too). The new statements have had no AI audit and no human review
+(`review.status` stays `unchecked`).

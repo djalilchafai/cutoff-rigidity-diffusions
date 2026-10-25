@@ -2,6 +2,8 @@
   "challenge_module": "Challenge",
   "solution_module": "Solution",
   "theorem_names": [
+    "CutCur.exists_stdBrownian",
+    "CutCur.exists_langevin",
     "CutCur.main_wasserstein_estimate",
     "CutCur.eigenspace_dim_and_lambda",
     "CutCur.wasserstein_cutoff",
