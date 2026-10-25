@@ -219,6 +219,10 @@ This workspace links `.lake/packages` to the shared package cache at
 pinned commit; project build outputs remain local. This machine-specific link
 is not part of the project sources.
 
+## Human review
+
+[HUMAN_REVIEW.md](HUMAN_REVIEW.md) is a draft checklist for the human semantic review, which has not taken place.
+
 ## Palomar status
 
 [PALOMAR.md](PALOMAR.md) records the official requirements and the detailed status.
