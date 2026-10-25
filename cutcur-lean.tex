@@ -67,7 +67,7 @@ Secondary 58J65; % - Diffusion processes and stochastic analysis on manifolds
   linked to the presence of a Gaussian factor. A novelty is the extensive
   usage of functional inequalities, even for short-time regularization, and
   the reduction to Wasserstein. The proofs are short and conceptual. Since the
-  product condition is satisfied, an Lp cutoff holds for all p. We moreover
+  product condition is satisfied, an Lp cutoff holds for all finite p. We moreover
   discuss a natural extension to Riemannian manifolds, a link with logarithmic
   gradient estimates in short-time for the heat kernel, and ask about
   stability by perturbation. Finally, beyond rigidity but still for
@@ -391,7 +391,7 @@ condition, and the mixing time in total variation goes to
 infinity by comparing with the projection of the process on an (affine)
 eigenfunction associated to the spectral gap. This allows to use
 \cite[Th.~3.3]{MR2375599} and \cite[Cor.~1]{salez-2025} to get cutoff for
-$L^p$ distance, $p\geq1$, namely, denoting $\mu^{(d)}_t$ the law of
+$L^p$ distance, $1\leq p<\infty$, namely, denoting $\mu^{(d)}_t$ the law of
 $X^{(d)}_t$, this writes
 \begin{equation}\label{eq:Lp}
     \lim_{d\to\infty}
@@ -403,8 +403,8 @@ $X^{(d)}_t$, this writes
       0 & \text{if $t_d=(1+\varepsilon)t_*$}
     \end{cases}
 \end{equation}
-where $\max=2$ if $p=1$ and $\max=+\infty$ if $p>1$, see \cite{blog-saloff}
-for a pedagogical presentation. We emphasize that
+where $\max=2$ if $p=1$ and $\max=+\infty$ if $1<p<\infty$, see \cite{blog-saloff}
+for a pedagogical presentation. The case $p=\infty$ is excluded: it fails already for the Ornstein--Uhlenbeck process. We emphasize that
 Corollaries~\ref{cor_cutoff_langevin_general},~\ref{co:cutoff:tv:H},
 and~\ref{cor_convex_inter} give the mixing time as well as the cutoff.
 
@@ -1348,7 +1348,7 @@ following.
   \item $k_1$ is the dimension of the eigenspace of $-\mathcal{L}$ associated with the eigenvalue $\lambda_1$
   \item $\gamma_{k_1,\rho^{-1}}$ is the centered Gaussian law on
     $\mathbb{R}^{k_1}$ with covariance matrix $\rho^{-1}\mathrm{Id}_{k_1}$
-  \item $(M', g', \mu')$ is a weighted Riemannian manifold satisfying $\mathrm{CD}(\rho, \infty)$.
+  \item $(M', g', \mu')$ is a smooth, connected, complete weighted Riemannian manifold without boundary satisfying $\mathrm{CD}(\rho, \infty)$.
   \end{itemize}
 \end{theorem}
 
