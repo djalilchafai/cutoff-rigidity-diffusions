@@ -352,3 +352,10 @@ public import CutoffRigidity.Extra.Temperature
 public import CutoffRigidity.Extra.WassersteinCutoffWeak
 public import CutoffRigidity.Extra.RiemannLichnerowicz
 public import CutoffRigidity.Extra.NoBmStatements
+public import CutoffRigidity.Extra.RicciBochner
+public import CutoffRigidity.Extra.RiemannK1
+public import CutoffRigidity.Extra.RiemannPoincareLSI
+public import CutoffRigidity.Extra.FisherDecayGeneral
+public import CutoffRigidity.Extra.BrownianScaling
+public import CutoffRigidity.Extra.TemperatureSDE
+public import CutoffRigidity.Extra.MixingTimeW2KL

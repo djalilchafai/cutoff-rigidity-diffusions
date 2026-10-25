@@ -204,15 +204,30 @@ The numbering below follows the common theorem/remark/definition counter in the 
 | OU first eigenspace `k₁ = d` | `CutCur.ou_first_eigenspace` | Proved, `0 < d` |
 | OU from the mean, cutoff at `log d/(4λ₁)` | `CutCur.ou_mean_start_cutoff` | Proved for W2 only, plus non-cutoff at `t*` |
 | `p = ∞` fails for OU | `CutCur.ou_lp_infty_fails` | Proved for balls `B(m, c√n)`; false from a single point (the ratio is bounded there) |
-| Mixing time of rigid sequences, product condition holds | `CutCur.mixing_time_rigid` | Proved for the TV mixing time; the W2 and entropy mixing-time sentence is not formalized |
+| Mixing time of rigid sequences, product condition holds | `CutCur.mixing_time_rigid` | Proved for the TV mixing time; the W2 and entropy mixing times are `CutCur.mixing_time_w2_rigid` and `CutCur.mixing_time_kl_rigid` (cheap block, below) |
 | Moments, `Λ` on balls (proofs of Thm 1.1, Cor. 1.3) | `CutCur.langevin_moment_bounds`, `CutCur.sup_eigenLambda_ball` | Proved |
 | W2 contraction, arbitrary laws | `CutCur.langevin_w2_contraction` | Proved |
-| Entropy decay, regularization, CKP, Fisher bounds | `CutCur.langevin_entropy_decay`, `CutCur.pinsker_tvDist`, `CutCur.talagrand_logSobolev` | Proved (`0 < d`; the first is stated for the Langevin process `X`; the Talagrand/LSI statement has no process); eq. (expdecI) for general laws and `dH/dt = -I`, `dI/dt ≤ -2ρI` not stated |
+| Entropy decay, regularization, CKP, Fisher bounds | `CutCur.langevin_entropy_decay`, `CutCur.pinsker_tvDist`, `CutCur.talagrand_logSobolev` | Proved (`0 < d`; the first is stated for the Langevin process `X`; the Talagrand/LSI statement has no process); eq. (expdecI) for general laws and its Dini form are `langevin_fisher_decay`, `langevin_fisher_dini` (cheap block, below); `dH/dt = -I` for general laws not stated |
 | Optimal constants (PI `1/λ₁`, LSI twice PI, extremals) | `CutCur.optimal_lsi_twice_pi`, `CutCur.optimal_constants_extremal` | Proved (no Brownian hypothesis) with a smooth bounded Lipschitz test class; Rothaus remark not formalized |
 | Section 4.1, Fisher information of the OU kernel; score of the heat kernel | `CutCur.ou_fisher_information`, `CutCur.heat_kernel_score` | Proved; eq. (loggradbound) conjectural, not formalized |
-| Section 4.2, normalization | `CutCur.normalization_cutoff` | Proved for time-changed laws; the SDE time change and Brownian scaling are not formalized |
-| Section 4.4, temperature | `CutCur.temperature_bakry_emery`, `CutCur.temperature_cd` | Proved; invariance only infinitesimally (`∫ L_σ f dμ_σ = 0`), no SDE with temperature |
+| Section 4.2, normalization | `CutCur.normalization_cutoff` | Proved for time-changed laws; the SDE time change and Brownian scaling are `CutCur.normalization_sde` (cheap block, below) |
+| Section 4.4, temperature | `CutCur.temperature_bakry_emery`, `CutCur.temperature_cd` | Proved; invariance only infinitesimally (`∫ L_σ f dμ_σ = 0`); the SDE level is `temperature_sde`, `temperature_cutoff` (cheap block, below) |
 | Question 1.10 | none | Open question |
+
+Cheap block (25 October 2026; statements in `Challenge.lean`, proofs `CutoffRigidity.Paper.<name>`; no AI audit of the statements yet, no human review):
+
+| Source item | Lean statement | Status |
+| --- | --- | --- |
+| Bochner identity, Section 1.4 (L641-654) | `CutCur.bochner_identity` | Proved, scalar form; Ricci tensor from Mathlib's Levi-Civita connection (choice-free extensions); the vector form is not formalized |
+| `CD(ρ,∞)` iff `Ric + Hess V ≥ ρ g` (L655-663) | `CutCur.CD_iff_ricci` | Proved |
+| `k₁` bounds, Riemannian (L633-636) | `CutCur.riemannian_k1_bounds` | Proved with `mSpectralGap = ρ` (`hgap`), needed for `k₁ ≤ dim M` (on the round sphere `λ₁ = d`, `k₁ = d+1`) |
+| Riemannian Poincaré and log-Sobolev (L618-632) | `CutCur.riemannian_poincare_lsi` | Proved, constant `2/ρ`, smooth compactly supported `f`; `entropyOf` now on any measurable space |
+| Fisher decay for all initial laws (eq. expdecI) | `CutCur.langevin_fisher_decay` | Proved (`I(ν) = ⊤` allowed) |
+| Dini form of `dI/dt ≤ -2ρI` | `CutCur.langevin_fisher_dini` | Proved on `toReal` at times with `I(μ_t) ≠ ⊤`; no derivative claimed |
+| Brownian scaling, normalization at the SDE level | `CutCur.normalization_sde` | Proved; solutions and Brownian motion by hypothesis |
+| Temperature at the SDE level, invariance of the Gibbs law | `CutCur.temperature_sde` | Proved with the added assumptions `C²` and `Hess V ≥ ρ > 0` |
+| Temperature, cutoffs (σ-independence of the critical time) | `CutCur.temperature_cutoff` | Proved with the hypothesis `ρₙ = σ² λ₁(Vₙ/σ²)`; information cutoffs under `ρ = o(log n)` |
+| W2 and entropy mixing times (summary after Cor. 1.6) | `CutCur.mixing_time_w2_rigid`, `CutCur.mixing_time_kl_rigid` | Proved; for W2 `t₀ → ∞` only under `λ₁ = o(log n)` (an implication; false otherwise) |
 
 The unnumbered Lᵖ conclusion (1.25) additionally depends on Chen–Saloff-Coste's general Markov Lᵖ cutoff theorem, Salez's p=1 result, identification of mixing times, and a precise convention for p (the finite-p regime must be checked rather than silently extending to infinity).
 

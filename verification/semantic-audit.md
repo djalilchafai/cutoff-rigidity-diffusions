@@ -517,3 +517,17 @@ Three further independent AI audits (statements and definitions; reports `audit-
   docstring of `IsDiffusionSemigroup` was corrected accordingly), and proved in scratch Lean files that every hypothesis of Theorem 1.9, including `Pt`,
   holds for the Gaussian on `ℝ^k` (previously the witness left the semigroup out). Not verified: that `Kk` is the law of the SDE (1.26).
 Theorem 1.9 therefore has a Lean-checked non-vacuity witness at the statement level (flat case). All of this is AI audit, not human review.
+
+## Audit of the 11 statements added by the cheap block (AI, 25 October 2026)
+
+Two independent AI auditors (statements and definitions only; no Lean scratch files; reports `audit-extra-H.md`, `audit-extra-I.md`) found no defect.
+* **H (Riemannian: `bochner_identity`, `CD_iff_ricci`, `riemannian_k1_bounds`, `riemannian_poincare_lsi`, `mCurv`/`mExt`/`mRic`/`mHess`/`mHessSq`, generalized `entropyOf`).**
+  `mCurv` is the standard `R(X,Y)Z` of Mathlib's Levi-Civita connection and `mRic` the standard Ricci tensor; a flat computation cannot detect the sign, which is instead
+  pinned by `bochner_identity` being kernel-proved with `+Ric(∇f,∇f)`. No non-flat scratch example was run. `hgap` is needed for the `k₁` bound (on the sphere `k₁ = d+1`);
+  the manuscript does not print that bound or the Riemannian LSI constants, so these are derived statements.
+* **I (Langevin: `langevin_fisher_decay`, `langevin_fisher_dini`, `IsSDESolution`, `normalization_sde`, `temperature_sde`, `temperature_cutoff`, `mixingTimeW2`/`KL`,
+  `mixing_time_w2_rigid`, `mixing_time_kl_rigid`).** Constants of the time change match the manuscript (drift `c`, noise `√(2c)`); the Dini form is a corollary of the decay
+  statement; the hypothesis of `temperature_cutoff` (`ρ n = σ² λ₁(V n/σ²)`) is the equality case of Bakry–Émery for the generator `σ²Δ − ∇V·∇`, consistent for the
+  Ornstein–Uhlenbeck potential; the fourth conjunct of `mixing_time_w2_rigid` must be an implication (with `ρ ~ log n` the mixing time stays bounded). One wording fix applied:
+  the docstring of `temperature_sde` now says `Z_σ = 1` instead of "normalizable".
+This is an AI audit, not a human review.

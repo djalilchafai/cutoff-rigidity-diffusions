@@ -174,7 +174,7 @@ Proof architecture (about 150 files `Riemann/Diff*.lean`):
 
 All twelve Challenge theorems have proofs of exactly the Challenge type; `Solution.lean` builds with
 no `sorry`, and each depends only on `propext`, `Classical.choice`, `Quot.sound`. `comparator.json`
-lists 35 theorems and 43 definitions (12 original theorems and 39 definitions at the time of the first Comparator run). `lake comparator` accepted the solution
+lists 46 theorems and 51 definitions after the cheap block integration (35 and 43 before it; 12 original theorems and 39 definitions at the time of the first Comparator run). `lake comparator` accepted the solution
 (`verification/comparator-final.log`: con-ron, nanoda and the Lean kernel all accept, 88114 declarations).
 The run was repeated inside the official bwrap sandbox (`verification/comparator-sandboxed.log`,
 same result: con-ron, nanoda and the Lean kernel accept). On this machine `/home` is a symlink to
@@ -244,13 +244,11 @@ Amendments and flags (all recorded in the docstrings in `Challenge.lean`):
 - Test class of `optimalPI`, `optimalLSI`: smooth, bounded, Lipschitz functions; the manuscript does not fix one.
 - `normalization_cutoff` concerns the time-changed laws `X_{αt}` only.
 
-Not formalized: Question 1.10 (open problem); eq. (loggradbound) and its consequences (conjectural); the claim that
-`X_{αt}` solves the SDE with generator `α𝓛` (not a Challenge statement yet; correction from the scoping study: Brownian scaling IS available
-in Mathlib as `IsBrownianReal.smul`, see `scope-status/bmC.md`); eq. (expdecI) for general initial laws (not a Challenge statement yet; correction: the
-project already proves it for every initial law as `relativeFisherInformation_langevinKernel_le` in `FisherDecay.lean`, and only monotonicity of `I`
-and `I(μ_{s+t}) ≤ H(μ_s)/t` are stated in the Challenge); the derivative identities `dH/dt = -I` and
-`dI/dt ≤ -2ρI` (only integrated consequences); the W2 and entropy mixing-time sentence; the Rothaus alternative
-(literature); `m` as the centre of mass for coordinates `i ≥ k₁`; the Dyson-OU, sphere and KLS discussions.
+Not formalized (updated after the cheap block integration below): Question 1.10 (open problem); eq. (loggradbound) and its consequences
+(conjectural); the derivative identity `dH/dt = -I` for general laws; Theorem 1.7 on manifolds; the sphere, Dyson and KLS discussions; Gaussian
+isoperimetry; existence of Brownian motion; the Leibniz identity for the carré du champ; the vector form of the Bochner identity; the Rothaus
+alternative (literature); `m` as the centre of mass for coordinates `i ≥ k₁`. (Formerly listed here and now covered: the SDE-level
+Brownian scaling, eq. (expdecI) for general laws and its Dini form, W2 and entropy mixing times, the Riemannian Bochner/CD equivalence.)
 
 `scripts/gen-solution.py` now passes `(Ω := Ω)` to `apply` for the three theorems where `Ω` occurs only in
 hypotheses (`EXPLICIT` table in the script).
@@ -296,3 +294,42 @@ The three Brownian-free statements were re-audited by one independent AI agent (
 
 Second independent AI audits (`verification/audit-extra-G.md`, `audit-second-1.md`, `audit-second-2.md`) covered the statements edited after
 their first audit and the original theorems 1-7 and 9-12: no defect; one docstring corrected (`IsDiffusionSemigroup`). Not a human review.
+
+## Cheap block integration (25 October 2026)
+
+Eleven further statements were added to `Challenge.lean` (35 to 46 theorems, 43 to 51 definitions); each has a proof
+`CutoffRigidity.Paper.<name>` of exactly the Challenge type, wired in `Solution.lean`, depending only on `propext`,
+`Classical.choice`, `Quot.sound`. The full `lake build`, `lake build Challenge Solution` and `scripts/check-palomar.py --ready` pass.
+The Comparator has NOT been rerun, and the new statements have had no AI statement audit and no human review
+(`review.status` stays `unchecked`). Reports: `extra-status/cb1.md` to `cb4.md`, `extra-status/integration2.md`.
+
+New definitions (all in `Challenge.lean`, namespace `CutCur`): `mixingTimeW2`, `mixingTimeKL`, `IsSDESolution`, `mCurv`, `mExt`, `mRic`,
+`mHess`, `mHessSq`. `entropyOf` is now stated on an arbitrary measurable space (same body; on `Rd d` it is the former definition, so
+`optimalLSI` and the earlier statements keep their meaning).
+
+New theorems (manuscript item, module):
+- `bochner_identity`, `CD_iff_ricci` (Section 1.4, lines 641-663; `RicciBochner`). The Ricci tensor is choice-free
+  (`Ric(v,w) = ∑ᵢ ⟨R(eᵢ,v)w, eᵢ⟩`, `R(X,Y)Z = ∇_X∇_Y Z - ∇_Y∇_X Z - ∇_[X,Y] Z`, extensions by constant coordinates in the canonical
+  trivialization). Scalar form only.
+- `riemannian_k1_bounds` (`RiemannK1`): `1 ≤ k₁ ≤ dim M`; flag: needs `hgap : λ₁ = ρ` (false claim without it on spheres).
+- `riemannian_poincare_lsi` (`RiemannPoincareLSI`): Poincaré and log-Sobolev (constant `2/ρ`) under `CD(ρ,∞)`, `ρ > 0`, for smooth compactly
+  supported `f`, no gap hypothesis.
+- `langevin_fisher_decay`, `langevin_fisher_dini` (`FisherDecayGeneral`): eq. (expdecI) for every initial law (`I = +∞` allowed) and the upper
+  Dini form; flag: the Dini form is on `toReal` at times with `I(μ_t) ≠ ⊤`, no derivative is claimed.
+- `normalization_sde` (`BrownianScaling`): Brownian scaling and the scaled SDE (`IsSDESolution`); solutions are given by hypothesis (`IsLangevin`).
+- `temperature_sde`, `temperature_cutoff` (`TemperatureSDE`). Flags: `temperature_sde` adds `C²` and `Hess V ≥ ρ > 0` (convexity is not in the
+  manuscript; needed by the library's Langevin kernel); `temperature_cutoff` takes `ρₙ = σ² λ₁(Vₙ/σ²)` as a hypothesis (`hgap`) as the reading
+  of "rigid case"; Brownian motions and solutions are given by hypothesis.
+- `mixing_time_w2_rigid`, `mixing_time_kl_rigid` (`MixingTimeW2KL`): W2 and entropy mixing times, every `η > 0`; flag: in the W2 statement the
+  last conjunct is an implication (`t₀ → ∞` only under `λ₁ = o(log n)`; it fails otherwise).
+- The docstring of `normalization_cutoff` now points to `normalization_sde`.
+
+Procedure: definitions moved from the `Extra` modules to `Challenge.lean` (so `Statements.lean` provides them to the Extra files, which now
+import `CutoffRigidity.Statements`); `mEntropy` was dropped in favour of the general `entropyOf`; `scripts/sync-statements.py` and
+`scripts/gen-solution.py` were rerun unchanged; seven `Extra` modules were appended to `CutoffRigidity.lean`; `comparator.json` regenerated.
+
+## Final suite after the cheap block (25 October 2026)
+
+Challenge.lean: 46 theorems, 51 definitions (998 lines, 68 KB; limits 1000 lines / 100 KiB). Full `lake build` (9683 jobs), `check-palomar.py --ready` (767 Lean files),
+axiom check (all 46 theorems use only `propext`, `Classical.choice`, `Quot.sound`, none uses `sorryAx`) and the sandboxed Comparator (con-ron, nanoda, Lean kernel) all pass.
+The 11 added statements were audited by two independent AI agents (`verification/audit-extra-H.md`, `audit-extra-I.md`): no defect. Not a human review.

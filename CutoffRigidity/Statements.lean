@@ -7,22 +7,20 @@ public import Mathlib
 /-!
 # Definitions of the Challenge statement surface (generated)
 
-Statement surface for D. Chafaï and M. Fathi, *On cutoff via rigidity for
-high-dimensional curved diffusions* (local corrected manuscript
-`cutcur-lean.tex`, based on arXiv:2412.15969v4). Every object is defined from
-Mathlib alone. Each theorem below corresponds to a numbered result of the
-paper; amendments to the printed statements are flagged in the docstrings.
+Statement surface for D. Chafaï and M. Fathi, *On cutoff via rigidity for high-dimensional curved
+diffusions* (local corrected manuscript `cutcur-lean.tex`, based on arXiv:2412.15969v4). Every object
+is defined from Mathlib alone. Each theorem below corresponds to a numbered result of the paper;
+amendments to the printed statements are flagged in the docstrings.
 
-Conventions. `ℝ^d` is `EuclideanSpace ℝ (Fin d)`. Suprema of nonnegative
-discrepancies over sets of initial conditions are taken in `ℝ≥0∞`, so that
-infinite values are meaningful. Laws of processes at a real time `t` use the
-time `t.toNNReal`; all times appearing in the statements are nonnegative.
+Conventions. `ℝ^d` is `EuclideanSpace ℝ (Fin d)`. Suprema of nonnegative discrepancies over sets of
+initial conditions are taken in `ℝ≥0∞`, so that infinite values are meaningful. Laws of processes at a
+real time `t` use the time `t.toNNReal`; all times appearing in the statements are nonnegative.
 
-Remark on the definitions of the first eigenspace. `E₁`, `k₁`, `Λ` and `λ₁` are defined
-classically: `λ₁` as the infimum of the Rayleigh quotient over smooth compactly supported
-functions, and `E₁` through `C²` (Euclidean) or smooth (Riemannian) `L²` eigenfunctions. They agree
-with the spectral objects of the paper through elliptic regularity and essential self-adjointness;
-the Lean `E₁` is contained in the spectral one, so any discrepancy could only weaken a lower bound.
+Remark on the definitions of the first eigenspace. `E₁`, `k₁`, `Λ` and `λ₁` are defined classically:
+`λ₁` as the infimum of the Rayleigh quotient over smooth compactly supported functions, and `E₁` through
+`C²` (Euclidean) or smooth (Riemannian) `L²` eigenfunctions. They agree with the spectral objects of the
+paper through elliptic regularity and essential self-adjointness; the Lean `E₁` is contained in the
+spectral one, so any discrepancy could only weaken a lower bound.
 -/
 
 open MeasureTheory ProbabilityTheory Filter Topology Set
@@ -82,8 +80,7 @@ def RigidCurvature {d : ℕ} (V : Rd d → ℝ) : Prop :=
   0 < spectralGap V ∧ ∀ x z : Rd d, spectralGap V * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z
 
 /-- `B` is a standard Brownian motion on `ℝ^d`: independent real Brownian coordinates. -/
-def IsStdBrownian {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (B : ℝ≥0 → Ω → Rd d)
-    (P : Measure Ω) : Prop :=
+def IsStdBrownian {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) : Prop :=
   (∀ i, IsBrownianReal (fun t w => B t w i) P) ∧ iIndepFun (fun i w (t : ℝ≥0) => B t w i) P
 
 /-- `X` solves the SDE (1.1) `dXₜ = -∇V(Xₜ)dt + √2 dBₜ`, `X₀ = x₀`: almost surely the
@@ -172,14 +169,24 @@ def mixingTime {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
     (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
   ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => .ofReal (tvDist ν μ)) t ≤ .ofReal η), (t : ℝ≥0∞)
 
+/-- The Wasserstein mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} W₂(Xₜ, μ) ≤ η}` (`+∞` if empty). -/
+def mixingTimeW2 {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
+    (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
+  ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => wasserstein2 ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
+
+/-- The entropy mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} H(Xₜ | μ) ≤ η}` (`+∞` if empty). -/
+def mixingTimeKL {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
+    (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
+  ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => InformationTheory.klDiv ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
+
 /-! ## Further results of the manuscript (remarks, examples, proof ingredients, Section 4)
 
 Statements of intermediate claims of the manuscript that are not part of the numbered theorems
 above. Amendments with respect to the printed text (`0 < d`) are
 flagged in the docstrings. -/
 
-/-- Entropy `Ent_μ(g) = ∫ g log g dμ - (∫ g dμ) log (∫ g dμ)`. -/
-def entropyOf {d : ℕ} (μ : Measure (Rd d)) (g : Rd d → ℝ) : ℝ :=
+/-- Entropy `Ent_μ(g) = ∫ g log g dμ - (∫ g dμ) log (∫ g dμ)`, on any measurable space. -/
+def entropyOf {α : Type*} [MeasurableSpace α] (μ : Measure α) (g : α → ℝ) : ℝ :=
   (∫ x, g x * Real.log (g x) ∂μ) - (∫ x, g x ∂μ) * Real.log (∫ x, g x ∂μ)
 
 /-- Test functions for the optimal constants: smooth, bounded and Lipschitz. -/
@@ -197,6 +204,13 @@ def optimalPI {d : ℕ} (V : Rd d → ℝ) : ℝ :=
 def optimalLSI {d : ℕ} (V : Rd d → ℝ) : ℝ :=
   sInf {C : ℝ | 0 ≤ C ∧ ∀ f : Rd d → ℝ, IsTestFunction f →
     entropyOf (gibbs V) (fun x => f x ^ 2) ≤ C * ∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V}
+
+/-- `X` solves `dXₜ = -a ∇V(Xₜ) dt + s dBₜ`, `X₀ = x₀`: a.s. continuous paths satisfying the integral
+equation. `IsLangevinSolution` is the case `a = 1`, `s = √2`. -/
+def IsSDESolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (a s : ℝ)
+    (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (x₀ : Rd d) (X : ℝ≥0 → Ω → Rd d) : Prop :=
+  ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0,
+    X t w = x₀ - a • (∫ r in (0 : ℝ)..(t : ℝ), gradient V (X r.toNNReal w)) + s • B t w
 
 /-! ## Weighted Riemannian manifolds (Section 1.4)
 
@@ -239,6 +253,34 @@ def carre2 (V f : M → ℝ) (x : M) : ℝ :=
 `f` (equivalently `Ric + Hess V ≥ ρ g`). -/
 def CD (ρ : ℝ) (V : M → ℝ) : Prop :=
   ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → ∀ x, ρ * carre F f f x ≤ carre2 F V f x
+
+/-- `∇_X ∇_Y Z - ∇_Y ∇_X Z - ∇_{[X,Y]} Z` at `x` (the curvature `R(X,Y)Z` for smooth fields). -/
+def mCurv (X Y Z : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
+  CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
+      (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z y (Y y)) x (X x)
+    - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
+      (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z y (X y)) x (Y x)
+    - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z x
+      (VectorField.mlieBracket 𝓘(ℝ, F) X Y x)
+
+/-- A smooth extension of `v ∈ T_x M`: constant coordinates in the canonical trivialization at `x`. -/
+def mExt (x : M) (v : TangentSpace 𝓘(ℝ, F) x) : (y : M) → TangentSpace 𝓘(ℝ, F) y :=
+  fun y => (trivializationAt F (TangentSpace 𝓘(ℝ, F)) x).symm y
+    ((trivializationAt F (TangentSpace 𝓘(ℝ, F)) x (Bundle.TotalSpace.mk' F x v)).2)
+
+/-- The Ricci tensor `Ric(v,w) = ∑ᵢ ⟨R(eᵢ,v)w, eᵢ⟩` (positive on spheres). -/
+def mRic (x : M) (v w : TangentSpace 𝓘(ℝ, F) x) : ℝ :=
+  ∑ i, inner ℝ (mCurv F (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i))
+      (mExt F x v) (mExt F x w) x) (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)
+
+/-- The Hessian `Hess f (v,w) = ⟨∇_v ∇f, w⟩`. -/
+def mHess (f : M → ℝ) (x : M) (v w : TangentSpace 𝓘(ℝ, F) x) : ℝ :=
+  inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x v) w
+
+/-- The squared Hilbert–Schmidt norm `‖Hess f‖² = ∑ᵢ ‖∇_{eᵢ} ∇f‖²`. -/
+def mHessSq (f : M → ℝ) (x : M) : ℝ :=
+  ∑ i, ‖CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x
+    (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)‖ ^ 2
 
 /-- The Riemannian volume density `√det(gᵢⱼ)` of the inverse of the chart at `x₀`, at the chart
 point `z`, computed in an orthonormal basis of the model space. -/
