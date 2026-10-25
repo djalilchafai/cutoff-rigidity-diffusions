@@ -1348,8 +1348,14 @@ following.
   \item $k_1$ is the dimension of the eigenspace of $-\mathcal{L}$ associated with the eigenvalue $\lambda_1$
   \item $\gamma_{k_1,\rho^{-1}}$ is the centered Gaussian law on
     $\mathbb{R}^{k_1}$ with covariance matrix $\rho^{-1}\mathrm{Id}_{k_1}$
-  \item $(M', g', \mu')$ is a smooth, connected, complete weighted Riemannian manifold without boundary satisfying $\mathrm{CD}(\rho, \infty)$.
+  \item $(M', g', \mu')$ is a smooth, connected, complete weighted Riemannian manifold without boundary satisfying $\mathrm{CD}(\rho, \infty)$,
+    with $\mu'=\mathrm{e}^{-V'}\mathrm{vol}_{g'}$ for a smooth $V'$.
   \end{itemize}
+  Moreover, if $\Phi:M\to\mathbb{R}^{k_1}\times M'$ denotes the isometry, then
+  \[
+    V\circ\Phi^{-1}(p,y)=\frac{\rho\left|p\right|_2^2}{2}+V'(y)+\frac{k_1}{2}\log\frac{2\pi}{\rho},
+    \qquad p\in\mathbb{R}^{k_1},\ y\in M'.
+  \]
 \end{theorem}
 
 This was proved by \cite{CZ17} in the setting

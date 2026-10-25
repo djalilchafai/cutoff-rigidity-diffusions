@@ -463,4 +463,4 @@ Recommendation 5 (cosmetic), first part, was applied: `hS` in Theorem 1.7 is now
 `∀ n, 0 < n → (S n).Nonempty`. The proof (`Paper/ProductCondition.lean`) reduces to the
 previous statement by replacing `S 0` with `univ`; the profiles and mixing times agree for `n > 0`.
 The sandboxed Comparator was rerun and accepts the solution
-(`verification/comparator-sandboxed.log`). The manuscript fixes were then applied in `cutcur-lean.tex` (abstract and Lp display restricted to finite `p`; Theorem 3.6 states that `(M',g',μ')` is connected, complete, without boundary). The `V∘Φ⁻¹` identity was not added.
+(`verification/comparator-sandboxed.log`). The manuscript fixes were then applied in `cutcur-lean.tex` (abstract and Lp display restricted to finite `p`; Theorem 3.6 states that `(M',g',μ')` is connected, complete, without boundary). The `V∘Φ⁻¹` identity was then added to the manuscript statement only; `riemannian_gaussian_splitting` in Lean does not state it (it is the constant `(k/2)log(2π/ρ)` seen in the Gaussian witness, but is not proved here as a Challenge conclusion).
