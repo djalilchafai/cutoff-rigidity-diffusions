@@ -245,8 +245,10 @@ Amendments and flags (all recorded in the docstrings in `Challenge.lean`):
 - `normalization_cutoff` concerns the time-changed laws `X_{αt}` only.
 
 Not formalized: Question 1.10 (open problem); eq. (loggradbound) and its consequences (conjectural); the claim that
-`X_{αt}` solves the SDE with generator `α𝓛` (Brownian scaling is not available); eq. (expdecI) for general initial laws (only
-monotonicity of `I` and `I(μ_{s+t}) ≤ H(μ_s)/t` are proved); the derivative identities `dH/dt = -I` and
+`X_{αt}` solves the SDE with generator `α𝓛` (not a Challenge statement yet; correction from the scoping study: Brownian scaling IS available
+in Mathlib as `IsBrownianReal.smul`, see `scope-status/bmC.md`); eq. (expdecI) for general initial laws (not a Challenge statement yet; correction: the
+project already proves it for every initial law as `relativeFisherInformation_langevinKernel_le` in `FisherDecay.lean`, and only monotonicity of `I`
+and `I(μ_{s+t}) ≤ H(μ_s)/t` are stated in the Challenge); the derivative identities `dH/dt = -I` and
 `dI/dt ≤ -2ρI` (only integrated consequences); the W2 and entropy mixing-time sentence; the Rothaus alternative
 (literature); `m` as the centre of mass for coordinates `i ≥ k₁`; the Dyson-OU, sphere and KLS discussions.
 
