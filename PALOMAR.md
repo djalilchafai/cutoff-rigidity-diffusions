@@ -275,3 +275,7 @@ Comparator were rerun and pass. This is not a human review; `review.status` rema
 ergodicity of the canonical kernel is derived from the Bakry–Émery gradient bound. Build, readiness check, axiom check and the sandboxed
 Comparator (35 theorems, 43 definitions) pass. The statement has had no audit beyond the author agent's own report
 (`extra-status/rlich.md`); no human review.
+
+`lsi_of_CD` (`Riemann/DiffLSI.lean`) no longer takes the spectral-gap hypothesis: its Poincaré step now uses `poincare_of_CD`
+(`Extra/RiemannLichnerowicz.lean`; `DiffLSI` imports it). Gap attainment in `DiffFinal.lean` still uses `hgap`, as in Theorem 1.9.
+Build, readiness check, axiom check of all 35 theorems and the sandboxed Comparator pass again.

@@ -54,7 +54,7 @@ theorem riemannian_wasserstein_estimate {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ
       lower (ENNReal.ofReal (ρ * R ^ 2)) ≤ ⨆ x₀ ∈ {x | edist m x ≤ ENNReal.ofReal R}, W x₀ := by
   have hVs : MSmooth F V := hV
   have hpos : 0 < mFirstEigenDim F μ V :=
-    gap_attained_of_LSI F hVs hμ hρ hCD hgap (lsi_of_CD F hVs hμ hρ hCD hgap)
+    gap_attained_of_LSI F hVs hμ hρ hCD hgap (lsi_of_CD F hVs hμ hρ hCD)
   have hK : CanonicalDiffusion F V μ ρ (Kk F hVs hμ) :=
     KerCanonical.toCanonical F (kerCanonical_Kk F hVs hμ) (gradBound_of_CD F hVs hμ hρ hCD)
       (contraction_of_CD F hVs hμ hρ hCD)

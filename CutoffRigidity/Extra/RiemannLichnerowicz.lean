@@ -1,6 +1,7 @@
 module
 
-public import CutoffRigidity.Riemann.DiffLSI
+public import CutoffRigidity.Riemann.DiffBEMain
+public import CutoffRigidity.Riemann.DiffLSIMain
 public import CutoffRigidity.Riemann.DiffKuwGlue
 public import CutoffRigidity.Riemann.DiffGapManifold
 
