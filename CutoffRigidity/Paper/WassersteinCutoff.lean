@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.SeqData
 public import CutoffRigidity.BarycenterWassersteinCutoff
 
@@ -39,7 +40,7 @@ theorem worst_wasserstein_eq {Ω Ω' : Type*} [MeasurableSpace Ω] [MeasurableSp
   rfl
 
 /-- **Corollary 1.3** (Wasserstein cutoff on balls `B(m, c√d)`). -/
-theorem wasserstein_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, CutCur.Rd n → ℝ}
+theorem wasserstein_cutoff_carrier {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, CutCur.Rd n → ℝ}
     {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (h : CutCur.IsRigidSequence V B P X) {c : ℝ} (hc : 0 < c) :

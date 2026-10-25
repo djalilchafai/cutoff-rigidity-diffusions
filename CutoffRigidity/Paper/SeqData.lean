@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.GapBridge
 public import CutoffRigidity.SpectralInformationLowerCutoffs
 public import Mathlib.Probability.ProductMeasure

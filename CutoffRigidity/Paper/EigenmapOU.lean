@@ -17,7 +17,7 @@ open MeasureTheory ProbabilityTheory Filter Set
 open scoped ENNReal NNReal Topology ContDiff
 
 /-- **Lemma 3.3** (projection on an orthonormal multi-eigenfunction is an OU process). -/
-theorem eigenmap_is_ou {Ω : Type*} [MeasurableSpace Ω] {d : ℕ}
+theorem eigenmap_is_ou_carrier {Ω : Type*} [MeasurableSpace Ω] {d : ℕ}
     {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d} {P : Measure Ω}
     {X : CutCur.Rd d → ℝ≥0 → Ω → CutCur.Rd d}
     (hL : CutCur.IsLangevin V B P X) (hV : CutCur.RigidCurvature V)

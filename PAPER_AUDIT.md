@@ -187,8 +187,8 @@ The numbering below follows the common theorem/remark/definition counter in the 
 | Theorem 3.1, `thm_split_eucl` | Gaussian splitting of dimension k₁ and affine first eigenfunctions | Integrated Bochner, regularity and full support, affine rigidity, measure factorization, maximality of factor | Proved (`CutCur.euclidean_gaussian_factorization`; see `Challenge.lean`) |
 | Remark 3.2, `rem_eigen_grad` | Affine gradient normalization | Integration by parts on eigenfunction domain | Proved (`CutCur.euclidean_gaussian_factorization`; see `Challenge.lean`) |
 | Lemma 3.3, `lem_proj_ou` | A normalized multi-eigenmap sends the diffusion to scaled OU | Chain rule/generator intertwining plus Markov/martingale-problem uniqueness or direct SDE argument | Proved (`CutCur.eigenmap_is_ou`; see `Challenge.lean`) |
-| Remark 3.4 | Relaxed inverse-gap growth condition | Quantitative version of scalar cutoff asymptotics | Proved (`CutCur.wasserstein_cutoff_weak`) |
-| Remark 3.5 | Relaxed `λ_d=d^{o(1)}` assumption | Dimension-dependent regularization time and prefactors | Proved (`CutCur.information_cutoff_weak`) |
+| Remark 3.4 | Relaxed inverse-gap growth condition | Quantitative version of scalar cutoff asymptotics | Proved (`CutCur.wasserstein_cutoff_weak`; kernel form, `V` is `C^∞`, no Brownian motion) |
+| Remark 3.5 | Relaxed `λ_d=d^{o(1)}` assumption | Dimension-dependent regularization time and prefactors | Proved (`CutCur.information_cutoff_weak`; kernel form, `V` is `C^∞`, no Brownian motion) |
 | Theorem 3.6, `thm_split_cz` | Weighted Riemannian Gaussian splitting | Cheng–Zhou theorem, global geometric splitting, weighted-volume factorization | Proved (`riemannian_gaussian_splitting`), now including the identity `V∘Φ⁻¹(p,y) = ρ|p|²/2 + V'(y) + (k₁/2) log(2π/ρ)` and the connectedness and completeness of the factor |
 | Lemma 3.7, `lem_rig` | Affine first eigenfunctions through splitting, gradient norm and orthogonality | Integrated Bochner, regularity, parallel vector fields, splitting and polarization | Proved (inside `riemannian_gaussian_splitting`) |
 
@@ -206,7 +206,7 @@ The numbering below follows the common theorem/remark/definition counter in the 
 | `p = ∞` fails for OU | `CutCur.ou_lp_infty_fails` | Proved for balls `B(m, c√n)`; false from a single point (the ratio is bounded there) |
 | Mixing time of rigid sequences, product condition holds | `CutCur.mixing_time_rigid` | Proved for the TV mixing time; the W2 and entropy mixing times are `CutCur.mixing_time_w2_rigid` and `CutCur.mixing_time_kl_rigid` (cheap block, below) |
 | Moments, `Λ` on balls (proofs of Thm 1.1, Cor. 1.3) | `CutCur.langevin_moment_bounds`, `CutCur.sup_eigenLambda_ball` | Proved |
-| W2 contraction, arbitrary laws | `CutCur.langevin_w2_contraction` | Proved |
+| W2 contraction, arbitrary laws | `CutCur.langevin_w2_contraction` | Proved (kernel form, `V` is `C^∞`) |
 | Entropy decay, regularization, CKP, Fisher bounds | `CutCur.langevin_entropy_decay`, `CutCur.pinsker_tvDist`, `CutCur.talagrand_logSobolev` | Proved (`0 < d`; the first is stated for the Langevin process `X`; the Talagrand/LSI statement has no process); eq. (expdecI) for general laws and its Dini form are `langevin_fisher_decay`, `langevin_fisher_dini` (cheap block, below); `dH/dt = -I` for general laws not stated |
 | Optimal constants (PI `1/λ₁`, LSI twice PI, extremals) | `CutCur.optimal_lsi_twice_pi`, `CutCur.optimal_constants_extremal` | Proved (no Brownian hypothesis) with a smooth bounded Lipschitz test class; Rothaus remark not formalized |
 | Section 4.1, Fisher information of the OU kernel; score of the heat kernel | `CutCur.ou_fisher_information`, `CutCur.heat_kernel_score` | Proved; eq. (loggradbound) conjectural, not formalized |
@@ -372,3 +372,19 @@ The tenth export is now complete: all seven selected new declarations pass
 leanchecker, NanoDa and con-ron (69,387 declarations). The independently checked
 selection totals 62 distinct results across ten proof streams. Exact scope and
 stream hash are recorded in verification/product-replay.json.
+
+
+## Brownian-free Euclidean statements (25 October 2026)
+
+| Source item | Lean statement | Change |
+| --- | --- | --- |
+| Thm 1.1; Cor 1.3, 1.4, 1.6; display (1.25); Thm 1.7 | `main_wasserstein_estimate`, `wasserstein_cutoff`, `information_cutoff`, `convex_interaction_cutoff`, `lp_cutoff`, `product_condition_cutoff` | Statement is about transition kernels (`IsEuclideanLangevin`, `IsRigidSequenceK`, `worstK`, `mixingTimeK`); no Brownian motion; `V` is `C^∞` (was `C²`) |
+| Lemma 3.3 | `eigenmap_is_ou` | Law form: `(Pt t x₀).map Tv` is the OU marginal; the pathwise Brownian `β` is not stated |
+| Mixing times (after Cor 1.6) | `mixing_time_rigid`, `mixing_time_w2_rigid`, `mixing_time_kl_rigid` | Kernel mixing times `mixingTimeK`, `mixingTimeW2K`, `mixingTimeKLK`; `V n` is `C^∞` |
+| Section 4.1; OU examples; Section 4.2 normalization | `ou_fisher_information`, `ou_mean_start_cutoff`, `ou_lp_infty_fails`, `normalization_cutoff` | Kernel form (normalization generic in `Pt n`) |
+| Proof of Cor 1.4 (entropy decay, Fisher decay and Dini form) | `langevin_entropy_decay`, `langevin_fisher_decay`, `langevin_fisher_dini` | Kernel form, `μ_t = ν.bind (Pt t)`; `V` is `C^∞` |
+| Remarks 3.4, 3.5; W2 contraction | `wasserstein_cutoff_weak`, `information_cutoff_weak`, `langevin_w2_contraction` | Kernel form (`IsEuclideanLangevin`, `IsRigidSequenceK`, `worstK`); `V` is `C^∞`; integration 5 |
+| Section 4.4 temperature, cutoffs | `temperature_cutoff` | Kernel form with `IsSigmaLangevin` (generator `σ²Δ - ∇V·∇`); `Vₙ` is `C^∞`, normalizability inside `IsSigmaLangevin` |
+
+Unchanged (SDE level, Brownian motion by hypothesis): `normalization_sde`, `temperature_sde`, `exists_stdBrownian`,
+`exists_langevin`. The Brownian-based proofs of the replaced statements remain in the project as `_carrier` theorems and are used by the kernel proofs through transfer lemmas.

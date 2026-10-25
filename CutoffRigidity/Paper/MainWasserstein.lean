@@ -42,7 +42,7 @@ theorem lintegral_edist_sq_gibbs {V : CutCur.Rd d → ℝ} (hV2 : ContDiff ℝ 2
   rw [edist_dist, ← ENNReal.ofReal_pow dist_nonneg, dist_eq_norm]
 
 /-- **Theorem 1.1** (main Wasserstein estimate), including the ball refinement. -/
-theorem main_wasserstein_estimate {Ω : Type*} [MeasurableSpace Ω] {d : ℕ}
+theorem main_wasserstein_estimate_carrier {Ω : Type*} [MeasurableSpace Ω] {d : ℕ}
     {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d} {P : Measure Ω}
     {X : CutCur.Rd d → ℝ≥0 → Ω → CutCur.Rd d}
     (hL : CutCur.IsLangevin V B P X) (hV : CutCur.RigidCurvature V) (t : ℝ≥0) :

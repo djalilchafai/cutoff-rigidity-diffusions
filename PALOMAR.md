@@ -233,8 +233,7 @@ Amendments and flags (all recorded in the docstrings in `Challenge.lean`):
   `langevin_entropy_decay`, `talagrand_logSobolev`: for `d = 0` the Rayleigh set is empty and `spectralGap = sInf ∅ = 0`.
 - `optimal_lsi_twice_pi`, `optimal_constants_extremal` and `talagrand_logSobolev` have NO Brownian carrier hypothesis
   (removed on 25 October 2026; Brownian-free proofs via the Riemannian machinery on `ℝ^d` plus mollification of `C²` potentials,
-  `Extra/NoBm*.lean`). `langevin_entropy_decay` and `langevin_w2_contraction` keep `IsLangevin V B P X`: their conclusions are
-  statements about the law of the process `X`, so it is part of the claim.
+  `Extra/NoBm*.lean`). `langevin_entropy_decay` and `langevin_w2_contraction` are now kernel statements (`IsEuclideanLangevin`, see "Brownian-free Euclidean statements").
 - `temperature_cd` takes the smoothness of Mathlib's standard Riemannian metric on `ℝ^d` as an instance argument
   (a Prop), because the global instance proving it lives in `Riemann/WitnessGeometry`, outside the Challenge.
 - `langevin_entropy_decay` states the printed (non-sharp) constants of the regularization inequality.
@@ -359,3 +358,32 @@ kernels; the full pair must be rerun; con-ron will count the vendored declaratio
 
 `exists_stdBrownian` and `exists_langevin` were audited by one independent AI agent (`verification/audit-extra-J.md`): no defect. Not a human review.
 The current Challenge pair has 48 theorems and 51 definitions; the sandboxed Comparator accepts it (con-ron 91128 declarations, nanoda, Lean kernel).
+
+
+## Brownian-free Euclidean statements (25 October 2026)
+
+Twenty-one Euclidean statements of `Challenge.lean` formerly took a Brownian carrier `(Ω, B, P, X)` with `IsLangevin V B P X` (or `IsRigidSequence`) as hypothesis. They have been
+replaced, under the same names and in the same positions, by kernel statements about transition kernels `Pt : ℝ≥0 → Kernel (Rd d) (Rd d)`, in the same style as the Riemannian
+`IsDiffusionSemigroup`: `main_wasserstein_estimate`, `wasserstein_cutoff`, `information_cutoff`, `lp_cutoff`, `convex_interaction_cutoff`, `product_condition_cutoff`, `eigenmap_is_ou`,
+`mixing_time_rigid`, `mixing_time_w2_rigid`, `mixing_time_kl_rigid`, `ou_fisher_information`, `ou_mean_start_cutoff`, `ou_lp_infty_fails`, `langevin_entropy_decay`,
+`langevin_fisher_decay`, `langevin_fisher_dini`, `normalization_cutoff`, `temperature_cutoff`, and (integration 5) `wasserstein_cutoff_weak` (Rem. 3.4), `information_cutoff_weak` (Rem. 3.5), `langevin_w2_contraction`. Brownian motion is no longer a hypothesis of these statements.
+
+New Challenge definitions: `IsEuclideanDiffusion V Pt` (Markov kernels, semigroup law, Kolmogorov/Dynkin identity on `C_c^∞` with generator `Δ - ∇V·∇`), `IsEuclideanLangevin V Pt`
+(`V ∈ C^∞`, probability Gibbs measure, `IsEuclideanDiffusion`), `IsSigmaDiffusion`/`IsSigmaLangevin` (generator `σ²Δ - ∇V·∇`, for the temperature statement), `worstK`, `mixingTimeK`,
+`mixingTimeW2K`, `mixingTimeKLK`, `IsRigidSequenceK`. The old `mixingTime`, `mixingTimeW2`, `mixingTimeKL` are no longer used by any Challenge statement: removed from `Challenge.lean`
+and `comparator.json`; they live on in `CutoffRigidity/Paper/CarrierDefs.lean` for the carrier proofs. `worst` and `IsRigidSequence` (no Challenge user after integration 5) moved there too, and `comparator.json` lists 55 definitions. `IsLangevin`, `IsStdBrownian`, `IsLangevinSolution`,
+`IsSDESolution` remain (used by `normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`).
+
+Why `C^∞`. The kernel `Pt` is proved to be unique (`isEuclideanDiffusion_unique`, from the Riemannian `bridge_final`) only for smooth potentials with probability Gibbs measure
+(elliptic regularity of resolvent solutions), so `V` is `C^∞` inside `IsEuclideanLangevin`/`IsSigmaLangevin` (and `W n` in `convex_interaction_cutoff`) instead of `C²`. This is an amendment
+(a smaller class of potentials), flagged in the docstrings and in `HUMAN_REVIEW.md`. Also: in `eigenmap_is_ou` the pathwise statement with a Brownian `β` is replaced by the law form
+`(Pt t x₀).map Tv = 𝒩(e^{-ρt}Tv x₀, (1-e^{-2ρt})I)`. The Brownian setting is recovered by transfer lemmas (`CutoffRigidity/Extra/EuclideanDiffusion.lean`: a Brownian carrier,
+supplied by `exists_stdBrownian`, whose Langevin process has the given kernels; non-vacuity `exists_euclideanLangevin`).
+
+Proofs. Each `CutoffRigidity.Paper.<name>` is an `alias` of the kernel theorem `<name>_K` (`Extra/EuclideanWasserstein.lean`, `EuclideanCutoffs.lean`, `EigenmapOUK.lean`,
+`EuclideanKernelStatements.lean`). The previous Brownian-based Paper theorems are kept, renamed `<name>_carrier`, as proof ingredients of the `_K` theorems (they are not Challenge statements).
+`wasserstein_cutoff_weak_K`, `information_cutoff_weak_K` are in `Extra/EuclideanWeakK.lean` (aliases `Paper.wasserstein_cutoff_weak` etc.), `langevin_w2_contraction_K` in `Extra/EuclideanWasserstein.lean`; the Brownian proofs are `*_carrier`.
+
+Remaining SDE-level statements (Brownian motion by hypothesis): `normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`; they are pathwise/SDE-level by nature.
+
+Status: Comparator NOT rerun after this change (the 48-theorem counts are unchanged; the definitions list changed, see `comparator.json`); the 18 kernel statements have had no AI audit and no human review.

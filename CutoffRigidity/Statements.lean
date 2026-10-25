@@ -94,6 +94,19 @@ def IsLangevin {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsStdBrownian B P ∧
     ∀ x₀, IsLangevinSolution V B P x₀ (X x₀)
 
+/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation
+`Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For smooth `V` with probability Gibbs measure such a semigroup is unique
+(`isEuclideanDiffusion_unique`, proved, via the Riemannian `bridge_final`), so it is the law of the SDE (1.1) solution; this is not assumed. -/
+def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
+  (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
+    ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
+      ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
+
+/-- Brownian-free replacement of `IsLangevin`: `V` is `C^∞` (amendment: `C²` in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean
+diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable: `exists_langevin` and the proved `exists_euclideanLangevin`. -/
+def IsEuclideanLangevin {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
+  ContDiff ℝ ∞ V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
+
 /-! ## Distances and divergences -/
 
 /-- The `L²` Wasserstein distance: the infimum over couplings `π` of `(∫ d(x,y)² dπ)^{1/2}`. -/
@@ -119,10 +132,10 @@ def relLp {α : Type*} [MeasurableSpace α] (ν μ : Measure α) (p : ℝ≥0∞
   classical
   exact if ν ≪ μ then eLpNorm (fun x => (ν.rnDeriv μ x).toReal - 1) p μ else ⊤
 
-/-- Worst case over initial conditions `x₀ ∈ S` of a discrepancy `δ` of `Law(X_t^{x₀})`. -/
-def worst {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α] (P : Measure Ω)
-    (X : α → ℝ≥0 → Ω → α) (S : Set α) (δ : Measure α → ℝ≥0∞) (t : ℝ) : ℝ≥0∞ :=
-  ⨆ x₀ ∈ S, δ (P.map (X x₀ t.toNNReal))
+/-- Worst case over initial conditions `x₀ ∈ S` of a discrepancy `δ` of the transition law `Pₜ(x₀, ·)`; kernel version of the carrier-based `worst`. -/
+def worstK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (S : Set (Rd d))
+    (δ : Measure (Rd d) → ℝ≥0∞) (t : ℝ) : ℝ≥0∞ :=
+  ⨆ x₀ ∈ S, δ (Pt t.toNNReal x₀)
 
 /-- Cutoff of a profile at critical times `tₙ`: for every `ε ∈ (0,1)` it tends to `before` at times `(1-ε)tₙ` and to `after` at times `(1+ε)tₙ`. -/
 def HasCutoff (profile : ℕ → ℝ → ℝ≥0∞) (t : ℕ → ℝ) (before after : ℝ≥0∞) : Prop :=
@@ -140,12 +153,10 @@ def meanCube {d : ℕ} (V : Rd d → ℝ) (c : ℝ) : Set (Rd d) :=
 
 /-! ## Main Euclidean results -/
 
-/-- The standing assumptions of Corollaries 1.3 and 1.4 for a sequence of dimensions `n`: the Euclidean setting and the curvature condition (1.4) in
+/-- The standing assumptions of Corollaries 1.3 and 1.4 for kernels: the Euclidean Langevin setting `IsEuclideanLangevin` and the curvature condition (1.4) in
 every positive dimension, and `liminf λ₁⁽ⁿ⁾ > 0`. -/
-def IsRigidSequence {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] (V : ∀ n, Rd n → ℝ)
-    (B : ∀ n, ℝ≥0 → Ω n → Rd n) (P : ∀ n, Measure (Ω n)) (X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n) :
-    Prop :=
-  (∀ n, 0 < n → IsLangevin (V n) (B n) (P n) (X n) ∧ RigidCurvature (V n)) ∧
+def IsRigidSequenceK (V : ∀ n, Rd n → ℝ) (Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)) : Prop :=
+  (∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n)) ∧
     0 < liminf (fun n => ENNReal.ofReal (spectralGap (V n))) atTop
 
 /-- The critical time `t* = log d / (2 λ₁)`. -/
@@ -154,20 +165,17 @@ def criticalTime (d : ℕ) (gap : ℝ) : ℝ := Real.log d / (2 * gap)
 /-- The diagonal direction `(1,…,1)` of `ℝ^d`. -/
 def diagonal (d : ℕ) : Rd d := WithLp.toLp 2 fun _ => 1
 
-/-- The total variation mixing time `t₀ = inf {t ≥ 0 : sup_{x₀ ∈ S} d_TV(Xₜ, μ) ≤ η}` (`+∞` if the set is empty). -/
-def mixingTime {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
-    (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
-  ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => .ofReal (tvDist ν μ)) t ≤ .ofReal η), (t : ℝ≥0∞)
+/-- The total variation mixing time `t₀ = inf {t ≥ 0 : sup_{x₀ ∈ S} d_TV(Pₜ(x₀,·), μ) ≤ η}` (`+∞` if the set is empty). -/
+def mixingTimeK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
+  ⨅ (t : ℝ≥0) (_ : worstK Pt S (fun ν => .ofReal (tvDist ν μ)) t ≤ .ofReal η), (t : ℝ≥0∞)
 
-/-- The Wasserstein mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} W₂(Xₜ, μ) ≤ η}` (`+∞` if empty). -/
-def mixingTimeW2 {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
-    (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
-  ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => wasserstein2 ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
+/-- The Wasserstein mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} W₂(Pₜ(x₀,·), μ) ≤ η}` (`+∞` if empty). -/
+def mixingTimeW2K {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
+  ⨅ (t : ℝ≥0) (_ : worstK Pt S (fun ν => wasserstein2 ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
 
-/-- The entropy mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} H(Xₜ | μ) ≤ η}` (`+∞` if empty). -/
-def mixingTimeKL {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
-    (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
-  ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => InformationTheory.klDiv ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
+/-- The entropy mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} H(Pₜ(x₀,·) | μ) ≤ η}` (`+∞` if empty). -/
+def mixingTimeKLK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
+  ⨅ (t : ℝ≥0) (_ : worstK Pt S (fun ν => InformationTheory.klDiv ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
 
 /-! ## Further results of the manuscript (remarks, examples, proof ingredients, Section 4)
 
@@ -199,6 +207,19 @@ def IsSDESolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ)
     (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (x₀ : Rd d) (X : ℝ≥0 → Ω → Rd d) : Prop :=
   ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0,
     X t w = x₀ - a • (∫ r in (0 : ℝ)..(t : ℝ), gradient V (X r.toNNReal w)) + s • B t w
+
+/-- Kernel-level `σ`-diffusion (Section "Temperature"): `Pt t x = Law(Y_t^x)` for `dY = -∇V dt + √2 σ dB`, a Markov semigroup solving Kolmogorov's
+equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(L_σ f)(x) ds` for `f ∈ C_c^∞`, with `L_σ f = σ²Δf - ⟨∇V, ∇f⟩`. -/
+def IsSigmaDiffusion {d : ℕ} (V : Rd d → ℝ) (σ : ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
+  (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
+    ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
+      ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ),
+        ∫ y, (σ ^ 2 * laplacian f y - inner ℝ (gradient V y) (gradient f y)) ∂Pt s.toNNReal x
+
+/-- Brownian-free replacement of "`Y x₀` solves `dY = -∇V dt + √2 σ dB`" with normalizability of `e^{-V/σ²}`: `V` is `C^∞`, `e^{-V/σ²}` is a probability density
+and `Pt` is the `σ`-diffusion semigroup with generator `σ²Δ - ∇V·∇`. -/
+def IsSigmaLangevin {d : ℕ} (V : Rd d → ℝ) (σ : ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
+  ContDiff ℝ ∞ V ∧ IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2) ∧ IsSigmaDiffusion V σ Pt
 
 /-! ## Weighted Riemannian manifolds (Section 1.4)
 

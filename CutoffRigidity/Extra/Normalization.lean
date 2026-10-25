@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.ProductCondition
 
 /-! # Normalization by time change (manuscript, Section 4.2)
@@ -79,7 +80,7 @@ worst-case profile at `t_*` for `X` is equivalent to cutoff at `t_*/α` for `X^{
 (same limits before and after); the mixing time of `X^{(α)}` is `t₀/α`; and the product condition
 `κ t₀ → ∞` of Theorem 1.7 is invariant, `κ` being replaced by `α κ` (the curvature of the
 generator `α 𝓛`). -/
-theorem normalization_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {P : ∀ n, Measure (Ω n)}
+theorem normalization_cutoff_carrier {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n} {S : ∀ n, Set (CutCur.Rd n)}
     {α : ℕ → ℝ} (hα : ∀ n, 0 < α n) :
     let Xα := fun n (x₀ : CutCur.Rd n) (u : ℝ≥0) => X n x₀ ((α n).toNNReal * u)

@@ -18,7 +18,7 @@ open scoped ENNReal NNReal
 variable {Ω : Type*} [MeasurableSpace Ω] {d : ℕ}
 
 /-- **Exponential decay of Fisher information** (eq. expdecI) for an arbitrary initial law. -/
-theorem langevin_fisher_decay {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d}
+theorem langevin_fisher_decay_carrier {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d}
     {P : Measure Ω} {X : CutCur.Rd d → ℝ≥0 → Ω → CutCur.Rd d}
     (hL : CutCur.IsLangevin V B P X) {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
@@ -73,7 +73,7 @@ theorem dini_of_exp_decay {I : ℝ → ℝ} {ρ t : ℝ}
 
 /-- **Upper Dini form of `dI/dt ≤ -2ρ I`** at every time `t` with `I(μ_t) < ∞`: the real number
 `I(μ_{t+h})` is eventually (as `h → 0+`) below `I(μ_t) + h (-2ρ I(μ_t) + ε)`. -/
-theorem langevin_fisher_dini {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d}
+theorem langevin_fisher_dini_carrier {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d}
     {P : Measure Ω} {X : CutCur.Rd d → ℝ≥0 → Ω → CutCur.Rd d}
     (hL : CutCur.IsLangevin V B P X) {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
@@ -87,7 +87,7 @@ theorem langevin_fisher_dini {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → C
   have hdec : ∀ h : ℝ, 0 ≤ h →
       (J (t + h.toNNReal)).toReal ≤ Real.exp (-2 * ρ * h) * (J t).toReal := by
     intro h h0
-    have h1 := langevin_fisher_decay hL hρ hHess ν t (t + h.toNNReal) le_self_add
+    have h1 := langevin_fisher_decay_carrier hL hρ hHess ν t (t + h.toNNReal) le_self_add
     have hc : ((t + h.toNNReal : ℝ≥0) : ℝ) - t = h := by
       push_cast; rw [Real.coe_toNNReal _ h0]; ring
     rw [hc] at h1

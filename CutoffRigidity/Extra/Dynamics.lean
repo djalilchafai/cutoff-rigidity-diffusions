@@ -78,7 +78,7 @@ theorem talagrand_logSobolev_carrier {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → 
 
 /-- **Wasserstein contraction for arbitrary initial laws**:
 `W₂(Law X_t, Law Y_t) ≤ e^{-ρt} W₂(Law X₀, Law Y₀)` under `Hess V ≥ ρ I`, `ρ ≥ 0`. -/
-theorem langevin_w2_contraction {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d}
+theorem langevin_w2_contraction_carrier {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d}
     {P : Measure Ω} {X : CutCur.Rd d → ℝ≥0 → Ω → CutCur.Rd d}
     (hL : CutCur.IsLangevin V B P X) {ρ : ℝ} (hρ : 0 ≤ ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
@@ -103,7 +103,7 @@ theorem langevin_w2_contraction {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω �
 /-- **Entropy decay and regularization** (eq. expdecH, eq. HWsmallt, eq. HtWX0, CKP, Fisher
 information; manuscript proof of Corollary 1.4) under `Hess V ≥ ρ I`, `ρ > 0`, for an arbitrary
 initial law `ν`, `μ_t := Law(X_t) = ν.bind fun x => P.map (X x t)`. -/
-theorem langevin_entropy_decay {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d}
+theorem langevin_entropy_decay_carrier {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutCur.Rd d}
     {P : Measure Ω} {X : CutCur.Rd d → ℝ≥0 → Ω → CutCur.Rd d}
     (hL : CutCur.IsLangevin V B P X) (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)

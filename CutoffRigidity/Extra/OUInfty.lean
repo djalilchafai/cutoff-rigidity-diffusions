@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Extra.OUMeanStart
 
 /-! # `p = ∞` fails for the Ornstein–Uhlenbeck process (manuscript L407)
@@ -226,7 +227,7 @@ end Main
 `L^∞(μ)` distance `‖dμ_t/dμ - 1‖_{L^∞(μ)}` tends to `+∞` along every sequence of times
 (in particular after the critical time), so the analogue of (1.25) with `p = ∞`
 (limit `0` at `(1+ε)t_*`) fails. -/
-theorem ou_lp_infty_fails {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ} (hρ : 0 < ρ)
+theorem ou_lp_infty_fails_carrier {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ} (hρ : 0 < ρ)
     {c' : ℕ → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (hL : ∀ n, 0 < n →

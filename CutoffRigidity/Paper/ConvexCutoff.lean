@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.ConvexInteraction
 public import CutoffRigidity.Paper.SeqData
 public import CutoffRigidity.Paper.FisherBridge
@@ -215,7 +216,7 @@ theorem assemble_cutoffs {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
         simp only [hT n hn]
 
 /-- **Corollary 1.6** (cutoff for convex interactions, fixed `ρ > 0`). -/
-theorem convex_interaction_cutoff {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ}
+theorem convex_interaction_cutoff_carrier {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ}
     (hρ : 0 < ρ) {W : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n}
     {P : ∀ n, Measure (Ω n)} {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (hW : ∀ n, 0 < n → ContDiff ℝ 2 (W n) ∧ ConvexOn ℝ univ (W n) ∧

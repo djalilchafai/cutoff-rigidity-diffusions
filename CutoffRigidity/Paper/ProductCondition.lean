@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.ConvexCutoff
 public import CutoffRigidity.ProductConditionTheorem
 
@@ -277,7 +278,7 @@ theorem product_condition_cutoff_all {Ω : ℕ → Type u} [∀ n, MeasurableSpa
 
 
 /-- **Theorem 1.7** (curvature product condition), in the amended form. -/
-theorem product_condition_cutoff {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
+theorem product_condition_cutoff_carrier {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n} {κ : ℕ → ℝ} {S : ∀ n, Set (CutCur.Rd n)}
     {η : ℝ}

@@ -160,6 +160,14 @@ isometries; the zero level has a constructed C² manifold, induced metric and
 actual product diffeomorphism. The complete paper is not yet formalized. Project proofs use only
 `propext`, `Classical.choice` and `Quot.sound`, and contain no proof placeholders.
 
+## Brownian-free Euclidean statements (25 October 2026)
+
+Twenty-one Euclidean statements of `Challenge.lean` (Thm 1.1, Cor 1.3, 1.4, 1.6, Remarks 3.4/3.5, the W2 contraction, display (1.25), Thm 1.7, Lemma 3.3, the three mixing-time statements, the OU examples and Fisher
+information, entropy/Fisher decay and Dini form, normalization and temperature cutoffs) no longer mention Brownian motion: they are stated for transition kernels `Pt`
+(`IsEuclideanLangevin`, `IsRigidSequenceK`, `worstK`, `mixingTimeK`, ...). Amendments: `V` is `C^∞` instead of `C²` (uniqueness of the diffusion semigroup is proved for smooth potentials),
+and Lemma 3.3 is stated in law form. The Brownian versions remain as `*_carrier` theorems used inside the proofs. The only statements still mentioning Brownian motion are the SDE-level
+`normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`. See `PALOMAR.md`. Not yet re-run through Comparator; no human review.
+
 ## How to rebuild and verify
 
 Prerequisites: `elan` (the toolchain `v4.35.0-rc2` is read from `lean-toolchain`), `python3`, and,

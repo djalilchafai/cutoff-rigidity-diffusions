@@ -259,7 +259,7 @@ measure) and a Langevin solution `X` from `x₀`, for every `t > 0`:
 the law `μ_t` of `X_t` is `𝒩(e^{-ρt}x₀, ((1-e^{-2ρt})/ρ) I_d)`; `μ_t` has a smooth log-density
 `u = log dμ_t/dμ` with `∇u(x) = a_t x + b_t x₀`, where `a_t`, `b_t` depend neither on `d`
 nor on `x₀`; and `I(μ_t | μ) = ρ d e^{-4ρt}/(1-e^{-2ρt}) + ρ² e^{-2ρt}|x₀|²`. -/
-theorem ou_fisher_information {ρ c : ℝ} (hρ : 0 < ρ)
+theorem ou_fisher_information_carrier {ρ c : ℝ} (hρ : 0 < ρ)
     {B : ℝ≥0 → Ω → CutCur.Rd d} {P : Measure Ω} {X : CutCur.Rd d → ℝ≥0 → Ω → CutCur.Rd d}
     (hL : CutCur.IsLangevin (fun x : CutCur.Rd d => ρ / 2 * ‖x‖ ^ 2 + c) B P X)
     (x₀ : CutCur.Rd d) {t : ℝ} (ht : 0 < t) :

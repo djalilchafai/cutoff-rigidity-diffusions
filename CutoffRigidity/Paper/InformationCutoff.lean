@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.SeqData
 public import CutoffRigidity.BarycenterInformationUpperCutoffs
 public import CutoffRigidity.BarycenterFisherLowerCutoffs
@@ -75,7 +76,7 @@ end Profiles
 
 /-- **Corollary 1.4** (Fisher information, relative entropy and total variation cutoffs on
 balls `B(m, c√d)`). -/
-theorem information_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
+theorem information_cutoff_carrier {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (h : CutCur.IsRigidSequence V B P X)

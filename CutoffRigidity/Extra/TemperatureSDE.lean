@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Statements
 public import CutoffRigidity.Extra.BrownianScaling
 public import CutoffRigidity.Extra.Temperature
@@ -95,7 +96,7 @@ is free of `σ`. For potentials `Vₙ` with `Hess Vₙ ≥ ρₙ`, `ρₙ = σ²
 `L_σ`) and `liminf ρₙ > 0`, and `σ`-diffusions `Yⁿ` (`dY = -∇Vₙ dt + √2 σ dB`), the Wasserstein
 cutoff on the balls `B(m, c√n)` occurs at `log n/(2ρₙ)`; and, if `ρₙ = o(log n)`, so do the Fisher
 information, relative entropy and total variation cutoffs. -/
-theorem temperature_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
+theorem temperature_cutoff_carrier {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {ρ : ℕ → ℝ}
     {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {Y : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
@@ -149,7 +150,7 @@ theorem temperature_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
         (by simpa using hσ.ne') ENNReal.ofReal_ne_top]
       exact ENNReal.mul_pos (by simpa using hσ.ne') hliminf.ne'
   have hα : ∀ n, 0 < (fun _ : ℕ => (σ ^ 2)⁻¹) n := fun n => by positivity
-  have hnorm := fun δ t' b a => (normalization_cutoff (P := P) (X := Y)
+  have hnorm := fun δ t' b a => (normalization_cutoff_carrier (P := P) (X := Y)
     (S := fun n => CutCur.meanBall (W n) c) hα).1 δ t' b a
   have ht : (fun n => CutCur.criticalTime n (ρ n) / (σ ^ 2)⁻¹) =
       fun n => CutCur.criticalTime n (CutCur.spectralGap (W n)) := by
@@ -161,7 +162,7 @@ theorem temperature_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
       unfold CutCur.criticalTime
       field_simp
   refine ⟨?_, fun hsmall => ?_⟩
-  · have hZc := CutoffRigidity.Paper.wasserstein_cutoff hrig hc
+  · have hZc := CutoffRigidity.Paper.wasserstein_cutoff_carrier hrig hc
     rw [hnorm (fun n ν => CutCur.wasserstein2 ν (CutCur.gibbs (W n))) (fun n => CutCur.criticalTime n (ρ n)) ⊤ 0, ht]
     exact hZc
   · have hsmall' : (fun n => CutCur.spectralGap (W n)) =o[atTop] (fun n : ℕ => Real.log n) := by
@@ -169,7 +170,7 @@ theorem temperature_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
         filter_upwards [eventually_gt_atTop 0] with n hn
         rw [hgap' n hn, div_eq_inv_mul]
       exact (hsmall.const_mul_left _).congr' h1.symm (EventuallyEq.refl _ _)
-    have hZi := CutoffRigidity.Paper.information_cutoff hrig hsmall' hc
+    have hZi := CutoffRigidity.Paper.information_cutoff_carrier hrig hsmall' hc
     refine ⟨?_, ?_, ?_⟩
     · rw [hnorm (fun n => CutCur.fisherInfo (W n)) (fun n => CutCur.criticalTime n (ρ n)) ⊤ 0, ht]
       exact hZi.1

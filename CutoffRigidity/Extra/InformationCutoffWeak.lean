@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.InformationCutoff
 
 /-! # Remark 3.5 (weaker assumption): `λ₁ = d^{o(1)}` suffices in Corollary 1.4
@@ -329,7 +330,7 @@ open scoped ENNReal NNReal Topology Asymptotics
 
 /-- **Remark 3.5** (weaker assumption): Corollary 1.4 holds with `λ₁⁽ⁿ⁾ = o(log n)` replaced by
 `λ₁⁽ⁿ⁾ = n^{o(1)}`. -/
-theorem information_cutoff_weak {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
+theorem information_cutoff_weak_carrier {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (h : CutCur.IsRigidSequence V B P X)

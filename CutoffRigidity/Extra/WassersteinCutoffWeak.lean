@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.WassersteinCutoff
 
 /-! # Remark 3.4 (weaker assumption in Corollary 1.3)
@@ -55,7 +56,7 @@ theorem barycenter_wasserstein_after_cutoff_weak {Ω : Type*} [MeasurableSpace �
 
 /-- **Remark 3.4** (weaker assumption in Corollary 1.3): the hypothesis `liminf λ₁ > 0`
 is replaced by `(λ₁⁽ⁿ⁾)⁻¹ ≤ (log n)^α` eventually, for some `α > 0`. -/
-theorem wasserstein_cutoff_weak {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
+theorem wasserstein_cutoff_weak_carrier {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ}
     {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}

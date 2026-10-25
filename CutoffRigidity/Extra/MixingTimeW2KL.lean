@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Statements
 public import CutoffRigidity.Extra.MixingTime
 public import CutoffRigidity.Extra.Dynamics
@@ -126,7 +127,7 @@ theorem worst_w2_antitone {V : CutCur.Rd d → ℝ} {B : ℝ≥0 → Ω → CutC
   have hg : IsProbabilityMeasure (CutCur.gibbs V) := hp
   have hu : IsProbabilityMeasure (P.map (X x u)) := by
     rw [IsLangevin.map_eq_langevinKernel hL ρ hρ.le hHess x u]; exact (hmk u).isProbabilityMeasure x
-  have hs := langevin_w2_contraction hL hρ.le hHess (P.map (X x u)) (CutCur.gibbs V) (u' - u)
+  have hs := langevin_w2_contraction_carrier hL hρ.le hHess (P.map (X x u)) (CutCur.gibbs V) (u' - u)
   have hinv : (CutCur.gibbs V).bind (fun y => P.map (X y (u' - u))) = CutCur.gibbs V := by
     rw [law_bind_eq_comp hL hρ.le hHess]
     exact langevinKernel_gibbs_invariant hB hL.1 hp ρ hρ hHess (u' - u)
@@ -198,7 +199,7 @@ theorem mixing_tail {V : ∀ n, CutCur.Rd n → ℝ} {t₀ : ℕ → ℝ≥0∞}
 `η > 0`, the Wasserstein mixing time `t₀⁽ⁿ⁾` from the balls `B(m, c√n)` is finite for large `n` and
 is `(log n/(2λ₁))(1+o(1))`; moreover `λ₁⁽ⁿ⁾ t₀⁽ⁿ⁾ → ∞`, and `t₀⁽ⁿ⁾ → ∞` when
 `λ₁⁽ⁿ⁾ = o(log n)`. -/
-theorem mixing_time_w2_rigid {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
+theorem mixing_time_w2_rigid_carrier {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (h : CutCur.IsRigidSequence V B P X) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
@@ -211,7 +212,7 @@ theorem mixing_time_w2_rigid {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n
       ((fun n => CutCur.spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n) →
         Tendsto (fun n => (t₀ n).toReal) atTop atTop) := by
   intro t₀
-  have hcut := wasserstein_cutoff h hc
+  have hcut := wasserstein_cutoff_carrier h hc
   have hgap : ∀ n, 0 < n → 0 < CutCur.spectralGap (V n) := fun n hn => (h.1 n hn).2.1
   have htpos : ∀ᶠ n in atTop, 0 < CutCur.criticalTime n (CutCur.spectralGap (V n)) := by
     filter_upwards [eventually_ge_atTop 2] with n hn
@@ -242,7 +243,7 @@ theorem mixing_time_w2_rigid {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n
 hypotheses of Corollary 1.4 and for every `η > 0`, the relative entropy mixing time `t₀⁽ⁿ⁾` from
 the balls `B(m, c√n)` is finite for large `n` and is `(log n/(2λ₁))(1+o(1))`; moreover
 `λ₁⁽ⁿ⁾ t₀⁽ⁿ⁾ → ∞` and `t₀⁽ⁿ⁾ → ∞`. -/
-theorem mixing_time_kl_rigid {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
+theorem mixing_time_kl_rigid_carrier {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (h : CutCur.IsRigidSequence V B P X)
@@ -256,7 +257,7 @@ theorem mixing_time_kl_rigid {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n
       Tendsto (fun n => CutCur.spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧
       Tendsto (fun n => (t₀ n).toReal) atTop atTop := by
   intro t₀
-  have hcut := (information_cutoff h hsmall hc).2.1
+  have hcut := (information_cutoff_carrier h hsmall hc).2.1
   have hgap : ∀ n, 0 < n → 0 < CutCur.spectralGap (V n) := fun n hn => (h.1 n hn).2.1
   have htpos : ∀ᶠ n in atTop, 0 < CutCur.criticalTime n (CutCur.spectralGap (V n)) := by
     filter_upwards [eventually_ge_atTop 2] with n hn

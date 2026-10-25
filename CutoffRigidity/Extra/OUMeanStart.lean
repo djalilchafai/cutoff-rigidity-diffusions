@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Extra.OUEigen
 public import CutoffRigidity.Paper.WassersteinCutoff
 public import CutoffRigidity.AffineProjectedDistances
@@ -269,7 +270,7 @@ end Asymptotics
 `ρ > 0` independent of `n` (so `λ₁⁽ⁿ⁾ = ρ`) and the single initial condition `S⁽ⁿ⁾ = {m⁽ⁿ⁾}`, `m⁽ⁿ⁾`
 the mean of `μ⁽ⁿ⁾`, the Wasserstein distance has a cutoff at `log n/(4λ₁)`, and there is no
 cutoff at the critical time `log n/(2λ₁)` of Corollary 1.3 (so `c > 0` is essential there). -/
-theorem ou_mean_start_cutoff {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ} (hρ : 0 < ρ)
+theorem ou_mean_start_cutoff_carrier {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ} (hρ : 0 < ρ)
     {c : ℕ → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (hL : ∀ n, 0 < n →

@@ -360,3 +360,10 @@ public import CutoffRigidity.Extra.BrownianScaling
 public import CutoffRigidity.Extra.TemperatureSDE
 public import CutoffRigidity.Extra.MixingTimeW2KL
 public import CutoffRigidity.Paper.ExistsBrownian
+public import CutoffRigidity.Paper.CarrierDefs
+public import CutoffRigidity.Extra.EuclideanDiffusion
+public import CutoffRigidity.Extra.EuclideanWasserstein
+public import CutoffRigidity.Extra.EuclideanCutoffs
+public import CutoffRigidity.Extra.EigenmapOUK
+public import CutoffRigidity.Extra.EuclideanWeakK
+public import CutoffRigidity.Extra.EuclideanKernelStatements

@@ -92,6 +92,19 @@ def IsLangevin {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsStdBrownian B P ∧
     ∀ x₀, IsLangevinSolution V B P x₀ (X x₀)
 
+/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation
+`Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For smooth `V` with probability Gibbs measure such a semigroup is unique
+(`isEuclideanDiffusion_unique`, proved, via the Riemannian `bridge_final`), so it is the law of the SDE (1.1) solution; this is not assumed. -/
+def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
+  (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
+    ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
+      ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
+
+/-- Brownian-free replacement of `IsLangevin`: `V` is `C^∞` (amendment: `C²` in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean
+diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable: `exists_langevin` and the proved `exists_euclideanLangevin`. -/
+def IsEuclideanLangevin {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
+  ContDiff ℝ ∞ V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
+
 /-! ## Distances and divergences -/
 
 /-- The `L²` Wasserstein distance: the infimum over couplings `π` of `(∫ d(x,y)² dπ)^{1/2}`. -/
@@ -117,10 +130,10 @@ def relLp {α : Type*} [MeasurableSpace α] (ν μ : Measure α) (p : ℝ≥0∞
   classical
   exact if ν ≪ μ then eLpNorm (fun x => (ν.rnDeriv μ x).toReal - 1) p μ else ⊤
 
-/-- Worst case over initial conditions `x₀ ∈ S` of a discrepancy `δ` of `Law(X_t^{x₀})`. -/
-def worst {Ω α : Type*} [MeasurableSpace Ω] [MeasurableSpace α] (P : Measure Ω)
-    (X : α → ℝ≥0 → Ω → α) (S : Set α) (δ : Measure α → ℝ≥0∞) (t : ℝ) : ℝ≥0∞ :=
-  ⨆ x₀ ∈ S, δ (P.map (X x₀ t.toNNReal))
+/-- Worst case over initial conditions `x₀ ∈ S` of a discrepancy `δ` of the transition law `Pₜ(x₀, ·)`; kernel version of the carrier-based `worst`. -/
+def worstK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (S : Set (Rd d))
+    (δ : Measure (Rd d) → ℝ≥0∞) (t : ℝ) : ℝ≥0∞ :=
+  ⨆ x₀ ∈ S, δ (Pt t.toNNReal x₀)
 
 /-- Cutoff of a profile at critical times `tₙ`: for every `ε ∈ (0,1)` it tends to `before` at times `(1-ε)tₙ` and to `after` at times `(1+ε)tₙ`. -/
 def HasCutoff (profile : ℕ → ℝ → ℝ≥0∞) (t : ℕ → ℝ) (before after : ℝ≥0∞) : Prop :=
@@ -152,15 +165,16 @@ theorem exists_langevin (d : ℕ) (V : Rd d → ℝ) (hV : ContDiff ℝ 2 V) (hH
       IsProbabilityMeasure P ∧ IsLangevin V B P X := by
   sorry
 
-/-- **Theorem 1.1** (main Wasserstein estimate), including the ball refinement. -/
-theorem main_wasserstein_estimate {Ω : Type*} [MeasurableSpace Ω] {d : ℕ}
-    {V : Rd d → ℝ} {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d}
-    (hL : IsLangevin V B P X) (hV : RigidCurvature V) (t : ℝ≥0) :
+/-- **Theorem 1.1** (main Wasserstein estimate), including the ball refinement; Brownian-free kernel form: `Pt t x₀ = Law(X_t^{x₀})`
+(`IsEuclideanLangevin`). Amendment: `V` is `C^∞` (inside `IsEuclideanLangevin`). -/
+theorem main_wasserstein_estimate {d : ℕ} {V : Rd d → ℝ}
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
+    (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V) (t : ℝ≥0) :
     let gap := spectralGap V
     let q := Real.exp (-2 * gap * t)
     let lower := fun Λ : ℝ≥0∞ => ENNReal.ofReal (q / gap) * Λ +
       ENNReal.ofReal (firstEigenDim V * (1 - Real.sqrt (1 - q)) ^ 2 / gap)
-    let W := fun x₀ => wasserstein2 (P.map (X x₀ t)) (gibbs V) ^ 2
+    let W := fun x₀ => wasserstein2 (Pt t x₀) (gibbs V) ^ 2
     (∀ S : Set (Rd d), S.Nonempty →
       lower (⨆ x₀ ∈ S, eigenLambda V x₀) ≤ ⨆ x₀ ∈ S, W x₀ ∧
       ⨆ x₀ ∈ S, W x₀ ≤ ENNReal.ofReal q * ⨆ x₀ ∈ S, ∫⁻ x, edist x x₀ ^ 2 ∂gibbs V) ∧
@@ -176,44 +190,43 @@ theorem eigenspace_dim_and_lambda {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff �
       ∀ f, IsEigenbasis V f → ∀ x₀, eigenLambda V x₀ = ENNReal.ofReal (∑ i, f i x₀ ^ 2) := by
   sorry
 
-/-- The standing assumptions of Corollaries 1.3 and 1.4 for a sequence of dimensions `n`: the Euclidean setting and the curvature condition (1.4) in
+/-- The standing assumptions of Corollaries 1.3 and 1.4 for kernels: the Euclidean Langevin setting `IsEuclideanLangevin` and the curvature condition (1.4) in
 every positive dimension, and `liminf λ₁⁽ⁿ⁾ > 0`. -/
-def IsRigidSequence {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] (V : ∀ n, Rd n → ℝ)
-    (B : ∀ n, ℝ≥0 → Ω n → Rd n) (P : ∀ n, Measure (Ω n)) (X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n) :
-    Prop :=
-  (∀ n, 0 < n → IsLangevin (V n) (B n) (P n) (X n) ∧ RigidCurvature (V n)) ∧
+def IsRigidSequenceK (V : ∀ n, Rd n → ℝ) (Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)) : Prop :=
+  (∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n)) ∧
     0 < liminf (fun n => ENNReal.ofReal (spectralGap (V n))) atTop
 
 /-- The critical time `t* = log d / (2 λ₁)`. -/
 def criticalTime (d : ℕ) (gap : ℝ) : ℝ := Real.log d / (2 * gap)
 
-/-- **Corollary 1.3** (Wasserstein cutoff on balls `B(m, c√d)`), for `ε ∈ (0,1)`. -/
-theorem wasserstein_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, Rd n → ℝ}
-    {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (h : IsRigidSequence V B P X) {c : ℝ} (hc : 0 < c) :
-    HasCutoff (fun n => worst (P n) (X n) (meanBall (V n) c) (wasserstein2 · (gibbs (V n))))
+/-- **Corollary 1.3** (Wasserstein cutoff on balls `B(m, c√d)`), for `ε ∈ (0,1)`; Brownian-free kernel form. Amendment: `V n` is `C^∞`. -/
+theorem wasserstein_cutoff {V : ∀ n, Rd n → ℝ}
+    {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (h : IsRigidSequenceK V Pt) {c : ℝ} (hc : 0 < c) :
+    HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c)
+      (wasserstein2 · (gibbs (V n))))
       (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
   sorry
 
-/-- **Corollary 1.4** (Fisher information, relative entropy and total variation cutoffs on balls `B(m, c√d)`), under the additional assumption `λ₁⁽ⁿ⁾
-= o(log n)`. -/
-theorem information_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, Rd n → ℝ}
-    {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (h : IsRigidSequence V B P X) (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) :
+/-- **Corollary 1.4** (Fisher information, relative entropy and total variation cutoffs on balls `B(m, c√d)`), under `λ₁⁽ⁿ⁾ = o(log n)`;
+Brownian-free kernel form. Amendment: `V n` is `C^∞`. -/
+theorem information_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (h : IsRigidSequenceK V Pt)
+    (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) :
     let t := fun n => criticalTime n (spectralGap (V n))
     let S := fun n => meanBall (V n) c
-    HasCutoff (fun n => worst (P n) (X n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
-    HasCutoff (fun n => worst (P n) (X n) (S n) (InformationTheory.klDiv · (gibbs (V n)))) t ⊤ 0 ∧
-    HasCutoff (fun n => worst (P n) (X n) (S n) (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
+    HasCutoff (fun n => worstK (Pt n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
+    HasCutoff (fun n => worstK (Pt n) (S n) (InformationTheory.klDiv · (gibbs (V n)))) t ⊤ 0 ∧
+    HasCutoff (fun n => worstK (Pt n) (S n) (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
   sorry
 
 /-- **Display (1.25)** (`Lᵖ` cutoff) under the assumptions of Corollary 1.4, for every finite `p ≥ 1`: the limit before the critical time is `2` for
-`p = 1` and `+∞` for `p > 1`. (The case `p = ∞` is excluded: it fails already for the Ornstein–Uhlenbeck process.) -/
-theorem lp_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, Rd n → ℝ}
-    {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (h : IsRigidSequence V B P X) (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
+`p = 1` and `+∞` for `p > 1` (`p = ∞` fails, already for Ornstein–Uhlenbeck). Brownian-free kernel form. Amendment: `V n` is `C^∞`. -/
+theorem lp_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (h : IsRigidSequenceK V Pt)
+    (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
     {c : ℝ} (hc : 0 < c) {p : ℝ≥0∞} (hp : 1 ≤ p) (hpt : p ≠ ⊤) :
-    HasCutoff (fun n => worst (P n) (X n) (meanBall (V n) c) (relLp · (gibbs (V n)) p))
+    HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c) (relLp · (gibbs (V n)) p))
       (fun n => criticalTime n (spectralGap (V n))) (if p = 1 then 2 else ⊤) 0 := by
   sorry
 
@@ -237,51 +250,48 @@ theorem convex_interaction {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ) {W :
   sorry
 
 /-- **Corollary 1.6** (cutoff for convex interactions, fixed `ρ > 0`): Wasserstein, Fisher, entropy and total variation cutoffs at `t* = log d /
-(2ρ)`, from balls `B(m, c√d)` and from cubes `m + [-c,c]^d`. -/
-theorem convex_interaction_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ}
-    (hρ : 0 < ρ) {W : ∀ n, Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)}
-    {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n} (hW : ∀ n, 0 < n → ContDiff ℝ 2 (W n) ∧ ConvexOn ℝ univ (W n) ∧
+(2ρ)`, from balls `m + B(0, c√d)` and cubes `m + [-c,c]^d`; Brownian-free kernel form. Amendments: `W n` and the potential are `C^∞` (not `C²`). -/
+theorem convex_interaction_cutoff {ρ : ℝ}
+    (hρ : 0 < ρ) {W : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (hW : ∀ n, 0 < n → ContDiff ℝ ∞ (W n) ∧ ConvexOn ℝ univ (W n) ∧
       ∀ x (s : ℝ), W n (x + s • diagonal n) = W n x)
-    (hL : ∀ n, 0 < n → IsLangevin (fun x => ρ / 2 * ‖x‖ ^ 2 + W n x) (B n) (P n) (X n))
+    (hL : ∀ n, 0 < n → IsEuclideanLangevin (fun x => ρ / 2 * ‖x‖ ^ 2 + W n x) (Pt n))
     {c : ℝ} (hc : 0 < c) :
     let V := fun n (x : Rd n) => ρ / 2 * ‖x‖ ^ 2 + W n x
     let t := fun n : ℕ => criticalTime n ρ
     ∀ cube : Bool,
       let S := fun n => if cube then meanCube (V n) c else meanBall (V n) c
-      HasCutoff (fun n => worst (P n) (X n) (S n) (wasserstein2 · (gibbs (V n)))) t ⊤ 0 ∧
-      HasCutoff (fun n => worst (P n) (X n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
-      HasCutoff (fun n => worst (P n) (X n) (S n)
+      HasCutoff (fun n => worstK (Pt n) (S n) (wasserstein2 · (gibbs (V n)))) t ⊤ 0 ∧
+      HasCutoff (fun n => worstK (Pt n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
+      HasCutoff (fun n => worstK (Pt n) (S n)
         (InformationTheory.klDiv · (gibbs (V n)))) t ⊤ 0 ∧
-      HasCutoff (fun n => worst (P n) (X n) (S n)
+      HasCutoff (fun n => worstK (Pt n) (S n)
         (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
   sorry
 
-/-- The total variation mixing time `t₀ = inf {t ≥ 0 : sup_{x₀ ∈ S} d_TV(Xₜ, μ) ≤ η}` (`+∞` if the set is empty). -/
-def mixingTime {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
-    (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
-  ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => .ofReal (tvDist ν μ)) t ≤ .ofReal η), (t : ℝ≥0∞)
+/-- The total variation mixing time `t₀ = inf {t ≥ 0 : sup_{x₀ ∈ S} d_TV(Pₜ(x₀,·), μ) ≤ η}` (`+∞` if the set is empty). -/
+def mixingTimeK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
+  ⨅ (t : ℝ≥0) (_ : worstK Pt S (fun ν => .ofReal (tvDist ν μ)) t ≤ .ofReal η), (t : ℝ≥0∞)
 
-/-- The Wasserstein mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} W₂(Xₜ, μ) ≤ η}` (`+∞` if empty). -/
-def mixingTimeW2 {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
-    (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
-  ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => wasserstein2 ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
+/-- The Wasserstein mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} W₂(Pₜ(x₀,·), μ) ≤ η}` (`+∞` if empty). -/
+def mixingTimeW2K {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
+  ⨅ (t : ℝ≥0) (_ : worstK Pt S (fun ν => wasserstein2 ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
 
-/-- The entropy mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} H(Xₜ | μ) ≤ η}` (`+∞` if empty). -/
-def mixingTimeKL {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (P : Measure Ω)
-    (X : Rd d → ℝ≥0 → Ω → Rd d) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
-  ⨅ (t : ℝ≥0) (_ : worst P X S (fun ν => InformationTheory.klDiv ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
+/-- The entropy mixing time `inf {t ≥ 0 : sup_{x₀ ∈ S} H(Pₜ(x₀,·) | μ) ≤ η}` (`+∞` if empty). -/
+def mixingTimeKLK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
+  ⨅ (t : ℝ≥0) (_ : worstK Pt S (fun ν => InformationTheory.klDiv ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
 
 /-- **Theorem 1.7** (curvature product condition), in the amended form of the corrected manuscript: TV and entropy cutoff at the mixing time `t₀⁽ⁿ⁾`
 under `κ⁽ⁿ⁾t₀⁽ⁿ⁾ → ∞` and eventual finiteness of `t₀⁽ⁿ⁾`; Fisher and Wasserstein cutoffs under the additional assumptions `liminf κ⁽ⁿ⁾ > 0` and `t₀⁽ⁿ⁾
-→ ∞`. The last assumption is absent from the archived arXiv v4 statement, which is false without it (see `PAPER_AUDIT.md`). -/
-theorem product_condition_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
-    {V : ∀ n, Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)}
-    {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n} {κ : ℕ → ℝ} {S : ∀ n, Set (Rd n)} {η : ℝ}
-    (hL : ∀ n, 0 < n → IsLangevin (V n) (B n) (P n) (X n) ∧ 0 < κ n ∧
+→ ∞` (absent from the archived arXiv v4 statement, which is false without it, see `PAPER_AUDIT.md`). Brownian-free kernel form; amendment: `V n` is `C^∞`. -/
+theorem product_condition_cutoff
+    {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    {κ : ℕ → ℝ} {S : ∀ n, Set (Rd n)} {η : ℝ}
+    (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ 0 < κ n ∧
       ∀ x z : Rd n, κ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
     (hS : ∀ n, 0 < n → (S n).Nonempty) (hη : 0 < η) (hη1 : η < 1) :
-    let t₀ := fun n => mixingTime (P n) (X n) (gibbs (V n)) (S n) η
-    let prof := fun (δ : ∀ n, Measure (Rd n) → ℝ≥0∞) n => worst (P n) (X n) (S n) (δ n)
+    let t₀ := fun n => mixingTimeK (Pt n) (gibbs (V n)) (S n) η
+    let prof := fun (δ : ∀ n, Measure (Rd n) → ℝ≥0∞) n => worstK (Pt n) (S n) (δ n)
     (∀ᶠ n in atTop, t₀ n < ⊤) → Tendsto (fun n => κ n * (t₀ n).toReal) atTop atTop →
       (HasCutoff (prof fun n ν => .ofReal (tvDist ν (gibbs (V n))))
           (fun n => (t₀ n).toReal) 1 0 ∧
@@ -309,17 +319,20 @@ theorem euclidean_gaussian_factorization {d : ℕ} {V : Rd d → ℝ} (hV2 : Con
         ∑ i, a i ^ 2 = ρ * ∫ x, f x ^ 2 ∂gibbs V := by
   sorry
 
-/-- **Lemma 3.3** (projection on an orthonormal multi-eigenfunction is an OU process): for an orthonormal basis `T = (f₁,…,f_{k₁})` of `E₁` under `λ₁
-= ρ` and `ρ`-convexity, the process `Yₜ = T(Xₜ)` solves the Ornstein–Uhlenbeck equation `dYₜ = -ρYₜ dt + √(2ρ) dβₜ` for a standard Brownian motion `β`
-on `ℝ^{k₁}`. In particular its generator is `ρΔ - ρ y·∇`. -/
-theorem eigenmap_is_ou {Ω : Type*} [MeasurableSpace Ω] {d : ℕ}
-    {V : Rd d → ℝ} {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d}
-    (hL : IsLangevin V B P X) (hV : RigidCurvature V) (T : Fin (firstEigenDim V) → Rd d → ℝ) (hT : IsEigenbasis V T) :
+/-- **Lemma 3.3** (projection on an orthonormal multi-eigenfunction is an OU process), law form without Brownian motion: for an orthonormal basis
+`T = (f₁,…,f_{k₁})` of `E₁` under `λ₁ = ρ` and `ρ`-convexity, the law of `T(Xₜ)` from `x₀` (the pushforward of `Pt t x₀` by `T`) is the Ornstein–Uhlenbeck marginal
+`𝒩(e^{-ρt} T(x₀), (1 - e^{-2ρt}) I_{k₁})`, the time-`t` law of `dYₜ = -ρYₜ dt + √(2ρ) dβₜ`, `Y₀ = T x₀` (generator `ρΔ - ρ y·∇`); in particular it depends on `x₀`
+only through `T x₀`. Divergences: the pathwise statement with a Brownian `β` is replaced by this law form; `V` is `C^∞`. -/
+theorem eigenmap_is_ou {d : ℕ} {V : Rd d → ℝ}
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
+    (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V)
+    (T : Fin (firstEigenDim V) → Rd d → ℝ) (hT : IsEigenbasis V T) :
     let ρ := spectralGap V
     let Tv := fun x => (WithLp.toLp 2 fun i => T i x : Rd (firstEigenDim V))
-    ∃ β : ℝ≥0 → Ω → Rd (firstEigenDim V), IsStdBrownian β P ∧ ∀ x₀, ∀ᵐ w ∂P, ∀ t : ℝ≥0,
-      Tv (X x₀ t w) = Tv x₀ - ρ • (∫ s in (0 : ℝ)..(t : ℝ), Tv (X x₀ s.toNNReal w)) +
-        Real.sqrt (2 * ρ) • β t w := by
+    ∀ (x₀ : Rd d) (t : ℝ≥0),
+      (Pt t x₀).map Tv = multivariateGaussian (Real.exp (-ρ * (t : ℝ)) • Tv x₀)
+        ((1 - Real.exp (-2 * ρ * (t : ℝ))) •
+          (1 : Matrix (Fin (firstEigenDim V)) (Fin (firstEigenDim V)) ℝ)) := by
   sorry
 
 /-! ## Further results of the manuscript (remarks, examples, proof ingredients, Section 4)
@@ -328,29 +341,28 @@ Statements of intermediate claims of the manuscript that are not part of the num
 above. Amendments with respect to the printed text (`0 < d`) are
 flagged in the docstrings. -/
 
-/-- **Remark 3.4** (weaker assumption in Corollary 1.3): the hypothesis `liminf λ₁ > 0` is replaced by `(λ₁⁽ⁿ⁾)⁻¹ ≤ (log n)^α` eventually, for some `α
-> 0`. -/
-theorem wasserstein_cutoff_weak {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, Rd n → ℝ}
-    {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (hL : ∀ n, 0 < n → IsLangevin (V n) (B n) (P n) (X n) ∧ RigidCurvature (V n)) (hgap : ∃ α : ℝ, 0 < α ∧
+/-- **Remark 3.4** (weaker assumption in Corollary 1.3): `liminf λ₁ > 0` is replaced by `(λ₁⁽ⁿ⁾)⁻¹ ≤ (log n)^α` eventually, for some `α > 0`;
+kernel form, `V⁽ⁿ⁾` is `C^∞` (inside `IsEuclideanLangevin`). -/
+theorem wasserstein_cutoff_weak {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n))
+    (hgap : ∃ α : ℝ, 0 < α ∧
       ∀ᶠ n : ℕ in atTop, (spectralGap (V n))⁻¹ ≤ (Real.log n) ^ α)
     {c : ℝ} (hc : 0 < c) :
-    HasCutoff (fun n => worst (P n) (X n) (meanBall (V n) c)
+    HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c)
       (wasserstein2 · (gibbs (V n))))
       (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
   sorry
 
-/-- **Remark 3.5** (weaker assumption): Corollary 1.4 holds with `λ₁⁽ⁿ⁾ = o(log n)` replaced by `λ₁⁽ⁿ⁾ = n^{o(1)}`. -/
-theorem information_cutoff_weak {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
-    {V : ∀ n, Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (h : IsRigidSequence V B P X) (hsmall : ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, spectralGap (V n) ≤ (n : ℝ) ^ ε) {c : ℝ} (hc : 0 < c) :
+/-- **Remark 3.5** (weaker assumption): Corollary 1.4 holds with `λ₁⁽ⁿ⁾ = o(log n)` replaced by `λ₁⁽ⁿ⁾ = n^{o(1)}`; kernel form, `V⁽ⁿ⁾` is `C^∞`. -/
+theorem information_cutoff_weak {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (h : IsRigidSequenceK V Pt)
+    (hsmall : ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, spectralGap (V n) ≤ (n : ℝ) ^ ε)
+    {c : ℝ} (hc : 0 < c) :
     let t := fun n => criticalTime n (spectralGap (V n))
     let S := fun n => meanBall (V n) c
-    HasCutoff (fun n => worst (P n) (X n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
-    HasCutoff (fun n => worst (P n) (X n) (S n)
-      (InformationTheory.klDiv · (gibbs (V n)))) t ⊤ 0 ∧
-    HasCutoff (fun n => worst (P n) (X n) (S n)
-      (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
+    HasCutoff (fun n => worstK (Pt n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
+    HasCutoff (fun n => worstK (Pt n) (S n) (InformationTheory.klDiv · (gibbs (V n)))) t ⊤ 0 ∧
+    HasCutoff (fun n => worstK (Pt n) (S n) (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
   sorry
 
 /-- **Lichnerowicz / Bakry–Émery bound** (display (1.7), `λ₁ ≥ ρ`): if `V` is `C²`, `e^{-V}` is a probability density and `Hess V ≥ ρ I` with `ρ > 0`,
@@ -420,15 +432,15 @@ theorem optimal_constants_extremal {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < 
         optimalLSI V * ∫ x, ‖gradient (fun y => Real.exp (α * h y)) x‖ ^ 2 ∂gibbs V := by
   sorry
 
-/-- **Fisher information and the heat kernel (OU case, manuscript Section 4.1).** For `V(x) = ρ|x|²/2 + c` (the constant `c` is forced by `μ = e^{-V}`
-being a probability measure) and a Langevin solution `X` from `x₀`, for every `t > 0`: the law `μ_t` of `X_t` is `𝒩(e^{-ρt}x₀, ((1-e^{-2ρt})/ρ) I_d)`;
-`μ_t` has a smooth log-density `u = log dμ_t/dμ` with `∇u(x) = a_t x + b_t x₀`, where `a_t`, `b_t` depend neither on `d` nor on `x₀`; and `I(μ_t | μ)
-= ρ d e^{-4ρt}/(1-e^{-2ρt}) + ρ² e^{-2ρt}|x₀|²`. -/
-theorem ou_fisher_information {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {ρ c : ℝ} (hρ : 0 < ρ)
-    {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d}
-    (hL : IsLangevin (fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c) B P X) (x₀ : Rd d) {t : ℝ} (ht : 0 < t) :
+/-- **Fisher information and the heat kernel (OU case, manuscript Section 4.1)**, kernel form. For `V(x) = ρ|x|²/2 + c` and the Euclidean Langevin
+semigroup `Pt` (`Pt t x₀ = Law(X_t^{x₀})`), for every `t > 0`: `Pt t x₀ = 𝒩(e^{-ρt}x₀, ((1-e^{-2ρt})/ρ) I_d)`; `μ_t` has a smooth log-density `u = log dμ_t/dμ` with
+`∇u(x) = a_t x + b_t x₀`; and `I(μ_t | μ) = ρ d e^{-4ρt}/(1-e^{-2ρt}) + ρ² e^{-2ρt}|x₀|²`. `V` is automatically `C^∞`. -/
+theorem ou_fisher_information {d : ℕ} {ρ c : ℝ} (hρ : 0 < ρ)
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
+    (hL : IsEuclideanLangevin (fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c) Pt)
+    (x₀ : Rd d) {t : ℝ} (ht : 0 < t) :
     let V := fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c
-    let μt := P.map (X x₀ t.toNNReal)
+    let μt := Pt t.toNNReal x₀
     μt = multivariateGaussian (Real.exp (-ρ * t) • x₀)
         (((1 - Real.exp (-2 * ρ * t)) / ρ) • (1 : Matrix (Fin d) (Fin d) ℝ)) ∧
       (∃ u : Rd d → ℝ, ContDiff ℝ ∞ u ∧
@@ -448,24 +460,36 @@ def IsSDESolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ)
   ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0,
     X t w = x₀ - a • (∫ r in (0 : ℝ)..(t : ℝ), gradient V (X r.toNNReal w)) + s • B t w
 
-/-- **Normalization** (manuscript, Section "Normalization"): for `α_d > 0` (possibly depending on the dimension), the time-changed processes
-`X^{(α)}_t = X_{αt}` satisfy: cutoff of every worst-case profile at `t_*` for `X` is equivalent to cutoff at `t_*/α` for `X^{(α)}` (same limits before
-and after); the mixing time of `X^{(α)}` is `t₀/α`; and the product condition `κ t₀ → ∞` of Theorem 1.7 is invariant, `κ` becoming `α κ` (the
-curvature of `α 𝓛`; arithmetic only; that `X^{(α)}` solves the scaled SDE is `normalization_sde`). -/
-theorem normalization_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {P : ∀ n, Measure (Ω n)}
-    {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n} {S : ∀ n, Set (Rd n)} {α : ℕ → ℝ} (hα : ∀ n, 0 < α n) :
-    let Xα := fun n (x₀ : Rd n) (u : ℝ≥0) => X n x₀ ((α n).toNNReal * u)
+/-- Kernel-level `σ`-diffusion (Section "Temperature"): `Pt t x = Law(Y_t^x)` for `dY = -∇V dt + √2 σ dB`, a Markov semigroup solving Kolmogorov's
+equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(L_σ f)(x) ds` for `f ∈ C_c^∞`, with `L_σ f = σ²Δf - ⟨∇V, ∇f⟩`. -/
+def IsSigmaDiffusion {d : ℕ} (V : Rd d → ℝ) (σ : ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
+  (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
+    ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
+      ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ),
+        ∫ y, (σ ^ 2 * laplacian f y - inner ℝ (gradient V y) (gradient f y)) ∂Pt s.toNNReal x
+
+/-- Brownian-free replacement of "`Y x₀` solves `dY = -∇V dt + √2 σ dB`" with normalizability of `e^{-V/σ²}`: `V` is `C^∞`, `e^{-V/σ²}` is a probability density
+and `Pt` is the `σ`-diffusion semigroup with generator `σ²Δ - ∇V·∇`. -/
+def IsSigmaLangevin {d : ℕ} (V : Rd d → ℝ) (σ : ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
+  ContDiff ℝ ∞ V ∧ IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2) ∧ IsSigmaDiffusion V σ Pt
+
+/-- **Normalization** (manuscript, Section "Normalization"), kernel form, generic in the transition kernels `Pt n`: for `α_d > 0`, the time-changed semigroup is
+`u ↦ Pt n (α n * u)`; cutoff of every worst-case profile at `t_*` for `Pt` is equivalent to cutoff at `t_*/α` for the time-changed one (same limits); the
+mixing time is `t₀/α`; and the product condition `κ t₀ → ∞` is invariant, `κ` becoming `α κ` (arithmetic only; the SDE statement is `normalization_sde`). -/
+theorem normalization_cutoff {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    {S : ∀ n, Set (Rd n)} {α : ℕ → ℝ} (hα : ∀ n, 0 < α n) :
+    let Ptα := fun n (u : ℝ≥0) => Pt n ((α n).toNNReal * u)
     (∀ (δ : ∀ n, Measure (Rd n) → ℝ≥0∞) (t : ℕ → ℝ) (b a : ℝ≥0∞),
-      HasCutoff (fun n => worst (P n) (X n) (S n) (δ n)) t b a ↔
-        HasCutoff (fun n => worst (P n) (Xα n) (S n) (δ n))
+      HasCutoff (fun n => worstK (Pt n) (S n) (δ n)) t b a ↔
+        HasCutoff (fun n => worstK (Ptα n) (S n) (δ n))
           (fun n => t n / α n) b a) ∧
     (∀ (μ : ∀ n, Measure (Rd n)) (η : ℝ) (n : ℕ),
-      mixingTime (P n) (Xα n) (μ n) (S n) η =
-        mixingTime (P n) (X n) (μ n) (S n) η / ENNReal.ofReal (α n)) ∧
+      mixingTimeK (Ptα n) (μ n) (S n) η =
+        mixingTimeK (Pt n) (μ n) (S n) η / ENNReal.ofReal (α n)) ∧
     (∀ (μ : ∀ n, Measure (Rd n)) (η : ℝ) (κ : ℕ → ℝ),
-      Tendsto (fun n => α n * κ n * (mixingTime (P n) (Xα n) (μ n) (S n) η).toReal)
+      Tendsto (fun n => α n * κ n * (mixingTimeK (Ptα n) (μ n) (S n) η).toReal)
           atTop atTop ↔
-        Tendsto (fun n => κ n * (mixingTime (P n) (X n) (μ n) (S n) η).toReal)
+        Tendsto (fun n => κ n * (mixingTimeK (Pt n) (μ n) (S n) η).toReal)
           atTop atTop) := by
   sorry
 
@@ -513,28 +537,29 @@ theorem temperature_sde {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d �
       gibbs fun x => V x / σ ^ 2 := by
   sorry
 
-/-- **Temperature, cutoff** (Section "Temperature"): the critical time is free of `σ`. If `Hess Vₙ ≥ ρₙ`, `liminf ρₙ > 0`, the Wasserstein cutoff on
-`B(m, c√n)` of `σ`-diffusions occurs at `log n/(2ρₙ)`; if `ρₙ = o(log n)`, so do Fisher, entropy and TV cutoffs. Flags: "rigid" is the hypothesis `ρₙ
-= σ² λ₁(Vₙ/σ²)` (`hgap`); `C²`, normalizability; `B`, `Y` given by hypothesis. -/
-theorem temperature_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {ρ : ℕ → ℝ}
-    {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {Y : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (hV : ∀ n, ContDiff ℝ 2 (V n)) (hY : ∀ n, 0 < n → IsStdBrownian (B n) (P n) ∧
-      ∀ x₀, IsSDESolution (V n) 1 (Real.sqrt 2 * σ) (B n) (P n) x₀ (Y n x₀))
-    (hp : ∀ n, 0 < n → IsProbabilityMeasure (gibbs fun x => V n x / σ ^ 2))
+/-- **Temperature, cutoff** (Section "Temperature"), kernel form: the critical time is free of `σ`. `Pt n` is the semigroup of the `σ`-diffusion `dY = -∇Vₙ dt + √2 σ dB`
+(`IsSigmaLangevin`, generator `σ²Δ - ∇Vₙ·∇`). If `Hess Vₙ ≥ ρₙ`, `liminf ρₙ > 0`, the Wasserstein cutoff on `B(m, c√n)` occurs at `log n/(2ρₙ)`; if `ρₙ = o(log n)`,
+so do Fisher, entropy and TV cutoffs. Flags: "rigid" is `ρₙ = σ² λ₁(Vₙ/σ²)` (`hgap`); amendment: `Vₙ` is `C^∞`, and normalizability of `e^{-Vₙ/σ²}` is inside
+`IsSigmaLangevin`. -/
+theorem temperature_cutoff {V : ∀ n, Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {ρ : ℕ → ℝ}
+    {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (hY : ∀ n, 0 < n → IsSigmaLangevin (V n) σ (Pt n))
     (hρ : ∀ n, 0 < n → 0 < ρ n)
-    (hHess : ∀ n, 0 < n → ∀ x z : Rd n, ρ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
+    (hHess : ∀ n, 0 < n → ∀ x z : Rd n,
+      ρ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
     (hgap : ∀ n, 0 < n → ρ n = σ ^ 2 * spectralGap (fun x => V n x / σ ^ 2))
     (hliminf : 0 < liminf (fun n => ENNReal.ofReal (ρ n)) atTop)
     {c : ℝ} (hc : 0 < c) :
     let t := fun n => criticalTime n (ρ n)
     let S := fun n => meanBall (fun x => V n x / σ ^ 2) c
-    HasCutoff (fun n => worst (P n) (Y n) (S n)
+    HasCutoff (fun n => worstK (Pt n) (S n)
       (wasserstein2 · (gibbs fun x => V n x / σ ^ 2))) t ⊤ 0 ∧
     ((ρ =o[atTop] (fun n : ℕ => Real.log n)) →
-      HasCutoff (fun n => worst (P n) (Y n) (S n) (fisherInfo fun x => V n x / σ ^ 2)) t ⊤ 0 ∧
-      HasCutoff (fun n => worst (P n) (Y n) (S n)
+      HasCutoff (fun n => worstK (Pt n) (S n)
+        (fisherInfo fun x => V n x / σ ^ 2)) t ⊤ 0 ∧
+      HasCutoff (fun n => worstK (Pt n) (S n)
         (InformationTheory.klDiv · (gibbs fun x => V n x / σ ^ 2))) t ⊤ 0 ∧
-      HasCutoff (fun n => worst (P n) (Y n) (S n)
+      HasCutoff (fun n => worstK (Pt n) (S n)
         (fun ν => .ofReal (tvDist ν (gibbs fun x => V n x / σ ^ 2)))) t 1 0) := by
   sorry
 
@@ -570,13 +595,12 @@ theorem ou_first_eigenspace {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ) {c 
 
 /-- **Mixing time of rigid sequences** (introduction, after Corollary 1.6, and Section "Product condition"): under the hypotheses of Corollary 1.4 and
 for every `η ∈ (0,1)`, the total variation mixing time `t₀⁽ⁿ⁾` from the balls `B(m, c√n)` is finite for large `n` and is `(log n/(2λ₁))(1+o(1))`;
-moreover `λ₁⁽ⁿ⁾ t₀⁽ⁿ⁾ → ∞` (so the product condition of Theorem 1.7 holds) and `t₀⁽ⁿ⁾ → ∞`. -/
-theorem mixing_time_rigid {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
-    {V : ∀ n, Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (h : IsRigidSequence V B P X) (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
+moreover `λ₁⁽ⁿ⁾ t₀⁽ⁿ⁾ → ∞` and `t₀⁽ⁿ⁾ → ∞`. Brownian-free kernel form; amendment: `V n` is `C^∞`. -/
+theorem mixing_time_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (h : IsRigidSequenceK V Pt)
+    (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
     {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) (hη1 : η < 1) :
-    let t₀ := fun n => mixingTime (P n) (X n) (gibbs (V n))
-      (meanBall (V n) c) η
+    let t₀ := fun n => mixingTimeK (Pt n) (gibbs (V n)) (meanBall (V n) c) η
     (∀ᶠ n in atTop, t₀ n < ⊤) ∧
       Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
       Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧
@@ -584,11 +608,10 @@ theorem mixing_time_rigid {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
   sorry
 
 /-- **Wasserstein mixing time of rigid sequences** (summary after Corollary 1.6): for every `η > 0`, `t₀` from `B(m, c√n)` is finite and `(log
-n/(2λ₁))(1+o(1))`, `λ₁ t₀ → ∞`. Flag: `t₀ → ∞` only under `λ₁ = o(log n)` (false otherwise), so the last conjunct is an implication. -/
-theorem mixing_time_w2_rigid {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
-    {V : ∀ n, Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (h : IsRigidSequence V B P X) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
-    let t₀ := fun n => mixingTimeW2 (P n) (X n) (gibbs (V n)) (meanBall (V n) c) η
+n/(2λ₁))(1+o(1))`, `λ₁ t₀ → ∞`. Flag: `t₀ → ∞` only under `λ₁ = o(log n)` (false otherwise), so the last conjunct is an implication. Kernel form. -/
+theorem mixing_time_w2_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (h : IsRigidSequenceK V Pt) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
+    let t₀ := fun n => mixingTimeW2K (Pt n) (gibbs (V n)) (meanBall (V n) c) η
     (∀ᶠ n in atTop, t₀ n < ⊤) ∧
       Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
       Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧
@@ -597,40 +620,38 @@ theorem mixing_time_w2_rigid {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)
   sorry
 
 /-- **Entropy mixing time of rigid sequences** (summary after Corollary 1.6): as above under the hypotheses of Corollary 1.4, for every `η > 0`, with
-`t₀ → ∞`. -/
-theorem mixing_time_kl_rigid {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)]
-    {V : ∀ n, Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n}
-    (h : IsRigidSequence V B P X) (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
+`t₀ → ∞`. Kernel form. -/
+theorem mixing_time_kl_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+    (h : IsRigidSequenceK V Pt)
+    (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
     {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
-    let t₀ := fun n => mixingTimeKL (P n) (X n) (gibbs (V n)) (meanBall (V n) c) η
+    let t₀ := fun n => mixingTimeKLK (Pt n) (gibbs (V n)) (meanBall (V n) c) η
     (∀ᶠ n in atTop, t₀ n < ⊤) ∧
       Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
       Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧
       Tendsto (fun n => (t₀ n).toReal) atTop atTop := by
   sorry
 
-/-- **OU started from the mean** (after Corollary 1.3): for `V⁽ⁿ⁾(x) = ρ|x|²/2 + c⁽ⁿ⁾` with `ρ > 0` independent of `n` (so `λ₁⁽ⁿ⁾ = ρ`) and the single
-initial condition `S⁽ⁿ⁾ = {m⁽ⁿ⁾}`, `m⁽ⁿ⁾` the mean of `μ⁽ⁿ⁾`, the Wasserstein distance has a cutoff at `log n/(4λ₁)`, and there is no cutoff at the
-critical time `log n/(2λ₁)` of Corollary 1.3 (so `c > 0` is essential there). -/
-theorem ou_mean_start_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ} (hρ : 0 < ρ)
-    {c : ℕ → ℝ} {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n} (hL : ∀ n, 0 < n →
-      IsLangevin (fun x : Rd n => ρ / 2 * ‖x‖ ^ 2 + c n) (B n) (P n) (X n)) :
+/-- **OU started from the mean** (after Corollary 1.3), kernel form: for `V⁽ⁿ⁾(x) = ρ|x|²/2 + c⁽ⁿ⁾`, `ρ > 0` independent of `n`, and `S⁽ⁿ⁾ = {m⁽ⁿ⁾}`
+(`m⁽ⁿ⁾` the mean of `μ⁽ⁿ⁾`), the Wasserstein distance has a cutoff at `log n/(4λ₁)`, and none at the critical time `log n/(2λ₁)` of Corollary 1.3. -/
+theorem ou_mean_start_cutoff {ρ : ℝ} (hρ : 0 < ρ)
+    {c : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (hL : ∀ n, 0 < n →
+      IsEuclideanLangevin (fun x : Rd n => ρ / 2 * ‖x‖ ^ 2 + c n) (Pt n)) :
     let V := fun n (x : Rd n) => ρ / 2 * ‖x‖ ^ 2 + c n
-    let prof := fun n => worst (P n) (X n) {∫ x, x ∂gibbs (V n)}
+    let prof := fun n => worstK (Pt n) {∫ x, x ∂gibbs (V n)}
       (wasserstein2 · (gibbs (V n)))
     HasCutoff prof (fun n => Real.log n / (4 * spectralGap (V n))) ⊤ 0 ∧
       ¬ HasCutoff prof (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
   sorry
 
-/-- **`p = ∞` fails for the Ornstein–Uhlenbeck process** (after (1.25)): for `V⁽ⁿ⁾(x) = ρ|x|²/2 + c⁽ⁿ⁾` with `ρ > 0` and the balls `B(m, c√n)`, `c >
-0`, the worst-case `L^∞(μ)` distance `‖dμ_t/dμ - 1‖_{L^∞(μ)}` tends to `+∞` along every sequence of times (in particular after the critical time), so
-the analogue of (1.25) with `p = ∞` (limit `0` at `(1+ε)t_*`) fails. -/
-theorem ou_lp_infty_fails {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {ρ : ℝ} (hρ : 0 < ρ)
-    {c' : ℕ → ℝ} {B : ∀ n, ℝ≥0 → Ω n → Rd n} {P : ∀ n, Measure (Ω n)} {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n} (hL : ∀ n, 0 < n →
-      IsLangevin (fun x : Rd n => ρ / 2 * ‖x‖ ^ 2 + c' n) (B n) (P n) (X n))
+/-- **`p = ∞` fails for the Ornstein–Uhlenbeck process** (after (1.25)), kernel form: for `V⁽ⁿ⁾(x) = ρ|x|²/2 + c⁽ⁿ⁾`, `ρ > 0`, balls `B(m, c√n)`, `c > 0`, the
+worst-case `L^∞(μ)` distance tends to `+∞` along every sequence of times, so the analogue of (1.25) with `p = ∞` fails. -/
+theorem ou_lp_infty_fails {ρ : ℝ} (hρ : 0 < ρ)
+    {c' : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (hL : ∀ n, 0 < n →
+      IsEuclideanLangevin (fun x : Rd n => ρ / 2 * ‖x‖ ^ 2 + c' n) (Pt n))
     {c : ℝ} (hc : 0 < c) :
     let V := fun n (x : Rd n) => ρ / 2 * ‖x‖ ^ 2 + c' n
-    let prof := fun n => worst (P n) (X n) (meanBall (V n) c)
+    let prof := fun n => worstK (Pt n) (meanBall (V n) c)
       (relLp · (gibbs (V n)) ⊤)
     (∀ t : ℕ → ℝ, Tendsto (fun n => prof n (t n)) atTop (𝓝 ⊤)) ∧
       ¬ HasCutoff prof (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
@@ -667,23 +688,26 @@ theorem sup_eigenLambda_ball {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 
         ENNReal.ofReal (spectralGap V * c ^ 2 * d) := by
   sorry
 
-/-- **Wasserstein contraction for arbitrary initial laws**: `W₂(Law X_t, Law Y_t) ≤ e^{-ρt} W₂(Law X₀, Law Y₀)` under `Hess V ≥ ρ I`, `ρ ≥ 0`. -/
-theorem langevin_w2_contraction {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ} {B : ℝ≥0 → Ω → Rd d}
-    {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d} (hL : IsLangevin V B P X) {ρ : ℝ} (hρ : 0 ≤ ρ)
+/-- **Wasserstein contraction for arbitrary initial laws**: `W₂(ν₁Pₜ, ν₂Pₜ) ≤ e^{-ρt} W₂(ν₁, ν₂)` under `Hess V ≥ ρ I`, `ρ ≥ 0`; kernel form, `V` is `C^∞`. -/
+theorem langevin_w2_contraction {d : ℕ} {V : Rd d → ℝ}
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
+    (hL : IsEuclideanLangevin V Pt) {ρ : ℝ} (hρ : 0 ≤ ρ)
     (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (ν₁ ν₂ : Measure (Rd d)) [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂] (t : ℝ≥0) :
-    wasserstein2 (ν₁.bind fun x => P.map (X x t)) (ν₂.bind fun x => P.map (X x t)) ≤
+    (ν₁ ν₂ : Measure (Rd d)) [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
+    (t : ℝ≥0) :
+    wasserstein2 (ν₁.bind (Pt t)) (ν₂.bind (Pt t)) ≤
       ENNReal.ofReal (Real.exp (-ρ * t)) * wasserstein2 ν₁ ν₂ := by
   sorry
 
-/-- **Entropy decay and regularization** (eq. expdecH, eq. HWsmallt, eq. HtWX0, CKP, Fisher information; manuscript proof of Corollary 1.4) under
-`Hess V ≥ ρ I`, `ρ > 0`, for an arbitrary initial law `ν`, `μ_t := Law(X_t) = ν.bind fun x => P.map (X x t)`. Amendment: `0 < d`. The constant in
-(HWsmallt) is exactly the printed one (not the sharper constant that the formalized proof can reach). -/
-theorem langevin_entropy_decay {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ} {B : ℝ≥0 → Ω → Rd d}
-    {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d} (hL : IsLangevin V B P X) (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
-    (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :
-    let H := fun t : ℝ≥0 => InformationTheory.klDiv (ν.bind fun x => P.map (X x t)) (gibbs V)
-    let I := fun t : ℝ≥0 => fisherInfo V (ν.bind fun x => P.map (X x t))
+/-- **Entropy decay and regularization** (eq. expdecH, HWsmallt, HtWX0, CKP, Fisher; proof of Corollary 1.4) under `Hess V ≥ ρ I`, `ρ > 0`, for an arbitrary
+initial law `ν`, `μ_t = ν.bind (Pt t)`; kernel form. Amendments: `0 < d`; `V` is `C^∞`. The constant in (HWsmallt) is exactly the printed one. -/
+theorem langevin_entropy_decay {d : ℕ} {V : Rd d → ℝ}
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
+    (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
+    (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
+    (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :
+    let H := fun t : ℝ≥0 => InformationTheory.klDiv (ν.bind (Pt t)) (gibbs V)
+    let I := fun t : ℝ≥0 => fisherInfo V (ν.bind (Pt t))
     let W := wasserstein2 ν (gibbs V) ^ 2
     (∀ s t : ℝ≥0, s ≤ t → H t ≤ ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - s))) * H s) ∧
       (∀ t : ℝ≥0, 0 < t →
@@ -692,7 +716,7 @@ theorem langevin_entropy_decay {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : 
           ENNReal.ofReal (1 / (2 * (t : ℝ))) * W) ∧
       (∀ t : ℝ≥0, 1 ≤ t →
         2 * H t ≤ ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - 1))) * W ∧
-        ENNReal.ofReal (tvDist (ν.bind fun x => P.map (X x t)) (gibbs V) ^ 2) ≤
+        ENNReal.ofReal (tvDist (ν.bind (Pt t)) (gibbs V) ^ 2) ≤
           ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - 1)) / 4) * W) ∧
       (∀ s t : ℝ≥0, s ≤ t → I t ≤ I s) ∧
       (∀ s t : ℝ≥0, 0 < t → I (s + t) ≤ H s / ENNReal.ofReal t) ∧
@@ -701,26 +725,30 @@ theorem langevin_entropy_decay {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : 
   sorry
 
 /-- **Fisher information decay** (eq. expdecI): under `Hess V ≥ ρ I`, `ρ > 0`, for every initial law `ν` (`I(ν) = +∞` allowed), `I(μ_t) ≤ e^{-2ρ(t-s)}
-I(μ_s)`, `s ≤ t`. `X` is given by hypothesis. -/
-theorem langevin_fisher_decay {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
-    {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d} (hL : IsLangevin V B P X) {ρ : ℝ} (hρ : 0 < ρ)
-    (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :
+I(μ_s)`, `s ≤ t`, `μ_t = ν.bind (Pt t)`; kernel form. Amendment: `V` is `C^∞`. -/
+theorem langevin_fisher_decay {d : ℕ} {V : Rd d → ℝ}
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
+    {ρ : ℝ} (hρ : 0 < ρ)
+    (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
+    (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :
     ∀ s t : ℝ≥0, s ≤ t →
-      fisherInfo V (ν.bind fun x => P.map (X x t)) ≤
+      fisherInfo V (ν.bind (Pt t)) ≤
         ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - s))) *
-          fisherInfo V (ν.bind fun x => P.map (X x s)) := by
+          fisherInfo V (ν.bind (Pt s)) := by
   sorry
 
-/-- **Upper Dini form of `∂ₜ I ≤ -2ρ I`** (before eq. expdecI): if `I(μ_t) < ∞`, then eventually as `h → 0+`, `(I(μ_{t+h}) - I(μ_t))/h ≤ -2ρ I(μ_t) +
-ε`. Flag: on `toReal` at times with `I(μ_t) ≠ ∞`; no derivative is claimed. -/
-theorem langevin_fisher_dini {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
-    {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d} (hL : IsLangevin V B P X) {ρ : ℝ} (hρ : 0 < ρ)
-    (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (ν : Measure (Rd d)) [IsProbabilityMeasure ν] (t : ℝ≥0)
-    (ht : fisherInfo V (ν.bind fun x => P.map (X x t)) ≠ ⊤) (ε : ℝ) (hε : 0 < ε) :
+/-- **Upper Dini form of `∂ₜ I ≤ -2ρ I`** (before eq. expdecI), kernel form: if `I(μ_t) < ∞`, then eventually as `h → 0+`, `(I(μ_{t+h}) - I(μ_t))/h ≤ -2ρ I(μ_t) +
+ε`. Flag: on `toReal` at times with `I(μ_t) ≠ ∞`; no derivative is claimed. Amendment: `V` is `C^∞`. -/
+theorem langevin_fisher_dini {d : ℕ} {V : Rd d → ℝ}
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
+    {ρ : ℝ} (hρ : 0 < ρ)
+    (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
+    (ν : Measure (Rd d)) [IsProbabilityMeasure ν] (t : ℝ≥0)
+    (ht : fisherInfo V (ν.bind (Pt t)) ≠ ⊤) (ε : ℝ) (hε : 0 < ε) :
     ∀ᶠ h in 𝓝[>] (0 : ℝ),
-      ((fisherInfo V (ν.bind fun x => P.map (X x (t + h.toNNReal)))).toReal -
-          (fisherInfo V (ν.bind fun x => P.map (X x t))).toReal) / h ≤
-        -2 * ρ * (fisherInfo V (ν.bind fun x => P.map (X x t))).toReal + ε := by
+      ((fisherInfo V (ν.bind (Pt (t + h.toNNReal)))).toReal -
+          (fisherInfo V (ν.bind (Pt t))).toReal) / h ≤
+        -2 * ρ * (fisherInfo V (ν.bind (Pt t))).toReal + ε := by
   sorry
 
 /-- **Pinsker / Csiszár–Kullback–Pinsker** (eq. CKP): `TV(μ,ν)² ≤ H(ν | μ)/2`. -/

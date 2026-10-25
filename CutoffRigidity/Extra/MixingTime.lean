@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.ProductCondition
 public import CutoffRigidity.Paper.InformationCutoff
 
@@ -24,7 +25,7 @@ universe u
 variation mixing time `t₀⁽ⁿ⁾` from the balls `B(m, c√n)` is finite for large `n` and is
 `(log n/(2λ₁))(1+o(1))`; moreover `λ₁⁽ⁿ⁾ t₀⁽ⁿ⁾ → ∞` (so the product condition of Theorem 1.7
 holds) and `t₀⁽ⁿ⁾ → ∞`. -/
-theorem mixing_time_rigid {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
+theorem mixing_time_rigid_carrier {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (h : CutCur.IsRigidSequence V B P X)
@@ -38,7 +39,7 @@ theorem mixing_time_rigid {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
       Tendsto (fun n => CutCur.spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧
       Tendsto (fun n => (t₀ n).toReal) atTop atTop := by
   intro t₀
-  have hinfo := information_cutoff h hsmall hc
+  have hinfo := information_cutoff_carrier h hsmall hc
   have hTV := hinfo.2.2
   obtain ⟨Ω', _, D, hD, -⟩ := exists_seqData_rigid h
   have hev : ∀ᶠ n : ℕ in atTop, 0 < n := eventually_gt_atTop 0

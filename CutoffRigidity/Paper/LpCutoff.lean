@@ -1,5 +1,6 @@
 module
 
+public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Paper.SeqData
 public import CutoffRigidity.BarycenterLpHarnackCutoffs
 
@@ -15,7 +16,7 @@ open scoped ENNReal NNReal Topology
 /-! ### The theorem -/
 
 /-- **Display (1.25)** (`Lᵖ` cutoff), for every finite `p ≥ 1`. -/
-theorem lp_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, CutCur.Rd n → ℝ}
+theorem lp_cutoff_carrier {Ω : ℕ → Type*} [∀ n, MeasurableSpace (Ω n)] {V : ∀ n, CutCur.Rd n → ℝ}
     {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n}
     (h : CutCur.IsRigidSequence V B P X)
