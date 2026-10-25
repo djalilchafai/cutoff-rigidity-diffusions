@@ -170,7 +170,7 @@ theorem product_condition_cutoff {Ω : ℕ → Type*} [∀ n, MeasurableSpace (�
     {X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n} {κ : ℕ → ℝ} {S : ∀ n, Set (Rd n)} {η : ℝ}
     (hL : ∀ n, 0 < n → IsLangevin (V n) (B n) (P n) (X n) ∧ 0 < κ n ∧
       ∀ x z : Rd n, κ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
-    (hS : ∀ n, (S n).Nonempty) (hη : 0 < η) (hη1 : η < 1) :
+    (hS : ∀ n, 0 < n → (S n).Nonempty) (hη : 0 < η) (hη1 : η < 1) :
     let t₀ := fun n => mixingTime (P n) (X n) (gibbs (V n)) (S n) η
     let prof := fun (δ : ∀ n, Measure (Rd n) → ℝ≥0∞) n => worst (P n) (X n) (S n) (δ n)
     (∀ᶠ n in atTop, t₀ n < ⊤) → Tendsto (fun n => κ n * (t₀ n).toReal) atTop atTop →

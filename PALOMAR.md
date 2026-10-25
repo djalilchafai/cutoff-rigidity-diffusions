@@ -195,3 +195,9 @@ definition error. No `IsDiffusionSemigroup` instance is constructed for Theorem 
 kernel `Kk` of `exists_kernel` on any manifold satisfying the standing hypotheses. The sandboxed
 Comparator was rerun after these changes with the same result. Human semantic review, registry
 steps and attestation of responsible humans remain to be done by people; none is claimed here.
+
+## Hypothesis cleanup (25 October 2026)
+
+`hS` of Theorem 1.7 (`product_condition_cutoff`) was weakened from `∀ n, (S n).Nonempty` to
+`∀ n, 0 < n → (S n).Nonempty`. The full build, `scripts/check-palomar.py --ready`, and the sandboxed
+`lake comparator` (con-ron 88115 declarations, nanoda, Lean kernel) pass after the change. Human review is still absent.

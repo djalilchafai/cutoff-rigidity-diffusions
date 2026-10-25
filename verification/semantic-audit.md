@@ -455,3 +455,12 @@ None is required for correctness of the statements. In order of value:
 Scratch files are in
 `/tmp/claude-1000/-chome-djay-S--Publis-2025-CRAS-CF-lean/25ce202f-e16f-4c7d-901c-94cac4f5c39d/scratchpad/`
 (`t1.lean`, `t2.lean`, `t3.lean`).
+
+
+## Follow-up (25 October 2026)
+
+Recommendation 5 (cosmetic), first part, was applied: `hS` in Theorem 1.7 is now
+`∀ n, 0 < n → (S n).Nonempty`. The proof (`Paper/ProductCondition.lean`) reduces to the
+previous statement by replacing `S 0` with `univ`; the profiles and mixing times agree for `n > 0`.
+The sandboxed Comparator was rerun and accepts the solution
+(`verification/comparator-sandboxed.log`). The manuscript abstract and the Theorem 3.6 conclusion were not changed.

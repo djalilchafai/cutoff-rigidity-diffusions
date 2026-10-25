@@ -125,8 +125,8 @@ noncomputable def padCurved {Ω' : Type*} [MeasurableSpace Ω'] (P' : Measure Ω
     subst this
     simp
 
-/-- **Theorem 1.7** (curvature product condition), in the amended form. -/
-theorem product_condition_cutoff {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
+/-- Theorem 1.7 with `S n` nonempty for every `n`, including `n = 0`. -/
+theorem product_condition_cutoff_all {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
     {V : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
     {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n} {κ : ℕ → ℝ} {S : ∀ n, Set (CutCur.Rd n)}
     {η : ℝ}
@@ -273,5 +273,73 @@ theorem product_condition_cutoff {Ω : ℕ → Type u} [∀ n, MeasurableSpace (
       rwa [ENNReal.top_rpow_of_pos (by norm_num)] at this
     · have := (hsq 0).comp hWa
       rwa [ENNReal.zero_rpow_of_pos (by norm_num)] at this
+
+
+
+/-- **Theorem 1.7** (curvature product condition), in the amended form. -/
+theorem product_condition_cutoff {Ω : ℕ → Type u} [∀ n, MeasurableSpace (Ω n)]
+    {V : ∀ n, CutCur.Rd n → ℝ} {B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n} {P : ∀ n, Measure (Ω n)}
+    {X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n} {κ : ℕ → ℝ} {S : ∀ n, Set (CutCur.Rd n)}
+    {η : ℝ}
+    (hL : ∀ n, 0 < n → CutCur.IsLangevin (V n) (B n) (P n) (X n) ∧ 0 < κ n ∧
+      ∀ x z : CutCur.Rd n, κ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
+    (hS : ∀ n, 0 < n → (S n).Nonempty) (hη : 0 < η) (hη1 : η < 1) :
+    let t₀ := fun n => CutCur.mixingTime (P n) (X n) (CutCur.gibbs (V n)) (S n) η
+    let prof := fun (δ : ∀ n, Measure (CutCur.Rd n) → ℝ≥0∞) n =>
+      CutCur.worst (P n) (X n) (S n) (δ n)
+    (∀ᶠ n in atTop, t₀ n < ⊤) → Tendsto (fun n => κ n * (t₀ n).toReal) atTop atTop →
+      (CutCur.HasCutoff (prof fun n ν => .ofReal (CutCur.tvDist ν (CutCur.gibbs (V n))))
+          (fun n => (t₀ n).toReal) 1 0 ∧
+        CutCur.HasCutoff (prof fun n ν => InformationTheory.klDiv ν (CutCur.gibbs (V n)))
+          (fun n => (t₀ n).toReal) ⊤ 0) ∧
+      (0 < liminf (fun n => ENNReal.ofReal (κ n)) atTop →
+        Tendsto (fun n => (t₀ n).toReal) atTop atTop →
+        CutCur.HasCutoff (prof fun n => CutCur.fisherInfo (V n)) (fun n => (t₀ n).toReal) ⊤ 0 ∧
+        CutCur.HasCutoff (prof fun n ν => CutCur.wasserstein2 ν (CutCur.gibbs (V n)))
+          (fun n => (t₀ n).toReal) ⊤ 0) := by
+  intro t₀ prof hfin hprod
+  classical
+  obtain ⟨S', hS'eq, hS'ne⟩ : ∃ S' : ∀ n, Set (CutCur.Rd n), (∀ n, 0 < n → S' n = S n) ∧
+      ∀ n, (S' n).Nonempty := by
+    refine ⟨fun n => if n = 0 then Set.univ else S n, fun n hn => if_neg hn.ne', fun n => ?_⟩
+    by_cases h : n = 0
+    · simp [h]
+    · simpa [h] using hS n (Nat.pos_of_ne_zero h)
+  have hev : ∀ᶠ n : ℕ in atTop, 0 < n := eventually_gt_atTop 0
+  have ht : ∀ n, 0 < n → CutCur.mixingTime (P n) (X n) (CutCur.gibbs (V n)) (S' n) η = t₀ n := by
+    intro n hn
+    show _ = CutCur.mixingTime (P n) (X n) (CutCur.gibbs (V n)) (S n) η
+    rw [hS'eq n hn]
+  have key := product_condition_cutoff_all (V := V) (B := B) (P := P) (X := X) (κ := κ) (S := S')
+    (η := η) hL hS'ne hη hη1
+  have hfin' : ∀ᶠ n in atTop,
+      CutCur.mixingTime (P n) (X n) (CutCur.gibbs (V n)) (S' n) η < ⊤ := by
+    filter_upwards [hfin, hev] with n h hn
+    rwa [← ht n hn] at h
+  have hprod' : Tendsto (fun n => κ n *
+      (CutCur.mixingTime (P n) (X n) (CutCur.gibbs (V n)) (S' n) η).toReal) atTop atTop := by
+    refine hprod.congr' ?_
+    filter_upwards [hev] with n hn
+    rw [ht n hn]
+  have key' := key hfin' hprod'
+  have cong : ∀ {p q : ℕ → ℝ → ℝ≥0∞} {s u : ℕ → ℝ} {a b : ℝ≥0∞},
+      (∀ n, 0 < n → p n = q n) → (∀ n, 0 < n → s n = u n) →
+      CutCur.HasCutoff p s a b → CutCur.HasCutoff q u a b := by
+    intro p q s u a b hp hs h ε h0 h1
+    obtain ⟨h1', h2'⟩ := h ε h0 h1
+    exact ⟨h1'.congr' (by filter_upwards [hev] with n hn; rw [hp n hn, hs n hn]),
+      h2'.congr' (by filter_upwards [hev] with n hn; rw [hp n hn, hs n hn])⟩
+  have hs : ∀ n, 0 < n →
+      (CutCur.mixingTime (P n) (X n) (CutCur.gibbs (V n)) (S' n) η).toReal = (t₀ n).toReal :=
+    fun n hn => by rw [ht n hn]
+  have hp : ∀ (δ : ∀ n, Measure (CutCur.Rd n) → ℝ≥0∞) n, 0 < n →
+      CutCur.worst (P n) (X n) (S' n) (δ n) = CutCur.worst (P n) (X n) (S n) (δ n) :=
+    fun δ n hn => by rw [hS'eq n hn]
+  refine ⟨⟨cong (hp _) hs key'.1.1, cong (hp _) hs key'.1.2⟩, fun h1 h2 => ?_⟩
+  have h2' : Tendsto (fun n =>
+      (CutCur.mixingTime (P n) (X n) (CutCur.gibbs (V n)) (S' n) η).toReal) atTop atTop :=
+    h2.congr' (by filter_upwards [hev] with n hn; rw [ht n hn])
+  obtain ⟨hF, hW⟩ := key'.2 h1 h2'
+  exact ⟨cong (hp _) hs hF, cong (hp _) hs hW⟩
 
 end CutoffRigidity.Paper
