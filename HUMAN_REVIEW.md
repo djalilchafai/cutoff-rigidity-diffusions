@@ -1,6 +1,6 @@
 # Human review checklist (draft)
 
-Status: **no human review has taken place.** This file is a checklist for the people who will do it. It records nothing
+Status (updated 25 October 2026): **no human review has taken place.** This file is a checklist for the people who will do it. It records nothing
 as reviewed, and the sign-off block at the end is intentionally blank. Everything below that is marked "AI" was done by
 language-model agents and is not a substitute for a person.
 
@@ -8,6 +8,18 @@ What Lean already guarantees (machine-checked, rerunnable, see README "How to re
 `Challenge.lean` are proved by `Solution.lean` with the same statements, using only `propext`, `Classical.choice`,
 `Quot.sound`; the Comparator (Lean kernel, nanoda, con-ron) accepts. What it does NOT guarantee: that the *statements and
 definitions* mean what the manuscript says. That is what a reviewer must establish.
+
+## AI audits done so far (to reuse, not to trust)
+Every one of the 35 statements has had at least one AI audit (statements and definitions read against the manuscript; proofs not read):
+- original 12: `verification/semantic-audit.md` (first audit) and independent second audits `audit-second-1.md` (theorems 1-7),
+  `audit-second-2.md` (theorems 9-12 and the Riemannian definitions);
+- 22 added statements: `audit-extra-A.md` (sequence cutoffs), `-B.md` (spectral gap, constants), `-C.md` (OU, time change, temperature),
+  `-D.md` (dynamics, strengthened splitting);
+- later changes: `-E.md` (`mSpectralGap_ge_of_CD`), `-F.md` (the three statements without Brownian carrier), `-G.md` (Thm 1.7 `hS`
+  weakening, `heat_kernel_score`).
+No audit found a defect; remarks and agreements are in those files. Limits: each statement was read by one or two agents, mostly by hand (few
+Lean scratch checks), the agents share blind spots with the author's tooling, and none of this replaces a person. Reviewers may skim the
+reports to see what was already examined, but should form their own verdict first (the second audits did so, which is why they are useful).
 
 ## 0. Setup (15 min)
 - [ ] Clone `https://github.com/djalilchafai/cutoff-rigidity-diffusions`, record the commit hash reviewed.
@@ -17,7 +29,7 @@ definitions* mean what the manuscript says. That is what a reviewer must establi
 - [ ] Confirm that `comparator.json` lists exactly the 35 theorems and 43 definitions of `Challenge.lean`.
 
 ## 1. Definitions (highest priority: an error here silently changes every theorem)
-Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `mgrad`, about line 715).
+Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `mgrad`, about line 712).
 - [ ] `gibbs V` is `e^{-V} dx` as a measure (not normalized); `IsProbabilityMeasure (gibbs V)` is assumed where needed.
 - [ ] `spectralGap V`: Rayleigh infimum over which test functions, which junk value (`sInf ∅ = 0`), compare with
       "λ₁ = optimal Poincaré constant⁻¹" in the paper.
@@ -31,7 +43,7 @@ Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `
 - [ ] `worst`, `HasCutoff`, `meanBall`, `meanCube`, `criticalTime`, `mixingTime` (`⨅ ∅ = ⊤`), `IsRigidSequence`.
 - [ ] Riemannian: `mgrad`, `mlaplacian`, `carre` (Γ), `carre2` (Γ₂), `CD` (Γ₂ ≥ ρΓ), `chartVolumeDensity`,
       `IsWeightedVolume` (μ = e^{-V} vol_g, no stray constant), `mSpectralGap`, `IsMEigenfunction`, `mFirstEigenDim`, `mLambda`.
-- [ ] `IsDiffusionSemigroup`: Markov kernels, semigroup law, Dynkin identity on `C_c^∞`; the file's docstring says exactly one
+- [ ] `IsDiffusionSemigroup`: Markov kernels, semigroup law, Dynkin identity on `C_c^∞`; the file's docstring says exactly one (`isDiffusionSemigroup_Kk` and uniqueness `bridge_final`; neither `CD` nor `ρ > 0` is needed for uniqueness)
       such semigroup exists under the standing hypotheses (proved, `isDiffusionSemigroup_Kk`). Is that a faithful encoding of
       "the diffusion" of Theorem 1.9?
 - [ ] Optimal constants: `entropyOf`, `IsTestFunction` (smooth bounded Lipschitz), `optimalPI`, `optimalLSI` and the factor-2
@@ -39,7 +51,7 @@ Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `
 
 ## 2. The 35 statements against the manuscript
 For each: read the statement and its docstring, find the manuscript item, tick when statement = claim. "Flag" = known
-deviation to judge. AI audit: `verification/semantic-audit.md` (12 original), `audit-extra-{A,B,C,D,E}.md` (the 23 added).
+deviation to judge. AI audits: see the list above.
 
 | # | Theorem (`CutCur.`) | Manuscript item | Flag to judge |
 |---|---|---|---|
@@ -76,12 +88,13 @@ deviation to judge. AI audit: `verification/semantic-audit.md` (12 original), `a
 | 31 | `talagrand_logSobolev` | (Talagrand, LSI) | `0 < d` |
 | 32 | `temperature_cd` | Sect. 4 Temperature | redundant instance argument for the metric on `Rd d` |
 | 33 | `mSpectralGap_ge_of_CD` | L619-663 | `0 < finrank ℝ F` |
-| 34 | `riemannian_wasserstein_estimate` | Thm 1.9 | semigroup encoded by `IsDiffusionSemigroup`; SDE replaced |
+| 34 | `riemannian_wasserstein_estimate` | Thm 1.9 | semigroup encoded by `IsDiffusionSemigroup`; SDE replaced; not verified that the canonical kernel `Kk` is the law of the SDE (1.26) |
 | 35 | `riemannian_gaussian_splitting` | Thm 3.6, Lemma 3.7 | potential identity and connected/complete `N` added |
 
 ## 3. Cross-cutting questions
-- [ ] **Vacuity.** Only the Riemannian hypotheses have a Lean witness (`Riemann/WitnessMain.lean`, Gaussian on ℝᵏ, flat only).
-      For the Langevin-based statements, joint satisfiability rests on classical existence of Brownian motion and strong solutions, which
+- [ ] **Vacuity.** Only the Riemannian hypotheses have a Lean witness in the repository (`Riemann/WitnessMain.lean`, Gaussian on ℝᵏ, flat
+      only). The second audit of Thm 1.9 reports having proved in scratch files (not committed) that the witness also admits the semigroup `Pt`
+      via `isDiffusionSemigroup_Kk`; consider committing that check. For the Langevin-based statements, joint satisfiability rests on classical existence of Brownian motion and strong solutions, which
       Lean cannot instantiate. Decide whether that is acceptable, and whether a curved Riemannian witness is wanted.
 - [ ] **Each amendment** (`0 < d`, `0 < finrank`, Thm 1.7, `hS`) necessary and harmless?
 - [ ] **Manuscript vs printed paper.** The local `cutcur-lean.tex` differs from arXiv:2412.15969v4 (Thm 1.7 hypotheses, completeness and
