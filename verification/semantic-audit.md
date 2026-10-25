@@ -504,3 +504,16 @@ Brownian carrier, with the definitions `entropyOf`, `IsTestFunction`, `optimalPI
 keep exactly the two facts that `IsLangevin` used to bundle (`C²` and `IsProbabilityMeasure (gibbs V)`) and are strictly stronger than
 the old ones; `0 < d` is necessary for the extremal theorem and harmless for Talagrand/LSI; the Gaussian-shift case gives equality in
 both Talagrand and LSI. This is an AI audit, not a human review.
+
+## Second audits and post-audit edits (AI, 25 October 2026)
+
+Three further independent AI audits (statements and definitions; reports `audit-extra-G.md`, `audit-second-1.md`, `audit-second-2.md`):
+* **G** (`product_condition_cutoff` after weakening `hS` to `0 < n`; `heat_kernel_score` after adding differentiability of `u`): no defect.
+  Only large `n` matters in every use of `S n`; the printed Theorem 1.7 fails for the Ornstein–Uhlenbeck example (re-derived by hand), so `liminf κ > 0`
+  and `t₀ → ∞` are necessary amendments for the Fisher and Wasserstein parts. TV/entropy parts rely on Salez and were not rechecked.
+* **Second audit of theorems 1-7** (independent of the first audit): no defect, agrees with all seven verdicts.
+* **Second audit of theorems 9-12 and the Riemannian definitions**: no defect, agrees with all verdicts. It confirmed from the statements that
+  `IsDiffusionSemigroup` has exactly one solution (`isDiffusionSemigroup_Kk`, `bridge_final`; `bridge_final` needs neither `CD` nor `ρ > 0`: the
+  docstring of `IsDiffusionSemigroup` was corrected accordingly), and proved in scratch Lean files that every hypothesis of Theorem 1.9, including `Pt`,
+  holds for the Gaussian on `ℝ^k` (previously the witness left the semigroup out). Not verified: that `Kk` is the law of the SDE (1.26).
+Theorem 1.9 therefore has a Lean-checked non-vacuity witness at the statement level (flat case). All of this is AI audit, not human review.

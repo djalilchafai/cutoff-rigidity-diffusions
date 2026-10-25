@@ -291,3 +291,6 @@ The older carrier versions are kept as `*_carrier` in `Extra/OptimalConstants.le
 after the AI audits of group B and D, and have not been re-audited. Build, readiness check, axiom check and the sandboxed Comparator were rerun.
 
 The three Brownian-free statements were re-audited by one independent AI agent (`verification/audit-extra-F.md`): no defect. Not a human review.
+
+Second independent AI audits (`verification/audit-extra-G.md`, `audit-second-1.md`, `audit-second-2.md`) covered the statements edited after
+their first audit and the original theorems 1-7 and 9-12: no defect; one docstring corrected (`IsDiffusionSemigroup`). Not a human review.

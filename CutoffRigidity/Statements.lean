@@ -281,10 +281,11 @@ def mLambda [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) (x : M) : ℝ�
 
 /-- The diffusion (1.26) with generator `𝓛`, through its transition kernels `Pₜ(x, ·) = Law(Xₜ)`
 from `X₀ = x`: a Markov semigroup solving Kolmogorov's equation
-`Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for smooth compactly supported `f`. Under the standing
-hypotheses of the Riemannian theorems (completeness, `CD(ρ,∞)`, `ρ > 0`) there is exactly one such
-semigroup, the minimal and conservative diffusion; this is proved in the formalization
-(`Riemann/DiffKer*`, `DiffPerron*`) and not assumed. -/
+`Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for smooth compactly supported `f`. For a smooth `V` on a complete
+connected manifold with `IsWeightedVolume F μ V` (in particular under the standing hypotheses of the
+Riemannian theorems; neither `CD` nor `ρ > 0` is needed for this) there is exactly one such semigroup,
+the minimal and conservative diffusion; this is proved in the formalization (`Riemann/DiffKer*`,
+`DiffPerron*`: `isDiffusionSemigroup_Kk` and `bridge_final`) and not assumed. -/
 def IsDiffusionSemigroup [MeasurableSpace M] (V : M → ℝ) (Pt : ℝ≥0 → Kernel M M) : Prop :=
   (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
     ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → HasCompactSupport f → ∀ (x : M) (t : ℝ≥0),
