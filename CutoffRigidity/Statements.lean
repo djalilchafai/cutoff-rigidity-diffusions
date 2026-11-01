@@ -7,21 +7,15 @@ public import Mathlib
 /-!
 # Definitions of the Challenge statement surface (generated)
 
-Statement surface for D. Chafaï and M. Fathi, *On cutoff via rigidity for high-dimensional curved
-diffusions* (local corrected manuscript `cutcur-lean.tex`, based on arXiv:2412.15969v4). Every object
-is defined from Mathlib alone. Each theorem below corresponds to a numbered result of the paper;
-amendments to the printed statements are flagged in the docstrings.
+Statement surface for D. Chafaï and M. Fathi, *On cutoff via rigidity for high-dimensional curved diffusions* (local corrected manuscript `cutcur-lean.tex`, based on arXiv:2412.15969v4). Every object
+is defined from Mathlib alone. Each theorem below corresponds to a numbered result of the paper; amendments to the printed statements are flagged in the docstrings.
 
-Conventions. `ℝ^d` is `EuclideanSpace ℝ (Fin d)`. Suprema of nonnegative discrepancies over sets of
-initial conditions are taken in `ℝ≥0∞`, so that infinite values are meaningful. Laws of processes at a
-real time `t` use the time `t.toNNReal`; all times appearing in the statements are nonnegative.
+Conventions. `ℝ^d` is `EuclideanSpace ℝ (Fin d)`. Suprema of nonnegative discrepancies over sets of initial conditions are taken in `ℝ≥0∞`, so that infinite values are meaningful. Laws of processes at
+a real time `t` use the time `t.toNNReal`; all times appearing in the statements are nonnegative.
 
-Remark on the definitions of the first eigenspace. `E₁`, `k₁`, `Λ` and `λ₁` are defined classically:
-`λ₁` as the infimum of the Rayleigh quotient over smooth compactly supported functions, and `E₁` through
-`C²` (Euclidean) or smooth (Riemannian) `L²` eigenfunctions. They agree with the spectral objects of the
-paper through elliptic regularity and essential self-adjointness; the Lean `E₁` is contained in the
-spectral one, so any discrepancy could only weaken a lower bound.
--/
+Remark on the definitions of the first eigenspace. `E₁`, `k₁`, `Λ` and `λ₁` are defined classically: `λ₁` as the infimum of the Rayleigh quotient over smooth compactly supported functions, and `E₁`
+through `C²` (Euclidean) or smooth (Riemannian) `L²` eigenfunctions. They agree with the spectral objects of the paper through elliptic regularity and essential self-adjointness; the Lean `E₁` is
+contained in the spectral one, so any discrepancy could only weaken a lower bound. -/
 
 open MeasureTheory ProbabilityTheory Filter Topology Set
 open scoped ENNReal NNReal ContDiff Manifold
@@ -47,8 +41,7 @@ def laplacian {d : ℕ} (f : Rd d → ℝ) (x : Rd d) : ℝ :=
 def generator {d : ℕ} (V f : Rd d → ℝ) (x : Rd d) : ℝ :=
   laplacian f x - inner ℝ (gradient V x) (gradient f x)
 
-/-- The spectral gap `λ₁` of `-𝓛` in `L²(μ)`, as the optimal Poincaré constant: the infimum of the Rayleigh quotients `∫|∇f|² dμ / Var_μ(f)` over
-smooth compactly supported non-constant test functions (a core of the Dirichlet form). -/
+/-- The spectral gap `λ₁` of `-𝓛` in `L²(μ)`, as the optimal Poincaré constant: the infimum of the Rayleigh quotients `∫|∇f|² dμ / Var_μ(f)` over smooth compactly supported non-constant test functions (a core of the Dirichlet form). -/
 def spectralGap {d : ℕ} (V : Rd d → ℝ) : ℝ :=
   sInf {r : ℝ | ∃ f : Rd d → ℝ, ContDiff ℝ ∞ f ∧ HasCompactSupport f ∧
     0 < variance f (gibbs V) ∧ r = (∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V) / variance f (gibbs V)}
@@ -87,23 +80,22 @@ def IsLangevinSolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d →
   ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0,
     X t w = x₀ - (∫ s in (0 : ℝ)..(t : ℝ), gradient V (X s.toNNReal w)) + Real.sqrt 2 • B t w
 
-/-- The standing assumptions of the Euclidean setting: `V` is `C²`, `μ = e^{-V}` is a probability measure, `B` is a standard Brownian motion and
-`X x₀` solves (1.1) from `x₀`. That this hypothesis is satisfiable (for convex `V`) is proved in `exists_langevin`. -/
+/-- The standing assumptions of the Euclidean setting: `V` is `C²`, `μ = e^{-V}` is a probability measure, `B` is a standard Brownian motion and `X x₀` solves (1.1) from `x₀`. That this hypothesis is satisfiable (for convex `V`) is proved in
+`exists_langevin`. -/
 def IsLangevin {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B : ℝ≥0 → Ω → Rd d)
     (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d) : Prop :=
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsStdBrownian B P ∧
     ∀ x₀, IsLangevinSolution V B P x₀ (X x₀)
 
-/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation
-`Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For smooth `V` with probability Gibbs measure such a semigroup is unique
-(`isEuclideanDiffusion_unique`, proved, via the Riemannian `bridge_final`), so it is the law of the SDE (1.1) solution; this is not assumed. -/
+/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For smooth `V` with
+probability Gibbs measure such a semigroup is unique (`isEuclideanDiffusion_unique`, proved, via the Riemannian `bridge_final`), so it is the law of the SDE (1.1) solution; this is not assumed. -/
 def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
     ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
       ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
 
-/-- Brownian-free replacement of `IsLangevin`: `V` is `C^∞` (amendment: `C²` in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean
-diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable: `exists_langevin` and the proved `exists_euclideanLangevin`. -/
+/-- Brownian-free replacement of `IsLangevin`: `V` is `C^∞` (amendment: `C²` in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable: `exists_langevin` and the proved
+`exists_euclideanLangevin`. -/
 def IsEuclideanLangevin {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   ContDiff ℝ ∞ V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
 
@@ -119,8 +111,8 @@ def wasserstein2 {α : Type*} [PseudoEMetricSpace α] [MeasurableSpace α] (μ �
 def tvDist {α : Type*} [MeasurableSpace α] (μ ν : Measure α) : ℝ :=
   ⨆ A : {A : Set α // MeasurableSet A}, |μ.real A - ν.real A|
 
-/-- Relative Fisher information `I(ν | μ) = 4 ∫ |∇√h|² dμ`, `h = dν/dμ`, `μ = e^{-V}`, where `∇√h` is the weak (distributional) gradient. It is `+∞`
-when `ν` is not absolutely continuous or `√h` has no weak gradient in `L²(μ)` (paper, before Corollary 1.4). -/
+/-- Relative Fisher information `I(ν | μ) = 4 ∫ |∇√h|² dμ`, `h = dν/dμ`, `μ = e^{-V}`, where `∇√h` is the weak (distributional) gradient. It is `+∞` when `ν` is not absolutely continuous or `√h` has no weak gradient in `L²(μ)` (paper, before
+Corollary 1.4). -/
 def fisherInfo {d : ℕ} (V : Rd d → ℝ) (ν : Measure (Rd d)) : ℝ≥0∞ :=
   ⨅ (G : Rd d → Rd d) (_ : ν ≪ gibbs V ∧ MemLp G 2 (gibbs V) ∧
       ∀ φ : Rd d → ℝ, ContDiff ℝ ∞ φ → HasCompactSupport φ →
@@ -153,8 +145,7 @@ def meanCube {d : ℕ} (V : Rd d → ℝ) (c : ℝ) : Set (Rd d) :=
 
 /-! ## Main Euclidean results -/
 
-/-- The standing assumptions of Corollaries 1.3 and 1.4 for kernels: the Euclidean Langevin setting `IsEuclideanLangevin` and the curvature condition (1.4) in
-every positive dimension, and `liminf λ₁⁽ⁿ⁾ > 0`. -/
+/-- The standing assumptions of Corollaries 1.3 and 1.4 for kernels: the Euclidean Langevin setting `IsEuclideanLangevin` and the curvature condition (1.4) in every positive dimension, and `liminf λ₁⁽ⁿ⁾ > 0`. -/
 def IsRigidSequenceK (V : ∀ n, Rd n → ℝ) (Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)) : Prop :=
   (∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n)) ∧
     0 < liminf (fun n => ENNReal.ofReal (spectralGap (V n))) atTop
@@ -201,25 +192,31 @@ def optimalLSI {d : ℕ} (V : Rd d → ℝ) : ℝ :=
   sInf {C : ℝ | 0 ≤ C ∧ ∀ f : Rd d → ℝ, IsTestFunction f →
     entropyOf (gibbs V) (fun x => f x ^ 2) ≤ C * ∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V}
 
-/-- `X` solves `dXₜ = -a ∇V(Xₜ) dt + s dBₜ`, `X₀ = x₀`: a.s. continuous paths satisfying the integral equation. `IsLangevinSolution` is the case `a =
-1`, `s = √2`. -/
+/-- `X` solves `dXₜ = -a ∇V(Xₜ) dt + s dBₜ`, `X₀ = x₀`: a.s. continuous paths satisfying the integral equation. `IsLangevinSolution` is the case `a = 1`, `s = √2`. -/
 def IsSDESolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (a s : ℝ)
     (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (x₀ : Rd d) (X : ℝ≥0 → Ω → Rd d) : Prop :=
   ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0,
     X t w = x₀ - a • (∫ r in (0 : ℝ)..(t : ℝ), gradient V (X r.toNNReal w)) + s • B t w
 
-/-- Kernel-level `σ`-diffusion (Section "Temperature"): `Pt t x = Law(Y_t^x)` for `dY = -∇V dt + √2 σ dB`, a Markov semigroup solving Kolmogorov's
-equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(L_σ f)(x) ds` for `f ∈ C_c^∞`, with `L_σ f = σ²Δf - ⟨∇V, ∇f⟩`. -/
+/-- Kernel-level `σ`-diffusion (Section "Temperature"): `Pt t x = Law(Y_t^x)` for `dY = -∇V dt + √2 σ dB`, a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(L_σ f)(x) ds` for `f ∈ C_c^∞`, with `L_σ f = σ²Δf - ⟨∇V, ∇f⟩`. -/
 def IsSigmaDiffusion {d : ℕ} (V : Rd d → ℝ) (σ : ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
     ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
       ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ),
         ∫ y, (σ ^ 2 * laplacian f y - inner ℝ (gradient V y) (gradient f y)) ∂Pt s.toNNReal x
 
-/-- Brownian-free replacement of "`Y x₀` solves `dY = -∇V dt + √2 σ dB`" with normalizability of `e^{-V/σ²}`: `V` is `C^∞`, `e^{-V/σ²}` is a probability density
-and `Pt` is the `σ`-diffusion semigroup with generator `σ²Δ - ∇V·∇`. -/
+/-- Brownian-free replacement of "`Y x₀` solves `dY = -∇V dt + √2 σ dB`" with normalizability of `e^{-V/σ²}`: `V` is `C^∞`, `e^{-V/σ²}` is a probability density and `Pt` is the `σ`-diffusion semigroup with generator `σ²Δ - ∇V·∇`. -/
 def IsSigmaLangevin {d : ℕ} (V : Rd d → ℝ) (σ : ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   ContDiff ℝ ∞ V ∧ IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2) ∧ IsSigmaDiffusion V σ Pt
+
+/-- The open convex Weyl chamber `{x₁ > ⋯ > x_d}`. -/
+def chamber (d : ℕ) : Set (Rd d) := {x | ∀ i j : Fin d, i < j → x j < x i}
+
+/-- The Dyson–OU Gibbs probability `e^{-V} 1_chamber dx / Z`, `V(x) = ρ|x|²/2 - β ∑_{i<j} log(xᵢ - xⱼ)`, `β ≥ 0` (`V = +∞` off the chamber). -/
+def dysonProb (d : ℕ) (ρ β : ℝ) : Measure (Rd d) :=
+  let m := (volume.restrict (chamber d)).withDensity fun x => ENNReal.ofReal
+    (Real.exp (-(ρ / 2 * ‖x‖ ^ 2 + ∑ i, ∑ j with i < j, -β * Real.log (x i - x j))))
+  (m univ)⁻¹ • m
 
 /-! ## Weighted Riemannian manifolds (Section 1.4)
 
@@ -290,8 +287,23 @@ def mHessSq (f : M → ℝ) (x : M) : ℝ :=
   ∑ i, ‖CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x
     (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)‖ ^ 2
 
-/-- The Riemannian volume density `√det(gᵢⱼ)` of the inverse of the chart at `x₀`, at the chart point `z`, computed in an orthonormal basis of the
-model space. -/
+/-- The second covariant derivative `∇²_{X,Y} u = ∇_X ∇_Y u - ∇_{∇_X Y} u` at `x`. -/
+def mSecondDeriv (u X Y : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
+  CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
+      (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M u y (Y y)) x (X x)
+    - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M u x (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Y x (X x))
+
+/-- The rough Laplacian `tr ∇²u = ∑ᵢ ∇²_{eᵢ,eᵢ} u` of a vector field, computed with the chart-constant extensions `mExt` of an orthonormal basis (mathematically the value does not depend on the frame, since `∇²` is tensorial; this is not asserted
+here). -/
+def mRoughLaplacian (u : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
+  ∑ i, mSecondDeriv F u (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i))
+    (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)) x
+
+/-- The Langevin operator on vector fields `𝓛 u = tr ∇²u - ∇_{∇V} u`. -/
+def mVecGenerator (V : M → ℝ) (u : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
+  mRoughLaplacian F u x - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M u x (mgrad F V x)
+
+/-- The Riemannian volume density `√det(gᵢⱼ)` of the inverse of the chart at `x₀`, at the chart point `z`, computed in an orthonormal basis of the model space. -/
 def chartVolumeDensity (x₀ : M) (z : F) : ℝ :=
   Real.sqrt (Matrix.det (Matrix.of fun i j =>
     inner ℝ (mfderiv 𝓘(ℝ, F) 𝓘(ℝ, F) (chartAt F x₀).symm z (stdOrthonormalBasis ℝ F i) :
@@ -319,19 +331,16 @@ def mFirstEigenDim [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) : ℕ :=
   Module.finrank ℝ (Submodule.span ℝ
     {u : M →₂[μ] ℝ | ∃ f, IsMEigenfunction F μ V (mSpectralGap F μ) f ∧ f =ᵐ[μ] u})
 
-/-- `Λ(x) = sup_{T ∈ 𝕊_{F₁}} |T(x)|²` (Definition 1.8), the supremum over multi-eigenfunctions `T = (f₁,…,f_{k₁})` with orthonormal coordinates in
-`E₁`. -/
+/-- `Λ(x) = sup_{T ∈ 𝕊_{F₁}} |T(x)|²` (Definition 1.8), the supremum over multi-eigenfunctions `T = (f₁,…,f_{k₁})` with orthonormal coordinates in `E₁`. -/
 def mLambda [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) (x : M) : ℝ≥0∞ :=
   ⨆ (T : Fin (mFirstEigenDim F μ V) → M → ℝ)
     (_ : (∀ i, IsMEigenfunction F μ V (mSpectralGap F μ) (T i)) ∧
       ∀ i j, ∫ y, T i y * T j y ∂μ = if i = j then 1 else 0),
     ENNReal.ofReal (∑ i, T i x ^ 2)
 
-/-- The diffusion (1.26) with generator `𝓛`, through its transition kernels `Pₜ(x, ·) = Law(Xₜ)` from `X₀ = x`: a Markov semigroup solving
-Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for smooth compactly supported `f`. For a smooth `V` on a complete connected manifold with
-`IsWeightedVolume F μ V` (in particular under the standing hypotheses of the Riemannian theorems; neither `CD` nor `ρ > 0` is needed for this) there
-is exactly one such semigroup, the minimal and conservative diffusion; this is proved in the formalization (`Riemann/DiffKer*`, `DiffPerron*`:
-`isDiffusionSemigroup_Kk` and `bridge_final`) and not assumed. -/
+/-- The diffusion (1.26) with generator `𝓛`, through its transition kernels `Pₜ(x, ·) = Law(Xₜ)` from `X₀ = x`: a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for smooth compactly supported `f`. For a smooth `V`
+on a complete connected manifold with `IsWeightedVolume F μ V` (in particular under the standing hypotheses of the Riemannian theorems; neither `CD` nor `ρ > 0` is needed for this) there is exactly one such semigroup, the minimal and conservative
+diffusion; this is proved in the formalization (`Riemann/DiffKer*`, `DiffPerron*`: `isDiffusionSemigroup_Kk` and `bridge_final`) and not assumed. -/
 def IsDiffusionSemigroup [MeasurableSpace M] (V : M → ℝ) (Pt : ℝ≥0 → Kernel M M) : Prop :=
   (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
     ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → HasCompactSupport f → ∀ (x : M) (t : ℝ≥0),

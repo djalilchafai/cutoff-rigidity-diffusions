@@ -148,6 +148,7 @@ alignment:
   statements:
     - lean: CutCur.exists_stdBrownian  # existence of a standard Brownian motion on R^d (vendored Degenne et al. library; Mathlib IsBrownianReal)
     - lean: CutCur.exists_langevin  # non-vacuity of IsLangevin: assumes Hess V >= 0 (convexity, standing assumption) and probability Gibbs measure
+    - lean: CutCur.isLangevinSolution_map_eq_kernel_of_rigid  # every SDE solution has the law prescribed by the kernel Pt (RigidCurvature version); makes the kernel formulation faithful
     - lean: CutCur.main_wasserstein_estimate
     - lean: CutCur.eigenspace_dim_and_lambda
     - lean: CutCur.wasserstein_cutoff
@@ -158,6 +159,7 @@ alignment:
     - lean: CutCur.product_condition_cutoff
     - lean: CutCur.euclidean_gaussian_factorization
     - lean: CutCur.eigenmap_is_ou
+    - lean: CutCur.eigenmap_is_ou_pathwise  # Lemma 3.3 in pathwise form: T(X) solves the OU SDE for a standard Brownian beta on the same space
     - lean: CutCur.wasserstein_cutoff_weak  # Remark 3.4
     - lean: CutCur.information_cutoff_weak  # Remark 3.5
     - lean: CutCur.spectral_gap_ge_curvature  # eq. (1.7), Lichnerowicz/Bakry-Emery, Euclidean
@@ -176,8 +178,11 @@ alignment:
     - lean: CutCur.langevin_entropy_decay  # entropy decay, regularization, Fisher bounds, proof of Cor. 1.4
     - lean: CutCur.langevin_fisher_decay  # eq:expdecI for every initial law, proof of Cor. 1.4
     - lean: CutCur.langevin_fisher_dini  # upper Dini form of dI/dt <= -2 rho I (toReal, I finite at t)
+    - lean: CutCur.langevin_dissipation_ge_K'  # integrated de Bruijn inequality (inequality half of eq. HI), finite entropy at an earlier time a < s
+    - lean: CutCur.langevin_dissipation_dirac_K  # integrated de Bruijn inequality for a Dirac initial law; equality of eq. HI is not claimed
     - lean: CutCur.pinsker_tvDist  # Csiszar-Kullback-Pinsker, proof of Cor. 1.4
     - lean: CutCur.talagrand_logSobolev  # Talagrand and log-Sobolev, proof of Cor. 1.4
+    - lean: CutCur.dyson_ou_static  # Dyson-OU example: static statement only (Gibbs law on the Weyl chamber, h = sum x_i, Neumann form, Poincare 1/rho, optimal over test functions); no Dyson-OU process, no spectral-gap identification
     - lean: CutCur.optimal_lsi_twice_pi  # subsection Optimal constants (no Brownian hypothesis)
     - lean: CutCur.optimal_constants_extremal  # subsection Optimal constants, extremal functions (amendment: 0 < d)
     - lean: CutCur.ou_fisher_information  # Section 4.1, Fisher information of the OU heat kernel
@@ -189,6 +194,10 @@ alignment:
     - lean: CutCur.temperature_sde  # Section 4.4, temperature, SDE level and Gibbs invariance (adds Hess V >= rho > 0)
     - lean: CutCur.temperature_cutoff  # Section 4.4, temperature, cutoffs (hypothesis rho_n = sigma^2 spectralGap(V_n/sigma^2))
     - lean: CutCur.bochner_identity  # Section 1.4, Bochner identity (scalar form)
+    - lean: CutCur.carre_eq_operator  # Section 1.4, Gamma(f,g) = (L(fg) - fLg - gLf)/2
+    - lean: CutCur.carre_polarization  # polarization of the carre du champ
+    - lean: CutCur.generator_comp  # chain rule L(theta o f) = theta'(f) Lf + theta''(f) Gamma(f)
+    - lean: CutCur.bochner_vector  # Section 1.4, Bochner formula in vector form (rough Laplacian computed with chart-constant frames)
     - lean: CutCur.CD_iff_ricci  # Section 1.4, CD(rho,infinity) iff Ric + Hess V >= rho g
     - lean: CutCur.riemannian_k1_bounds  # Section 1.4, 1 <= k1 <= dim M (needs hgap)
     - lean: CutCur.riemannian_poincare_lsi  # Section 1.4, Riemannian Poincare and log-Sobolev from CD(rho,infinity)

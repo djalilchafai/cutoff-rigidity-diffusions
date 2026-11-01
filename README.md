@@ -3,12 +3,12 @@
 This project is a Lean 4 formalization of the manuscript [cutcur-lean.tex](cutcur-lean.tex)
 by Chafaï–Fathi, based on [arXiv:2412.15969v4](https://arxiv.org/abs/2412.15969v4).
 
-**Status (25 October 2026).** `Challenge.lean` states 48 theorems: the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
+**Status (25 October 2026).** `Challenge.lean` states 57 theorems and 60 definitions: the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
 3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and 36 further claims of the
 manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound (Euclidean and Riemannian), (R2) => (R1), examples, proof ingredients such as W2
 contraction, entropy decay, Pinsker and Talagrand, the optimal constants, and the Section 4 items; see
 [PALOMAR.md](PALOMAR.md)). `Solution.lean` proves all of them (no `sorry`, axioms `propext`,
-`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 48-theorem pair
+`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 57-theorem pair
 (con-ron, nanoda and the Lean kernel). The splitting theorem now also states the
 potential identity of Theorem 3.6 and the connectedness and completeness of the factor.
 A further block of 11 statements (Bochner identity and `CD ⇔ Ric + Hess V ≥ ρ`, Riemannian `k₁` bounds and Poincaré/log-Sobolev, Fisher
@@ -17,9 +17,9 @@ stated and proved too (see PALOMAR.md, section "Cheap block integration"; flags 
 Two further theorems, `exists_stdBrownian` and `exists_langevin`, show that a standard Brownian motion exists and that the standing hypothesis
 `IsLangevin` of all Langevin statements is satisfiable (for `C²` `V` with `Hess V ≥ 0`, the paper's convexity assumption, and probability Gibbs
 measure); they rely on the vendored Brownian motion library of Degenne et al. (see Credits below).
-Not formalized: Question 1.10 (open), eq. (loggradbound) (conjectural), the derivative identities `dH/dt = -I` for general laws, Theorem 1.7
-on manifolds, the sphere and Dyson examples, Gaussian isoperimetry, the Leibniz identity for the carré du
-champ, the vector form of the Bochner identity, and the Rothaus remark. Theorem 1.9 is proved for every
+Nine further statements (Armstrong-method round, 1 November 2026): kernel = SDE law for rigid curvature, pathwise Lemma 3.3, the integrated entropy-dissipation
+inequality (general and Dirac initial laws), the static Dyson–OU statement on the Weyl chamber, the operator/polarization/chain-rule forms of the carré du champ, and the vector
+form of the Bochner identity. Not formalized: see the section "What is not formalized" below. Theorem 1.9 is proved for every
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
 log-Sobolev, gap attainment and the Kuwada contraction are formalized (see [PALOMAR.md](PALOMAR.md)).
 No human semantic review has taken place; the statements were checked only by an AI audit
@@ -172,16 +172,19 @@ and Lemma 3.3 is stated in law form. The Brownian versions remain as `*_carrier`
 
 ## What is not formalized
 
-The 48 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`.
+The 57 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`, `extra-status/` (worker and adversary reports of the 1 November 2026 round).
 
 - **Open or conjectural in the paper:** Question 1.10; `eq:loggradbound`.
-- **Judged infeasible or skipped:** the static Dyson statement (estimated 1.5-4k lines); Gaussian isoperimetry; the sphere claims; Theorem 1.7 on manifolds;
-  `dH/dt = -I` for general laws (only the Dini form, no. 41, is stated); the Leibniz identity for the carre du champ; vector-form Bochner (only the scalar form); the Rothaus remark.
-- **Formalized only in a weakened or changed form:** `C^∞` instead of `C²` for the 21 kernel-form statements (see above); Lemma 3.3 in law form, not pathwise; Theorem 1.9 with the diffusion encoded as
-  `IsDiffusionSemigroup` (not proved to be the law of the SDE (1.26)); `normalization_sde` and `temperature_sde` take the SDE solutions as hypotheses, and `temperature_sde` adds `Hess V ≥ ρ > 0`;
-  Theorem 1.7 amended (the printed statement is false; the counterexample is a written derivation, not checked in Lean); (1.25) for finite `p` only; extra hypotheses `0 < d`, `0 < finrank`, and `hgap` for the `k₁` bounds.
-- **Not checked in Lean:** that `Pt t x` is the law of the SDE solution (uniqueness of such `Pt` is proved, the identification is not a Challenge statement); satisfiability of `IsSigmaLangevin` for `σ ≠ 1`
-  (argued by hand); a curved Riemannian witness (only the flat Gaussian on ℝᵏ); a kernel analogue of the invariance statement in `temperature_sde`.
+- **Attempted, blocked or without a precise statement:**
+  - sphere: only the conditional upper bound `λ₁ ≤ d` is proved (`Extra/Item6a.lean`, not in the Challenge); `CD(d-1)` for the sphere, `λ₁ = d` and a Lean model of the sphere are missing (Mathlib has no Riemannian structure on `S^d`; 5-10k lines);
+  - Gaussian isoperimetry (the manuscript only says Bakry-Émery "implies" it; 4-8k lines);
+  - Theorem 1.7 on manifolds (one sentence in the manuscript, no statement);
+  - the Rothaus remark (3-6k lines; the (VW) extremality claims are covered by `optimal_constants_extremal`);
+  - `dH/dt = -I` with equality for general laws: only the inequality half `H(μ_s) - H(μ_t) ≥ ∫_s^t I` is proved (general laws with finite entropy at an earlier time, and Dirac laws); equality needs upper semicontinuity of the Fisher information for `L¹` data (1.5-2.5k lines);
+  - Dyson: the static statement is formalized (no. `dyson_ou_static`); the Dyson-OU process, the Neumann realization of the generator and the identification with the project's `spectralGap` are not.
+- **Formalized only in a weakened or changed form:** `C^∞` instead of `C²` for the 18 kernel-form statements with general `V` (C² uniqueness of the diffusion semigroup needs Schauder/`W^{2,p}` regularity, estimated 2.5-6k lines; the three Ornstein-Uhlenbeck statements were never restricted); Theorem 1.9 with the diffusion encoded as `IsDiffusionSemigroup`; `normalization_sde` and `temperature_sde` take the SDE solutions as hypotheses, and `temperature_sde` adds `Hess V ≥ ρ > 0`; Theorem 1.7 amended (the printed statement is false; the counterexample is a written derivation, not checked in Lean); (1.25) for finite `p` only; extra hypotheses `0 < d`, `0 < finrank`, and `hgap` for the `k₁` bounds; the Dyson Poincaré statement is for bounded smooth Lipschitz test functions with `h` extremal in the closure sense.
+- **Now formalized (previously listed here):** that `Pt t x` is the law of any SDE solution (`isLangevinSolution_map_eq_kernel_of_rigid`, `V ∈ C^∞`, rigid curvature); the pathwise form of Lemma 3.3 (`eigenmap_is_ou_pathwise`); the Leibniz/chain rule and operator form of `carre`; the vector form of Bochner.
+- **Not checked in Lean:** satisfiability of `IsSigmaLangevin` for `σ ≠ 1` (argued by hand); a curved Riemannian witness (only the flat Gaussian on ℝᵏ); a kernel analogue of the invariance statement in `temperature_sde`.
 
 ## How to rebuild and verify
 
@@ -256,8 +259,8 @@ is not part of the project sources.
 
 [PALOMAR.md](PALOMAR.md) records the official requirements and the detailed status.
 
-- **Challenge/Solution pair:** `Challenge.lean` states 48 theorems; `Solution.lean` proves all of
-  them. `comparator.json` lists the 48 theorems and 51 definitions. The Comparator runs below were made for the
+- **Challenge/Solution pair:** `Challenge.lean` states 57 theorems; `Solution.lean` proves all of
+  them. `comparator.json` lists the 57 theorems and 60 definitions. The Comparator runs below were made for the
   earlier 12-theorem pair and must be repeated for the extended one.
 - **Comparator (12-theorem pair, before the extension):** `lake comparator` accepted the solution (con-ron, nanda and the Lean kernel; 88114
   declarations), both without a sandbox (`verification/comparator-final.log`) and inside the bwrap

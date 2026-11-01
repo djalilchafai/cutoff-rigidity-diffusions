@@ -4,7 +4,7 @@ Status (updated 25 October 2026, after the Brownian-free integration): **no huma
 as reviewed, and the sign-off block at the end is intentionally blank. Everything below that is marked "AI" was done by
 language-model agents and is not a substitute for a person.
 
-What Lean already guarantees (machine-checked, rerunnable, see README "How to rebuild and verify"): the 48 theorems of
+What Lean already guarantees (machine-checked, rerunnable, see README "How to rebuild and verify"): the 57 theorems of
 `Challenge.lean` are proved by `Solution.lean` with the same statements, using only `propext`, `Classical.choice`,
 `Quot.sound`; the Comparator (Lean kernel, nanoda, con-ron) accepts. What it does NOT guarantee: that the *statements and
 definitions* mean what the manuscript says. That is what a reviewer must establish.
@@ -13,12 +13,13 @@ Short versions for the authors: [HUMAN_REVIEW_SUMMARY.md](HUMAN_REVIEW_SUMMARY.m
 "What is not formalized" (the full list of gaps, kept in sync with section 3 below). Both are drafts and claim no review.
 
 ## AI audits done so far (to reuse, not to trust)
-Every one of the 48 statements has had at least one AI audit (statements and definitions read against the manuscript; proofs not read):
+Every one of the 57 statements has had at least one AI audit (statements and definitions read against the manuscript; proofs not read):
 - original 12: `verification/semantic-audit.md` (first audit) and independent second audits `audit-second-1.md` (theorems 1-7),
   `audit-second-2.md` (theorems 9-12 and the Riemannian definitions);
 - 22 added statements: `audit-extra-A.md` (sequence cutoffs), `-B.md` (spectral gap, constants), `-C.md` (OU, time change, temperature),
   `-D.md` (dynamics, strengthened splitting);
   `-H.md` (Ricci/Bochner/CD, `k₁` bounds, Riemannian Poincaré/LSI, `entropyOf`), `-I.md` (Fisher decay/Dini, `normalization_sde`, temperature, W₂/entropy mixing times), `-J.md` (`exists_stdBrownian`, `exists_langevin`), `-K.md` (kernel definitions `IsEuclideanDiffusion`/`IsEuclideanLangevin`/`IsSigma*`/`worstK`/`mixingTime*K`/`IsRigidSequenceK`, and the kernel versions of Thm 1.1, Cor 1.3, 1.4, 1.6, (1.25), Thm 1.7, Remarks 3.4/3.5; C^∞ trade-off), `-L.md` (`eigenmap_is_ou` law form, mixing times, OU statements, Langevin decay statements, `normalization_cutoff`, `temperature_cutoff`);
+- 1 November 2026 round: `-M.md` (the nine added statements; no defect, remarks only); worker/adversary reports in `extra-status/` (`c2-`, `item2-`, `dyson-`, `dissip-`, `sdeid-`, `item6-`);
 - later changes: `-E.md` (`mSpectralGap_ge_of_CD`), `-F.md` (the three statements without Brownian carrier), `-G.md` (Thm 1.7 `hS`
   weakening, `heat_kernel_score`).
 No audit found a defect; remarks and agreements are in those files. Limits: each statement was read by one or two agents, mostly by hand (few
@@ -30,7 +31,7 @@ reports to see what was already examined, but should form their own verdict firs
 - [ ] Run steps 1-4 of README "How to rebuild and verify"; note any failure.
 - [ ] Confirm that `Solution.lean` imports `CutoffRigidity.Statements` (generated verbatim from `Challenge.lean`'s
       definitions; `python3 scripts/sync-statements.py --check`) and contains no definitions of its own.
-- [ ] Confirm that `comparator.json` lists exactly the 48 theorems and the definitions of `Challenge.lean` (55 after the Brownian-free integrations: 9 added, 5 removed (`worst`, `IsRigidSequence` too); the old `mixingTime*` live in `Paper/CarrierDefs.lean`).
+- [ ] Confirm that `comparator.json` lists exactly the 57 theorems and the 60 definitions of `Challenge.lean` (55 before the Armstrong round; after the Brownian-free integrations: 9 added, 5 removed (`worst`, `IsRigidSequence` too); the old `mixingTime*` live in `Paper/CarrierDefs.lean`).
 
 ## 1. Definitions (highest priority: an error here silently changes every theorem)
 Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `mgrad`, about line 712).
@@ -52,7 +53,7 @@ Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `
       `IsSigmaDiffusion` / `IsSigmaLangevin` (generator `σ²Δ - ∇V·∇`, `V ∈ C^∞`, `e^{-V/σ²}` a probability density), `worstK`, `mixingTimeK`, `mixingTimeW2K`,
       `mixingTimeKLK` (`⨅ ∅ = ⊤`), `IsRigidSequenceK`. Confirm in particular that **`IsEuclideanDiffusion` is a faithful encoding of the law of the solution of the SDE (1.1)**
       (`Pt t x = Law(X_t^x)`): uniqueness of such `Pt` for smooth `V` with probability Gibbs measure is *proved* (`isEuclideanDiffusion_unique`, via the Riemannian
-      `bridge_final`), and the Brownian `langevinKernel` is shown to satisfy it, but the identification with the SDE solution is not a Challenge statement.
+      `bridge_final`), and the Brownian `langevinKernel` is shown to satisfy it, and the identification with the SDE solution is Challenge statement no. 49 (`isLangevinSolution_map_eq_kernel_of_rigid`, rigid curvature).
 - [ ] Riemannian: `mgrad`, `mlaplacian`, `carre` (Γ), `carre2` (Γ₂), `CD` (Γ₂ ≥ ρΓ), `chartVolumeDensity`,
       `IsWeightedVolume` (μ = e^{-V} vol_g, no stray constant), `mSpectralGap`, `IsMEigenfunction`, `mFirstEigenDim`, `mLambda`;
       `mCurv`, `mExt`, `mRic` (sign and extension conventions), `mHess`, `mHessSq`.
@@ -62,7 +63,7 @@ Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `
 - [ ] Optimal constants: `entropyOf`, `IsTestFunction` (smooth bounded Lipschitz), `optimalPI`, `optimalLSI` and the factor-2
       convention (`Var f ≤ C∫|∇f|²`, `Ent(f²) ≤ C∫|∇f|²`).
 
-## 2. The 48 statements against the manuscript
+## 2. The 57 statements against the manuscript
 For each: read the statement and its docstring, find the manuscript item, tick when statement = claim. "Flag" = known
 deviation to judge. AI audits: see the list above.
 
@@ -116,6 +117,15 @@ deviation to judge. AI audits: see the list above.
 | 46 | `mixing_time_kl_rigid` | summary after Cor 1.6 | needs `λ₁ = o(log n)`; any `η > 0`; kernel form |
 | 47 | `exists_stdBrownian` | existence of Brownian motion (classical) | proved from the vendored library; space `Ω : Type`; no AI audit yet |
 | 48 | `exists_langevin` | non-vacuity of `IsLangevin` | assumes `Hess V ≥ 0` (convexity, the paper's standing assumption; for non-convex `V` no global solution is claimed) and `IsProbabilityMeasure (gibbs V)`; `X x₀` is the project's selected pathwise solution; no AI audit yet |
+| 49 | `isLangevinSolution_map_eq_kernel_of_rigid` | kernel replacement (Sect. 1) | `V ∈ C^∞` (via `IsEuclideanLangevin`); rigid curvature; any carrier |
+| 50 | `eigenmap_is_ou_pathwise` | Lemma 3.3 | pathwise form (re-export of an existing theorem); `IsLangevin`, `C²` only |
+| 51 | `langevin_dissipation_ge_K'` | eq. HI (≥ half) | inequality only; `hρ`, `hHess`; finite entropy at an earlier time |
+| 52 | `langevin_dissipation_dirac_K` | eq. HI (Dirac) | inequality only; Dirac initial law; `ρ` explicit via `EXPLICIT` entry in `gen-solution.py` |
+| 53 | `dyson_ou_static` | L315-335 (Dyson-OU) | static only; Poincaré `1/ρ`, `Var h = ρ⁻¹∫|∇h|²`; no `spectralGap`, no process; `0 < d` |
+| 54 | `carre_eq_operator` | L640-654 | Γ as the operator; smooth `f, g` |
+| 55 | `carre_polarization` | L1417 | trivial bilinearity; read with 54 |
+| 56 | `generator_comp` | L640-654 | scalar chain rule |
+| 57 | `bochner_vector` | L633-663 | `mRic x v (∇f)` slot order (Ric symmetric in reality, not built in); rough Laplacian with chart-constant frame, frame independence not asserted |
 
 ## 3. Cross-cutting questions
 - [ ] **Vacuity.** Only the Riemannian hypotheses have a Lean witness in the repository (`Riemann/WitnessMain.lean`, Gaussian on ℝᵏ, flat
@@ -159,5 +169,5 @@ The item "existence of Brownian motion" moved from not formalized to formalized,
 
 ## Sign-off (to be completed by humans; left blank on purpose)
 Reviewer(s): ____________  Date: ____________  Commit reviewed: ____________
-Scope reviewed (definitions / statements 1-48 / vendored code / other): ____________
+Scope reviewed (definitions / statements 1-57 / vendored code / other): ____________
 Findings and decision: ____________

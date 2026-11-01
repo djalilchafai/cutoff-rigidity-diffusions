@@ -8,24 +8,25 @@ to a registry or attested. Everything labelled "AI" below was done by language-m
 signing up to check.
 
 ## 1. What is machine-checked
-- `Challenge.lean` has 48 theorems and 55 definitions (981 lines). `Solution.lean` proves each theorem with the same statement.
+- `Challenge.lean` has 57 theorems and 60 definitions (995 lines). `Solution.lean` proves each theorem with the same statement.
 - All 48 use only `propext`, `Classical.choice` and `Quot.sound`. There is no `sorry`, `axiom` or `native_decide`.
-- The sandboxed Comparator accepts the solution, with the Lean kernel, nanoda and con-ron (91176 declarations).
+- The sandboxed Comparator accepts the solution, with the Lean kernel, nanoda and con-ron (91445 declarations).
 - Rebuild instructions are in the README section "How to rebuild and verify".
 
 Lean does **not** certify that the statements and definitions mean what the manuscript says. That is the review.
 
-## 2. What the 48 theorems cover
+## 2. What the 57 theorems cover
 - **Euclidean results (Section 1):** Thm 1.1, Cor 1.3, 1.4, (1.25), Thm 1.5, Cor 1.6, Thm 1.7, Remarks 1.2, 3.4, 3.5.
 - **Riemannian results:** Thm 1.9, Thm 3.6 and Lemma 3.7, the Bochner and CD equivalence, the `k₁` bounds, and Poincaré/LSI from CD.
 - **Section 3 and 4 material:** the Gaussian factorization, Lemma 3.3 (the Ornstein–Uhlenbeck eigenmap), normalization and temperature.
 - **Supporting results:** Wasserstein contraction, entropy and Fisher decay, Pinsker, Talagrand, optimal constants.
+- **1 November 2026 round (nos. 49-57):** kernel = SDE law, pathwise Lemma 3.3, integrated entropy-dissipation inequality, static Dyson-OU, Γ operator/polarization/chain rule, vector Bochner.
 - **Brownian motion:** existence of Brownian motion and of a Langevin solution (nos. 47, 48), from the vendored Degenne et al. library.
 
 ## 3. Where I would look first (highest risk)
 1. **Kernel encoding of the diffusion.** 21 Euclidean statements no longer mention Brownian motion. They use
    `IsEuclideanDiffusion V Pt`: Markov kernels, the semigroup law, and the Dynkin identity on `C_c^∞` with generator `Δ − ∇V·∇`.
-   Uniqueness of such `Pt` is proved (`isEuclideanDiffusion_unique`). That `Pt t x` is the law of the SDE solution is argued, not a Challenge statement.
+   Uniqueness of such `Pt` is proved (`isEuclideanDiffusion_unique`). That `Pt t x` is the law of any SDE solution is now a Challenge statement (no. 49, rigid curvature, `V ∈ C^∞`).
 2. **C^∞ instead of C².** Those 21 statements assume `V ∈ C^∞` (and `W n ∈ C^∞` for Cor 1.6), because the uniqueness proof needs smoothness.
    They are weaker than the printed statements in this respect. The `C²` versions survive only as unchecked `*_carrier` theorems.
 3. **Amendments to the printed statements:**
@@ -49,10 +50,11 @@ Lean does **not** certify that the statements and definitions mean what the manu
 - `exists_stdBrownian` and `exists_langevin` were audited in `audit-extra-J.md`. The kernel statements were audited in `-K` and `-L`.
 
 ## 5. Known limits
-- **Not formalized:**
+- **Not formalized:** see the README section "What is not formalized". In short:
   - Question 1.10 (open) and `eq:loggradbound` (conjecture).
-  - `dH/dt = −I` for general laws, and Thm 1.7 on manifolds.
-  - The sphere claims, Dyson, Gaussian isoperimetry, the Leibniz identity for the carré du champ, vector-form Bochner, and the Rothaus remark.
+  - The equality `dH/dt = −I` for general laws (only the inequality half is proved), and Thm 1.7 on manifolds (no precise statement).
+  - The sphere claims (only a conditional upper bound, outside the Challenge), the Dyson-OU process (only the static statement), Gaussian isoperimetry, and the Rothaus remark.
+  - The `C^∞` restriction of the 18 general-`V` kernel statements (C² uniqueness blocked, 2.5-6k lines).
 - **Non-vacuity:** only the Riemannian hypotheses have a committed Lean witness, and it is flat (Gaussian on ℝᵏ).
   `IsSigmaLangevin` for `σ ≠ 1` is argued by hand only.
 - **Global instance:** `instIsContMDiffRiemannianBundleRd` is added globally. It should not change any statement, and only `temperature_cd` touches it.
@@ -61,7 +63,7 @@ Lean does **not** certify that the statements and definitions mean what the manu
 ## 6. Suggested review plan (about a day)
 1. Run the README rebuild steps and record the commit hash (15 min).
 2. Read the definitions: Euclidean (`Challenge.lean` lines 1-150), the kernel definitions, and the Riemannian section from `mgrad` (about line 712).
-3. Go through the table in `HUMAN_REVIEW.md` §2 and tick each of the 48 statements against the manuscript.
+3. Go through the table in `HUMAN_REVIEW.md` §2 and tick each of the 57 statements against the manuscript.
 4. Decide on the C^∞ restriction, the law form of Lemma 3.3 and the Thm 1.7 amendment.
 5. Check the vendored code provenance (`vendor/README.md`).
 6. Only after a real review: fill the `review` fields in `formalization.yaml` and decide on registry submission and attestation (humans only).

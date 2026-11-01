@@ -390,3 +390,20 @@ Status: Comparator NOT rerun after this change (the 48-theorem counts are unchan
 
 The kernel (Brownian-free) statements and the new definitions were audited by two independent AI agents (`verification/audit-extra-K.md`, `audit-extra-L.md`): no defect.
 Trade-off: `C^∞` instead of `C²` for the process statements; the `C²` versions survive only as `*_carrier` theorems, which the Comparator does not check. Not a human review.
+
+
+## Armstrong-method round (1 November 2026): worker/adversary items and nine new statements
+
+Method: a worker agent per item (new files only), then a fresh adversary agent that tries to break the result; the lead integrates. Reports: `extra-status/*-worker.md`, `*-adversary.md`, `integration6.md`, and `audit-extra-M.md`.
+All of this is AI work; no human review. `review.status` stays `unchecked`.
+
+- Item 1 (C² instead of C^∞): blocked. The 18 general-V kernel statements need C² uniqueness of the diffusion semigroup (Schauder/`W^{2,p}`, 2.5-6k lines); the three C² Ornstein-Uhlenbeck theorems are mere restatements and are not in the Challenge.
+- Item 2: Leibniz/chain rule/operator form of Γ, vector-form Bochner (proved; Rothaus remark not formalized, 3-6k lines).
+- Item 3: static Dyson-OU on the Weyl chamber (proved, ~1400 lines, by regularisation to smooth convex whole-space potentials).
+- Item 4: integrated de Bruijn inequality (general and Dirac laws); equality for general laws blocked (1.5-2.5k lines). One repair round (finite entropy at an earlier time instead of at time 0).
+- Item 5: kernel = SDE law via pathwise uniqueness for monotone drift; pathwise Lemma 3.3 (re-export of an existing theorem).
+- Item 6: sphere upper bound only (Extra, not in the Challenge; its first conditional version was vacuous and was repaired); Gaussian isoperimetry and Theorem 1.7 on manifolds: nothing to formalize or blocked.
+- Added to `Challenge.lean` (9 theorems, 5 definitions): `isLangevinSolution_map_eq_kernel_of_rigid`, `eigenmap_is_ou_pathwise`, `langevin_dissipation_ge_K'`, `langevin_dissipation_dirac_K`, `dyson_ou_static`, `carre_eq_operator`, `carre_polarization`, `generator_comp`, `bochner_vector`; definitions `chamber`, `dysonProb`, `mSecondDeriv`, `mRoughLaplacian`, `mVecGenerator`.
+  Existing statements were reflowed to stay under the 1000-line limit (a script confirmed that all older declarations are unchanged modulo comments and whitespace).
+- AI audit M (`extra-status/audit-extra-M.md`) found no defect in the nine statements, only remarks (the docstring of the kernel = law theorem now states the `C^∞` amendment; "extremal" for the Dyson statement holds in the closure sense).
+- The Challenge pair now has 57 theorems and 60 definitions; the sandboxed Comparator accepts it (con-ron 91445 declarations, nanoda, Lean kernel; `verification/comparator-sandboxed.log`).

@@ -10,8 +10,8 @@ import pathlib
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 lines = (ROOT / "Challenge.lean").read_text(encoding="utf-8").split("\n")
 # Theorems whose universe/type `Ω` is not determined by the conclusion (it only occurs in the
-# hypotheses about Brownian motion): pass it explicitly to `apply`.
-EXPLICIT = {}
+# hypotheses about Brownian motion, or `ρ` could be captured by an unrelated `0 < _` hypothesis): pass it explicitly to `apply`.
+EXPLICIT = {"langevin_dissipation_dirac_K": "(ρ := ρ)"}
 out = []
 i = 0
 name = None

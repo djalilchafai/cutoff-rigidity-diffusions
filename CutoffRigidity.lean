@@ -367,3 +367,9 @@ public import CutoffRigidity.Extra.EuclideanCutoffs
 public import CutoffRigidity.Extra.EigenmapOUK
 public import CutoffRigidity.Extra.EuclideanWeakK
 public import CutoffRigidity.Extra.EuclideanKernelStatements
+public import CutoffRigidity.Extra.SdeId1
+public import CutoffRigidity.Extra.Dissip4
+public import CutoffRigidity.Extra.Dyson7
+public import CutoffRigidity.Extra.Item2a
+public import CutoffRigidity.Extra.Item2b
+public import CutoffRigidity.Paper.ChallengeExtras
