@@ -9,6 +9,9 @@ What Lean already guarantees (machine-checked, rerunnable, see README "How to re
 `Quot.sound`; the Comparator (Lean kernel, nanoda, con-ron) accepts. What it does NOT guarantee: that the *statements and
 definitions* mean what the manuscript says. That is what a reviewer must establish.
 
+Short versions for the authors: [HUMAN_REVIEW_SUMMARY.md](HUMAN_REVIEW_SUMMARY.md) (what to check first, review plan) and the README section
+"What is not formalized" (the full list of gaps, kept in sync with section 3 below). Both are drafts and claim no review.
+
 ## AI audits done so far (to reuse, not to trust)
 Every one of the 48 statements has had at least one AI audit (statements and definitions read against the manuscript; proofs not read):
 - original 12: `verification/semantic-audit.md` (first audit) and independent second audits `audit-second-1.md` (theorems 1-7),
@@ -133,7 +136,7 @@ deviation to judge. AI audits: see the list above.
       (`PAPER_AUDIT.md`: the Ornstein–Uhlenbeck counterexample to Thm 1.7 is a written derivation, not checked in Lean) and agree with the authors' intent.
 - [ ] **Global instance.** `Riemann/WitnessGeometry.lean` adds `instIsContMDiffRiemannianBundleRd`; confirm it cannot change the meaning of
       any Challenge statement (Comparator accepts; `temperature_cd` is the only statement touching it).
-- [ ] **Not formalized** (honestly listed in `PALOMAR.md`): Question 1.10 (open); `eq:loggradbound` (conjecture); `dH/dt = -I` for general laws;
+- [ ] **Not formalized** (honestly listed in `PALOMAR.md` and in the README section "What is not formalized"): Question 1.10 (open); `eq:loggradbound` (conjecture); `dH/dt = -I` for general laws;
       Theorem 1.7 on manifolds; sphere, Dyson, Gaussian isoperimetry; Leibniz identity for the carré du champ;
       vector-form Bochner; the Rothaus remark. Decide whether any is required for the intended submission.
 - [ ] **Cosmetic/lint:** deprecation warnings (`if_pos`, `if_neg`, `haveI`, `Set.mem_setOf_eq`) are harmless.
