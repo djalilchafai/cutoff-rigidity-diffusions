@@ -1,6 +1,6 @@
 # Human review checklist (draft)
 
-Status (updated 25 October 2026, after the Brownian-free integration): **no human review has taken place.** The 21 statements converted to kernel form were re-audited by two AI agents after the conversion (`audit-extra-K.md`, `audit-extra-L.md`; earlier audits of the same statements concerned the Brownian-carrier text). This file is a checklist for the people who will do it. It records nothing
+Status (updated 1 November 2026, after the Armstrong round that added nos. 49-57): **no human review has taken place.** The nine added statements were audited by one AI agent (`audit-extra-M.md`) and went through worker/adversary passes. The 21 statements converted to kernel form were re-audited by two AI agents after the conversion (`audit-extra-K.md`, `audit-extra-L.md`; earlier audits of the same statements concerned the Brownian-carrier text). This file is a checklist for the people who will do it. It records nothing
 as reviewed, and the sign-off block at the end is intentionally blank. Everything below that is marked "AI" was done by
 language-model agents and is not a substitute for a person.
 
@@ -19,7 +19,7 @@ Every one of the 57 statements has had at least one AI audit (statements and def
 - 22 added statements: `audit-extra-A.md` (sequence cutoffs), `-B.md` (spectral gap, constants), `-C.md` (OU, time change, temperature),
   `-D.md` (dynamics, strengthened splitting);
   `-H.md` (Ricci/Bochner/CD, `k₁` bounds, Riemannian Poincaré/LSI, `entropyOf`), `-I.md` (Fisher decay/Dini, `normalization_sde`, temperature, W₂/entropy mixing times), `-J.md` (`exists_stdBrownian`, `exists_langevin`), `-K.md` (kernel definitions `IsEuclideanDiffusion`/`IsEuclideanLangevin`/`IsSigma*`/`worstK`/`mixingTime*K`/`IsRigidSequenceK`, and the kernel versions of Thm 1.1, Cor 1.3, 1.4, 1.6, (1.25), Thm 1.7, Remarks 3.4/3.5; C^∞ trade-off), `-L.md` (`eigenmap_is_ou` law form, mixing times, OU statements, Langevin decay statements, `normalization_cutoff`, `temperature_cutoff`);
-- 1 November 2026 round: `-M.md` (the nine added statements; no defect, remarks only); worker/adversary reports in `extra-status/` (`c2-`, `item2-`, `dyson-`, `dissip-`, `sdeid-`, `item6-`);
+- 1 November 2026 round: `-M.md` (the nine added statements; no defect, remarks only; in `verification/`); worker/adversary reports in `extra-status/` (`c2-`, `item2-`, `dyson-`, `dissip-`, `sdeid-`, `item6-`);
 - later changes: `-E.md` (`mSpectralGap_ge_of_CD`), `-F.md` (the three statements without Brownian carrier), `-G.md` (Thm 1.7 `hS`
   weakening, `heat_kernel_score`).
 No audit found a defect; remarks and agreements are in those files. Limits: each statement was read by one or two agents, mostly by hand (few

@@ -554,3 +554,11 @@ Brownian-motion hypothesis was replaced by `IsEuclideanLangevin V Pt` and the ni
 * **Trade-off, stated plainly.** The Challenge no longer covers potentials that are `C²` but not `C^∞` (e.g. `Σ|xᵢ|³`, `Σ|xᵢ|^{5/2}`, Huber-type interactions, convex `C²` pair potentials that are not `C³`), which the manuscript admits (line 92, Cor 1.6). The `C²` versions
   remain proved in the repository as the `*_carrier` Paper theorems (using the old `IsLangevin`); they are outside the Challenge and `comparator.json`, so the Comparator does not check their statements.
 This is an AI audit, not a human review.
+
+## Audit of the nine statements added on 1 November 2026 (AI, audit M)
+
+One independent AI auditor (statements and definitions only, no compilation; report `audit-extra-M.md`) read `isLangevinSolution_map_eq_kernel_of_rigid`, `eigenmap_is_ou_pathwise`,
+`langevin_dissipation_ge_K'`, `langevin_dissipation_dirac_K`, `dyson_ou_static` (with `chamber`, `dysonProb`), `carre_eq_operator`, `carre_polarization`, `generator_comp` and `bochner_vector` (with `mSecondDeriv`, `mRoughLaplacian`, `mVecGenerator`):
+no defect found, remarks only. Remarks applied: the kernel = law theorem states the `C^∞` amendment; the Dyson docstring says "extremal" holds in the closure sense. Remarks left as documented: the optimality of the Poincaré constant `1/ρ`
+in `dyson_ou_static` needs a truncation argument (not a conjunct); `mRic` symmetry is not built into the definition; the rough Laplacian uses chart-constant frames; the flat witness does not exercise the Ricci term.
+Before integration each statement also had a worker and an adversary AI pass (`extra-status/*-adversary.md`). This is an AI audit, not a human review.

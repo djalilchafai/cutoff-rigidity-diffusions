@@ -394,7 +394,7 @@ Trade-off: `C^∞` instead of `C²` for the process statements; the `C²` versio
 
 ## Armstrong-method round (1 November 2026): worker/adversary items and nine new statements
 
-Method: a worker agent per item (new files only), then a fresh adversary agent that tries to break the result; the lead integrates. Reports: `extra-status/*-worker.md`, `*-adversary.md`, `integration6.md`, and `audit-extra-M.md`.
+Method: a worker agent per item (new files only), then a fresh adversary agent that tries to break the result; the lead integrates. Reports: `extra-status/*-worker.md`, `*-adversary.md`, `integration6.md`, and `verification/audit-extra-M.md`.
 All of this is AI work; no human review. `review.status` stays `unchecked`.
 
 - Item 1 (C² instead of C^∞): blocked. The 18 general-V kernel statements need C² uniqueness of the diffusion semigroup (Schauder/`W^{2,p}`, 2.5-6k lines); the three C² Ornstein-Uhlenbeck theorems are mere restatements and are not in the Challenge.
@@ -405,5 +405,5 @@ All of this is AI work; no human review. `review.status` stays `unchecked`.
 - Item 6: sphere upper bound only (Extra, not in the Challenge; its first conditional version was vacuous and was repaired); Gaussian isoperimetry and Theorem 1.7 on manifolds: nothing to formalize or blocked.
 - Added to `Challenge.lean` (9 theorems, 5 definitions): `isLangevinSolution_map_eq_kernel_of_rigid`, `eigenmap_is_ou_pathwise`, `langevin_dissipation_ge_K'`, `langevin_dissipation_dirac_K`, `dyson_ou_static`, `carre_eq_operator`, `carre_polarization`, `generator_comp`, `bochner_vector`; definitions `chamber`, `dysonProb`, `mSecondDeriv`, `mRoughLaplacian`, `mVecGenerator`.
   Existing statements were reflowed to stay under the 1000-line limit (a script confirmed that all older declarations are unchanged modulo comments and whitespace).
-- AI audit M (`extra-status/audit-extra-M.md`) found no defect in the nine statements, only remarks (the docstring of the kernel = law theorem now states the `C^∞` amendment; "extremal" for the Dyson statement holds in the closure sense).
+- AI audit M (`verification/audit-extra-M.md`) found no defect in the nine statements, only remarks (the docstring of the kernel = law theorem now states the `C^∞` amendment; "extremal" for the Dyson statement holds in the closure sense).
 - The Challenge pair now has 57 theorems and 60 definitions; the sandboxed Comparator accepts it (con-ron 91445 declarations, nanoda, Lean kernel; `verification/comparator-sandboxed.log`).

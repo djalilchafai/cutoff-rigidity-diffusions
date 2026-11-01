@@ -46,3 +46,8 @@ Nothing here is added to the Challenge yet. All numbers are agents' estimates.
 * Is it worth doing the Wiener construction (3-6 agent-weeks) for non-vacuity only?
 * Is replacing the Brownian-carrier hypothesis by `IsEuclideanLangevin` with `V ∈ C^∞` an acceptable trade for the Euclidean statements?
 * Should the cheap block be integrated now (it brings the Challenge near its size limit)?
+
+## Status update (1 November 2026)
+Done since this scoping (see `extra-status/` and PALOMAR.md, "Armstrong-method round"): the cheap block, Brownian existence (vendored library), the Brownian-free kernel reformulation, the static Dyson statement
+(1.4k lines instead of the estimated 1.5-4k), the inequality half of `dH/dt = -I`, kernel = SDE law, the Leibniz/vector-Bochner items. Still blocked: C² uniqueness (2.5-6k lines), equality in `dH/dt = -I` for general
+laws (1.5-2.5k), sphere (5-10k), Rothaus (3-6k), Gaussian isoperimetry (4-8k), Theorem 1.7 on manifolds.
