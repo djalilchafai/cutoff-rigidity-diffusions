@@ -166,9 +166,22 @@ Twenty-one Euclidean statements of `Challenge.lean` (Thm 1.1, Cor 1.3, 1.4, 1.6,
 information, entropy/Fisher decay and Dini form, normalization and temperature cutoffs) no longer mention Brownian motion: they are stated for transition kernels `Pt`
 (`IsEuclideanLangevin`, `IsRigidSequenceK`, `worstK`, `mixingTimeK`, ...). Amendments: `V` is `C^∞` instead of `C²` (uniqueness of the diffusion semigroup is proved for smooth potentials),
 and Lemma 3.3 is stated in law form. The Brownian versions remain as `*_carrier` theorems used inside the proofs. The only statements still mentioning Brownian motion are the SDE-level
-`normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`. See `PALOMAR.md`. Not yet re-run through Comparator; no human review.
+`normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`. See `PALOMAR.md`. The sandboxed Comparator accepts the solution (`verification/comparator-sandboxed.log`); no human review.
 
 **Trade-off of the Brownian-free statements.** The Euclidean process statements are now stated for `C^∞` potentials (kernel formulation `IsEuclideanLangevin`), not for the manuscript's convex `C²` potentials. Potentials that are `C²` but not `C^∞` (for example `Σ|xᵢ|³`, Huber-type interactions) are therefore not covered by the Challenge. The `C²` versions are still proved in the repository as the `*_carrier` theorems in `CutoffRigidity/Paper` and `Extra`, but they are not part of the Challenge, so the Comparator does not check their statements.
+
+## What is not formalized
+
+The 48 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`.
+
+- **Open or conjectural in the paper:** Question 1.10; `eq:loggradbound`.
+- **Judged infeasible or skipped:** the static Dyson statement (estimated 1.5-4k lines); Gaussian isoperimetry; the sphere claims; Theorem 1.7 on manifolds;
+  `dH/dt = -I` for general laws (only the Dini form, no. 41, is stated); the Leibniz identity for the carre du champ; vector-form Bochner (only the scalar form); the Rothaus remark.
+- **Formalized only in a weakened or changed form:** `C^∞` instead of `C²` for the 21 kernel-form statements (see above); Lemma 3.3 in law form, not pathwise; Theorem 1.9 with the diffusion encoded as
+  `IsDiffusionSemigroup` (not proved to be the law of the SDE (1.26)); `normalization_sde` and `temperature_sde` take the SDE solutions as hypotheses, and `temperature_sde` adds `Hess V ≥ ρ > 0`;
+  Theorem 1.7 amended (the printed statement is false; the counterexample is a written derivation, not checked in Lean); (1.25) for finite `p` only; extra hypotheses `0 < d`, `0 < finrank`, and `hgap` for the `k₁` bounds.
+- **Not checked in Lean:** that `Pt t x` is the law of the SDE solution (uniqueness of such `Pt` is proved, the identification is not a Challenge statement); satisfiability of `IsSigmaLangevin` for `σ ≠ 1`
+  (argued by hand); a curved Riemannian witness (only the flat Gaussian on ℝᵏ); a kernel analogue of the invariance statement in `temperature_sde`.
 
 ## How to rebuild and verify
 
