@@ -19,3 +19,13 @@ instances (non-vacuity, e.g. instantiate the hypotheses for an explicit V; check
 Rules: edit no existing file; write only your report file. Report per statement: verdict (faithful / faithful with remarks /
 defect), the manuscript lines, a precise list of deviations with severity, and for each suspected defect a concrete
 counterexample or failure scenario. Be adversarial but honest: if nothing is wrong, say so. Do not claim human review.
+
+## Pending AI audit (added 1 November 2026, round 2)
+
+No AI audit has been run on the following statements and definitions yet (the worker/adversary reports in `extra-status/` are not audits of the integrated text). Suggested report name: `audit-extra-N.md`.
+- Changed statements: the `C²` clause of `IsEuclideanLangevin`, `IsSigmaLangevin` and of `W n` in `convex_interaction_cutoff` (23 statements; check that each carries a convexity hypothesis and that none silently loses strength);
+  the equality statements `langevin_dissipation_eq_K'`, `langevin_dissipation_eq_dirac_K` (replacing the `≥` versions).
+- New statements: `dyson_spectralGap` (`dysonGap`); `gaussian_isoperimetric_functional`, `gaussian_isoperimetric_sets`, `gibbs_quadratic_isProb` (`gaussianIsoProfile`; QUADRATIC potential only);
+  `rothaus_alternative_ne`, `two_optPI_le_optLSI`, `finite_rothaus` (`Form`, `Form.optPI`, `Form.optLSI`, `Form.Compact`; abstract/finite only); `temperature_kernel`; `sphere_curvature`, `sphere_gap` (`IsSphereModel`; model form).
+- Points to examine: junk values of `sInf` in `Form.optPI/optLSI`, `dysonGap`, `gaussianIsoProfile`; that `Form.Compact` is not contradictory (satisfied by finite forms in `Extra/Rothaus15`);
+  that `finite_rothaus` quantifying over any `Form` with `Q = univ` and the Dirichlet energy is equivalent to the statement for the canonical form; that `IsSphereModel` pulls back exactly the Riemannian inner product (compare `Extra/Item6a`, `Sphere5/6`).

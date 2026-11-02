@@ -3,13 +3,13 @@
 This project is a Lean 4 formalization of the manuscript [cutcur-lean.tex](cutcur-lean.tex)
 by Chafaï–Fathi, based on [arXiv:2412.15969v4](https://arxiv.org/abs/2412.15969v4).
 
-**Status (25 October 2026).** `Challenge.lean` states 57 theorems and 60 definitions: the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
-3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and 36 further claims of the
+**Status (1 November 2026, round 2).** `Challenge.lean` states 67 theorems and 67 definitions (850 lines, 87 KB): the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
+3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and further claims of the
 manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound (Euclidean and Riemannian), (R2) => (R1), examples, proof ingredients such as W2
 contraction, entropy decay, Pinsker and Talagrand, the optimal constants, and the Section 4 items; see
 [PALOMAR.md](PALOMAR.md)). `Solution.lean` proves all of them (no `sorry`, axioms `propext`,
-`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 57-theorem pair
-(con-ron, nanoda and the Lean kernel). The splitting theorem now also states the
+`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 67-theorem pair
+(con-ron 92444 declarations, nanoda and the Lean kernel; `comparator.json` lists the 67 theorems and 66 definitions, the structure `CutCur.Form` being checked as a dependency). The splitting theorem now also states the
 potential identity of Theorem 3.6 and the connectedness and completeness of the factor.
 A further block of 11 statements (Bochner identity and `CD ⇔ Ric + Hess V ≥ ρ`, Riemannian `k₁` bounds and Poincaré/log-Sobolev, Fisher
 decay for all laws and its Dini form, Brownian scaling at the SDE level, the temperature SDE and cutoffs, W2 and entropy mixing times) is
@@ -19,7 +19,15 @@ Two further theorems, `exists_stdBrownian` and `exists_langevin`, show that a st
 measure); they rely on the vendored Brownian motion library of Degenne et al. (see Credits below).
 Nine further statements (Armstrong-method round, 1 November 2026): kernel = SDE law for rigid curvature, pathwise Lemma 3.3, the integrated entropy-dissipation
 inequality (general and Dirac initial laws), the static Dyson–OU statement on the Weyl chamber, the operator/polarization/chain-rule forms of the carré du champ, and the vector
-form of the Bochner identity. Not formalized: see the section "What is not formalized" below. Theorem 1.9 is proved for every
+form of the Bochner identity.
+Round 2 (1 November 2026, second integration; every item went through a worker and an adversary AI pass, `extra-status/*-adversary.md`; the AI audit of the new and changed statements is pending): (a) the smoothness clause of `IsEuclideanLangevin`,
+`IsSigmaLangevin` and of `W n` in `convex_interaction_cutoff` is now `C²` instead of `C^∞` (uniqueness of the diffusion semigroup for convex `C²` potentials is proved, `Extra/C2Uniq*`; 23 statements become stronger);
+(b) the integrated de Bruijn identity is now an equality (`langevin_dissipation_eq_K'`, `langevin_dissipation_eq_dirac_K` replace the two inequality statements);
+(c) `dyson_spectralGap`: `λ₁ = ρ` for the Dyson–OU law; (d) Gaussian isoperimetry, **quadratic potential `ρ|x|²/2 + c` only** (not general `Hess V ≥ ρ`): `gaussian_isoperimetric_functional` (Bobkov) and `gaussian_isoperimetric_sets`;
+(e) the Rothaus alternative for an **abstract Dirichlet-type form** under a compactness hypothesis (`rothaus_alternative_ne`, `Form.Compact`) and **unconditionally for finite spaces** (`finite_rothaus`); the compact-manifold theorem is **not** proved;
+(f) the round sphere in model form: `sphere_curvature` (`Ric = (d-1) g`, `CD(d-1)`, optimal) and `sphere_gap` (`λ₁ = d ≠ d-1`) for any manifold isometrically immersed in `S^d`: the sphere is **not** a witness of the hypothesis `hgap` of Theorem 1.9;
+(g) `temperature_kernel`: the `σ`-diffusion kernel exists, is Gibbs-invariant and is the time change of the Euclidean Langevin kernel (convex `C²`).
+Not formalized: see the section "What is not formalized" below. Theorem 1.9 is proved for every
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
 log-Sobolev, gap attainment and the Kuwada contraction are formalized (see [PALOMAR.md](PALOMAR.md)).
 No human semantic review has taken place; the statements were checked only by an AI audit
@@ -164,27 +172,27 @@ actual product diffeomorphism. The complete paper is not yet formalized. Project
 
 Twenty-one Euclidean statements of `Challenge.lean` (Thm 1.1, Cor 1.3, 1.4, 1.6, Remarks 3.4/3.5, the W2 contraction, display (1.25), Thm 1.7, Lemma 3.3, the three mixing-time statements, the OU examples and Fisher
 information, entropy/Fisher decay and Dini form, normalization and temperature cutoffs) no longer mention Brownian motion: they are stated for transition kernels `Pt`
-(`IsEuclideanLangevin`, `IsRigidSequenceK`, `worstK`, `mixingTimeK`, ...). Amendments: `V` is `C^∞` instead of `C²` (uniqueness of the diffusion semigroup is proved for smooth potentials),
-and Lemma 3.3 is stated in law form. The Brownian versions remain as `*_carrier` theorems used inside the proofs. The only statements still mentioning Brownian motion are the SDE-level
+(`IsEuclideanLangevin`, `IsRigidSequenceK`, `worstK`, `mixingTimeK`, ...). Amendment: Lemma 3.3 is stated in law form (the first version also assumed `V ∈ C^∞`; round 2 reinstated `C²`). The Brownian versions remain as `*_carrier` theorems used inside the proofs. The only statements still mentioning Brownian motion are the SDE-level
 `normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`. See `PALOMAR.md`. The sandboxed Comparator accepts the solution (`verification/comparator-sandboxed.log`); no human review.
 
-**Trade-off of the Brownian-free statements.** The Euclidean process statements are now stated for `C^∞` potentials (kernel formulation `IsEuclideanLangevin`), not for the manuscript's convex `C²` potentials. Potentials that are `C²` but not `C^∞` (for example `Σ|xᵢ|³`, Huber-type interactions) are therefore not covered by the Challenge. The `C²` versions are still proved in the repository as the `*_carrier` theorems in `CutoffRigidity/Paper` and `Extra`, but they are not part of the Challenge, so the Comparator does not check their statements.
+**Convexity and `C²` in the Brownian-free statements.** The Euclidean process statements are stated for `C²` potentials (kernel formulation `IsEuclideanLangevin`), as in the manuscript. Uniqueness of the diffusion kernel is proved for convex `C²` potentials
+(`euclideanDiffusion_unique_convex`), and every such statement carries a convexity hypothesis (`Hess V ≥ ρ`, `RigidCurvature`, convex `W n`, or the explicitly smooth OU potential). Nonconvex potentials are not covered (the manuscript's setting is convex). The `C^∞` kernel results of the earlier version survive as
+proof-side lemmas (`IsEuclideanLangevinInf` in `Extra/SmoothLangevin.lean`).
 
 ## What is not formalized
 
-The 57 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`, `extra-status/` (worker and adversary reports of the 1 November 2026 round).
+The 67 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`, `extra-status/` (worker and adversary reports of the 1 November 2026 rounds, and `extra-status/integration-round2.md`).
 
 - **Open or conjectural in the paper:** Question 1.10; `eq:loggradbound`.
-- **Attempted, blocked or without a precise statement:**
-  - sphere: only the conditional upper bound `λ₁ ≤ d` is proved (`Extra/Item6a.lean`, not in the Challenge); `CD(d-1)` for the sphere, `λ₁ = d` and a Lean model of the sphere are missing (Mathlib has no Riemannian structure on `S^d`; 5-10k lines);
-  - Gaussian isoperimetry (the manuscript only says Bakry-Émery "implies" it; 4-8k lines);
+- **Attempted, blocked, partial or without a precise statement:**
+  - sphere: the Challenge has only the model-form statements `sphere_curvature` and `sphere_gap` (any `M^d` isometrically immersed in `S^d`: `Ric = (d-1) g`, `CD(d-1)` and its optimality, `λ₁ = d`). The concrete round sphere (`Extra/Sphere*`: the type `Sph d`, a probability weighted volume, `λ₁ = d ≠ d-1`, and `¬(1 ≤ k₁ ≤ d)`, so `hgap` cannot be dropped in `riemannian_k1_bounds`) is proved but is not a Challenge statement (about 100 lines of definitions). The sphere is not a witness of `hgap` in Theorem 1.9;
+  - Gaussian isoperimetry: only the quadratic potential `ρ|x|²/2 + c` (`μ = 𝒩(0, ρ⁻¹ I)`); the general `CD(ρ,∞)` case (Bakry–Ledoux) is not formalized (the manuscript only says Bakry–Émery "implies" it);
   - Theorem 1.7 on manifolds (one sentence in the manuscript, no statement);
-  - the Rothaus remark (3-6k lines; the (VW) extremality claims are covered by `optimal_constants_extremal`);
-  - `dH/dt = -I` with equality for general laws: only the inequality half `H(μ_s) - H(μ_t) ≥ ∫_s^t I` is proved (general laws with finite entropy at an earlier time, and Dirac laws); equality needs upper semicontinuity of the Fisher information for `L¹` data (1.5-2.5k lines);
-  - Dyson: the static statement is formalized (no. `dyson_ou_static`); the Dyson-OU process, the Neumann realization of the generator and the identification with the project's `spectralGap` are not.
-- **Formalized only in a weakened or changed form:** `C^∞` instead of `C²` for the 18 kernel-form statements with general `V` (C² uniqueness of the diffusion semigroup needs Schauder/`W^{2,p}` regularity, estimated 2.5-6k lines; the three Ornstein-Uhlenbeck statements were never restricted); Theorem 1.9 with the diffusion encoded as `IsDiffusionSemigroup`; `normalization_sde` and `temperature_sde` take the SDE solutions as hypotheses, and `temperature_sde` adds `Hess V ≥ ρ > 0`; Theorem 1.7 amended (the printed statement is false; the counterexample is a written derivation, not checked in Lean); (1.25) for finite `p` only; extra hypotheses `0 < d`, `0 < finrank`, and `hgap` for the `k₁` bounds; the Dyson Poincaré statement is for bounded smooth Lipschitz test functions with `h` extremal in the closure sense.
-- **Now formalized (previously listed here):** that `Pt t x` is the law of any SDE solution (`isLangevinSolution_map_eq_kernel_of_rigid`, `V ∈ C^∞`, rigid curvature); the pathwise form of Lemma 3.3 (`eigenmap_is_ou_pathwise`); the Leibniz/chain rule and operator form of `carre`; the vector form of Bochner.
-- **Not checked in Lean:** satisfiability of `IsSigmaLangevin` for `σ ≠ 1` (argued by hand); a curved Riemannian witness (only the flat Gaussian on ℝᵏ); a kernel analogue of the invariance statement in `temperature_sde`.
+  - the Rothaus remark: only an abstract Dirichlet-type form `(Q, E)` under the hypothesis `Form.Compact`, and the unconditional finite-space case; the compact weighted Riemannian manifold (Sobolev embedding `H¹ ⊂ L^{2+δ}`, Rellich, density of smooth functions) is not formalized; the (VW) extremality claims are covered by `optimal_constants_extremal`;
+  - Dyson: the static statement (`dyson_ou_static`) and `λ₁ = ρ` (`dyson_spectralGap`) are formalized; the Dyson–OU process and the Neumann realization of the generator are not.
+- **Formalized only in a weakened or changed form:** `IsEuclideanLangevin`/`IsSigmaLangevin` are `C²` but the statements all assume convexity (uniqueness of the diffusion kernel is proved for convex `V` only); Theorem 1.9 with the diffusion encoded as `IsDiffusionSemigroup`; `normalization_sde` and `temperature_sde` take the SDE solutions as hypotheses, and `temperature_sde` and `temperature_kernel` add `Hess V ≥ ρ > 0`; Theorem 1.7 amended (the printed statement is false; the counterexample is a written derivation, not checked in Lean); (1.25) for finite `p` only; extra hypotheses `0 < d`, `0 < finrank`, and `hgap` for the `k₁` bounds; the Dyson Poincaré statement is for bounded smooth Lipschitz test functions with `h` extremal in the closure sense; Gaussian isoperimetry and the Rothaus alternative as described above.
+- **Now formalized (previously listed here):** that `Pt t x` is the law of any SDE solution (`isLangevinSolution_map_eq_kernel_of_rigid`); the pathwise form of Lemma 3.3 (`eigenmap_is_ou_pathwise`); the Leibniz/chain rule and operator form of `carre`; the vector form of Bochner; `C²` instead of `C^∞` for the kernel statements; the equality `H(μ_s) - H(μ_t) = ∫_s^t I` for general laws (finite entropy at an earlier time) and Dirac laws; `λ₁ = ρ` for Dyson–OU; existence and uniqueness of the `σ`-diffusion kernel (`temperature_kernel`).
+- **Not checked in Lean:** a curved Riemannian witness for the theorems of Section 1.4 (only the flat Gaussian on ℝᵏ and, in model form, the sphere); that `Form.Compact` holds for `H¹` of a compact manifold (only for finite spaces, `Rothaus.finite_compact`, not a Challenge statement); non-vacuity of the Gaussian isoperimetric statements for a non-constant test function (`gibbs_quadratic_isProb` only shows the measure hypothesis is satisfiable).
 
 ## How to rebuild and verify
 
@@ -259,8 +267,8 @@ is not part of the project sources.
 
 [PALOMAR.md](PALOMAR.md) records the official requirements and the detailed status.
 
-- **Challenge/Solution pair:** `Challenge.lean` states 57 theorems; `Solution.lean` proves all of
-  them. `comparator.json` lists the 57 theorems and 60 definitions. The Comparator runs below were made for the
+- **Challenge/Solution pair:** `Challenge.lean` states 67 theorems; `Solution.lean` proves all of
+  them. `comparator.json` lists the 67 theorems and 67 definitions. The Comparator runs below were made for the
   earlier 12-theorem pair and must be repeated for the extended one.
 - **Comparator (12-theorem pair, before the extension):** `lake comparator` accepted the solution (con-ron, nanda and the Lean kernel; 88114
   declarations), both without a sandbox (`verification/comparator-final.log`) and inside the bwrap

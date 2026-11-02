@@ -1,14 +1,14 @@
 module
 
 public import CutoffRigidity.Statements
-public import CutoffRigidity.Extra.Dissip4
 public import CutoffRigidity.Extra.Dyson7
 
 /-! # Thin wrappers for the Challenge statements proved in `Extra`
 
-`langevin_dissipation_ge_K'`, `langevin_dissipation_dirac_K` (`CutoffRigidity.Dissip`) and
 `dyson_ou_static` (`CutoffRigidity.Dyson`), restated over the `CutCur` definitions of `Challenge.lean`
-(the Dyson definitions are inlined there; they are definitionally equal to the worker's).
+(the Dyson definitions are inlined there; they are definitionally equal to the worker's). The integrated de Bruijn
+identities (`DissipEq`), the Dyson gap, the Gaussian isoperimetry, the Rothaus alternative and the sphere theorems
+are applied directly in `Solution.lean` (see `scripts/gen-solution.py`), through `ChallengeBridge`.
 -/
 
 public section
@@ -20,21 +20,6 @@ namespace CutoffRigidity.Paper
 open MeasureTheory ProbabilityTheory Set
 open scoped ENNReal NNReal ContDiff
 open CutCur
-
-theorem langevin_dissipation_ge_K' {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
-    {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (ν : Measure (Rd d)) [IsProbabilityMeasure ν] {a s t : ℝ≥0}
-    (hfin : InformationTheory.klDiv (ν.bind (Pt a)) (gibbs V) ≠ ⊤) (has : a < s) (hst : s < t) :
-    (∫⁻ r in Ioc (s : ℝ) t, fisherInfo V (ν.bind (Pt r.toNNReal))) + InformationTheory.klDiv (ν.bind (Pt t)) (gibbs V) ≤
-      InformationTheory.klDiv (ν.bind (Pt s)) (gibbs V) :=
-  Dissip.langevin_dissipation_ge_K' hL hρ hHess ν hfin has hst
-
-theorem langevin_dissipation_dirac_K {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
-    {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (x₀ : Rd d) {s t : ℝ≥0} (hs : 0 < s) (hst : s < t) :
-    (∫⁻ r in Ioc (s : ℝ) t, fisherInfo V (Pt r.toNNReal x₀)) + InformationTheory.klDiv (Pt t x₀) (gibbs V) ≤
-      InformationTheory.klDiv (Pt s x₀) (gibbs V) :=
-  Dissip.langevin_dissipation_dirac_K hL hρ hHess x₀ hs hst
 
 theorem dyson_ou_static {d : ℕ} (hd : 0 < d) {ρ β : ℝ} (hρ : 0 < ρ) (hβ : 0 ≤ β) :
     IsProbabilityMeasure (dysonProb d ρ β) ∧ IsOpen (chamber d) ∧ Convex ℝ (chamber d) ∧

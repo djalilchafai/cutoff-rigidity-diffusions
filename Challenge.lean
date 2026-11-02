@@ -28,25 +28,20 @@ namespace CutCur
 abbrev Rd (d : ℕ) := EuclideanSpace ℝ (Fin d)
 
 /-- The Boltzmann–Gibbs measure `μ(dx) = e^{-V(x)} dx` on `ℝ^d` (paper (1.2)). -/
-def gibbs {d : ℕ} (V : Rd d → ℝ) : Measure (Rd d) :=
-  volume.withDensity fun x => ENNReal.ofReal (Real.exp (-V x))
+def gibbs {d : ℕ} (V : Rd d → ℝ) : Measure (Rd d) := volume.withDensity fun x => ENNReal.ofReal (Real.exp (-V x))
 
 /-- The Laplacian `Δf(x) = ∑ᵢ ∂ᵢ²f(x)`. -/
-def laplacian {d : ℕ} (f : Rd d → ℝ) (x : Rd d) : ℝ :=
-  ∑ i, fderiv ℝ (fderiv ℝ f) x (EuclideanSpace.single i 1) (EuclideanSpace.single i 1)
+def laplacian {d : ℕ} (f : Rd d → ℝ) (x : Rd d) : ℝ := ∑ i, fderiv ℝ (fderiv ℝ f) x (EuclideanSpace.single i 1) (EuclideanSpace.single i 1)
 
 /-- The Langevin generator `𝓛f = Δf - ∇V·∇f` (paper (1.3)). -/
-def generator {d : ℕ} (V f : Rd d → ℝ) (x : Rd d) : ℝ :=
-  laplacian f x - inner ℝ (gradient V x) (gradient f x)
+def generator {d : ℕ} (V f : Rd d → ℝ) (x : Rd d) : ℝ := laplacian f x - inner ℝ (gradient V x) (gradient f x)
 
 /-- The spectral gap `λ₁` of `-𝓛` in `L²(μ)`, as the optimal Poincaré constant: the infimum of the Rayleigh quotients `∫|∇f|² dμ / Var_μ(f)` over smooth compactly supported non-constant test functions (a core of the Dirichlet form). -/
-def spectralGap {d : ℕ} (V : Rd d → ℝ) : ℝ :=
-  sInf {r : ℝ | ∃ f : Rd d → ℝ, ContDiff ℝ ∞ f ∧ HasCompactSupport f ∧
-    0 < variance f (gibbs V) ∧ r = (∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V) / variance f (gibbs V)}
+def spectralGap {d : ℕ} (V : Rd d → ℝ) : ℝ := sInf {r : ℝ | ∃ f : Rd d → ℝ, ContDiff ℝ ∞ f ∧ HasCompactSupport f ∧
+  0 < variance f (gibbs V) ∧ r = (∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V) / variance f (gibbs V)}
 
 /-- `f` is an eigenfunction of `-𝓛` with eigenvalue `lam` in `L²(μ)`, with its `C²` representative (elliptic regularity, paper Remark 1.2). -/
-def IsEigenfunction {d : ℕ} (V : Rd d → ℝ) (lam : ℝ) (f : Rd d → ℝ) : Prop :=
-  ContDiff ℝ 2 f ∧ MemLp f 2 (gibbs V) ∧ ∀ x, generator V f x = -lam * f x
+def IsEigenfunction {d : ℕ} (V : Rd d → ℝ) (lam : ℝ) (f : Rd d → ℝ) : Prop := ContDiff ℝ 2 f ∧ MemLp f 2 (gibbs V) ∧ ∀ x, generator V f x = -lam * f x
 
 /-- The eigenspace `E₁ ⊆ L²(μ)` of `-𝓛` associated with `λ₁`. -/
 def firstEigenspace {d : ℕ} (V : Rd d → ℝ) : Submodule ℝ (Rd d →₂[gibbs V] ℝ) :=
@@ -56,66 +51,49 @@ def firstEigenspace {d : ℕ} (V : Rd d → ℝ) : Submodule ℝ (Rd d →₂[gi
 def firstEigenDim {d : ℕ} (V : Rd d → ℝ) : ℕ := Module.finrank ℝ (firstEigenspace V)
 
 /-- `f = (f₁,…,f_{k₁})` is an orthonormal basis of `E₁` (given by continuous representatives). -/
-def IsEigenbasis {d : ℕ} (V : Rd d → ℝ) (f : Fin (firstEigenDim V) → Rd d → ℝ) : Prop :=
-  (∀ i, IsEigenfunction V (spectralGap V) (f i)) ∧
-    ∀ i j, ∫ x, f i x * f j x ∂gibbs V = if i = j then 1 else 0
+def IsEigenbasis {d : ℕ} (V : Rd d → ℝ) (f : Fin (firstEigenDim V) → Rd d → ℝ) : Prop := (∀ i, IsEigenfunction V (spectralGap V) (f i)) ∧
+  ∀ i j, ∫ x, f i x * f j x ∂gibbs V = if i = j then 1 else 0
 
 /-- `Λ(x₀) = sup ∑ᵢ |fᵢ(x₀)|²` over orthonormal bases `(f₁,…,f_{k₁})` of `E₁` (Theorem 1.1). -/
-def eigenLambda {d : ℕ} (V : Rd d → ℝ) (x₀ : Rd d) : ℝ≥0∞ :=
-  ⨆ (f : Fin (firstEigenDim V) → Rd d → ℝ) (_ : IsEigenbasis V f), ENNReal.ofReal (∑ i, f i x₀ ^ 2)
+def eigenLambda {d : ℕ} (V : Rd d → ℝ) (x₀ : Rd d) : ℝ≥0∞ := ⨆ (f : Fin (firstEigenDim V) → Rd d → ℝ) (_ : IsEigenbasis V f), ENNReal.ofReal (∑ i, f i x₀ ^ 2)
 
 /-- The curvature condition (1.4) `Hess V ≥ λ₁ I_d` together with `λ₁ > 0`. -/
-def RigidCurvature {d : ℕ} (V : Rd d → ℝ) : Prop :=
-  0 < spectralGap V ∧ ∀ x z : Rd d, spectralGap V * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z
+def RigidCurvature {d : ℕ} (V : Rd d → ℝ) : Prop := 0 < spectralGap V ∧ ∀ x z : Rd d, spectralGap V * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z
 
 /-- `B` is a standard Brownian motion on `ℝ^d`: independent real Brownian coordinates. -/
 def IsStdBrownian {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) : Prop :=
   (∀ i, IsBrownianReal (fun t w => B t w i) P) ∧ iIndepFun (fun i w (t : ℝ≥0) => B t w i) P
 
 /-- `X` solves the SDE (1.1) `dXₜ = -∇V(Xₜ)dt + √2 dBₜ`, `X₀ = x₀`: almost surely the paths are continuous and satisfy the integral equation. -/
-def IsLangevinSolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ)
-    (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (x₀ : Rd d) (X : ℝ≥0 → Ω → Rd d) : Prop :=
-  ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0,
-    X t w = x₀ - (∫ s in (0 : ℝ)..(t : ℝ), gradient V (X s.toNNReal w)) + Real.sqrt 2 • B t w
+def IsLangevinSolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (x₀ : Rd d) (X : ℝ≥0 → Ω → Rd d) : Prop :=
+  ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0, X t w = x₀ - (∫ s in (0 : ℝ)..(t : ℝ), gradient V (X s.toNNReal w)) + Real.sqrt 2 • B t w
 
-/-- The standing assumptions of the Euclidean setting: `V` is `C²`, `μ = e^{-V}` is a probability measure, `B` is a standard Brownian motion and `X x₀` solves (1.1) from `x₀`. That this hypothesis is satisfiable (for convex `V`) is proved in
-`exists_langevin`. -/
-def IsLangevin {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B : ℝ≥0 → Ω → Rd d)
-    (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d) : Prop :=
-  ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsStdBrownian B P ∧
-    ∀ x₀, IsLangevinSolution V B P x₀ (X x₀)
+/-- The standing assumptions of the Euclidean setting: `V` is `C²`, `μ = e^{-V}` is a probability measure, `B` is a standard Brownian motion and `X x₀` solves (1.1) from `x₀`. That this hypothesis is satisfiable (for convex `V`) is proved in `exists_langevin`. -/
+def IsLangevin {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d) : Prop :=
+  ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsStdBrownian B P ∧ ∀ x₀, IsLangevinSolution V B P x₀ (X x₀)
 
-/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For smooth `V` with
-probability Gibbs measure such a semigroup is unique (`isEuclideanDiffusion_unique`, proved, via the Riemannian `bridge_final`), so it is the law of the SDE (1.1) solution; this is not assumed. -/
-def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
-  (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
-    ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
-      ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
+/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For convex `C²` `V` with probability Gibbs measure (the setting of every statement below) such a semigroup is unique (`euclideanDiffusion_unique_convex`, proved), so it is the law of the SDE (1.1) solution; this is not assumed. -/
+def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop := (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
+  ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
+  ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
 
-/-- Brownian-free replacement of `IsLangevin`: `V` is `C^∞` (amendment: `C²` in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable: `exists_langevin` and the proved
-`exists_euclideanLangevin`. -/
+/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for convex `V`: `exists_langevin` and the proved `exists_euclideanLangevin_C2`. -/
 def IsEuclideanLangevin {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
-  ContDiff ℝ ∞ V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
+  ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
 
 /-! ## Distances and divergences -/
 
 /-- The `L²` Wasserstein distance: the infimum over couplings `π` of `(∫ d(x,y)² dπ)^{1/2}`. -/
-def wasserstein2 {α : Type*} [PseudoEMetricSpace α] [MeasurableSpace α] (μ ν : Measure α) :
-    ℝ≥0∞ :=
-  (⨅ (π : Measure (α × α)) (_ : π.map Prod.fst = μ ∧ π.map Prod.snd = ν),
-    ∫⁻ z, edist z.1 z.2 ^ 2 ∂π) ^ (1 / 2 : ℝ)
+def wasserstein2 {α : Type*} [PseudoEMetricSpace α] [MeasurableSpace α] (μ ν : Measure α) : ℝ≥0∞ :=
+  (⨅ (π : Measure (α × α)) (_ : π.map Prod.fst = μ ∧ π.map Prod.snd = ν), ∫⁻ z, edist z.1 z.2 ^ 2 ∂π) ^ (1 / 2 : ℝ)
 
 /-- Total variation distance `sup_A |μ(A) - ν(A)|`. -/
-def tvDist {α : Type*} [MeasurableSpace α] (μ ν : Measure α) : ℝ :=
-  ⨆ A : {A : Set α // MeasurableSet A}, |μ.real A - ν.real A|
+def tvDist {α : Type*} [MeasurableSpace α] (μ ν : Measure α) : ℝ := ⨆ A : {A : Set α // MeasurableSet A}, |μ.real A - ν.real A|
 
-/-- Relative Fisher information `I(ν | μ) = 4 ∫ |∇√h|² dμ`, `h = dν/dμ`, `μ = e^{-V}`, where `∇√h` is the weak (distributional) gradient. It is `+∞` when `ν` is not absolutely continuous or `√h` has no weak gradient in `L²(μ)` (paper, before
-Corollary 1.4). -/
-def fisherInfo {d : ℕ} (V : Rd d → ℝ) (ν : Measure (Rd d)) : ℝ≥0∞ :=
-  ⨅ (G : Rd d → Rd d) (_ : ν ≪ gibbs V ∧ MemLp G 2 (gibbs V) ∧
-      ∀ φ : Rd d → ℝ, ContDiff ℝ ∞ φ → HasCompactSupport φ →
-        ∫ x, Real.sqrt (ν.rnDeriv (gibbs V) x).toReal • gradient φ x = -∫ x, φ x • G x),
-    4 * ∫⁻ x, ‖G x‖ₑ ^ 2 ∂gibbs V
+/-- Relative Fisher information `I(ν | μ) = 4 ∫ |∇√h|² dμ`, `h = dν/dμ`, `μ = e^{-V}`, where `∇√h` is the weak (distributional) gradient. It is `+∞` when `ν` is not absolutely continuous or `√h` has no weak gradient in `L²(μ)` (paper, before Corollary 1.4). -/
+def fisherInfo {d : ℕ} (V : Rd d → ℝ) (ν : Measure (Rd d)) : ℝ≥0∞ := ⨅ (G : Rd d → Rd d) (_ : ν ≪ gibbs V ∧ MemLp G 2 (gibbs V) ∧
+  ∀ φ : Rd d → ℝ, ContDiff ℝ ∞ φ → HasCompactSupport φ → ∫ x, Real.sqrt (ν.rnDeriv (gibbs V) x).toReal • gradient φ x = -∫ x, φ x • G x),
+  4 * ∫⁻ x, ‖G x‖ₑ ^ 2 ∂gibbs V
 
 /-- The relative density distance `‖dν/dμ - 1‖_{Lᵖ(μ)}` (paper (1.25)); `+∞` if `ν` is not absolutely continuous with respect to `μ`. -/
 def relLp {α : Type*} [MeasurableSpace α] (ν μ : Measure α) (p : ℝ≥0∞) : ℝ≥0∞ := by
@@ -123,87 +101,69 @@ def relLp {α : Type*} [MeasurableSpace α] (ν μ : Measure α) (p : ℝ≥0∞
   exact if ν ≪ μ then eLpNorm (fun x => (ν.rnDeriv μ x).toReal - 1) p μ else ⊤
 
 /-- Worst case over initial conditions `x₀ ∈ S` of a discrepancy `δ` of the transition law `Pₜ(x₀, ·)`; kernel version of the carrier-based `worst`. -/
-def worstK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (S : Set (Rd d))
-    (δ : Measure (Rd d) → ℝ≥0∞) (t : ℝ) : ℝ≥0∞ :=
-  ⨆ x₀ ∈ S, δ (Pt t.toNNReal x₀)
+def worstK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (S : Set (Rd d)) (δ : Measure (Rd d) → ℝ≥0∞) (t : ℝ) : ℝ≥0∞ := ⨆ x₀ ∈ S, δ (Pt t.toNNReal x₀)
 
 /-- Cutoff of a profile at critical times `tₙ`: for every `ε ∈ (0,1)` it tends to `before` at times `(1-ε)tₙ` and to `after` at times `(1+ε)tₙ`. -/
-def HasCutoff (profile : ℕ → ℝ → ℝ≥0∞) (t : ℕ → ℝ) (before after : ℝ≥0∞) : Prop :=
-  ∀ ε : ℝ, 0 < ε → ε < 1 →
-    Tendsto (fun n => profile n ((1 - ε) * t n)) atTop (𝓝 before) ∧
-      Tendsto (fun n => profile n ((1 + ε) * t n)) atTop (𝓝 after)
+def HasCutoff (profile : ℕ → ℝ → ℝ≥0∞) (t : ℕ → ℝ) (before after : ℝ≥0∞) : Prop := ∀ ε : ℝ, 0 < ε → ε < 1 →
+  Tendsto (fun n => profile n ((1 - ε) * t n)) atTop (𝓝 before) ∧ Tendsto (fun n => profile n ((1 + ε) * t n)) atTop (𝓝 after)
 
 /-- The ball `{x : |x - m| ≤ c√d}` around the mean `m` of `μ` (Corollary 1.3). -/
-def meanBall {d : ℕ} (V : Rd d → ℝ) (c : ℝ) : Set (Rd d) :=
-  Metric.closedBall (∫ x, x ∂gibbs V) (c * Real.sqrt d)
+def meanBall {d : ℕ} (V : Rd d → ℝ) (c : ℝ) : Set (Rd d) := Metric.closedBall (∫ x, x ∂gibbs V) (c * Real.sqrt d)
 
 /-- The cube `m + [-c, c]^d` around the mean `m` of `μ` (Corollary 1.6). -/
-def meanCube {d : ℕ} (V : Rd d → ℝ) (c : ℝ) : Set (Rd d) :=
-  {x | ∀ i, |x i - (∫ y, y ∂gibbs V) i| ≤ c}
+def meanCube {d : ℕ} (V : Rd d → ℝ) (c : ℝ) : Set (Rd d) := {x | ∀ i, |x i - (∫ y, y ∂gibbs V) i| ≤ c}
 
 /-! ## Main Euclidean results -/
 
 /-- Existence of a standard Brownian motion on `ℝ^d` (the predicate `IsStdBrownian` is satisfiable). -/
-theorem exists_stdBrownian (d : ℕ) : ∃ (Ω : Type) (_ : MeasurableSpace Ω) (P : Measure Ω) (B : ℝ≥0 → Ω → Rd d),
-      IsProbabilityMeasure P ∧ IsStdBrownian B P := by
+theorem exists_stdBrownian (d : ℕ) : ∃ (Ω : Type) (_ : MeasurableSpace Ω) (P : Measure Ω) (B : ℝ≥0 → Ω → Rd d), IsProbabilityMeasure P ∧ IsStdBrownian B P := by
   sorry
 
-/-- Non-vacuity of the standing hypothesis `IsLangevin`: for a `C²` potential with nonnegative Hessian (that is, convex) and probability Gibbs measure there are a probability space, a Brownian motion and solutions of the Langevin SDE from every
-starting point. -/
+/-- Non-vacuity of the standing hypothesis `IsLangevin`: for a `C²` potential with nonnegative Hessian (that is, convex) and probability Gibbs measure there are a probability space, a Brownian motion and solutions of the Langevin SDE from every starting point. -/
 theorem exists_langevin (d : ℕ) (V : Rd d → ℝ) (hV : ContDiff ℝ 2 V) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (hgibbs : IsProbabilityMeasure (gibbs V)) :
-    ∃ (Ω : Type) (_ : MeasurableSpace Ω) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d),
-      IsProbabilityMeasure P ∧ IsLangevin V B P X := by
+  (hgibbs : IsProbabilityMeasure (gibbs V)) : ∃ (Ω : Type) (_ : MeasurableSpace Ω) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d),
+  IsProbabilityMeasure P ∧ IsLangevin V B P X := by
   sorry
 
-/-- **The kernel is the law of the SDE** (the kernel formulation is faithful): under `RigidCurvature V`, every solution `X` of (1.1) driven by a standard Brownian motion `B` (on any probability space) has `Law(Xₜ) = Pt t x₀` for the Euclidean
-Langevin semigroup `Pt`. Amendment: `V ∈ C^∞` (inside `IsEuclideanLangevin`). -/
+/-- **The kernel is the law of the SDE** (the kernel formulation is faithful): under `RigidCurvature V`, every solution `X` of (1.1) driven by a standard Brownian motion `B` (on any probability space) has `Law(Xₜ) = Pt t x₀` for the Euclidean Langevin semigroup `Pt`. -/
 theorem isLangevinSolution_map_eq_kernel_of_rigid {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hR : RigidCurvature V) {B : ℝ≥0 → Ω → Rd d}
-    {P : Measure Ω} (hB : IsStdBrownian B P) {x₀ : Rd d} {X : ℝ≥0 → Ω → Rd d} (hX : IsLangevinSolution V B P x₀ X) (t : ℝ≥0) :
-    P.map (X t) = Pt t x₀ := by
+  {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hR : RigidCurvature V) {B : ℝ≥0 → Ω → Rd d}
+  {P : Measure Ω} (hB : IsStdBrownian B P) {x₀ : Rd d} {X : ℝ≥0 → Ω → Rd d} (hX : IsLangevinSolution V B P x₀ X) (t : ℝ≥0) : P.map (X t) = Pt t x₀ := by
   sorry
 
-/-- **Theorem 1.1** (main Wasserstein estimate), including the ball refinement; Brownian-free kernel form: `Pt t x₀ = Law(X_t^{x₀})` (`IsEuclideanLangevin`). Amendment: `V` is `C^∞` (inside `IsEuclideanLangevin`). -/
-theorem main_wasserstein_estimate {d : ℕ} {V : Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
-    (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V) (t : ℝ≥0) :
+/-- **Theorem 1.1** (main Wasserstein estimate), including the ball refinement; Brownian-free kernel form: `Pt t x₀ = Law(X_t^{x₀})` (`IsEuclideanLangevin`). -/
+theorem main_wasserstein_estimate {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V) (t : ℝ≥0) :
     let gap := spectralGap V
     let q := Real.exp (-2 * gap * t)
-    let lower := fun Λ : ℝ≥0∞ => ENNReal.ofReal (q / gap) * Λ +
-      ENNReal.ofReal (firstEigenDim V * (1 - Real.sqrt (1 - q)) ^ 2 / gap)
+    let lower := fun Λ : ℝ≥0∞ => ENNReal.ofReal (q / gap) * Λ + ENNReal.ofReal (firstEigenDim V * (1 - Real.sqrt (1 - q)) ^ 2 / gap)
     let W := fun x₀ => wasserstein2 (Pt t x₀) (gibbs V) ^ 2
-    (∀ S : Set (Rd d), S.Nonempty →
-      lower (⨆ x₀ ∈ S, eigenLambda V x₀) ≤ ⨆ x₀ ∈ S, W x₀ ∧
+    (∀ S : Set (Rd d), S.Nonempty → lower (⨆ x₀ ∈ S, eigenLambda V x₀) ≤ ⨆ x₀ ∈ S, W x₀ ∧
       ⨆ x₀ ∈ S, W x₀ ≤ ENNReal.ofReal q * ⨆ x₀ ∈ S, ∫⁻ x, edist x x₀ ^ 2 ∂gibbs V) ∧
-    (∫ x, x ∂gibbs V = 0 → ∀ R : ℝ, 0 ≤ R →
-      lower (ENNReal.ofReal (gap * R ^ 2)) ≤ ⨆ x₀ ∈ Metric.closedBall 0 R, W x₀) := by
+    (∫ x, x ∂gibbs V = 0 → ∀ R : ℝ, 0 ≤ R → lower (ENNReal.ofReal (gap * R ^ 2)) ≤ ⨆ x₀ ∈ Metric.closedBall 0 R, W x₀) := by
   sorry
 
 /-- **Remark 1.2**: `1 ≤ k₁ ≤ d`, and `Λ(x₀) = ∑ᵢ |fᵢ(x₀)|²` for every orthonormal basis of `E₁` (the supremum defining `Λ` is attained by every basis). -/
 theorem eigenspace_dim_and_lambda {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V)
-    (hp : IsProbabilityMeasure (gibbs V)) (hV : RigidCurvature V) : 1 ≤ firstEigenDim V ∧ firstEigenDim V ≤ d ∧
-      ∀ f, IsEigenbasis V f → ∀ x₀, eigenLambda V x₀ = ENNReal.ofReal (∑ i, f i x₀ ^ 2) := by
+  (hp : IsProbabilityMeasure (gibbs V)) (hV : RigidCurvature V) : 1 ≤ firstEigenDim V ∧ firstEigenDim V ≤ d ∧
+  ∀ f, IsEigenbasis V f → ∀ x₀, eigenLambda V x₀ = ENNReal.ofReal (∑ i, f i x₀ ^ 2) := by
   sorry
 
 /-- The standing assumptions of Corollaries 1.3 and 1.4 for kernels: the Euclidean Langevin setting `IsEuclideanLangevin` and the curvature condition (1.4) in every positive dimension, and `liminf λ₁⁽ⁿ⁾ > 0`. -/
 def IsRigidSequenceK (V : ∀ n, Rd n → ℝ) (Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)) : Prop :=
-  (∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n)) ∧
-    0 < liminf (fun n => ENNReal.ofReal (spectralGap (V n))) atTop
+  (∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n)) ∧ 0 < liminf (fun n => ENNReal.ofReal (spectralGap (V n))) atTop
 
 /-- The critical time `t* = log d / (2 λ₁)`. -/
 def criticalTime (d : ℕ) (gap : ℝ) : ℝ := Real.log d / (2 * gap)
 
-/-- **Corollary 1.3** (Wasserstein cutoff on balls `B(m, c√d)`), for `ε ∈ (0,1)`; Brownian-free kernel form. Amendment: `V n` is `C^∞`. -/
+/-- **Corollary 1.3** (Wasserstein cutoff on balls `B(m, c√d)`), for `ε ∈ (0,1)`; Brownian-free kernel form. -/
 theorem wasserstein_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt) {c : ℝ} (hc : 0 < c) : HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c)
-      (wasserstein2 · (gibbs (V n)))) (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
+  (h : IsRigidSequenceK V Pt) {c : ℝ} (hc : 0 < c) : HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c)
+  (wasserstein2 · (gibbs (V n)))) (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
   sorry
 
-/-- **Corollary 1.4** (Fisher information, relative entropy and total variation cutoffs on balls `B(m, c√d)`), under `λ₁⁽ⁿ⁾ = o(log n)`; Brownian-free kernel form. Amendment: `V n` is `C^∞`. -/
-theorem information_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
-    (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) :
+/-- **Corollary 1.4** (Fisher information, relative entropy and total variation cutoffs on balls `B(m, c√d)`), under `λ₁⁽ⁿ⁾ = o(log n)`; Brownian-free kernel form. -/
+theorem information_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (h : IsRigidSequenceK V Pt)
+  (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) :
     let t := fun n => criticalTime n (spectralGap (V n))
     let S := fun n => meanBall (V n) c
     HasCutoff (fun n => worstK (Pt n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
@@ -211,51 +171,40 @@ theorem information_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Ke
     HasCutoff (fun n => worstK (Pt n) (S n) (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
   sorry
 
-/-- **Display (1.25)** (`Lᵖ` cutoff) under the assumptions of Corollary 1.4, for every finite `p ≥ 1`: the limit before the critical time is `2` for `p = 1` and `+∞` for `p > 1` (`p = ∞` fails, already for Ornstein–Uhlenbeck). Brownian-free kernel
-form. Amendment: `V n` is `C^∞`. -/
+/-- **Display (1.25)** (`Lᵖ` cutoff) under the assumptions of Corollary 1.4, for every finite `p ≥ 1`: the limit before the critical time is `2` for `p = 1` and `+∞` for `p > 1` (`p = ∞` fails, already for Ornstein–Uhlenbeck). Brownian-free kernel form. -/
 theorem lp_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (h : IsRigidSequenceK V Pt)
-    (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
-    {c : ℝ} (hc : 0 < c) {p : ℝ≥0∞} (hp : 1 ≤ p) (hpt : p ≠ ⊤) :
-    HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c) (relLp · (gibbs (V n)) p))
-      (fun n => criticalTime n (spectralGap (V n))) (if p = 1 then 2 else ⊤) 0 := by
+  (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) {p : ℝ≥0∞} (hp : 1 ≤ p) (hpt : p ≠ ⊤) :
+  HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c) (relLp · (gibbs (V n)) p)) (fun n => criticalTime n (spectralGap (V n))) (if p = 1 then 2 else ⊤) 0 := by
   sorry
 
 /-- The diagonal direction `(1,…,1)` of `ℝ^d`. -/
 def diagonal (d : ℕ) : Rd d := WithLp.toLp 2 fun _ => 1
 
-/-- **Theorem 1.5** (convex interaction): for `V(x) = ρ|x|²/2 + W(x)` with `W` convex `C²` and invariant under translations along `(1,…,1)`, (i) `λ₁ = ρ` and `x₁+⋯+x_d ∈ E₁`, (ii) `V` is `ρ`-convex and `μ` has the Gaussian factor `𝒩(0, 1/ρ)` along `u
-= (1,…,1)/√d`, (iii) the curvature condition (1.4) holds. -/
+/-- **Theorem 1.5** (convex interaction): for `V(x) = ρ|x|²/2 + W(x)` with `W` convex `C²` and invariant under translations along `(1,…,1)`, (i) `λ₁ = ρ` and `x₁+⋯+x_d ∈ E₁`, (ii) `V` is `ρ`-convex and `μ` has the Gaussian factor `𝒩(0, 1/ρ)` along `u = (1,…,1)/√d`, (iii) the curvature condition (1.4) holds. -/
 theorem convex_interaction {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ) {W : Rd d → ℝ}
-    (hW : ContDiff ℝ 2 W) (hconv : ConvexOn ℝ univ W) (hinv : ∀ x (s : ℝ), W (x + s • diagonal d) = W x)
-    (hp : IsProbabilityMeasure (gibbs fun x => ρ / 2 * ‖x‖ ^ 2 + W x)) :
+  (hW : ContDiff ℝ 2 W) (hconv : ConvexOn ℝ univ W) (hinv : ∀ x (s : ℝ), W (x + s • diagonal d) = W x)
+  (hp : IsProbabilityMeasure (gibbs fun x => ρ / 2 * ‖x‖ ^ 2 + W x)) :
     let V := fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + W x
     let u := (Real.sqrt d)⁻¹ • diagonal d
     let π := fun x : Rd d => x - inner ℝ u x • u
     (spectralGap V = ρ ∧ IsEigenfunction V ρ (fun x => ∑ i, x i)) ∧
-    ((∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) ∧
-      (gibbs V).map (fun x => (inner ℝ u x, π x)) =
-        (gaussianReal 0 ρ⁻¹.toNNReal).prod ((gibbs V).map π)) ∧
+    ((∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) ∧ (gibbs V).map (fun x => (inner ℝ u x, π x)) =
+      (gaussianReal 0 ρ⁻¹.toNNReal).prod ((gibbs V).map π)) ∧
     RigidCurvature V := by
   sorry
 
-/-- **Corollary 1.6** (cutoff for convex interactions, fixed `ρ > 0`): Wasserstein, Fisher, entropy and total variation cutoffs at `t* = log d / (2ρ)`, from balls `m + B(0, c√d)` and cubes `m + [-c,c]^d`; Brownian-free kernel form. Amendments: `W n`
-and the potential are `C^∞` (not `C²`). -/
-theorem convex_interaction_cutoff {ρ : ℝ}
-    (hρ : 0 < ρ) {W : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (hW : ∀ n, 0 < n → ContDiff ℝ ∞ (W n) ∧ ConvexOn ℝ univ (W n) ∧
-      ∀ x (s : ℝ), W n (x + s • diagonal n) = W n x)
-    (hL : ∀ n, 0 < n → IsEuclideanLangevin (fun x => ρ / 2 * ‖x‖ ^ 2 + W n x) (Pt n))
-    {c : ℝ} (hc : 0 < c) :
+/-- **Corollary 1.6** (cutoff for convex interactions, fixed `ρ > 0`): Wasserstein, Fisher, entropy and total variation cutoffs at `t* = log d / (2ρ)`, from balls `m + B(0, c√d)` and cubes `m + [-c,c]^d`; Brownian-free kernel form. -/
+theorem convex_interaction_cutoff {ρ : ℝ} (hρ : 0 < ρ) {W : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+  (hW : ∀ n, 0 < n → ContDiff ℝ 2 (W n) ∧ ConvexOn ℝ univ (W n) ∧ ∀ x (s : ℝ), W n (x + s • diagonal n) = W n x)
+  (hL : ∀ n, 0 < n → IsEuclideanLangevin (fun x => ρ / 2 * ‖x‖ ^ 2 + W n x) (Pt n)) {c : ℝ} (hc : 0 < c) :
     let V := fun n (x : Rd n) => ρ / 2 * ‖x‖ ^ 2 + W n x
     let t := fun n : ℕ => criticalTime n ρ
     ∀ cube : Bool,
       let S := fun n => if cube then meanCube (V n) c else meanBall (V n) c
       HasCutoff (fun n => worstK (Pt n) (S n) (wasserstein2 · (gibbs (V n)))) t ⊤ 0 ∧
       HasCutoff (fun n => worstK (Pt n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
-      HasCutoff (fun n => worstK (Pt n) (S n)
-        (InformationTheory.klDiv · (gibbs (V n)))) t ⊤ 0 ∧
-      HasCutoff (fun n => worstK (Pt n) (S n)
-        (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
+      HasCutoff (fun n => worstK (Pt n) (S n) (InformationTheory.klDiv · (gibbs (V n)))) t ⊤ 0 ∧
+      HasCutoff (fun n => worstK (Pt n) (S n) (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
   sorry
 
 /-- The total variation mixing time `t₀ = inf {t ≥ 0 : sup_{x₀ ∈ S} d_TV(Pₜ(x₀,·), μ) ≤ η}` (`+∞` if the set is empty). -/
@@ -270,53 +219,37 @@ def mixingTimeW2K {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measur
 def mixingTimeKLK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
   ⨅ (t : ℝ≥0) (_ : worstK Pt S (fun ν => InformationTheory.klDiv ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
 
-/-- **Theorem 1.7** (curvature product condition), in the amended form of the corrected manuscript: TV and entropy cutoff at the mixing time `t₀⁽ⁿ⁾` under `κ⁽ⁿ⁾t₀⁽ⁿ⁾ → ∞` and eventual finiteness of `t₀⁽ⁿ⁾`; Fisher and Wasserstein cutoffs under the
-additional assumptions `liminf κ⁽ⁿ⁾ > 0` and `t₀⁽ⁿ⁾ → ∞` (absent from the archived arXiv v4 statement, which is false without it, see `PAPER_AUDIT.md`). Brownian-free kernel form; amendment: `V n` is `C^∞`. -/
-theorem product_condition_cutoff
-    {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    {κ : ℕ → ℝ} {S : ∀ n, Set (Rd n)} {η : ℝ}
-    (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ 0 < κ n ∧
-      ∀ x z : Rd n, κ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
-    (hS : ∀ n, 0 < n → (S n).Nonempty) (hη : 0 < η) (hη1 : η < 1) :
+/-- **Theorem 1.7** (curvature product condition), in the amended form of the corrected manuscript: TV and entropy cutoff at the mixing time `t₀⁽ⁿ⁾` under `κ⁽ⁿ⁾t₀⁽ⁿ⁾ → ∞` and eventual finiteness of `t₀⁽ⁿ⁾`; Fisher and Wasserstein cutoffs under the additional assumptions `liminf κ⁽ⁿ⁾ > 0` and `t₀⁽ⁿ⁾ → ∞` (absent from the archived arXiv v4 statement, which is false without it, see `PAPER_AUDIT.md`). Brownian-free kernel form. -/
+theorem product_condition_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} {κ : ℕ → ℝ} {S : ∀ n, Set (Rd n)} {η : ℝ}
+  (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ 0 < κ n ∧ ∀ x z : Rd n, κ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
+  (hS : ∀ n, 0 < n → (S n).Nonempty) (hη : 0 < η) (hη1 : η < 1) :
     let t₀ := fun n => mixingTimeK (Pt n) (gibbs (V n)) (S n) η
     let prof := fun (δ : ∀ n, Measure (Rd n) → ℝ≥0∞) n => worstK (Pt n) (S n) (δ n)
-    (∀ᶠ n in atTop, t₀ n < ⊤) → Tendsto (fun n => κ n * (t₀ n).toReal) atTop atTop →
-      (HasCutoff (prof fun n ν => .ofReal (tvDist ν (gibbs (V n))))
-          (fun n => (t₀ n).toReal) 1 0 ∧
-        HasCutoff (prof fun n ν => InformationTheory.klDiv ν (gibbs (V n)))
-          (fun n => (t₀ n).toReal) ⊤ 0) ∧
-      (0 < liminf (fun n => ENNReal.ofReal (κ n)) atTop →
-        Tendsto (fun n => (t₀ n).toReal) atTop atTop →
-        HasCutoff (prof fun n => fisherInfo (V n)) (fun n => (t₀ n).toReal) ⊤ 0 ∧
-        HasCutoff (prof fun n ν => wasserstein2 ν (gibbs (V n))) (fun n => (t₀ n).toReal) ⊤ 0) := by
+    (∀ᶠ n in atTop, t₀ n < ⊤) → Tendsto (fun n => κ n * (t₀ n).toReal) atTop atTop → (HasCutoff (prof fun n ν => .ofReal (tvDist ν (gibbs (V n))))
+      (fun n => (t₀ n).toReal) 1 0 ∧ HasCutoff (prof fun n ν => InformationTheory.klDiv ν (gibbs (V n))) (fun n => (t₀ n).toReal) ⊤ 0) ∧
+      (0 < liminf (fun n => ENNReal.ofReal (κ n)) atTop → Tendsto (fun n => (t₀ n).toReal) atTop atTop →
+      HasCutoff (prof fun n => fisherInfo (V n)) (fun n => (t₀ n).toReal) ⊤ 0 ∧
+      HasCutoff (prof fun n ν => wasserstein2 ν (gibbs (V n))) (fun n => (t₀ n).toReal) ⊤ 0) := by
   sorry
 
-/-- **Theorem 3.1** (Gaussian factorization) and **Remark 3.2**: if `V` is `ρ`-convex and `λ₁ = ρ`, there are an orthonormal basis `e` and `m ∈ ℝ^d` with `V(x) = (ρ/2) ∑_{i<k₁} (⟨eᵢ,x⟩ - mᵢ)² + U(x)`, `U` depending only on the coordinates `⟨eᵢ,x⟩`,
-`i ≥ k₁`, and `ρ`-convex in those coordinates; every `f ∈ E₁` is affine, `f(x) = ∑_{i<k₁} aᵢ(⟨eᵢ,x⟩ - mᵢ)`, with `|a|² = λ₁ ‖f‖²_{L²(μ)}`. -/
-theorem euclidean_gaussian_factorization {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V)
-    (hp : IsProbabilityMeasure (gibbs V)) {ρ : ℝ} (hρ : 0 < ρ)
-    (hconv : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (hgap : spectralGap V = ρ) :
-    ∃ (e : OrthonormalBasis (Fin d) ℝ (Rd d)) (m : Fin d → ℝ) (U : Rd d → ℝ),
-      (∀ x, V x = ρ / 2 * ∑ i with i.val < firstEigenDim V, (inner ℝ (e i) x - m i) ^ 2 + U x) ∧
-      (∀ x y, (∀ i, firstEigenDim V ≤ i.val → inner ℝ (e i) x = inner ℝ (e i) y) → U x = U y) ∧
-      (∀ x z, (∀ i, i.val < firstEigenDim V → inner ℝ (e i) z = 0) → ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ U) x z z) ∧
-      ∀ f, IsEigenfunction V ρ f → ∃ a : Fin d → ℝ, (∀ i, firstEigenDim V ≤ i.val → a i = 0) ∧
-        (∀ x, f x = ∑ i, a i * (inner ℝ (e i) x - m i)) ∧ ∑ i, a i ^ 2 = ρ * ∫ x, f x ^ 2 ∂gibbs V := by
+/-- **Theorem 3.1** (Gaussian factorization) and **Remark 3.2**: if `V` is `ρ`-convex and `λ₁ = ρ`, there are an orthonormal basis `e` and `m ∈ ℝ^d` with `V(x) = (ρ/2) ∑_{i<k₁} (⟨eᵢ,x⟩ - mᵢ)² + U(x)`, `U` depending only on the coordinates `⟨eᵢ,x⟩`, `i ≥ k₁`, and `ρ`-convex in those coordinates; every `f ∈ E₁` is affine, `f(x) = ∑_{i<k₁} aᵢ(⟨eᵢ,x⟩ - mᵢ)`, with `|a|² = λ₁ ‖f‖²_{L²(μ)}`. -/
+theorem euclidean_gaussian_factorization {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V) (hp : IsProbabilityMeasure (gibbs V)) {ρ : ℝ} (hρ : 0 < ρ)
+  (hconv : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (hgap : spectralGap V = ρ) :
+  ∃ (e : OrthonormalBasis (Fin d) ℝ (Rd d)) (m : Fin d → ℝ) (U : Rd d → ℝ),
+  (∀ x, V x = ρ / 2 * ∑ i with i.val < firstEigenDim V, (inner ℝ (e i) x - m i) ^ 2 + U x) ∧
+  (∀ x y, (∀ i, firstEigenDim V ≤ i.val → inner ℝ (e i) x = inner ℝ (e i) y) → U x = U y) ∧
+  (∀ x z, (∀ i, i.val < firstEigenDim V → inner ℝ (e i) z = 0) → ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ U) x z z) ∧
+  ∀ f, IsEigenfunction V ρ f → ∃ a : Fin d → ℝ, (∀ i, firstEigenDim V ≤ i.val → a i = 0) ∧
+  (∀ x, f x = ∑ i, a i * (inner ℝ (e i) x - m i)) ∧ ∑ i, a i ^ 2 = ρ * ∫ x, f x ^ 2 ∂gibbs V := by
   sorry
 
-/-- **Lemma 3.3** (projection on an orthonormal multi-eigenfunction is an OU process), law form without Brownian motion: for an orthonormal basis `T = (f₁,…,f_{k₁})` of `E₁` under `λ₁ = ρ` and `ρ`-convexity, the law of `T(Xₜ)` from `x₀` (the
-pushforward of `Pt t x₀` by `T`) is the Ornstein–Uhlenbeck marginal `𝒩(e^{-ρt} T(x₀), (1 - e^{-2ρt}) I_{k₁})`, the time-`t` law of `dYₜ = -ρYₜ dt + √(2ρ) dβₜ`, `Y₀ = T x₀` (generator `ρΔ - ρ y·∇`); in particular it depends on `x₀` only through `T
-x₀`. Divergences: the pathwise statement with a Brownian `β` is replaced by this law form; `V` is `C^∞`. -/
-theorem eigenmap_is_ou {d : ℕ} {V : Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
-    (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V)
-    (T : Fin (firstEigenDim V) → Rd d → ℝ) (hT : IsEigenbasis V T) :
+/-- **Lemma 3.3** (projection on an orthonormal multi-eigenfunction is an OU process), law form without Brownian motion: for an orthonormal basis `T = (f₁,…,f_{k₁})` of `E₁` under `λ₁ = ρ` and `ρ`-convexity, the law of `T(Xₜ)` from `x₀` (the pushforward of `Pt t x₀` by `T`) is the Ornstein–Uhlenbeck marginal `𝒩(e^{-ρt} T(x₀), (1 - e^{-2ρt}) I_{k₁})`, the time-`t` law of `dYₜ = -ρYₜ dt + √(2ρ) dβₜ`, `Y₀ = T x₀` (generator `ρΔ - ρ y·∇`); in particular it depends on `x₀` only through `T x₀`. Divergence: the pathwise statement with a Brownian `β` is replaced by this law form. -/
+theorem eigenmap_is_ou {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V)
+  (T : Fin (firstEigenDim V) → Rd d → ℝ) (hT : IsEigenbasis V T) :
     let ρ := spectralGap V
     let Tv := fun x => (WithLp.toLp 2 fun i => T i x : Rd (firstEigenDim V))
-    ∀ (x₀ : Rd d) (t : ℝ≥0),
-      (Pt t x₀).map Tv = multivariateGaussian (Real.exp (-ρ * (t : ℝ)) • Tv x₀)
-        ((1 - Real.exp (-2 * ρ * (t : ℝ))) •
-          (1 : Matrix (Fin (firstEigenDim V)) (Fin (firstEigenDim V)) ℝ)) := by
+    ∀ (x₀ : Rd d) (t : ℝ≥0), (Pt t x₀).map Tv = multivariateGaussian (Real.exp (-ρ * (t : ℝ)) • Tv x₀) ((1 - Real.exp (-2 * ρ * (t : ℝ))) •
+      (1 : Matrix (Fin (firstEigenDim V)) (Fin (firstEigenDim V)) ℝ)) := by
   sorry
 
 /-! ## Further results of the manuscript (remarks, examples, proof ingredients, Section 4)
@@ -325,29 +258,25 @@ Statements of intermediate claims of the manuscript that are not part of the num
 above. Amendments with respect to the printed text (`0 < d`) are
 flagged in the docstrings. -/
 
-/-- **Pathwise form of Lemma 3.3**: under `RigidCurvature V`, for an eigenbasis `T` of `E₁` and a Langevin solution family `X`, there is a standard Brownian motion `β` on the same space with
-`T(Xₜ) = T(x₀) - ρ ∫₀ᵗ T(Xₛ) ds + √(2ρ) βₜ` almost surely for all `t`, i.e. `T(X)` solves the Ornstein–Uhlenbeck SDE (`ρ = λ₁`). -/
+/-- **Pathwise form of Lemma 3.3**: under `RigidCurvature V`, for an eigenbasis `T` of `E₁` and a Langevin solution family `X`, there is a standard Brownian motion `β` on the same space with `T(Xₜ) = T(x₀) - ρ ∫₀ᵗ T(Xₛ) ds + √(2ρ) βₜ` almost surely for all `t`, i.e. `T(X)` solves the Ornstein–Uhlenbeck SDE (`ρ = λ₁`). -/
 theorem eigenmap_is_ou_pathwise {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ} (hV : RigidCurvature V) {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω}
-    {X : Rd d → ℝ≥0 → Ω → Rd d} (hX : IsLangevin V B P X) (T : Fin (firstEigenDim V) → Rd d → ℝ) (hT : IsEigenbasis V T) :
+  {X : Rd d → ℝ≥0 → Ω → Rd d} (hX : IsLangevin V B P X) (T : Fin (firstEigenDim V) → Rd d → ℝ) (hT : IsEigenbasis V T) :
     let ρ := spectralGap V
     let Tv := fun x => (WithLp.toLp 2 fun i => T i x : Rd (firstEigenDim V))
     ∃ β : ℝ≥0 → Ω → Rd (firstEigenDim V), IsStdBrownian β P ∧ ∀ x₀, ∀ᵐ w ∂P, ∀ t : ℝ≥0,
       Tv (X x₀ t w) = Tv x₀ - ρ • (∫ s in (0 : ℝ)..(t : ℝ), Tv (X x₀ s.toNNReal w)) + Real.sqrt (2 * ρ) • β t w := by
   sorry
 
-/-- **Remark 3.4** (weaker assumption in Corollary 1.3): `liminf λ₁ > 0` is replaced by `(λ₁⁽ⁿ⁾)⁻¹ ≤ (log n)^α` eventually, for some `α > 0`; kernel form, `V⁽ⁿ⁾` is `C^∞` (inside `IsEuclideanLangevin`). -/
+/-- **Remark 3.4** (weaker assumption in Corollary 1.3): `liminf λ₁ > 0` is replaced by `(λ₁⁽ⁿ⁾)⁻¹ ≤ (log n)^α` eventually, for some `α > 0`; kernel form. -/
 theorem wasserstein_cutoff_weak {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n)) (hgap : ∃ α : ℝ, 0 < α ∧
-      ∀ᶠ n : ℕ in atTop, (spectralGap (V n))⁻¹ ≤ (Real.log n) ^ α) {c : ℝ} (hc : 0 < c) :
-    HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c) (wasserstein2 · (gibbs (V n))))
-      (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
+  (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n)) (hgap : ∃ α : ℝ, 0 < α ∧
+  ∀ᶠ n : ℕ in atTop, (spectralGap (V n))⁻¹ ≤ (Real.log n) ^ α) {c : ℝ} (hc : 0 < c) :
+  HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c) (wasserstein2 · (gibbs (V n)))) (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
   sorry
 
-/-- **Remark 3.5** (weaker assumption): Corollary 1.4 holds with `λ₁⁽ⁿ⁾ = o(log n)` replaced by `λ₁⁽ⁿ⁾ = n^{o(1)}`; kernel form, `V⁽ⁿ⁾` is `C^∞`. -/
-theorem information_cutoff_weak {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
-    (hsmall : ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, spectralGap (V n) ≤ (n : ℝ) ^ ε)
-    {c : ℝ} (hc : 0 < c) :
+/-- **Remark 3.5** (weaker assumption): Corollary 1.4 holds with `λ₁⁽ⁿ⁾ = o(log n)` replaced by `λ₁⁽ⁿ⁾ = n^{o(1)}`; kernel form. -/
+theorem information_cutoff_weak {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (h : IsRigidSequenceK V Pt)
+  (hsmall : ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, spectralGap (V n) ≤ (n : ℝ) ^ ε) {c : ℝ} (hc : 0 < c) :
     let t := fun n => criticalTime n (spectralGap (V n))
     let S := fun n => meanBall (V n) c
     HasCutoff (fun n => worstK (Pt n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
@@ -355,382 +284,336 @@ theorem information_cutoff_weak {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 �
     HasCutoff (fun n => worstK (Pt n) (S n) (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
   sorry
 
-/-- **Lichnerowicz / Bakry–Émery bound** (display (1.7), `λ₁ ≥ ρ`): if `V` is `C²`, `e^{-V}` is a probability density and `Hess V ≥ ρ I` with `ρ > 0`, then `λ₁ ≥ ρ`. Amendment: `0 < d` is needed (for `d = 0` the Rayleigh set is empty, so `λ₁ = sInf ∅
-= 0`). -/
+/-- **Lichnerowicz / Bakry–Émery bound** (display (1.7), `λ₁ ≥ ρ`): if `V` is `C²`, `e^{-V}` is a probability density and `Hess V ≥ ρ I` with `ρ > 0`, then `λ₁ ≥ ρ`. Amendment: `0 < d` is needed (for `d = 0` the Rayleigh set is empty, so `λ₁ = sInf ∅ = 0`). -/
 theorem spectral_gap_ge_curvature {d : ℕ} (hd : 0 < d) {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V)
-    (hp : IsProbabilityMeasure (gibbs V)) {ρ : ℝ} (hρ : 0 < ρ) (hconv : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) :
-    ρ ≤ spectralGap V := by
+  (hp : IsProbabilityMeasure (gibbs V)) {ρ : ℝ} (hρ : 0 < ρ) (hconv : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) : ρ ≤ spectralGap V := by
   sorry
 
-/-- **(R2) ⇒ (R1)** (rigidity, Section 1.3): if, up to translation and rotation, `V = ρ/2 (⟨u,x⟩ - m)² + U(x)` with `U` invariant along the unit vector `u` and `ρ`-convex in the orthogonal directions (that is, `μ` splits as `𝒩(m, 1/ρ)` times a factor
-with `ρ`-convex potential), then `Hess V ≥ ρ I`, `λ₁ = ρ`, and `⟨u,x⟩ - m` is an eigenfunction for `λ₁`. The Gaussian factor is expressed on the potential, not as a product measure. -/
+/-- **(R2) ⇒ (R1)** (rigidity, Section 1.3): if, up to translation and rotation, `V = ρ/2 (⟨u,x⟩ - m)² + U(x)` with `U` invariant along the unit vector `u` and `ρ`-convex in the orthogonal directions (that is, `μ` splits as `𝒩(m, 1/ρ)` times a factor with `ρ`-convex potential), then `Hess V ≥ ρ I`, `λ₁ = ρ`, and `⟨u,x⟩ - m` is an eigenfunction for `λ₁`. The Gaussian factor is expressed on the potential, not as a product measure. -/
 theorem rigidity_of_gaussian_factor {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V)
-    (hp : IsProbabilityMeasure (gibbs V)) {ρ : ℝ} (hρ : 0 < ρ) (u : Rd d) (hu : ‖u‖ = 1) (m : ℝ) (U : Rd d → ℝ)
-    (hsplit : ∀ x, V x = ρ / 2 * (inner ℝ u x - m) ^ 2 + U x) (hinv : ∀ x (t : ℝ), U (x + t • u) = U x)
-    (hU : ∀ x z, inner ℝ u z = 0 → ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ U) x z z) :
-    (∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) ∧ spectralGap V = ρ ∧
-      IsEigenfunction V ρ (fun x => inner ℝ u x - m) := by
+  (hp : IsProbabilityMeasure (gibbs V)) {ρ : ℝ} (hρ : 0 < ρ) (u : Rd d) (hu : ‖u‖ = 1) (m : ℝ) (U : Rd d → ℝ)
+  (hsplit : ∀ x, V x = ρ / 2 * (inner ℝ u x - m) ^ 2 + U x) (hinv : ∀ x (t : ℝ), U (x + t • u) = U x)
+  (hU : ∀ x z, inner ℝ u z = 0 → ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ U) x z z) : (∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) ∧ spectralGap V = ρ ∧
+  IsEigenfunction V ρ (fun x => inner ℝ u x - m) := by
   sorry
 
 /-- Entropy `Ent_μ(g) = ∫ g log g dμ - (∫ g dμ) log (∫ g dμ)`, on any measurable space. -/
-def entropyOf {α : Type*} [MeasurableSpace α] (μ : Measure α) (g : α → ℝ) : ℝ :=
-  (∫ x, g x * Real.log (g x) ∂μ) - (∫ x, g x ∂μ) * Real.log (∫ x, g x ∂μ)
+def entropyOf {α : Type*} [MeasurableSpace α] (μ : Measure α) (g : α → ℝ) : ℝ := (∫ x, g x * Real.log (g x) ∂μ) - (∫ x, g x ∂μ) * Real.log (∫ x, g x ∂μ)
 
 /-- Test functions for the optimal constants: smooth, bounded and Lipschitz. -/
-def IsTestFunction {d : ℕ} (f : Rd d → ℝ) : Prop :=
-  ContDiff ℝ ∞ f ∧ (∃ M : ℝ, ∀ x, |f x| ≤ M) ∧ ∃ L : ℝ≥0, LipschitzWith L f
+def IsTestFunction {d : ℕ} (f : Rd d → ℝ) : Prop := ContDiff ℝ ∞ f ∧ (∃ M : ℝ, ∀ x, |f x| ≤ M) ∧ ∃ L : ℝ≥0, LipschitzWith L f
 
 /-- Optimal Poincaré constant: the infimum of the `C ≥ 0` with `Var_μ f ≤ C ∫|∇f|² dμ` for all test functions `f`. -/
-def optimalPI {d : ℕ} (V : Rd d → ℝ) : ℝ :=
-  sInf {C : ℝ | 0 ≤ C ∧ ∀ f : Rd d → ℝ, IsTestFunction f →
-    variance f (gibbs V) ≤ C * ∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V}
+def optimalPI {d : ℕ} (V : Rd d → ℝ) : ℝ := sInf {C : ℝ | 0 ≤ C ∧ ∀ f : Rd d → ℝ, IsTestFunction f →
+  variance f (gibbs V) ≤ C * ∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V}
 
 /-- Optimal logarithmic Sobolev constant: the infimum of the `C ≥ 0` with `Ent_μ(f²) ≤ C ∫|∇f|² dμ` for all test functions `f`. -/
-def optimalLSI {d : ℕ} (V : Rd d → ℝ) : ℝ :=
-  sInf {C : ℝ | 0 ≤ C ∧ ∀ f : Rd d → ℝ, IsTestFunction f →
-    entropyOf (gibbs V) (fun x => f x ^ 2) ≤ C * ∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V}
+def optimalLSI {d : ℕ} (V : Rd d → ℝ) : ℝ := sInf {C : ℝ | 0 ≤ C ∧ ∀ f : Rd d → ℝ, IsTestFunction f →
+  entropyOf (gibbs V) (fun x => f x ^ 2) ≤ C * ∫ x, ‖gradient f x‖ ^ 2 ∂gibbs V}
 
 /-- **Optimal constants** (manuscript subsection "Optimal constants"): under rigidity (`Hess V ≥ λ₁ I`, `λ₁ > 0`), the optimal Poincaré constant is `1/λ₁` and the optimal logarithmic Sobolev constant is twice the optimal Poincaré constant. -/
 theorem optimal_lsi_twice_pi {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V) (hp : IsProbabilityMeasure (gibbs V))
-    (hR : RigidCurvature V) : optimalPI V = (spectralGap V)⁻¹ ∧ optimalLSI V = 2 * optimalPI V := by
+  (hR : RigidCurvature V) : optimalPI V = (spectralGap V)⁻¹ ∧ optimalLSI V = 2 * optimalPI V := by
   sorry
 
-/-- **Extremal functions** (manuscript subsection "Optimal constants"): in the convex-interaction setting `V = ρ|x|²/2 + W`, the function `x ↦ x₁+⋯+x_d` is extremal for the Poincaré inequality (equality with the optimal constant), and `x ↦
-e^{α(x₁+⋯+x_d)}` is extremal for the logarithmic Sobolev inequality (equality with the optimal constant), for every real `α`. Both functions lie outside the bounded test class, so the statement asserts finiteness of all the integrals involved.
-Amendment: `0 < d`. -/
+/-- **Extremal functions** (manuscript subsection "Optimal constants"): in the convex-interaction setting `V = ρ|x|²/2 + W`, the function `x ↦ x₁+⋯+x_d` is extremal for the Poincaré inequality (equality with the optimal constant), and `x ↦ e^{α(x₁+⋯+x_d)}` is extremal for the logarithmic Sobolev inequality (equality with the optimal constant), for every real `α`. Both functions lie outside the bounded test class, so the statement asserts finiteness of all the integrals involved. Amendment: `0 < d`. -/
 theorem optimal_constants_extremal {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
-    {W : Rd d → ℝ} (hW : ContDiff ℝ 2 W) (hconv : ConvexOn ℝ univ W) (hinv : ∀ x (s : ℝ), W (x + s • diagonal d) = W x)
-    (hp : IsProbabilityMeasure (gibbs fun x => ρ / 2 * ‖x‖ ^ 2 + W x)) :
+  {W : Rd d → ℝ} (hW : ContDiff ℝ 2 W) (hconv : ConvexOn ℝ univ W) (hinv : ∀ x (s : ℝ), W (x + s • diagonal d) = W x)
+  (hp : IsProbabilityMeasure (gibbs fun x => ρ / 2 * ‖x‖ ^ 2 + W x)) :
     let V := fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + W x
     let h := fun x : Rd d => ∑ i, x i
     optimalPI V = ρ⁻¹ ∧ optimalLSI V = 2 * optimalPI V ∧
-    (MemLp h 2 (gibbs V) ∧ 0 < variance h (gibbs V) ∧
-      variance h (gibbs V) =
-        optimalPI V * ∫ x, ‖gradient h x‖ ^ 2 ∂gibbs V) ∧
-    ∀ α : ℝ,
-      Integrable (fun x => Real.exp (α * h x) ^ 2) (gibbs V) ∧
-      Integrable (fun x => Real.exp (α * h x) ^ 2 * Real.log (Real.exp (α * h x) ^ 2))
-        (gibbs V) ∧
-      Integrable (fun x => ‖gradient (fun y => Real.exp (α * h y)) x‖ ^ 2) (gibbs V) ∧
-      (α ≠ 0 → 0 < ∫ x, ‖gradient (fun y => Real.exp (α * h y)) x‖ ^ 2 ∂gibbs V) ∧
-      entropyOf (gibbs V) (fun x => Real.exp (α * h x) ^ 2) =
-        optimalLSI V * ∫ x, ‖gradient (fun y => Real.exp (α * h y)) x‖ ^ 2 ∂gibbs V := by
+    (MemLp h 2 (gibbs V) ∧ 0 < variance h (gibbs V) ∧ variance h (gibbs V) = optimalPI V * ∫ x, ‖gradient h x‖ ^ 2 ∂gibbs V) ∧
+    ∀ α : ℝ, Integrable (fun x => Real.exp (α * h x) ^ 2) (gibbs V) ∧ Integrable (fun x => Real.exp (α * h x) ^ 2 * Real.log (Real.exp (α * h x) ^ 2))
+      (gibbs V) ∧ Integrable (fun x => ‖gradient (fun y => Real.exp (α * h y)) x‖ ^ 2) (gibbs V) ∧
+      (α ≠ 0 → 0 < ∫ x, ‖gradient (fun y => Real.exp (α * h y)) x‖ ^ 2 ∂gibbs V) ∧ entropyOf (gibbs V) (fun x => Real.exp (α * h x) ^ 2) =
+      optimalLSI V * ∫ x, ‖gradient (fun y => Real.exp (α * h y)) x‖ ^ 2 ∂gibbs V := by
   sorry
 
-/-- **Fisher information and the heat kernel (OU case, manuscript Section 4.1)**, kernel form. For `V(x) = ρ|x|²/2 + c` and the Euclidean Langevin semigroup `Pt` (`Pt t x₀ = Law(X_t^{x₀})`), for every `t > 0`: `Pt t x₀ = 𝒩(e^{-ρt}x₀, ((1-e^{-2ρt})/ρ)
-I_d)`; `μ_t` has a smooth log-density `u = log dμ_t/dμ` with `∇u(x) = a_t x + b_t x₀`; and `I(μ_t | μ) = ρ d e^{-4ρt}/(1-e^{-2ρt}) + ρ² e^{-2ρt}|x₀|²`. `V` is automatically `C^∞`. -/
-theorem ou_fisher_information {d : ℕ} {ρ c : ℝ} (hρ : 0 < ρ)
-    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
-    (hL : IsEuclideanLangevin (fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c) Pt)
-    (x₀ : Rd d) {t : ℝ} (ht : 0 < t) :
+/-- The Gaussian isoperimetric profile `I = φ ∘ Φ⁻¹` on `(0,1)` and `0` elsewhere (`φ`, `Φ` the standard normal density and cdf, `Φ⁻¹ u = inf {x | u ≤ Φ x}`). -/
+def gaussianIsoProfile (u : ℝ) : ℝ := if 0 < u ∧ u < 1 then gaussianPDFReal 0 1 (sInf {x : ℝ | u ≤ cdf (gaussianReal 0 1) x}) else 0
+
+/-- **Gaussian isoperimetry, functional (Bobkov) form, QUADRATIC CASE ONLY** (manuscript remark: `CD(ρ,∞)` implies Gaussian isoperimetry). Only `V = ρ|x|²/2 + c`, i.e. `μ = 𝒩(0, ρ⁻¹ I_d)`, the equality case of `CD(ρ,∞)`, is proved; the general case `Hess V ≥ ρ` is NOT formalized. For `f : ℝ^d → [0,1]` smooth, bounded and Lipschitz: `I(∫ f dμ) ≤ ∫ √(I(f)² + ρ⁻¹ |∇f|²) dμ`. -/
+theorem gaussian_isoperimetric_functional {d : ℕ} {ρ : ℝ} (hρ : 0 < ρ) {V : Rd d → ℝ} (hV : ∃ c : ℝ, ∀ x, V x = ρ / 2 * ‖x‖ ^ 2 + c)
+  (hp : IsProbabilityMeasure (gibbs V)) {f : Rd d → ℝ} (hf : IsTestFunction f) (h01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1) :
+  gaussianIsoProfile (∫ x, f x ∂gibbs V) ≤ ∫ x, Real.sqrt (gaussianIsoProfile (f x) ^ 2 + ρ⁻¹ * ‖gradient f x‖ ^ 2) ∂gibbs V := by
+  sorry
+
+/-- **Gaussian isoperimetry, set form** (Sudakov–Tsirelson, Borell), QUADRATIC CASE ONLY (`V = ρ|x|²/2 + c`, same hypotheses as above; general `Hess V ≥ ρ` not formalized): if `μ(A) ≥ Φ(a)` for an arbitrary set `A`, then the closed `r`-neighbourhood satisfies `μ(A_r) ≥ Φ(a + √ρ r)`, `r ≥ 0`. -/
+theorem gaussian_isoperimetric_sets {d : ℕ} {ρ : ℝ} (hρ : 0 < ρ) {V : Rd d → ℝ} (hV : ∃ c : ℝ, ∀ x, V x = ρ / 2 * ‖x‖ ^ 2 + c)
+  (hp : IsProbabilityMeasure (gibbs V)) {A : Set (Rd d)} {a : ℝ} (hA : cdf (gaussianReal 0 1) a ≤ (gibbs V).real A) {r : ℝ} (hr : 0 ≤ r) :
+  cdf (gaussianReal 0 1) (a + Real.sqrt ρ * r) ≤ (gibbs V).real (Metric.cthickening r A) := by
+  sorry
+
+/-- Non-vacuity of the two Gaussian isoperimetric statements: `e^{-V}dx` is a probability measure for `V = ρ|x|²/2 + (d/2) log (2π/ρ)`. -/
+theorem gibbs_quadratic_isProb {d : ℕ} {ρ : ℝ} (hρ : 0 < ρ) : IsProbabilityMeasure (gibbs fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + (d : ℝ) / 2 * Real.log (2 * Real.pi / ρ)) := by
+  sorry
+
+/-- An abstract Dirichlet-type form `(Q, E)` on a probability space `(X, μ)` (for the Rothaus alternative): `Q` is the energy domain (e.g. `H¹`), `E ≥ 0` the energy, quadratic and invariant under adding constants; members of `Q` lie in `L²(μ)` and have `f² log (1 + f²)` integrable. -/
+structure Form {X : Type*} [MeasurableSpace X] (μ : Measure X) where
+  Q : Set (X → ℝ)
+  E : (X → ℝ) → ℝ
+  smul_mem : ∀ (c : ℝ) (f : X → ℝ), f ∈ Q → c • f ∈ Q
+  add_const_mem : ∀ (c : ℝ) (f : X → ℝ), f ∈ Q → (fun x => f x + c) ∈ Q
+  E_nonneg : ∀ f ∈ Q, 0 ≤ E f
+  E_smul : ∀ (c : ℝ) (f : X → ℝ), f ∈ Q → E (c • f) = c ^ 2 * E f
+  E_add_const : ∀ (c : ℝ) (f : X → ℝ), f ∈ Q → E (fun x => f x + c) = E f
+  memLp : ∀ f ∈ Q, MemLp f 2 μ
+  integrable_Θ : ∀ f ∈ Q, Integrable (fun x => f x ^ 2 * Real.log (1 + f x ^ 2)) μ
+
+/-- Optimal Poincaré constant of a form: the infimum of the `C ≥ 0` with `Var_μ f ≤ C E(f)` on `Q`. -/
+def Form.optPI {X : Type*} [MeasurableSpace X] {μ : Measure X} (F : Form μ) : ℝ := sInf {C : ℝ | 0 ≤ C ∧ ∀ f ∈ F.Q, variance f μ ≤ C * F.E f}
+
+/-- Optimal logarithmic Sobolev constant of a form: the infimum of the `C ≥ 0` with `Ent_μ(f²) ≤ C E(f)` on `Q`. -/
+def Form.optLSI {X : Type*} [MeasurableSpace X] {μ : Measure X} (F : Form μ) : ℝ := sInf {C : ℝ | 0 ≤ C ∧ ∀ f ∈ F.Q, entropyOf μ (fun x => f x ^ 2) ≤ C * F.E f}
+
+/-- The analytic input of the Rothaus argument (compactness of `H¹` in `L² log L`): mean-zero sequences in `Q` of bounded energy have a subsequence converging in `L²(μ)` and in the Orlicz weight `f² log (1 + f²)` (in `L¹(μ)`) to some `h ∈ Q`, with `E h` below every eventual bound on the energies. -/
+def Form.Compact {X : Type*} [MeasurableSpace X] {μ : Measure X} (F : Form μ) : Prop :=
+  ∀ (B : ℝ) (g : ℕ → X → ℝ), (∀ n, g n ∈ F.Q) → (∀ n, ∫ x, g n x ∂μ = 0) → (∀ n, F.E (g n) ≤ B) →
+  ∃ φ : ℕ → ℕ, StrictMono φ ∧ ∃ h ∈ F.Q, Tendsto (fun n => ∫ x, (g (φ n) x - h x) ^ 2 ∂μ) atTop (𝓝 0) ∧
+  Tendsto (fun n => ∫ x, |g (φ n) x ^ 2 * Real.log (1 + g (φ n) x ^ 2) - h x ^ 2 * Real.log (1 + h x ^ 2)| ∂μ) atTop (𝓝 0) ∧
+  ∀ b : ℝ, (∀ᶠ n in atTop, F.E (g (φ n)) ≤ b) → F.E h ≤ b
+
+/-- **Rothaus alternative** (manuscript, subsection "Optimal constants": in the compact setting, if the optimal LSI constant is not twice the optimal PI constant, an LSI extremal exists), ABSTRACT form: for a form `(Q, E)` with a Poincaré and a log-Sobolev inequality (some finite constants) and the compactness hypothesis `Form.Compact`, `optLSI ≠ 2 optPI` gives `f ∈ Q` with `E f > 0` and `Ent(f²) = optLSI · E f`. The compact-manifold theorem (instantiating `Form` with `H¹`, i.e. Sobolev embedding and density) is NOT proved; the finite case below is unconditional. -/
+theorem rothaus_alternative_ne {X : Type*} [MeasurableSpace X] {μ : Measure X} [IsProbabilityMeasure μ] (F : Form μ)
+  (hPI : ∃ P, 0 ≤ P ∧ ∀ f ∈ F.Q, variance f μ ≤ P * F.E f) (hLSI : ∃ c, 0 ≤ c ∧ ∀ f ∈ F.Q, entropyOf μ (fun x => f x ^ 2) ≤ c * F.E f)
+  (hcomp : F.Compact) (hne : F.optLSI ≠ 2 * F.optPI) : ∃ f ∈ F.Q, 0 < F.E f ∧ entropyOf μ (fun x => f x ^ 2) = F.optLSI * F.E f := by
+  sorry
+
+/-- **`2 C_PI ≤ C_LSI`** for every form satisfying some log-Sobolev inequality (so `optLSI ≠ 2 optPI` means `optLSI > 2 optPI`, the hypothesis of the Rothaus alternative). -/
+theorem two_optPI_le_optLSI {X : Type*} [MeasurableSpace X] {μ : Measure X} [IsProbabilityMeasure μ] (F : Form μ)
+  (hLSI : ∃ c, 0 ≤ c ∧ ∀ f ∈ F.Q, entropyOf μ (fun x => f x ^ 2) ≤ c * F.E f) : 2 * F.optPI ≤ F.optLSI := by
+  sorry
+
+/-- **Discrete Rothaus alternative**, unconditional (Saloff-Coste, Lectures on finite Markov chains, Th. 2.2.3): on a finite probability space with full support and an irreducible Dirichlet form `E f = ∑ₓ ∑ᵧ w(x,y) (f x - f y)²` on all functions, `optLSI > 2 optPI` gives an LSI extremal function. No analytic hypothesis. -/
+theorem finite_rothaus {X : Type*} [Fintype X] [MeasurableSpace X] [MeasurableSingletonClass X] (μ : Measure X) [IsProbabilityMeasure μ]
+  (w : X → X → ℝ) (hw : ∀ x y, 0 ≤ w x y) (hπ : ∀ x, 0 < μ.real {x}) (hconn : ∀ f : X → ℝ, ∑ x, ∑ y, w x y * (f x - f y) ^ 2 = 0 → ∀ x y, f x = f y)
+  (F : Form μ) (hQ : F.Q = Set.univ) (hE : ∀ f, F.E f = ∑ x, ∑ y, w x y * (f x - f y) ^ 2) (hgt : 2 * F.optPI < F.optLSI) :
+  ∃ f : X → ℝ, 0 < F.E f ∧ entropyOf μ (fun x => f x ^ 2) = F.optLSI * F.E f := by
+  sorry
+
+/-- **Fisher information and the heat kernel (OU case, manuscript Section 4.1)**, kernel form. For `V(x) = ρ|x|²/2 + c` and the Euclidean Langevin semigroup `Pt` (`Pt t x₀ = Law(X_t^{x₀})`), for every `t > 0`: `Pt t x₀ = 𝒩(e^{-ρt}x₀, ((1-e^{-2ρt})/ρ) I_d)`; `μ_t` has a smooth log-density `u = log dμ_t/dμ` with `∇u(x) = a_t x + b_t x₀`; and `I(μ_t | μ) = ρ d e^{-4ρt}/(1-e^{-2ρt}) + ρ² e^{-2ρt}|x₀|²`. `V` is automatically `C^∞`. -/
+theorem ou_fisher_information {d : ℕ} {ρ c : ℝ} (hρ : 0 < ρ) {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
+  (hL : IsEuclideanLangevin (fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c) Pt) (x₀ : Rd d) {t : ℝ} (ht : 0 < t) :
     let V := fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c
     let μt := Pt t.toNNReal x₀
-    μt = multivariateGaussian (Real.exp (-ρ * t) • x₀)
-        (((1 - Real.exp (-2 * ρ * t)) / ρ) • (1 : Matrix (Fin d) (Fin d) ℝ)) ∧
-      (∃ u : Rd d → ℝ, ContDiff ℝ ∞ u ∧
-        μt = (gibbs V).withDensity (fun x => ENNReal.ofReal (Real.exp (u x))) ∧
-        (∀ᵐ x ∂gibbs V, u x = Real.log (μt.rnDeriv (gibbs V) x).toReal) ∧
-        ∀ x, gradient u x = (ρ - ρ / (1 - Real.exp (-2 * ρ * t))) • x +
-          (ρ * Real.exp (-ρ * t) / (1 - Real.exp (-2 * ρ * t))) • x₀) ∧
-      fisherInfo V μt = ENNReal.ofReal
-        (ρ * d * Real.exp (-4 * ρ * t) / (1 - Real.exp (-2 * ρ * t)) +
-          ρ ^ 2 * Real.exp (-2 * ρ * t) * ‖x₀‖ ^ 2) := by
+    μt = multivariateGaussian (Real.exp (-ρ * t) • x₀) (((1 - Real.exp (-2 * ρ * t)) / ρ) • (1 : Matrix (Fin d) (Fin d) ℝ)) ∧ (∃ u : Rd d → ℝ, ContDiff ℝ ∞ u ∧
+      μt = (gibbs V).withDensity (fun x => ENNReal.ofReal (Real.exp (u x))) ∧ (∀ᵐ x ∂gibbs V, u x = Real.log (μt.rnDeriv (gibbs V) x).toReal) ∧
+      ∀ x, gradient u x = (ρ - ρ / (1 - Real.exp (-2 * ρ * t))) • x + (ρ * Real.exp (-ρ * t) / (1 - Real.exp (-2 * ρ * t))) • x₀) ∧
+      fisherInfo V μt = ENNReal.ofReal (ρ * d * Real.exp (-4 * ρ * t) / (1 - Real.exp (-2 * ρ * t)) + ρ ^ 2 * Real.exp (-2 * ρ * t) * ‖x₀‖ ^ 2) := by
   sorry
 
 /-- `X` solves `dXₜ = -a ∇V(Xₜ) dt + s dBₜ`, `X₀ = x₀`: a.s. continuous paths satisfying the integral equation. `IsLangevinSolution` is the case `a = 1`, `s = √2`. -/
 def IsSDESolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (a s : ℝ)
-    (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (x₀ : Rd d) (X : ℝ≥0 → Ω → Rd d) : Prop :=
-  ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0,
-    X t w = x₀ - a • (∫ r in (0 : ℝ)..(t : ℝ), gradient V (X r.toNNReal w)) + s • B t w
+  (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (x₀ : Rd d) (X : ℝ≥0 → Ω → Rd d) : Prop := ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0,
+  X t w = x₀ - a • (∫ r in (0 : ℝ)..(t : ℝ), gradient V (X r.toNNReal w)) + s • B t w
 
 /-- Kernel-level `σ`-diffusion (Section "Temperature"): `Pt t x = Law(Y_t^x)` for `dY = -∇V dt + √2 σ dB`, a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(L_σ f)(x) ds` for `f ∈ C_c^∞`, with `L_σ f = σ²Δf - ⟨∇V, ∇f⟩`. -/
 def IsSigmaDiffusion {d : ℕ} (V : Rd d → ℝ) (σ : ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
-  (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
-    ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
-      ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ),
-        ∫ y, (σ ^ 2 * laplacian f y - inner ℝ (gradient V y) (gradient f y)) ∂Pt s.toNNReal x
+  (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧ ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
+  ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, (σ ^ 2 * laplacian f y - inner ℝ (gradient V y) (gradient f y)) ∂Pt s.toNNReal x
 
-/-- Brownian-free replacement of "`Y x₀` solves `dY = -∇V dt + √2 σ dB`" with normalizability of `e^{-V/σ²}`: `V` is `C^∞`, `e^{-V/σ²}` is a probability density and `Pt` is the `σ`-diffusion semigroup with generator `σ²Δ - ∇V·∇`. -/
+/-- Brownian-free replacement of "`Y x₀` solves `dY = -∇V dt + √2 σ dB`" with normalizability of `e^{-V/σ²}`: `V` is `C²`, `e^{-V/σ²}` is a probability density and `Pt` is the `σ`-diffusion semigroup with generator `σ²Δ - ∇V·∇`. -/
 def IsSigmaLangevin {d : ℕ} (V : Rd d → ℝ) (σ : ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
-  ContDiff ℝ ∞ V ∧ IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2) ∧ IsSigmaDiffusion V σ Pt
+  ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2) ∧ IsSigmaDiffusion V σ Pt
 
-/-- **Normalization** (manuscript, Section "Normalization"), kernel form, generic in the transition kernels `Pt n`: for `α_d > 0`, the time-changed semigroup is `u ↦ Pt n (α n * u)`; cutoff of every worst-case profile at `t_*` for `Pt` is equivalent
-to cutoff at `t_*/α` for the time-changed one (same limits); the mixing time is `t₀/α`; and the product condition `κ t₀ → ∞` is invariant, `κ` becoming `α κ` (arithmetic only; the SDE statement is `normalization_sde`). -/
-theorem normalization_cutoff {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    {S : ∀ n, Set (Rd n)} {α : ℕ → ℝ} (hα : ∀ n, 0 < α n) :
+/-- **Normalization** (manuscript, Section "Normalization"), kernel form, generic in the transition kernels `Pt n`: for `α_d > 0`, the time-changed semigroup is `u ↦ Pt n (α n * u)`; cutoff of every worst-case profile at `t_*` for `Pt` is equivalent to cutoff at `t_*/α` for the time-changed one (same limits); the mixing time is `t₀/α`; and the product condition `κ t₀ → ∞` is invariant, `κ` becoming `α κ` (arithmetic only; the SDE statement is `normalization_sde`). -/
+theorem normalization_cutoff {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} {S : ∀ n, Set (Rd n)} {α : ℕ → ℝ} (hα : ∀ n, 0 < α n) :
     let Ptα := fun n (u : ℝ≥0) => Pt n ((α n).toNNReal * u)
-    (∀ (δ : ∀ n, Measure (Rd n) → ℝ≥0∞) (t : ℕ → ℝ) (b a : ℝ≥0∞),
-      HasCutoff (fun n => worstK (Pt n) (S n) (δ n)) t b a ↔
-        HasCutoff (fun n => worstK (Ptα n) (S n) (δ n))
-          (fun n => t n / α n) b a) ∧
-    (∀ (μ : ∀ n, Measure (Rd n)) (η : ℝ) (n : ℕ),
-      mixingTimeK (Ptα n) (μ n) (S n) η =
-        mixingTimeK (Pt n) (μ n) (S n) η / ENNReal.ofReal (α n)) ∧
-    (∀ (μ : ∀ n, Measure (Rd n)) (η : ℝ) (κ : ℕ → ℝ),
-      Tendsto (fun n => α n * κ n * (mixingTimeK (Ptα n) (μ n) (S n) η).toReal)
-          atTop atTop ↔
-        Tendsto (fun n => κ n * (mixingTimeK (Pt n) (μ n) (S n) η).toReal)
-          atTop atTop) := by
+    (∀ (δ : ∀ n, Measure (Rd n) → ℝ≥0∞) (t : ℕ → ℝ) (b a : ℝ≥0∞), HasCutoff (fun n => worstK (Pt n) (S n) (δ n)) t b a ↔
+      HasCutoff (fun n => worstK (Ptα n) (S n) (δ n)) (fun n => t n / α n) b a) ∧
+    (∀ (μ : ∀ n, Measure (Rd n)) (η : ℝ) (n : ℕ), mixingTimeK (Ptα n) (μ n) (S n) η = mixingTimeK (Pt n) (μ n) (S n) η / ENNReal.ofReal (α n)) ∧
+    (∀ (μ : ∀ n, Measure (Rd n)) (η : ℝ) (κ : ℕ → ℝ), Tendsto (fun n => α n * κ n * (mixingTimeK (Ptα n) (μ n) (S n) η).toReal) atTop atTop ↔
+      Tendsto (fun n => κ n * (mixingTimeK (Pt n) (μ n) (S n) η).toReal) atTop atTop) := by
   sorry
 
 /-- **Normalization, SDE level** (Section "Normalization"): for `c > 0`, `X x₀ (c ·)` solves `dX = -c ∇V dt + √(2c) dB'` with `B'_t = B_{ct}/√c` again standard Brownian. Solutions are given by hypothesis (`IsLangevin`); no existence is claimed. -/
 theorem normalization_sde {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
-    {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d} (hL : IsLangevin V B P X) {c : ℝ} (hc : 0 < c) :
-    IsStdBrownian (fun t w => (Real.sqrt c)⁻¹ • B (c.toNNReal * t) w) P ∧ ∀ x₀, IsSDESolution V c (Real.sqrt (2 * c))
-      (fun t w => (Real.sqrt c)⁻¹ • B (c.toNNReal * t) w) P x₀ (fun t w => X x₀ (c.toNNReal * t) w) := by
+  {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} {X : Rd d → ℝ≥0 → Ω → Rd d} (hL : IsLangevin V B P X) {c : ℝ} (hc : 0 < c) :
+  IsStdBrownian (fun t w => (Real.sqrt c)⁻¹ • B (c.toNNReal * t) w) P ∧ ∀ x₀, IsSDESolution V c (Real.sqrt (2 * c))
+  (fun t w => (Real.sqrt c)⁻¹ • B (c.toNNReal * t) w) P x₀ (fun t w => X x₀ (c.toNNReal * t) w) := by
   sorry
 
-/-- **Temperature** (manuscript, Section "Temperature"). For `σ > 0` and smooth `V`, with the generator `L_σ f = σ²Δf - ∇V·∇f`, `Γ(f,g) = σ²⟨∇f,∇g⟩` and `Γ₂(f) = ½ L_σ Γ(f,f) - Γ(f, L_σ f)`: (i) `Γ(f) = σ²|∇f|²` and `Γ₂(f) = σ⁴ ‖Hess f‖²_HS + σ² Hess
-V(∇f,∇f)` for smooth `f`; (ii) the Gibbs measure `e^{-V/σ²}dx` (normalized by `Z_σ`) is invariant for `L_σ`, in the sense `∫ L_σ f e^{-V/σ²} dx = 0` for every `C²` compactly supported `f`; (iii) for every `ρ`, `CD(ρ,∞)` of `L_σ` (`ρΓ(f) ≤ Γ₂(f)` for
-smooth `f`) is equivalent to `Hess V ≥ ρ I_d` as a quadratic form, a condition free of `σ`. -/
+/-- **Temperature** (manuscript, Section "Temperature"). For `σ > 0` and smooth `V`, with the generator `L_σ f = σ²Δf - ∇V·∇f`, `Γ(f,g) = σ²⟨∇f,∇g⟩` and `Γ₂(f) = ½ L_σ Γ(f,f) - Γ(f, L_σ f)`: (i) `Γ(f) = σ²|∇f|²` and `Γ₂(f) = σ⁴ ‖Hess f‖²_HS + σ² Hess V(∇f,∇f)` for smooth `f`; (ii) the Gibbs measure `e^{-V/σ²}dx` (normalized by `Z_σ`) is invariant for `L_σ`, in the sense `∫ L_σ f e^{-V/σ²} dx = 0` for every `C²` compactly supported `f`; (iii) for every `ρ`, `CD(ρ,∞)` of `L_σ` (`ρΓ(f) ≤ Γ₂(f)` for smooth `f`) is equivalent to `Hess V ≥ ρ I_d` as a quadratic form, a condition free of `σ`. -/
 theorem temperature_bakry_emery {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ ∞ V) {σ : ℝ} (hσ : 0 < σ) :
     let L := fun (f : Rd d → ℝ) (x : Rd d) => σ ^ 2 * laplacian f x - inner ℝ (gradient V x) (gradient f x)
     let Γ := fun (f g : Rd d → ℝ) (x : Rd d) => σ ^ 2 * inner ℝ (gradient f x) (gradient g x)
     let Γ₂ := fun (f : Rd d → ℝ) (x : Rd d) => L (fun y => Γ f f y) x / 2 - Γ f (L f) x
-    (∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → ∀ x,
-      Γ f f x = σ ^ 2 * ‖gradient f x‖ ^ 2 ∧
-      Γ₂ f x = σ ^ 4 * ∑ i, ∑ j, (fderiv ℝ (fderiv ℝ f) x (EuclideanSpace.single i 1)
-          (EuclideanSpace.single j 1)) ^ 2 +
-        σ ^ 2 * fderiv ℝ (fderiv ℝ V) x (gradient f x) (gradient f x)) ∧
-    (∀ f : Rd d → ℝ, ContDiff ℝ 2 f → HasCompactSupport f →
-      ∫ x, L f x ∂gibbs (fun y => V y / σ ^ 2) = 0) ∧
-    ∀ ρ : ℝ, (∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → ∀ x, ρ * Γ f f x ≤ Γ₂ f x) ↔
-      ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z := by
+    (∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → ∀ x, Γ f f x = σ ^ 2 * ‖gradient f x‖ ^ 2 ∧
+      Γ₂ f x = σ ^ 4 * ∑ i, ∑ j, (fderiv ℝ (fderiv ℝ f) x (EuclideanSpace.single i 1) (EuclideanSpace.single j 1)) ^ 2 +
+      σ ^ 2 * fderiv ℝ (fderiv ℝ V) x (gradient f x) (gradient f x)) ∧
+    (∀ f : Rd d → ℝ, ContDiff ℝ 2 f → HasCompactSupport f → ∫ x, L f x ∂gibbs (fun y => V y / σ ^ 2) = 0) ∧
+    ∀ ρ : ℝ, (∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → ∀ x, ρ * Γ f f x ≤ Γ₂ f x) ↔ ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z := by
   sorry
 
-/-- **Temperature, SDE level** (Section "Temperature"): if `Y x₀` solves `dY = -∇V dt + √2 σ dB`, then (i) `u ↦ Y x₀ (u/σ²)` is Langevin for `V/σ²` driven by `σ B_{u/σ²}`, and (ii) the Gibbs law `∝ e^{-V/σ²}` is invariant. Flags: `C²` and `Hess V ≥ ρ
-> 0` added (convexity, not in the manuscript); `e^{-V/σ²}` a probability measure (`Z_σ = 1`); `B`, `Y` given by hypothesis. -/
+/-- **Temperature, SDE level** (Section "Temperature"): if `Y x₀` solves `dY = -∇V dt + √2 σ dB`, then (i) `u ↦ Y x₀ (u/σ²)` is Langevin for `V/σ²` driven by `σ B_{u/σ²}`, and (ii) the Gibbs law `∝ e^{-V/σ²}` is invariant. Flags: `C²` and `Hess V ≥ ρ > 0` added (convexity, not in the manuscript); `e^{-V/σ²}` a probability measure (`Z_σ = 1`); `B`, `Y` given by hypothesis. -/
 theorem temperature_sde {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
-    (hV : ContDiff ℝ 2 V) {σ : ℝ} (hσ : 0 < σ) {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (hp : IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2))
-    {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} (hB : IsStdBrownian B P) {Y : Rd d → ℝ≥0 → Ω → Rd d}
-    (hY : ∀ x₀, IsSDESolution V 1 (Real.sqrt 2 * σ) B P x₀ (Y x₀)) : IsLangevin (fun x => V x / σ ^ 2)
-      (fun t w => (Real.sqrt ((σ ^ 2)⁻¹).toNNReal)⁻¹ • B (((σ ^ 2)⁻¹).toNNReal * t) w) P
-      (fun x u w => Y x (((σ ^ 2)⁻¹).toNNReal * u) w) ∧ ∀ t : ℝ≥0, (gibbs fun x => V x / σ ^ 2).bind (fun x => P.map (Y x t)) =
-      gibbs fun x => V x / σ ^ 2 := by
+  (hV : ContDiff ℝ 2 V) {σ : ℝ} (hσ : 0 < σ) {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
+  (hp : IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2)) {B : ℝ≥0 → Ω → Rd d} {P : Measure Ω} (hB : IsStdBrownian B P) {Y : Rd d → ℝ≥0 → Ω → Rd d}
+  (hY : ∀ x₀, IsSDESolution V 1 (Real.sqrt 2 * σ) B P x₀ (Y x₀)) : IsLangevin (fun x => V x / σ ^ 2)
+  (fun t w => (Real.sqrt ((σ ^ 2)⁻¹).toNNReal)⁻¹ • B (((σ ^ 2)⁻¹).toNNReal * t) w) P
+  (fun x u w => Y x (((σ ^ 2)⁻¹).toNNReal * u) w) ∧ ∀ t : ℝ≥0, (gibbs fun x => V x / σ ^ 2).bind (fun x => P.map (Y x t)) = gibbs fun x => V x / σ ^ 2 := by
   sorry
 
-/-- **Temperature, cutoff** (Section "Temperature"), kernel form: the critical time is free of `σ`. `Pt n` is the semigroup of the `σ`-diffusion `dY = -∇Vₙ dt + √2 σ dB` (`IsSigmaLangevin`, generator `σ²Δ - ∇Vₙ·∇`). If `Hess Vₙ ≥ ρₙ`, `liminf ρₙ >
-0`, the Wasserstein cutoff on `B(m, c√n)` occurs at `log n/(2ρₙ)`; if `ρₙ = o(log n)`, so do Fisher, entropy and TV cutoffs. Flags: "rigid" is `ρₙ = σ² λ₁(Vₙ/σ²)` (`hgap`); amendment: `Vₙ` is `C^∞`, and normalizability of `e^{-Vₙ/σ²}` is inside
-`IsSigmaLangevin`. -/
-theorem temperature_cutoff {V : ∀ n, Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {ρ : ℕ → ℝ}
-    {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (hY : ∀ n, 0 < n → IsSigmaLangevin (V n) σ (Pt n))
-    (hρ : ∀ n, 0 < n → 0 < ρ n)
-    (hHess : ∀ n, 0 < n → ∀ x z : Rd n,
-      ρ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
-    (hgap : ∀ n, 0 < n → ρ n = σ ^ 2 * spectralGap (fun x => V n x / σ ^ 2))
-    (hliminf : 0 < liminf (fun n => ENNReal.ofReal (ρ n)) atTop)
-    {c : ℝ} (hc : 0 < c) :
+/-- **Temperature, cutoff** (Section "Temperature"), kernel form: the critical time is free of `σ`. `Pt n` is the semigroup of the `σ`-diffusion `dY = -∇Vₙ dt + √2 σ dB` (`IsSigmaLangevin`, generator `σ²Δ - ∇Vₙ·∇`). If `Hess Vₙ ≥ ρₙ`, `liminf ρₙ > 0`, the Wasserstein cutoff on `B(m, c√n)` occurs at `log n/(2ρₙ)`; if `ρₙ = o(log n)`, so do Fisher, entropy and TV cutoffs. Flags: "rigid" is `ρₙ = σ² λ₁(Vₙ/σ²)` (`hgap`); amendment: `Vₙ` is `C²`, and normalizability of `e^{-Vₙ/σ²}` is inside `IsSigmaLangevin`. -/
+theorem temperature_cutoff {V : ∀ n, Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {ρ : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
+  (hY : ∀ n, 0 < n → IsSigmaLangevin (V n) σ (Pt n)) (hρ : ∀ n, 0 < n → 0 < ρ n) (hHess : ∀ n, 0 < n → ∀ x z : Rd n,
+  ρ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z) (hgap : ∀ n, 0 < n → ρ n = σ ^ 2 * spectralGap (fun x => V n x / σ ^ 2))
+  (hliminf : 0 < liminf (fun n => ENNReal.ofReal (ρ n)) atTop) {c : ℝ} (hc : 0 < c) :
     let t := fun n => criticalTime n (ρ n)
     let S := fun n => meanBall (fun x => V n x / σ ^ 2) c
-    HasCutoff (fun n => worstK (Pt n) (S n)
-      (wasserstein2 · (gibbs fun x => V n x / σ ^ 2))) t ⊤ 0 ∧
-    ((ρ =o[atTop] (fun n : ℕ => Real.log n)) →
-      HasCutoff (fun n => worstK (Pt n) (S n)
-        (fisherInfo fun x => V n x / σ ^ 2)) t ⊤ 0 ∧
-      HasCutoff (fun n => worstK (Pt n) (S n)
-        (InformationTheory.klDiv · (gibbs fun x => V n x / σ ^ 2))) t ⊤ 0 ∧
-      HasCutoff (fun n => worstK (Pt n) (S n)
-        (fun ν => .ofReal (tvDist ν (gibbs fun x => V n x / σ ^ 2)))) t 1 0) := by
+    HasCutoff (fun n => worstK (Pt n) (S n) (wasserstein2 · (gibbs fun x => V n x / σ ^ 2))) t ⊤ 0 ∧
+    ((ρ =o[atTop] (fun n : ℕ => Real.log n)) → HasCutoff (fun n => worstK (Pt n) (S n) (fisherInfo fun x => V n x / σ ^ 2)) t ⊤ 0 ∧
+      HasCutoff (fun n => worstK (Pt n) (S n) (InformationTheory.klDiv · (gibbs fun x => V n x / σ ^ 2))) t ⊤ 0 ∧ HasCutoff (fun n => worstK (Pt n) (S n)
+      (fun ν => .ofReal (tvDist ν (gibbs fun x => V n x / σ ^ 2)))) t 1 0) := by
+  sorry
+
+/-- **Temperature, kernel form** (Section "Temperature"): for `σ > 0`, `V` of class `C²` with `Hess V ≥ ρ > 0` and `e^{-V/σ²}` a probability density, the `σ`-diffusion (generator `σ²Δ - ∇V·∇`) exists, leaves `e^{-V/σ²}dx` invariant, and equals the time change `Pt t = P̃ (σ² t)` of every Euclidean Langevin semigroup `P̃` of `V/σ²`, hence is unique. Flag: the convexity `Hess V ≥ ρ > 0` is added (not in the manuscript). -/
+theorem temperature_kernel {d : ℕ} {V : Rd d → ℝ} {σ : ℝ} (hσ : 0 < σ) (hV : ContDiff ℝ 2 V) {ρ : ℝ} (hρ : 0 < ρ)
+  (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (hp : IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2)) :
+  (∃ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsSigmaLangevin V σ Pt) ∧ ∀ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsSigmaLangevin V σ Pt →
+  (∀ t, (gibbs fun x => V x / σ ^ 2).bind (Pt t) = gibbs fun x => V x / σ ^ 2) ∧
+  ∀ Q : ℝ≥0 → Kernel (Rd d) (Rd d), IsEuclideanLangevin (fun x => V x / σ ^ 2) Q → ∀ t x, Pt t x = Q ((σ ^ 2).toNNReal * t) x := by
   sorry
 
 /-- If `ν = p dx` with `p > 0` continuous and differentiable, then `ν ≪ μ = e^{-V}dx`, a differentiable version of `log dν/dμ` is `log p + V` and its gradient is `∇ log p + ∇V`. -/
 theorem heat_kernel_score {d : ℕ} {V p : Rd d → ℝ} (hVc : Continuous V) (hVd : Differentiable ℝ V)
-    (hpc : Continuous p) (hpd : Differentiable ℝ p) (hp : ∀ x, 0 < p x) :
+  (hpc : Continuous p) (hpd : Differentiable ℝ p) (hp : ∀ x, 0 < p x) :
     let ν : MeasureTheory.Measure (Rd d) := volume.withDensity fun x => ENNReal.ofReal (p x)
-    ∃ u : Rd d → ℝ, Differentiable ℝ u ∧ ν ≪ gibbs V ∧
-      (∀ᵐ x ∂gibbs V, u x = Real.log (ν.rnDeriv (gibbs V) x).toReal) ∧
+    ∃ u : Rd d → ℝ, Differentiable ℝ u ∧ ν ≪ gibbs V ∧ (∀ᵐ x ∂gibbs V, u x = Real.log (ν.rnDeriv (gibbs V) x).toReal) ∧
       ∀ x, gradient u x = gradient (fun y => Real.log (p y)) x + gradient V x := by
   sorry
 
-/-- **Pairwise interaction example** (introduction, after (1.5)): for `h` convex, the potential `W(x) = ∑_{i<j} h(xᵢ - xⱼ)` is convex and invariant under translations along `(1,…,1)` (and `C²` if `h` is `C²`, as needed in Theorem 1.5). Evenness of
-`h` (printed in the manuscript) is not needed. -/
+/-- **Pairwise interaction example** (introduction, after (1.5)): for `h` convex, the potential `W(x) = ∑_{i<j} h(xᵢ - xⱼ)` is convex and invariant under translations along `(1,…,1)` (and `C²` if `h` is `C²`, as needed in Theorem 1.5). Evenness of `h` (printed in the manuscript) is not needed. -/
 theorem pairwise_interaction {d : ℕ} {h : ℝ → ℝ} (hh : ConvexOn ℝ Set.univ h) :
     let W := fun x : Rd d => ∑ i, ∑ j with i < j, h (x i - x j)
-    ConvexOn ℝ Set.univ W ∧ (∀ x (s : ℝ), W (x + s • diagonal d) = W x) ∧
-      (ContDiff ℝ 2 h → ContDiff ℝ 2 W) := by
+    ConvexOn ℝ Set.univ W ∧ (∀ x (s : ℝ), W (x + s • diagonal d) = W x) ∧ (ContDiff ℝ 2 h → ContDiff ℝ 2 W) := by
   sorry
 
-/-- **First eigenspace of the Ornstein–Uhlenbeck process** (introduction, after (1.4)): for `V(x) = ρ|x|²/2 + c` (the constant `c` normalizing `e^{-V}` to a probability measure) in dimension `d ≥ 1`, `λ₁ = ρ`, `k₁ = d`, and the functions `fᵢ(x) = √ρ
-xᵢ`, `i = 1,…,d`, are eigenfunctions forming an orthonormal family in `L²(μ)` (hence an orthonormal basis of `E₁`). Amendment: `0 < d` is needed (for `d = 0`, `λ₁ = sInf ∅ = 0`). -/
-theorem ou_first_eigenspace {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ) {c : ℝ}
-    (hp : IsProbabilityMeasure (gibbs fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c)) :
+/-- **First eigenspace of the Ornstein–Uhlenbeck process** (introduction, after (1.4)): for `V(x) = ρ|x|²/2 + c` (the constant `c` normalizing `e^{-V}` to a probability measure) in dimension `d ≥ 1`, `λ₁ = ρ`, `k₁ = d`, and the functions `fᵢ(x) = √ρ xᵢ`, `i = 1,…,d`, are eigenfunctions forming an orthonormal family in `L²(μ)` (hence an orthonormal basis of `E₁`). Amendment: `0 < d` is needed (for `d = 0`, `λ₁ = sInf ∅ = 0`). -/
+theorem ou_first_eigenspace {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ) {c : ℝ} (hp : IsProbabilityMeasure (gibbs fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c)) :
     let V := fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c
-    spectralGap V = ρ ∧ firstEigenDim V = d ∧
-      (∀ i : Fin d, IsEigenfunction V ρ (fun x => Real.sqrt ρ * x i)) ∧
-      ∀ i j : Fin d, ∫ x, (Real.sqrt ρ * x i) * (Real.sqrt ρ * x j) ∂gibbs V =
-        if i = j then 1 else 0 := by
+    spectralGap V = ρ ∧ firstEigenDim V = d ∧ (∀ i : Fin d, IsEigenfunction V ρ (fun x => Real.sqrt ρ * x i)) ∧
+      ∀ i j : Fin d, ∫ x, (Real.sqrt ρ * x i) * (Real.sqrt ρ * x j) ∂gibbs V = if i = j then 1 else 0 := by
   sorry
 
-/-- **Mixing time of rigid sequences** (introduction, after Corollary 1.6, and Section "Product condition"): under the hypotheses of Corollary 1.4 and for every `η ∈ (0,1)`, the total variation mixing time `t₀⁽ⁿ⁾` from the balls `B(m, c√n)` is finite
-for large `n` and is `(log n/(2λ₁))(1+o(1))`; moreover `λ₁⁽ⁿ⁾ t₀⁽ⁿ⁾ → ∞` and `t₀⁽ⁿ⁾ → ∞`. Brownian-free kernel form; amendment: `V n` is `C^∞`. -/
-theorem mixing_time_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
-    (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
-    {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) (hη1 : η < 1) :
+/-- **Mixing time of rigid sequences** (introduction, after Corollary 1.6, and Section "Product condition"): under the hypotheses of Corollary 1.4 and for every `η ∈ (0,1)`, the total variation mixing time `t₀⁽ⁿ⁾` from the balls `B(m, c√n)` is finite for large `n` and is `(log n/(2λ₁))(1+o(1))`; moreover `λ₁⁽ⁿ⁾ t₀⁽ⁿ⁾ → ∞` and `t₀⁽ⁿ⁾ → ∞`. Brownian-free kernel form. -/
+theorem mixing_time_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (h : IsRigidSequenceK V Pt)
+  (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) (hη1 : η < 1) :
     let t₀ := fun n => mixingTimeK (Pt n) (gibbs (V n)) (meanBall (V n) c) η
-    (∀ᶠ n in atTop, t₀ n < ⊤) ∧
-      Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
-      Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧
-      Tendsto (fun n => (t₀ n).toReal) atTop atTop := by
+    (∀ᶠ n in atTop, t₀ n < ⊤) ∧ Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
+      Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧ Tendsto (fun n => (t₀ n).toReal) atTop atTop := by
   sorry
 
-/-- **Wasserstein mixing time of rigid sequences** (summary after Corollary 1.6): for every `η > 0`, `t₀` from `B(m, c√n)` is finite and `(log n/(2λ₁))(1+o(1))`, `λ₁ t₀ → ∞`. Flag: `t₀ → ∞` only under `λ₁ = o(log n)` (false otherwise), so the last
-conjunct is an implication. Kernel form. -/
-theorem mixing_time_w2_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
+/-- **Wasserstein mixing time of rigid sequences** (summary after Corollary 1.6): for every `η > 0`, `t₀` from `B(m, c√n)` is finite and `(log n/(2λ₁))(1+o(1))`, `λ₁ t₀ → ∞`. Flag: `t₀ → ∞` only under `λ₁ = o(log n)` (false otherwise), so the last conjunct is an implication. Kernel form. -/
+theorem mixing_time_w2_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (h : IsRigidSequenceK V Pt) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
     let t₀ := fun n => mixingTimeW2K (Pt n) (gibbs (V n)) (meanBall (V n) c) η
-    (∀ᶠ n in atTop, t₀ n < ⊤) ∧
-      Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
-      Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧
-      ((fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n) →
-        Tendsto (fun n => (t₀ n).toReal) atTop atTop) := by
+    (∀ᶠ n in atTop, t₀ n < ⊤) ∧ Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
+      Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧ ((fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n) →
+      Tendsto (fun n => (t₀ n).toReal) atTop atTop) := by
   sorry
 
 /-- **Entropy mixing time of rigid sequences** (summary after Corollary 1.6): as above under the hypotheses of Corollary 1.4, for every `η > 0`, with `t₀ → ∞`. Kernel form. -/
-theorem mixing_time_kl_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
-    (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
-    {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
+theorem mixing_time_kl_rigid {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (h : IsRigidSequenceK V Pt)
+  (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
     let t₀ := fun n => mixingTimeKLK (Pt n) (gibbs (V n)) (meanBall (V n) c) η
-    (∀ᶠ n in atTop, t₀ n < ⊤) ∧
-      Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
-      Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧
-      Tendsto (fun n => (t₀ n).toReal) atTop atTop := by
+    (∀ᶠ n in atTop, t₀ n < ⊤) ∧ Tendsto (fun n => (t₀ n).toReal / criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
+      Tendsto (fun n => spectralGap (V n) * (t₀ n).toReal) atTop atTop ∧ Tendsto (fun n => (t₀ n).toReal) atTop atTop := by
   sorry
 
-/-- **OU started from the mean** (after Corollary 1.3), kernel form: for `V⁽ⁿ⁾(x) = ρ|x|²/2 + c⁽ⁿ⁾`, `ρ > 0` independent of `n`, and `S⁽ⁿ⁾ = {m⁽ⁿ⁾}` (`m⁽ⁿ⁾` the mean of `μ⁽ⁿ⁾`), the Wasserstein distance has a cutoff at `log n/(4λ₁)`, and none at the
-critical time `log n/(2λ₁)` of Corollary 1.3. -/
-theorem ou_mean_start_cutoff {ρ : ℝ} (hρ : 0 < ρ)
-    {c : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (hL : ∀ n, 0 < n →
-      IsEuclideanLangevin (fun x : Rd n => ρ / 2 * ‖x‖ ^ 2 + c n) (Pt n)) :
+/-- **OU started from the mean** (after Corollary 1.3), kernel form: for `V⁽ⁿ⁾(x) = ρ|x|²/2 + c⁽ⁿ⁾`, `ρ > 0` independent of `n`, and `S⁽ⁿ⁾ = {m⁽ⁿ⁾}` (`m⁽ⁿ⁾` the mean of `μ⁽ⁿ⁾`), the Wasserstein distance has a cutoff at `log n/(4λ₁)`, and none at the critical time `log n/(2λ₁)` of Corollary 1.3. -/
+theorem ou_mean_start_cutoff {ρ : ℝ} (hρ : 0 < ρ) {c : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (hL : ∀ n, 0 < n →
+  IsEuclideanLangevin (fun x : Rd n => ρ / 2 * ‖x‖ ^ 2 + c n) (Pt n)) :
     let V := fun n (x : Rd n) => ρ / 2 * ‖x‖ ^ 2 + c n
-    let prof := fun n => worstK (Pt n) {∫ x, x ∂gibbs (V n)}
-      (wasserstein2 · (gibbs (V n)))
-    HasCutoff prof (fun n => Real.log n / (4 * spectralGap (V n))) ⊤ 0 ∧
-      ¬ HasCutoff prof (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
+    let prof := fun n => worstK (Pt n) {∫ x, x ∂gibbs (V n)} (wasserstein2 · (gibbs (V n)))
+    HasCutoff prof (fun n => Real.log n / (4 * spectralGap (V n))) ⊤ 0 ∧ ¬ HasCutoff prof (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
   sorry
 
-/-- **`p = ∞` fails for the Ornstein–Uhlenbeck process** (after (1.25)), kernel form: for `V⁽ⁿ⁾(x) = ρ|x|²/2 + c⁽ⁿ⁾`, `ρ > 0`, balls `B(m, c√n)`, `c > 0`, the worst-case `L^∞(μ)` distance tends to `+∞` along every sequence of times, so the analogue
-of (1.25) with `p = ∞` fails. -/
-theorem ou_lp_infty_fails {ρ : ℝ} (hρ : 0 < ρ)
-    {c' : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (hL : ∀ n, 0 < n →
-      IsEuclideanLangevin (fun x : Rd n => ρ / 2 * ‖x‖ ^ 2 + c' n) (Pt n))
-    {c : ℝ} (hc : 0 < c) :
+/-- **`p = ∞` fails for the Ornstein–Uhlenbeck process** (after (1.25)), kernel form: for `V⁽ⁿ⁾(x) = ρ|x|²/2 + c⁽ⁿ⁾`, `ρ > 0`, balls `B(m, c√n)`, `c > 0`, the worst-case `L^∞(μ)` distance tends to `+∞` along every sequence of times, so the analogue of (1.25) with `p = ∞` fails. -/
+theorem ou_lp_infty_fails {ρ : ℝ} (hρ : 0 < ρ) {c' : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (hL : ∀ n, 0 < n →
+  IsEuclideanLangevin (fun x : Rd n => ρ / 2 * ‖x‖ ^ 2 + c' n) (Pt n)) {c : ℝ} (hc : 0 < c) :
     let V := fun n (x : Rd n) => ρ / 2 * ‖x‖ ^ 2 + c' n
-    let prof := fun n => worstK (Pt n) (meanBall (V n) c)
-      (relLp · (gibbs (V n)) ⊤)
-    (∀ t : ℕ → ℝ, Tendsto (fun n => prof n (t n)) atTop (𝓝 ⊤)) ∧
-      ¬ HasCutoff prof (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
+    let prof := fun n => worstK (Pt n) (meanBall (V n) c) (relLp · (gibbs (V n)) ⊤)
+    (∀ t : ℕ → ℝ, Tendsto (fun n => prof n (t n)) atTop (𝓝 ⊤)) ∧ ¬ HasCutoff prof (fun n => criticalTime n (spectralGap (V n))) ⊤ 0 := by
   sorry
 
-/-- **Moment bounds** (proofs of Theorem 1.1 and Corollaries 1.3, 1.4): every coordinate has variance at most `1/λ₁`, `∫|x-m|² dμ ≤ d/λ₁` (Poincaré inequality on coordinates), `∫|x-x₀|² dμ = |x₀-m|² + ∫|x-m|² dμ`, `W₂(δ_{x₀}, μ)² = ∫|x-x₀|² dμ`, and
-`W₂(δ_{x₀}, μ)² ≤ (c²+1/λ₁)d` on `B(m, c√d)`. No centering `m = 0` is needed. -/
-theorem langevin_moment_bounds {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V)
-    (hp : IsProbabilityMeasure (gibbs V)) (hV : RigidCurvature V) :
+/-- **Moment bounds** (proofs of Theorem 1.1 and Corollaries 1.3, 1.4): every coordinate has variance at most `1/λ₁`, `∫|x-m|² dμ ≤ d/λ₁` (Poincaré inequality on coordinates), `∫|x-x₀|² dμ = |x₀-m|² + ∫|x-m|² dμ`, `W₂(δ_{x₀}, μ)² = ∫|x-x₀|² dμ`, and `W₂(δ_{x₀}, μ)² ≤ (c²+1/λ₁)d` on `B(m, c√d)`. No centering `m = 0` is needed. -/
+theorem langevin_moment_bounds {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V) (hp : IsProbabilityMeasure (gibbs V)) (hV : RigidCurvature V) :
     let m := ∫ x, x ∂gibbs V
-    (∀ i : Fin d, variance (fun x : Rd d => x i) (gibbs V) ≤
-        1 / spectralGap V) ∧
-      ∫ x, ‖x - m‖ ^ 2 ∂gibbs V ≤ d / spectralGap V ∧
-      (∀ x₀, ∫ x, ‖x - x₀‖ ^ 2 ∂gibbs V =
-        ‖x₀ - m‖ ^ 2 + ∫ x, ‖x - m‖ ^ 2 ∂gibbs V) ∧
-      (∀ x₀, wasserstein2 (Measure.dirac x₀) (gibbs V) ^ 2 =
-        ENNReal.ofReal (∫ x, ‖x - x₀‖ ^ 2 ∂gibbs V)) ∧
-      ∀ c : ℝ, 0 ≤ c → ∀ x₀ ∈ meanBall V c,
-        wasserstein2 (Measure.dirac x₀) (gibbs V) ^ 2 ≤
-          ENNReal.ofReal ((c ^ 2 + 1 / spectralGap V) * d) := by
+    (∀ i : Fin d, variance (fun x : Rd d => x i) (gibbs V) ≤ 1 / spectralGap V) ∧ ∫ x, ‖x - m‖ ^ 2 ∂gibbs V ≤ d / spectralGap V ∧
+      (∀ x₀, ∫ x, ‖x - x₀‖ ^ 2 ∂gibbs V = ‖x₀ - m‖ ^ 2 + ∫ x, ‖x - m‖ ^ 2 ∂gibbs V) ∧ (∀ x₀, wasserstein2 (Measure.dirac x₀) (gibbs V) ^ 2 =
+      ENNReal.ofReal (∫ x, ‖x - x₀‖ ^ 2 ∂gibbs V)) ∧ ∀ c : ℝ, 0 ≤ c → ∀ x₀ ∈ meanBall V c, wasserstein2 (Measure.dirac x₀) (gibbs V) ^ 2 ≤
+      ENNReal.ofReal ((c ^ 2 + 1 / spectralGap V) * d) := by
   sorry
 
 /-- **Supremum of `Λ` on balls** (proof of Theorem 1.1, ball refinement, and Corollary 1.3): `Λ(x₀) ≤ λ₁|x₀-m|²`, `sup_{|x-m| ≤ R} Λ = λ₁R²` and `sup_{x ∈ B(m,c√d)} Λ = λ₁c²d`. -/
-theorem sup_eigenLambda_ball {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V)
-    (hp : IsProbabilityMeasure (gibbs V)) (hV : RigidCurvature V) :
+theorem sup_eigenLambda_ball {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V) (hp : IsProbabilityMeasure (gibbs V)) (hV : RigidCurvature V) :
     let m := ∫ x, x ∂gibbs V
-    (∀ x₀, eigenLambda V x₀ ≤
-        ENNReal.ofReal (spectralGap V * ‖x₀ - m‖ ^ 2)) ∧
-      (∀ R : ℝ, 0 ≤ R → ⨆ x₀ ∈ Metric.closedBall m R, eigenLambda V x₀ =
-        ENNReal.ofReal (spectralGap V * R ^ 2)) ∧
-      ∀ c : ℝ, 0 ≤ c → ⨆ x₀ ∈ meanBall V c, eigenLambda V x₀ =
-        ENNReal.ofReal (spectralGap V * c ^ 2 * d) := by
+    (∀ x₀, eigenLambda V x₀ ≤ ENNReal.ofReal (spectralGap V * ‖x₀ - m‖ ^ 2)) ∧ (∀ R : ℝ, 0 ≤ R → ⨆ x₀ ∈ Metric.closedBall m R, eigenLambda V x₀ =
+      ENNReal.ofReal (spectralGap V * R ^ 2)) ∧ ∀ c : ℝ, 0 ≤ c → ⨆ x₀ ∈ meanBall V c, eigenLambda V x₀ = ENNReal.ofReal (spectralGap V * c ^ 2 * d) := by
   sorry
 
-/-- **Wasserstein contraction for arbitrary initial laws**: `W₂(ν₁Pₜ, ν₂Pₜ) ≤ e^{-ρt} W₂(ν₁, ν₂)` under `Hess V ≥ ρ I`, `ρ ≥ 0`; kernel form, `V` is `C^∞`. -/
+/-- **Wasserstein contraction for arbitrary initial laws**: `W₂(ν₁Pₜ, ν₂Pₜ) ≤ e^{-ρt} W₂(ν₁, ν₂)` under `Hess V ≥ ρ I`, `ρ ≥ 0`; kernel form. -/
 theorem langevin_w2_contraction {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
-    (hL : IsEuclideanLangevin V Pt) {ρ : ℝ} (hρ : 0 ≤ ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (ν₁ ν₂ : Measure (Rd d)) [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂] (t : ℝ≥0) :
-    wasserstein2 (ν₁.bind (Pt t)) (ν₂.bind (Pt t)) ≤ ENNReal.ofReal (Real.exp (-ρ * t)) * wasserstein2 ν₁ ν₂ := by
+  (hL : IsEuclideanLangevin V Pt) {ρ : ℝ} (hρ : 0 ≤ ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
+  (ν₁ ν₂ : Measure (Rd d)) [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂] (t : ℝ≥0) :
+  wasserstein2 (ν₁.bind (Pt t)) (ν₂.bind (Pt t)) ≤ ENNReal.ofReal (Real.exp (-ρ * t)) * wasserstein2 ν₁ ν₂ := by
   sorry
 
-/-- **Entropy decay and regularization** (eq. expdecH, HWsmallt, HtWX0, CKP, Fisher; proof of Corollary 1.4) under `Hess V ≥ ρ I`, `ρ > 0`, for an arbitrary initial law `ν`, `μ_t = ν.bind (Pt t)`; kernel form. Amendments: `0 < d`; `V` is `C^∞`. The
-constant in (HWsmallt) is exactly the printed one. -/
-theorem langevin_entropy_decay {d : ℕ} {V : Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
-    (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
-    (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :
+/-- **Entropy decay and regularization** (eq. expdecH, HWsmallt, HtWX0, CKP, Fisher; proof of Corollary 1.4) under `Hess V ≥ ρ I`, `ρ > 0`, for an arbitrary initial law `ν`, `μ_t = ν.bind (Pt t)`; kernel form. Amendment: `0 < d`. The constant in (HWsmallt) is exactly the printed one. -/
+theorem langevin_entropy_decay {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
+  (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :
     let H := fun t : ℝ≥0 => InformationTheory.klDiv (ν.bind (Pt t)) (gibbs V)
     let I := fun t : ℝ≥0 => fisherInfo V (ν.bind (Pt t))
     let W := wasserstein2 ν (gibbs V) ^ 2
-    (∀ s t : ℝ≥0, s ≤ t → H t ≤ ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - s))) * H s) ∧
-      (∀ t : ℝ≥0, 0 < t →
-        H t ≤ ENNReal.ofReal (ρ * Real.exp (-2 * ρ * t) / (1 - Real.exp (-2 * ρ * t))) * W ∧
-        ENNReal.ofReal (ρ * Real.exp (-2 * ρ * t) / (1 - Real.exp (-2 * ρ * t))) * W ≤
-          ENNReal.ofReal (1 / (2 * (t : ℝ))) * W) ∧
-      (∀ t : ℝ≥0, 1 ≤ t →
-        2 * H t ≤ ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - 1))) * W ∧
-        ENNReal.ofReal (tvDist (ν.bind (Pt t)) (gibbs V) ^ 2) ≤
-          ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - 1)) / 4) * W) ∧
-      (∀ s t : ℝ≥0, s ≤ t → I t ≤ I s) ∧
-      (∀ s t : ℝ≥0, 0 < t → I (s + t) ≤ H s / ENNReal.ofReal t) ∧
-      (∀ t₀ t₁ : ℝ≥0, 1 ≤ t₀ → t₀ < t₁ →
-        I t₁ ≤ ENNReal.ofReal (Real.exp (-2 * ρ * ((t₀ : ℝ) - 1)) / (2 * ((t₁ : ℝ) - t₀))) * W) := by
+    (∀ s t : ℝ≥0, s ≤ t → H t ≤ ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - s))) * H s) ∧ (∀ t : ℝ≥0, 0 < t →
+      H t ≤ ENNReal.ofReal (ρ * Real.exp (-2 * ρ * t) / (1 - Real.exp (-2 * ρ * t))) * W ∧
+      ENNReal.ofReal (ρ * Real.exp (-2 * ρ * t) / (1 - Real.exp (-2 * ρ * t))) * W ≤ ENNReal.ofReal (1 / (2 * (t : ℝ))) * W) ∧ (∀ t : ℝ≥0, 1 ≤ t →
+      2 * H t ≤ ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - 1))) * W ∧ ENNReal.ofReal (tvDist (ν.bind (Pt t)) (gibbs V) ^ 2) ≤
+      ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - 1)) / 4) * W) ∧ (∀ s t : ℝ≥0, s ≤ t → I t ≤ I s) ∧
+      (∀ s t : ℝ≥0, 0 < t → I (s + t) ≤ H s / ENNReal.ofReal t) ∧ (∀ t₀ t₁ : ℝ≥0, 1 ≤ t₀ → t₀ < t₁ →
+      I t₁ ≤ ENNReal.ofReal (Real.exp (-2 * ρ * ((t₀ : ℝ) - 1)) / (2 * ((t₁ : ℝ) - t₀))) * W) := by
   sorry
 
-/-- **Fisher information decay** (eq. expdecI): under `Hess V ≥ ρ I`, `ρ > 0`, for every initial law `ν` (`I(ν) = +∞` allowed), `I(μ_t) ≤ e^{-2ρ(t-s)} I(μ_s)`, `s ≤ t`, `μ_t = ν.bind (Pt t)`; kernel form. Amendment: `V` is `C^∞`. -/
+/-- **Fisher information decay** (eq. expdecI): under `Hess V ≥ ρ I`, `ρ > 0`, for every initial law `ν` (`I(ν) = +∞` allowed), `I(μ_t) ≤ e^{-2ρ(t-s)} I(μ_s)`, `s ≤ t`, `μ_t = ν.bind (Pt t)`; kernel form. -/
 theorem langevin_fisher_decay {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
-    {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (ν : Measure (Rd d)) [IsProbabilityMeasure ν] : ∀ s t : ℝ≥0, s ≤ t → fisherInfo V (ν.bind (Pt t)) ≤
-        ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - s))) * fisherInfo V (ν.bind (Pt s)) := by
+  {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
+  (ν : Measure (Rd d)) [IsProbabilityMeasure ν] : ∀ s t : ℝ≥0, s ≤ t → fisherInfo V (ν.bind (Pt t)) ≤
+  ENNReal.ofReal (Real.exp (-2 * ρ * ((t : ℝ) - s))) * fisherInfo V (ν.bind (Pt s)) := by
   sorry
 
-/-- **Upper Dini form of `∂ₜ I ≤ -2ρ I`** (before eq. expdecI), kernel form: if `I(μ_t) < ∞`, then eventually as `h → 0+`, `(I(μ_{t+h}) - I(μ_t))/h ≤ -2ρ I(μ_t) + ε`. Flag: on `toReal` at times with `I(μ_t) ≠ ∞`; no derivative is claimed. Amendment:
-`V` is `C^∞`. -/
+/-- **Upper Dini form of `∂ₜ I ≤ -2ρ I`** (before eq. expdecI), kernel form: if `I(μ_t) < ∞`, then eventually as `h → 0+`, `(I(μ_{t+h}) - I(μ_t))/h ≤ -2ρ I(μ_t) + ε`. Flag: on `toReal` at times with `I(μ_t) ≠ ∞`; no derivative is claimed. -/
 theorem langevin_fisher_dini {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
-    {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (ν : Measure (Rd d)) [IsProbabilityMeasure ν] (t : ℝ≥0) (ht : fisherInfo V (ν.bind (Pt t)) ≠ ⊤) (ε : ℝ) (hε : 0 < ε) :
-    ∀ᶠ h in 𝓝[>] (0 : ℝ), ((fisherInfo V (ν.bind (Pt (t + h.toNNReal)))).toReal - (fisherInfo V (ν.bind (Pt t))).toReal) / h ≤
-        -2 * ρ * (fisherInfo V (ν.bind (Pt t))).toReal + ε := by
+  {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
+  (ν : Measure (Rd d)) [IsProbabilityMeasure ν] (t : ℝ≥0) (ht : fisherInfo V (ν.bind (Pt t)) ≠ ⊤) (ε : ℝ) (hε : 0 < ε) :
+  ∀ᶠ h in 𝓝[>] (0 : ℝ), ((fisherInfo V (ν.bind (Pt (t + h.toNNReal)))).toReal - (fisherInfo V (ν.bind (Pt t))).toReal) / h ≤
+  -2 * ρ * (fisherInfo V (ν.bind (Pt t))).toReal + ε := by
   sorry
 
-/-- **Integrated de Bruijn inequality** (inequality half of eq. HI; equality is not claimed), under `Hess V ≥ ρ I`, `ρ > 0`, kernel form, `μ_r = ν.bind (Pt r)`: if `H(μ_a | μ) < ∞` for some `a < s`, then `∫_s^t I(μ_r) dr + H(μ_t) ≤ H(μ_s)` for `s <
-t`. -/
-theorem langevin_dissipation_ge_K' {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
-    {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (ν : Measure (Rd d)) [IsProbabilityMeasure ν] {a s t : ℝ≥0}
-    (hfin : InformationTheory.klDiv (ν.bind (Pt a)) (gibbs V) ≠ ⊤) (has : a < s) (hst : s < t) :
-    (∫⁻ r in Ioc (s : ℝ) t, fisherInfo V (ν.bind (Pt r.toNNReal))) + InformationTheory.klDiv (ν.bind (Pt t)) (gibbs V) ≤
-      InformationTheory.klDiv (ν.bind (Pt s)) (gibbs V) := by
+/-- **Integrated de Bruijn identity** (eq. HI), under `Hess V ≥ ρ I`, `ρ > 0`, kernel form, `μ_r = ν.bind (Pt r)`: if `H(μ_a | μ) < ∞` for some `a < s`, then `∫_s^t I(μ_r) dr + H(μ_t) = H(μ_s)` for `s < t`. -/
+theorem langevin_dissipation_eq_K' {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
+  {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (ν : Measure (Rd d)) [IsProbabilityMeasure ν] {a s t : ℝ≥0}
+  (hfin : InformationTheory.klDiv (ν.bind (Pt a)) (gibbs V) ≠ ⊤) (has : a < s) (hst : s < t) :
+  (∫⁻ r in Ioc (s : ℝ) t, fisherInfo V (ν.bind (Pt r.toNNReal))) + InformationTheory.klDiv (ν.bind (Pt t)) (gibbs V) =
+  InformationTheory.klDiv (ν.bind (Pt s)) (gibbs V) := by
   sorry
 
-/-- **Integrated de Bruijn inequality for a Dirac initial law** (the case of eq. HI with `H(δ|μ) = ∞`): for every `x₀` and `0 < s < t`, `∫_s^t I(Pᵣ(x₀,·)) dr + H(Pₜ(x₀,·)) ≤ H(Pₛ(x₀,·))`. -/
-theorem langevin_dissipation_dirac_K {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
-    {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-    (x₀ : Rd d) {s t : ℝ≥0} (hs : 0 < s) (hst : s < t) :
-    (∫⁻ r in Ioc (s : ℝ) t, fisherInfo V (Pt r.toNNReal x₀)) + InformationTheory.klDiv (Pt t x₀) (gibbs V) ≤
-      InformationTheory.klDiv (Pt s x₀) (gibbs V) := by
+/-- **Integrated de Bruijn identity for a Dirac initial law** (the case of eq. HI with `H(δ|μ) = ∞`): for every `x₀` and `0 < s < t`, `∫_s^t I(Pᵣ(x₀,·)) dr + H(Pₜ(x₀,·)) = H(Pₛ(x₀,·))`. -/
+theorem langevin_dissipation_eq_dirac_K {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
+  {ρ : ℝ} (hρ : 0 < ρ) (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (x₀ : Rd d) {s t : ℝ≥0} (hs : 0 < s) (hst : s < t) :
+  (∫⁻ r in Ioc (s : ℝ) t, fisherInfo V (Pt r.toNNReal x₀)) + InformationTheory.klDiv (Pt t x₀) (gibbs V) = InformationTheory.klDiv (Pt s x₀) (gibbs V) := by
   sorry
 
 /-- **Pinsker / Csiszár–Kullback–Pinsker** (eq. CKP): `TV(μ,ν)² ≤ H(ν | μ)/2`. -/
 theorem pinsker_tvDist {α : Type*} [MeasurableSpace α] (μ ν : Measure α) [IsProbabilityMeasure μ] [IsProbabilityMeasure ν] :
-    ENNReal.ofReal (tvDist ν μ ^ 2) ≤ InformationTheory.klDiv ν μ / 2 := by
+  ENNReal.ofReal (tvDist ν μ ^ 2) ≤ InformationTheory.klDiv ν μ / 2 := by
   sorry
 
 /-- **Talagrand** `ρ W₂(ν,μ)² ≤ 2 H(ν | μ)` and **logarithmic Sobolev** `H(ν | μ) ≤ I(ν | μ)/(2ρ)` (eq. LSI) under `Hess V ≥ ρ I`, for every probability law `ν`. Amendment: `0 < d`. -/
-theorem talagrand_logSobolev {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V)
-    (hp : IsProbabilityMeasure (gibbs V)) (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
-    (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :
-    ENNReal.ofReal ρ * wasserstein2 ν (gibbs V) ^ 2 ≤ 2 * InformationTheory.klDiv ν (gibbs V) ∧
-      InformationTheory.klDiv ν (gibbs V) ≤ fisherInfo V ν / ENNReal.ofReal (2 * ρ) := by
+theorem talagrand_logSobolev {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V) (hp : IsProbabilityMeasure (gibbs V)) (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
+  (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (ν : Measure (Rd d)) [IsProbabilityMeasure ν] :
+  ENNReal.ofReal ρ * wasserstein2 ν (gibbs V) ^ 2 ≤ 2 * InformationTheory.klDiv ν (gibbs V) ∧
+  InformationTheory.klDiv ν (gibbs V) ≤ fisherInfo V ν / ENNReal.ofReal (2 * ρ) := by
   sorry
 
 /-- The open convex Weyl chamber `{x₁ > ⋯ > x_d}`. -/
@@ -738,24 +621,29 @@ def chamber (d : ℕ) : Set (Rd d) := {x | ∀ i j : Fin d, i < j → x j < x i}
 
 /-- The Dyson–OU Gibbs probability `e^{-V} 1_chamber dx / Z`, `V(x) = ρ|x|²/2 - β ∑_{i<j} log(xᵢ - xⱼ)`, `β ≥ 0` (`V = +∞` off the chamber). -/
 def dysonProb (d : ℕ) (ρ β : ℝ) : Measure (Rd d) :=
-  let m := (volume.restrict (chamber d)).withDensity fun x => ENNReal.ofReal
-    (Real.exp (-(ρ / 2 * ‖x‖ ^ 2 + ∑ i, ∑ j with i < j, -β * Real.log (x i - x j))))
+  let m := (volume.restrict (chamber d)).withDensity fun x => ENNReal.ofReal (Real.exp (-(ρ / 2 * ‖x‖ ^ 2 + ∑ i, ∑ j with i < j, -β * Real.log (x i - x j))))
   (m univ)⁻¹ • m
 
-/-- **Dyson–OU on the Weyl chamber, static statement** (the Dyson example): for `ρ > 0`, `β ≥ 0`, `d ≥ 1`, `μ = dysonProb d ρ β` is a probability measure; the chamber is open and convex and `V - ρ|x|²/2` is convex on it; `h(x) = ∑ xᵢ` satisfies `𝓛h =
--ρ h` on the chamber and the weak Neumann form `∫⟨∇h,∇φ⟩dμ = ρ∫hφ dμ` for all test functions `φ`; the Poincaré inequality holds with constant `1/ρ`; and `h ∈ L²(μ)` is non-constant with `Var h = ρ⁻¹ ∫|∇h|² dμ`, so the optimal Poincaré constant over
-bounded smooth Lipschitz test functions is `1/ρ`, with `h` extremal (in the closure sense: `h` is unbounded, its truncations are test functions). The Dyson–OU process and the identification with the spectral gap `λ₁` are not claimed. -/
+/-- **Dyson–OU on the Weyl chamber, static statement** (the Dyson example): for `ρ > 0`, `β ≥ 0`, `d ≥ 1`, `μ = dysonProb d ρ β` is a probability measure; the chamber is open and convex and `V - ρ|x|²/2` is convex on it; `h(x) = ∑ xᵢ` satisfies `𝓛h = -ρ h` on the chamber and the weak Neumann form `∫⟨∇h,∇φ⟩dμ = ρ∫hφ dμ` for all test functions `φ`; the Poincaré inequality holds with constant `1/ρ`; and `h ∈ L²(μ)` is non-constant with `Var h = ρ⁻¹ ∫|∇h|² dμ`, so the optimal Poincaré constant over bounded smooth Lipschitz test functions is `1/ρ`, with `h` extremal (in the closure sense: `h` is unbounded, its truncations are test functions). The identification with the spectral gap `λ₁ = ρ` is `dyson_spectralGap`; the Dyson–OU process is not claimed. -/
 theorem dyson_ou_static {d : ℕ} (hd : 0 < d) {ρ β : ℝ} (hρ : 0 < ρ) (hβ : 0 ≤ β) :
-    IsProbabilityMeasure (dysonProb d ρ β) ∧ IsOpen (chamber d) ∧ Convex ℝ (chamber d) ∧
-    ConvexOn ℝ (chamber d) (fun x => ∑ i, ∑ j with i < j, -β * Real.log (x i - x j)) ∧
-    (∀ x ∈ chamber d, generator (fun x => ρ / 2 * ‖x‖ ^ 2 + ∑ i, ∑ j with i < j, -β * Real.log (x i - x j))
-        (fun x => ∑ i, x i) x = -ρ * ∑ i, x i) ∧
-    (∀ φ, IsTestFunction φ → ∫ x, inner ℝ (gradient (fun x : Rd d => ∑ i, x i) x) (gradient φ x) ∂dysonProb d ρ β =
-        ρ * ∫ x, (∑ i, x i) * φ x ∂dysonProb d ρ β) ∧
-    (∀ f, IsTestFunction f → variance f (dysonProb d ρ β) ≤ ρ⁻¹ * ∫ x, ‖gradient f x‖ ^ 2 ∂dysonProb d ρ β) ∧
-    (MemLp (fun x : Rd d => ∑ i, x i) 2 (dysonProb d ρ β) ∧ 0 < variance (fun x : Rd d => ∑ i, x i) (dysonProb d ρ β) ∧
-      variance (fun x : Rd d => ∑ i, x i) (dysonProb d ρ β) =
-        ρ⁻¹ * ∫ x, ‖gradient (fun x : Rd d => ∑ i, x i) x‖ ^ 2 ∂dysonProb d ρ β) := by
+  IsProbabilityMeasure (dysonProb d ρ β) ∧ IsOpen (chamber d) ∧ Convex ℝ (chamber d) ∧
+  ConvexOn ℝ (chamber d) (fun x => ∑ i, ∑ j with i < j, -β * Real.log (x i - x j)) ∧
+  (∀ x ∈ chamber d, generator (fun x => ρ / 2 * ‖x‖ ^ 2 + ∑ i, ∑ j with i < j, -β * Real.log (x i - x j)) (fun x => ∑ i, x i) x = -ρ * ∑ i, x i) ∧
+  (∀ φ, IsTestFunction φ → ∫ x, inner ℝ (gradient (fun x : Rd d => ∑ i, x i) x) (gradient φ x) ∂dysonProb d ρ β = ρ * ∫ x, (∑ i, x i) * φ x ∂dysonProb d ρ β) ∧
+  (∀ f, IsTestFunction f → variance f (dysonProb d ρ β) ≤ ρ⁻¹ * ∫ x, ‖gradient f x‖ ^ 2 ∂dysonProb d ρ β) ∧
+  (MemLp (fun x : Rd d => ∑ i, x i) 2 (dysonProb d ρ β) ∧ 0 < variance (fun x : Rd d => ∑ i, x i) (dysonProb d ρ β) ∧
+  variance (fun x : Rd d => ∑ i, x i) (dysonProb d ρ β) = ρ⁻¹ * ∫ x, ‖gradient (fun x : Rd d => ∑ i, x i) x‖ ^ 2 ∂dysonProb d ρ β) := by
+  sorry
+
+/-- Spectral gap of the Dyson–OU law: the Rayleigh infimum over `C_c^∞(ℝ^d)` (test functions are not required to vanish on the walls), as `spectralGap`. -/
+def dysonGap (d : ℕ) (ρ β : ℝ) : ℝ := sInf {r : ℝ | ∃ f : Rd d → ℝ, ContDiff ℝ ∞ f ∧ HasCompactSupport f ∧ 0 < variance f (dysonProb d ρ β) ∧
+  r = (∫ x, ‖gradient f x‖ ^ 2 ∂dysonProb d ρ β) / variance f (dysonProb d ρ β)}
+
+/-- **Spectral gap of Dyson–OU** (manuscript, the Dyson example): `λ₁ = ρ` for every `β ≥ 0`, `d ≥ 1`, and `∑ xᵢ` is the `H¹(μ)`-limit of `C_c^∞` test functions (the infimum is attained in the closure sense). -/
+theorem dyson_spectralGap {d : ℕ} (hd : 0 < d) {ρ β : ℝ} (hρ : 0 < ρ) (hβ : 0 ≤ β) :
+  dysonGap d ρ β = ρ ∧ ∃ f : ℕ → Rd d → ℝ, (∀ n, ContDiff ℝ ∞ (f n) ∧ HasCompactSupport (f n) ∧ 0 < variance (f n) (dysonProb d ρ β)) ∧
+  Tendsto (fun n => ∫ x, (f n x - ∑ i, x i) ^ 2 ∂dysonProb d ρ β) atTop (𝓝 0) ∧
+  Tendsto (fun n => ∫ x, ‖gradient (f n) x - gradient (fun y : Rd d => ∑ i, y i) x‖ ^ 2 ∂dysonProb d ρ β) atTop (𝓝 0) := by
   sorry
 
 /-! ## Weighted Riemannian manifolds (Section 1.4)
@@ -775,96 +663,79 @@ variable (F : Type) [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDime
   [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F (fun x : M => TangentSpace 𝓘(ℝ, F) x)]
 
 /-- The Riemannian gradient: the Riesz representative of the differential. -/
-def mgrad (f : M → ℝ) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
-  (InnerProductSpace.toDual ℝ (TangentSpace 𝓘(ℝ, F) x)).symm (mvfderiv 𝓘(ℝ, F) f x)
+def mgrad (f : M → ℝ) (x : M) : TangentSpace 𝓘(ℝ, F) x := (InnerProductSpace.toDual ℝ (TangentSpace 𝓘(ℝ, F) x)).symm (mvfderiv 𝓘(ℝ, F) f x)
 
 /-- The Laplace–Beltrami operator: the trace of the Levi-Civita Hessian `∇(grad f)`. -/
-def mlaplacian (f : M → ℝ) (x : M) : ℝ :=
-  ∑ i, inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x
-      (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i))
-    (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)
+def mlaplacian (f : M → ℝ) (x : M) : ℝ := ∑ i, inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x
+  (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)) (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)
 
 /-- The generator (1.27) `𝓛f = Δf - ⟨∇V, ∇f⟩`. -/
-def mgenerator (V f : M → ℝ) (x : M) : ℝ :=
-  mlaplacian F f x - inner ℝ (mgrad F V x) (mgrad F f x)
+def mgenerator (V f : M → ℝ) (x : M) : ℝ := mlaplacian F f x - inner ℝ (mgrad F V x) (mgrad F f x)
 
 /-- The carré du champ `Γ(f,g) = ⟨∇f, ∇g⟩`. -/
 def carre (f g : M → ℝ) (x : M) : ℝ := inner ℝ (mgrad F f x) (mgrad F g x)
 
 /-- **Operator definition of `Γ`** (Section 1.4): for smooth `f, g`, `Γ(f,g) = (𝓛(fg) - f𝓛g - g𝓛f)/2`; no hypothesis on `V`. -/
 theorem carre_eq_operator {V f g : M → ℝ} (hf : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f) (hg : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ g) (x : M) :
-    carre F f g x = (mgenerator F V (fun y => f y * g y) x - f x * mgenerator F V g x - g x * mgenerator F V f x) / 2 := by
+  carre F f g x = (mgenerator F V (fun y => f y * g y) x - f x * mgenerator F V g x - g x * mgenerator F V f x) / 2 := by
   sorry
 
 /-- **Polarization** for smooth `f, g`: `Γ(f,g) = (Γ(f+g) - Γ(f-g))/4`. -/
 theorem carre_polarization (f g : M → ℝ) (hf : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f) (hg : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ g) (x : M) :
-    carre F f g x = (carre F (fun y => f y + g y) (fun y => f y + g y) x - carre F (fun y => f y - g y) (fun y => f y - g y) x) / 4 := by
+  carre F f g x = (carre F (fun y => f y + g y) (fun y => f y + g y) x - carre F (fun y => f y - g y) (fun y => f y - g y) x) / 4 := by
   sorry
 
 /-- **Chain rule** for `θ ∈ C^∞(ℝ)` and smooth `f`: `𝓛(θ ∘ f) = θ'(f) 𝓛f + θ''(f) Γ(f)`. -/
 theorem generator_comp {V : M → ℝ} {θ : ℝ → ℝ} (hθ : ContDiff ℝ ∞ θ) {f : M → ℝ} (hf : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    mgenerator F V (θ ∘ f) x = deriv θ (f x) * mgenerator F V f x + deriv (deriv θ) (f x) * carre F f f x := by
+  mgenerator F V (θ ∘ f) x = deriv θ (f x) * mgenerator F V f x + deriv (deriv θ) (f x) * carre F f f x := by
   sorry
 
 /-- The iterated carré du champ `Γ₂(f) = ½ 𝓛Γ(f,f) - Γ(f, 𝓛f)`. -/
-def carre2 (V f : M → ℝ) (x : M) : ℝ :=
-  mgenerator F V (carre F f f) x / 2 - carre F f (mgenerator F V f) x
+def carre2 (V f : M → ℝ) (x : M) : ℝ := mgenerator F V (carre F f f) x / 2 - carre F f (mgenerator F V f) x
 
 /-- The Bakry–Émery curvature-dimension condition `CD(ρ,∞)`: `Γ₂(f) ≥ ρ Γ(f)` for every smooth `f` (equivalently `Ric + Hess V ≥ ρ g`). -/
-def CD (ρ : ℝ) (V : M → ℝ) : Prop :=
-  ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → ∀ x, ρ * carre F f f x ≤ carre2 F V f x
+def CD (ρ : ℝ) (V : M → ℝ) : Prop := ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → ∀ x, ρ * carre F f f x ≤ carre2 F V f x
 
-/-- The manuscript's remark "using `α = σ²` and `V/σ²` instead of `V`": `L_σ = σ² 𝓛_{V/σ²}`, so `CD(ρ,∞)` of `L_σ` is `CD(ρ/σ², ∞)` of the unit-temperature generator of the potential `V/σ²` (in the project's Riemannian formulation on flat space),
-again equivalent to `Hess V ≥ ρ`. The smoothness of Mathlib's standard Riemannian metric on `ℝ^d` is taken as an instance argument (it is a proposition, so the statement is about that metric). -/
+/-- The manuscript's remark "using `α = σ²` and `V/σ²` instead of `V`": `L_σ = σ² 𝓛_{V/σ²}`, so `CD(ρ,∞)` of `L_σ` is `CD(ρ/σ², ∞)` of the unit-temperature generator of the potential `V/σ²` (in the project's Riemannian formulation on flat space), again equivalent to `Hess V ≥ ρ`. The smoothness of Mathlib's standard Riemannian metric on `ℝ^d` is taken as an instance argument (it is a proposition, so the statement is about that metric). -/
 theorem temperature_cd {d : ℕ} [IsContMDiffRiemannianBundle 𝓘(ℝ, Rd d) ∞ (Rd d) (fun x : Rd d => TangentSpace 𝓘(ℝ, Rd d) x)]
-    {V : Rd d → ℝ} (hV : ContDiff ℝ ∞ V) {σ : ℝ} (hσ : 0 < σ) (ρ : ℝ) : CD (Rd d) (ρ / σ ^ 2) (fun x => V x / σ ^ 2) ↔
-      ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z := by
+  {V : Rd d → ℝ} (hV : ContDiff ℝ ∞ V) {σ : ℝ} (hσ : 0 < σ) (ρ : ℝ) : CD (Rd d) (ρ / σ ^ 2) (fun x => V x / σ ^ 2) ↔
+  ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z := by
   sorry
 
 /-- `∇_X ∇_Y Z - ∇_Y ∇_X Z - ∇_{[X,Y]} Z` at `x` (the curvature `R(X,Y)Z` for smooth fields). -/
-def mCurv (X Y Z : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
-  CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
-      (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z y (Y y)) x (X x)
-    - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
-      (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z y (X y)) x (Y x)
-    - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z x
-      (VectorField.mlieBracket 𝓘(ℝ, F) X Y x)
+def mCurv (X Y Z : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x := CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
+  (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z y (Y y)) x (X x) - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
+  (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z y (X y)) x (Y x) - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Z x
+  (VectorField.mlieBracket 𝓘(ℝ, F) X Y x)
 
 /-- A smooth extension of `v ∈ T_x M`: constant coordinates in the canonical trivialization at `x`. -/
-def mExt (x : M) (v : TangentSpace 𝓘(ℝ, F) x) : (y : M) → TangentSpace 𝓘(ℝ, F) y :=
-  fun y => (trivializationAt F (TangentSpace 𝓘(ℝ, F)) x).symm y
-    ((trivializationAt F (TangentSpace 𝓘(ℝ, F)) x (Bundle.TotalSpace.mk' F x v)).2)
+def mExt (x : M) (v : TangentSpace 𝓘(ℝ, F) x) : (y : M) → TangentSpace 𝓘(ℝ, F) y := fun y => (trivializationAt F (TangentSpace 𝓘(ℝ, F)) x).symm y
+  ((trivializationAt F (TangentSpace 𝓘(ℝ, F)) x (Bundle.TotalSpace.mk' F x v)).2)
 
 /-- The Ricci tensor `Ric(v,w) = ∑ᵢ ⟨R(eᵢ,v)w, eᵢ⟩` (positive on spheres). -/
-def mRic (x : M) (v w : TangentSpace 𝓘(ℝ, F) x) : ℝ :=
-  ∑ i, inner ℝ (mCurv F (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i))
-      (mExt F x v) (mExt F x w) x) (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)
+def mRic (x : M) (v w : TangentSpace 𝓘(ℝ, F) x) : ℝ := ∑ i, inner ℝ (mCurv F (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i))
+  (mExt F x v) (mExt F x w) x) (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)
 
 /-- The Hessian `Hess f (v,w) = ⟨∇_v ∇f, w⟩`. -/
-def mHess (f : M → ℝ) (x : M) (v w : TangentSpace 𝓘(ℝ, F) x) : ℝ :=
-  inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x v) w
+def mHess (f : M → ℝ) (x : M) (v w : TangentSpace 𝓘(ℝ, F) x) : ℝ := inner ℝ (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x v) w
 
 /-- The squared Hilbert–Schmidt norm `‖Hess f‖² = ∑ᵢ ‖∇_{eᵢ} ∇f‖²`. -/
-def mHessSq (f : M → ℝ) (x : M) : ℝ :=
-  ∑ i, ‖CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x
-    (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)‖ ^ 2
+def mHessSq (f : M → ℝ) (x : M) : ℝ := ∑ i, ‖CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M (mgrad F f) x
+  (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)‖ ^ 2
 
 /-- **Bochner identity** (Section 1.4): `Γ₂(f) = ‖Hess f‖² + Ric(∇f,∇f) + Hess V(∇f,∇f)`, smooth `V`, `f` (scalar form only). -/
 theorem bochner_identity {V f : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V) (hf : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f) (x : M) :
-    carre2 F V f x = mHessSq F f x + (mRic F x (mgrad F f x) (mgrad F f x) + mHess F V x (mgrad F f x) (mgrad F f x)) := by
+  carre2 F V f x = mHessSq F f x + (mRic F x (mgrad F f x) (mgrad F f x) + mHess F V x (mgrad F f x) (mgrad F f x)) := by
   sorry
 
 /-- The second covariant derivative `∇²_{X,Y} u = ∇_X ∇_Y u - ∇_{∇_X Y} u` at `x`. -/
-def mSecondDeriv (u X Y : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
-  CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
-      (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M u y (Y y)) x (X x)
-    - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M u x (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Y x (X x))
+def mSecondDeriv (u X Y : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x := CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M
+  (fun y => CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M u y (Y y)) x (X x)
+  - CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M u x (CovariantDerivative.leviCivitaConnection 𝓘(ℝ, F) M Y x (X x))
 
-/-- The rough Laplacian `tr ∇²u = ∑ᵢ ∇²_{eᵢ,eᵢ} u` of a vector field, computed with the chart-constant extensions `mExt` of an orthonormal basis (mathematically the value does not depend on the frame, since `∇²` is tensorial; this is not asserted
-here). -/
+/-- The rough Laplacian `tr ∇²u = ∑ᵢ ∇²_{eᵢ,eᵢ} u` of a vector field, computed with the chart-constant extensions `mExt` of an orthonormal basis (mathematically the value does not depend on the frame, since `∇²` is tensorial; this is not asserted here). -/
 def mRoughLaplacian (u : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
-  ∑ i, mSecondDeriv F u (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i))
-    (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)) x
+  ∑ i, mSecondDeriv F u (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)) (mExt F x (stdOrthonormalBasis ℝ (TangentSpace 𝓘(ℝ, F) x) i)) x
 
 /-- The Langevin operator on vector fields `𝓛 u = tr ∇²u - ∇_{∇V} u`. -/
 def mVecGenerator (V : M → ℝ) (u : (y : M) → TangentSpace 𝓘(ℝ, F) y) (x : M) : TangentSpace 𝓘(ℝ, F) x :=
@@ -872,122 +743,106 @@ def mVecGenerator (V : M → ℝ) (u : (y : M) → TangentSpace 𝓘(ℝ, F) y) 
 
 /-- **Bochner formula in vector form** (Section 1.4, `∇𝓛 = 𝓛∇ - Hess(V)∇ - Ric(∇,·)`), smooth `V`, `f`, paired with `v ∈ T_xM`: `d(𝓛f)(v) = ⟨𝓛 ∇f, v⟩ - Hess V(∇f, v) - Ric(v, ∇f)`. -/
 theorem bochner_vector {V f : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V) (hf : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f) (x : M) (v : TangentSpace 𝓘(ℝ, F) x) :
-    mvfderiv 𝓘(ℝ, F) (mgenerator F V f) x v =
-      inner ℝ (mVecGenerator F V (mgrad F f) x) v - mHess F V x (mgrad F f x) v - mRic F x v (mgrad F f x) := by
+  mvfderiv 𝓘(ℝ, F) (mgenerator F V f) x v = inner ℝ (mVecGenerator F V (mgrad F f) x) v - mHess F V x (mgrad F f x) v - mRic F x v (mgrad F f x) := by
   sorry
 
 /-- **`CD(ρ,∞)` is `Ric + Hess V ≥ ρ g`** (Section 1.4), for smooth `V`. -/
 theorem CD_iff_ricci {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V) (ρ : ℝ) : CD F ρ V ↔ ∀ (x : M) (v : TangentSpace 𝓘(ℝ, F) x),
-      ρ * ‖v‖ ^ 2 ≤ mRic F x v v + mHess F V x v v := by
+  ρ * ‖v‖ ^ 2 ≤ mRic F x v v + mHess F V x v v := by
   sorry
 
 /-- The Riemannian volume density `√det(gᵢⱼ)` of the inverse of the chart at `x₀`, at the chart point `z`, computed in an orthonormal basis of the model space. -/
-def chartVolumeDensity (x₀ : M) (z : F) : ℝ :=
-  Real.sqrt (Matrix.det (Matrix.of fun i j =>
-    inner ℝ (mfderiv 𝓘(ℝ, F) 𝓘(ℝ, F) (chartAt F x₀).symm z (stdOrthonormalBasis ℝ F i) :
-      TangentSpace 𝓘(ℝ, F) ((chartAt F x₀).symm z))
-      (mfderiv 𝓘(ℝ, F) 𝓘(ℝ, F) (chartAt F x₀).symm z (stdOrthonormalBasis ℝ F j))))
+def chartVolumeDensity (x₀ : M) (z : F) : ℝ := Real.sqrt (Matrix.det (Matrix.of fun i j =>
+  inner ℝ (mfderiv 𝓘(ℝ, F) 𝓘(ℝ, F) (chartAt F x₀).symm z (stdOrthonormalBasis ℝ F i) : TangentSpace 𝓘(ℝ, F) ((chartAt F x₀).symm z))
+  (mfderiv 𝓘(ℝ, F) 𝓘(ℝ, F) (chartAt F x₀).symm z (stdOrthonormalBasis ℝ F j))))
 
 /-- `μ = e^{-V} vol_g`: in every chart, `μ` has density `e^{-V} √det(gᵢⱼ)` with respect to Lebesgue measure. -/
-def IsWeightedVolume [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) : Prop :=
-  ∀ x₀ : M, (μ.restrict (chartAt F x₀).source).map (chartAt F x₀) =
-    (volume.restrict (chartAt F x₀).target).withDensity fun z =>
-      ENNReal.ofReal (Real.exp (-V ((chartAt F x₀).symm z)) * chartVolumeDensity F x₀ z)
+def IsWeightedVolume [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) : Prop := ∀ x₀ : M, (μ.restrict (chartAt F x₀).source).map (chartAt F x₀) =
+  (volume.restrict (chartAt F x₀).target).withDensity fun z => ENNReal.ofReal (Real.exp (-V ((chartAt F x₀).symm z)) * chartVolumeDensity F x₀ z)
 
 /-- The spectral gap of `-𝓛` in `L²(μ)` (optimal Poincaré constant over smooth compactly supported test functions). -/
-def mSpectralGap [MeasurableSpace M] (μ : Measure M) : ℝ :=
-  sInf {r : ℝ | ∃ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f ∧ HasCompactSupport f ∧
-    0 < variance f μ ∧ r = (∫ x, ‖mgrad F f x‖ ^ 2 ∂μ) / variance f μ}
+def mSpectralGap [MeasurableSpace M] (μ : Measure M) : ℝ := sInf {r : ℝ | ∃ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f ∧ HasCompactSupport f ∧
+  0 < variance f μ ∧ r = (∫ x, ‖mgrad F f x‖ ^ 2 ∂μ) / variance f μ}
 
 /-- Smooth `L²(μ)` eigenfunctions of `-𝓛` with eigenvalue `lam`. -/
-def IsMEigenfunction [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) (lam : ℝ) (f : M → ℝ) :
-    Prop :=
+def IsMEigenfunction [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) (lam : ℝ) (f : M → ℝ) : Prop :=
   ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f ∧ MemLp f 2 μ ∧ ∀ x, mgenerator F V f x = -lam * f x
 
 /-- `k₁ = dim E₁`, `E₁ ⊆ L²(μ)` the eigenspace of `-𝓛` for `λ₁`. -/
-def mFirstEigenDim [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) : ℕ :=
-  Module.finrank ℝ (Submodule.span ℝ
-    {u : M →₂[μ] ℝ | ∃ f, IsMEigenfunction F μ V (mSpectralGap F μ) f ∧ f =ᵐ[μ] u})
+def mFirstEigenDim [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) : ℕ := Module.finrank ℝ (Submodule.span ℝ
+  {u : M →₂[μ] ℝ | ∃ f, IsMEigenfunction F μ V (mSpectralGap F μ) f ∧ f =ᵐ[μ] u})
 
 /-- `Λ(x) = sup_{T ∈ 𝕊_{F₁}} |T(x)|²` (Definition 1.8), the supremum over multi-eigenfunctions `T = (f₁,…,f_{k₁})` with orthonormal coordinates in `E₁`. -/
-def mLambda [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) (x : M) : ℝ≥0∞ :=
-  ⨆ (T : Fin (mFirstEigenDim F μ V) → M → ℝ)
-    (_ : (∀ i, IsMEigenfunction F μ V (mSpectralGap F μ) (T i)) ∧
-      ∀ i j, ∫ y, T i y * T j y ∂μ = if i = j then 1 else 0),
-    ENNReal.ofReal (∑ i, T i x ^ 2)
+def mLambda [MeasurableSpace M] (μ : Measure M) (V : M → ℝ) (x : M) : ℝ≥0∞ := ⨆ (T : Fin (mFirstEigenDim F μ V) → M → ℝ)
+  (_ : (∀ i, IsMEigenfunction F μ V (mSpectralGap F μ) (T i)) ∧ ∀ i j, ∫ y, T i y * T j y ∂μ = if i = j then 1 else 0), ENNReal.ofReal (∑ i, T i x ^ 2)
 
-/-- The diffusion (1.26) with generator `𝓛`, through its transition kernels `Pₜ(x, ·) = Law(Xₜ)` from `X₀ = x`: a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for smooth compactly supported `f`. For a smooth `V`
-on a complete connected manifold with `IsWeightedVolume F μ V` (in particular under the standing hypotheses of the Riemannian theorems; neither `CD` nor `ρ > 0` is needed for this) there is exactly one such semigroup, the minimal and conservative
-diffusion; this is proved in the formalization (`Riemann/DiffKer*`, `DiffPerron*`: `isDiffusionSemigroup_Kk` and `bridge_final`) and not assumed. -/
-def IsDiffusionSemigroup [MeasurableSpace M] (V : M → ℝ) (Pt : ℝ≥0 → Kernel M M) : Prop :=
-  (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
-    ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → HasCompactSupport f → ∀ (x : M) (t : ℝ≥0),
-      ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, mgenerator F V f y ∂Pt s.toNNReal x
+/-- The diffusion (1.26) with generator `𝓛`, through its transition kernels `Pₜ(x, ·) = Law(Xₜ)` from `X₀ = x`: a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for smooth compactly supported `f`. For a smooth `V` on a complete connected manifold with `IsWeightedVolume F μ V` (in particular under the standing hypotheses of the Riemannian theorems; neither `CD` nor `ρ > 0` is needed for this) there is exactly one such semigroup, the minimal and conservative diffusion; this is proved in the formalization (`Riemann/DiffKer*`, `DiffPerron*`: `isDiffusionSemigroup_Kk` and `bridge_final`) and not assumed. -/
+def IsDiffusionSemigroup [MeasurableSpace M] (V : M → ℝ) (Pt : ℝ≥0 → Kernel M M) : Prop := (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
+  ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → HasCompactSupport f → ∀ (x : M) (t : ℝ≥0),
+  ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, mgenerator F V f y ∂Pt s.toNNReal x
+
+/-- `Φ : M → E` is an isometric immersion into the unit sphere of `E`: `‖Φ‖ = 1`, `Φ` is smooth, and the Riemannian inner product on `T_xM` is the pull back of that of `E`. A model of (a manifold isometrically immersed in) the round sphere `S^d ⊂ ℝ^{d+1}`; the actual round sphere is constructed in `Extra/Sphere*`, not in this file. -/
+def IsSphereModel {E : Type} [NormedAddCommGroup E] [InnerProductSpace ℝ E] (Φ : M → E) : Prop := (∀ x, ‖Φ x‖ = 1) ∧ ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, E) ∞ Φ ∧
+  ∀ (x : M) (v w : TangentSpace 𝓘(ℝ, F) x), inner ℝ v w = inner ℝ (mvfderiv 𝓘(ℝ, F) Φ x v) (mvfderiv 𝓘(ℝ, F) Φ x w)
 
 variable [IsRiemannianManifold 𝓘(ℝ, F) M] [ConnectedSpace M] [CompleteSpace M]
   [MeasurableSpace M] [BorelSpace M]
 
-/-- **Lichnerowicz / Bakry–Émery spectral gap bound** (manuscript lines 619–627, `λ₁ ≥ ρ`): on a smooth, connected, complete weighted Riemannian manifold with probability measure `μ = e^{-V} vol`, `CD(ρ,∞)` with `ρ > 0` implies `λ₁ ≥ ρ`. Amendment:
-`0 < finrank ℝ F` is needed (on a point manifold the Rayleigh set is empty, `sInf ∅ = 0`, while every other hypothesis holds). -/
+/-- **Lichnerowicz / Bakry–Émery spectral gap bound** (manuscript lines 619–627, `λ₁ ≥ ρ`): on a smooth, connected, complete weighted Riemannian manifold with probability measure `μ = e^{-V} vol`, `CD(ρ,∞)` with `ρ > 0` implies `λ₁ ≥ ρ`. Amendment: `0 < finrank ℝ F` is needed (on a point manifold the Rayleigh set is empty, `sInf ∅ = 0`, while every other hypothesis holds). -/
 theorem mSpectralGap_ge_of_CD (hF : 0 < Module.finrank ℝ F) {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)
-    {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ)
-    (hCD : CD F ρ V) : ρ ≤ mSpectralGap F μ := by
+  {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ) (hCD : CD F ρ V) : ρ ≤ mSpectralGap F μ := by
   sorry
 
 /-- **Riemannian `k₁` bounds** (Section 1.4): `1 ≤ k₁ ≤ dim M`. Flag: needs `λ₁ = ρ` (`hgap`; on the round sphere `λ₁ = d`, `k₁ = d + 1`). -/
 theorem riemannian_k1_bounds {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)
-    {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ)
-    (hCD : CD F ρ V) (hgap : mSpectralGap F μ = ρ) : 1 ≤ mFirstEigenDim F μ V ∧ mFirstEigenDim F μ V ≤ Module.finrank ℝ F := by
+  {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ)
+  (hCD : CD F ρ V) (hgap : mSpectralGap F μ = ρ) : 1 ≤ mFirstEigenDim F μ V ∧ mFirstEigenDim F μ V ≤ Module.finrank ℝ F := by
   sorry
 
 /-- **Riemannian Poincaré and log-Sobolev** (Section 1.4): under `CD(ρ,∞)`, `ρ > 0`, for smooth compactly supported `f`: `ρ Var_μ f ≤ ∫ |∇f|² dμ` and `Ent_μ(f²) ≤ (2/ρ) ∫ |∇f|² dμ`. -/
 theorem riemannian_poincare_lsi {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)
-    {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ) (hCD : CD F ρ V) :
-    ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → HasCompactSupport f → ρ * variance f μ ≤ ∫ x, ‖mgrad F f x‖ ^ 2 ∂μ ∧
-      entropyOf μ (fun x => f x ^ 2) ≤ 2 / ρ * ∫ x, ‖mgrad F f x‖ ^ 2 ∂μ := by
+  {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ) (hCD : CD F ρ V) :
+  ∀ f : M → ℝ, ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ f → HasCompactSupport f → ρ * variance f μ ≤ ∫ x, ‖mgrad F f x‖ ^ 2 ∂μ ∧
+  entropyOf μ (fun x => f x ^ 2) ≤ 2 / ρ * ∫ x, ‖mgrad F f x‖ ^ 2 ∂μ := by
   sorry
 
 /-- **Theorem 1.9** (Wasserstein estimate on a smooth, connected, complete weighted Riemannian manifold without boundary), including the ball refinement. -/
 theorem riemannian_wasserstein_estimate {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)
-    {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ)
-    (hCD : CD F ρ V) (hgap : mSpectralGap F μ = ρ) {Pt : ℝ≥0 → Kernel M M} (hP : IsDiffusionSemigroup F V Pt) (t : ℝ≥0) :
+  {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ)
+  (hCD : CD F ρ V) (hgap : mSpectralGap F μ = ρ) {Pt : ℝ≥0 → Kernel M M} (hP : IsDiffusionSemigroup F V Pt) (t : ℝ≥0) :
     let q := Real.exp (-2 * ρ * t)
-    let lower := fun Λ : ℝ≥0∞ => ENNReal.ofReal (q / ρ) * Λ +
-      ENNReal.ofReal (mFirstEigenDim F μ V * (1 - Real.sqrt (1 - q)) ^ 2 / ρ)
+    let lower := fun Λ : ℝ≥0∞ => ENNReal.ofReal (q / ρ) * Λ + ENNReal.ofReal (mFirstEigenDim F μ V * (1 - Real.sqrt (1 - q)) ^ 2 / ρ)
     let W := fun x₀ => wasserstein2 (Pt t x₀) μ ^ 2
-    (∀ S : Set M, S.Nonempty →
-      lower (⨆ x₀ ∈ S, mLambda F μ V x₀) ≤ ⨆ x₀ ∈ S, W x₀ ∧
-      ⨆ x₀ ∈ S, W x₀ ≤ ENNReal.ofReal q * ⨆ x₀ ∈ S, ∫⁻ x, edist x₀ x ^ 2 ∂μ) ∧
-    ∀ (m : M) (R : ℝ), 0 ≤ R → mLambda F μ V m = 0 →
-      lower (ENNReal.ofReal (ρ * R ^ 2)) ≤ ⨆ x₀ ∈ {x | edist m x ≤ ENNReal.ofReal R}, W x₀ := by
+    (∀ S : Set M, S.Nonempty → lower (⨆ x₀ ∈ S, mLambda F μ V x₀) ≤ ⨆ x₀ ∈ S, W x₀ ∧ ⨆ x₀ ∈ S, W x₀ ≤ ENNReal.ofReal q * ⨆ x₀ ∈ S, ∫⁻ x, edist x₀ x ^ 2 ∂μ) ∧
+    ∀ (m : M) (R : ℝ), 0 ≤ R → mLambda F μ V m = 0 → lower (ENNReal.ofReal (ρ * R ^ 2)) ≤ ⨆ x₀ ∈ {x | edist m x ≤ ENNReal.ofReal R}, W x₀ := by
   sorry
 
-/-- **Theorem 3.6** (Riemannian splitting with Gaussian factor) and **Lemma 3.7** (rigidity of first eigenfunctions): `(M, g, μ)` is isometric to `(ℝ^{k₁} × M', |·|² ⊕ g', γ_{k₁,ρ⁻¹} ⊗ μ')` with `(M', g', μ')` a connected complete weighted Riemannian
-manifold satisfying `CD(ρ,∞)`; the potential splits as `V∘Φ⁻¹(p,y) = ρ|p|²/2 + V'(y) + (k₁/2) log(2π/ρ)`; through this isometry every `f ∈ E₁` is `f = ⟨a, p⟩`, `p` the projection on the Euclidean factor, with `|a|² = ρ ‖f‖²_{L²(μ)}`, and orthogonal
-eigenfunctions have orthogonal vectors `a`. -/
+/-- **Theorem 3.6** (Riemannian splitting with Gaussian factor) and **Lemma 3.7** (rigidity of first eigenfunctions): `(M, g, μ)` is isometric to `(ℝ^{k₁} × M', |·|² ⊕ g', γ_{k₁,ρ⁻¹} ⊗ μ')` with `(M', g', μ')` a connected complete weighted Riemannian manifold satisfying `CD(ρ,∞)`; the potential splits as `V∘Φ⁻¹(p,y) = ρ|p|²/2 + V'(y) + (k₁/2) log(2π/ρ)`; through this isometry every `f ∈ E₁` is `f = ⟨a, p⟩`, `p` the projection on the Euclidean factor, with `|a|² = ρ ‖f‖²_{L²(μ)}`, and orthogonal eigenfunctions have orthogonal vectors `a`. -/
 theorem riemannian_gaussian_splitting {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, F) 𝓘(ℝ, ℝ) ∞ V)
-    {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ)
-    (hCD : CD F ρ V) (hgap : mSpectralGap F μ = ρ) :
+  {μ : Measure M} [IsProbabilityMeasure μ] (hμ : IsWeightedVolume F μ V) {ρ : ℝ} (hρ : 0 < ρ) (hCD : CD F ρ V) (hgap : mSpectralGap F μ = ρ) :
     let k := mFirstEigenDim F μ V
-    ∃ (F' : Type) (_ : NormedAddCommGroup F') (_ : InnerProductSpace ℝ F')
-      (_ : FiniteDimensional ℝ F') (N : Type) (_ : EMetricSpace N) (_ : ChartedSpace F' N)
+    ∃ (F' : Type) (_ : NormedAddCommGroup F') (_ : InnerProductSpace ℝ F') (_ : FiniteDimensional ℝ F') (N : Type) (_ : EMetricSpace N) (_ : ChartedSpace F' N)
       (_ : IsManifold 𝓘(ℝ, F') ∞ N) (_ : RiemannianBundle (fun y : N => TangentSpace 𝓘(ℝ, F') y))
       (_ : IsContMDiffRiemannianBundle 𝓘(ℝ, F') ∞ F' (fun y : N => TangentSpace 𝓘(ℝ, F') y))
-      (_ : IsRiemannianManifold 𝓘(ℝ, F') N) (_ : MeasurableSpace F') (_ : BorelSpace F')
-      (_ : MeasurableSpace N) (_ : BorelSpace N)
-      (V' : N → ℝ) (μ' : Measure N)
-      (Φ : M ≃ₘ^∞⟮𝓘(ℝ, F), 𝓘(ℝ, Rd k).prod 𝓘(ℝ, F')⟯ Rd k × N),
-      (ContMDiff 𝓘(ℝ, F') 𝓘(ℝ, ℝ) ∞ V' ∧ IsProbabilityMeasure μ' ∧
-        IsWeightedVolume F' μ' V' ∧ CD F' ρ V' ∧ ConnectedSpace N ∧ CompleteSpace N) ∧
+      (_ : IsRiemannianManifold 𝓘(ℝ, F') N) (_ : MeasurableSpace F') (_ : BorelSpace F') (_ : MeasurableSpace N) (_ : BorelSpace N)
+      (V' : N → ℝ) (μ' : Measure N) (Φ : M ≃ₘ^∞⟮𝓘(ℝ, F), 𝓘(ℝ, Rd k).prod 𝓘(ℝ, F')⟯ Rd k × N), (ContMDiff 𝓘(ℝ, F') 𝓘(ℝ, ℝ) ∞ V' ∧ IsProbabilityMeasure μ' ∧
+      IsWeightedVolume F' μ' V' ∧ CD F' ρ V' ∧ ConnectedSpace N ∧ CompleteSpace N) ∧
       (∀ x y, edist x y ^ 2 = edist (Φ x).1 (Φ y).1 ^ 2 + edist (Φ x).2 (Φ y).2 ^ 2) ∧
       (∀ x, V x = ρ * ‖(Φ x).1‖ ^ 2 / 2 + V' (Φ x).2 + k / 2 * Real.log (2 * Real.pi / ρ)) ∧
-      μ.map Φ = (multivariateGaussian 0 (ρ⁻¹ • (1 : Matrix (Fin k) (Fin k) ℝ))).prod μ' ∧
-      (∀ f, IsMEigenfunction F μ V ρ f → ∃ a : Rd k,
-        (∀ x, f x = inner ℝ a (Φ x).1) ∧ ‖a‖ ^ 2 = ρ * ∫ x, f x ^ 2 ∂μ) ∧
-      ∀ f g (a b : Rd k), IsMEigenfunction F μ V ρ f →
-        IsMEigenfunction F μ V ρ g →
-        (∀ x, f x = inner ℝ a (Φ x).1) → (∀ x, g x = inner ℝ b (Φ x).1) →
-        ∫ x, f x * g x ∂μ = 0 → inner ℝ a b = 0 := by
+      μ.map Φ = (multivariateGaussian 0 (ρ⁻¹ • (1 : Matrix (Fin k) (Fin k) ℝ))).prod μ' ∧ (∀ f, IsMEigenfunction F μ V ρ f → ∃ a : Rd k,
+      (∀ x, f x = inner ℝ a (Φ x).1) ∧ ‖a‖ ^ 2 = ρ * ∫ x, f x ^ 2 ∂μ) ∧ ∀ f g (a b : Rd k), IsMEigenfunction F μ V ρ f → IsMEigenfunction F μ V ρ g →
+      (∀ x, f x = inner ℝ a (Φ x).1) → (∀ x, g x = inner ℝ b (Φ x).1) → ∫ x, f x * g x ∂μ = 0 → inner ℝ a b = 0 := by
+  sorry
+
+/-- **Round sphere, curvature** (Section 1.4, "for the unit sphere `ρ = d - 1`"), for every Riemannian `M^d` isometrically immersed in `S^d ⊂ ℝ^{d+1}`: `Ric = (d-1) g`; `CD(d-1,∞)` holds for every constant potential (unweighted Laplace–Beltrami operator); and `d - 1` is optimal (`d ≥ 1`, `M` nonempty). -/
+theorem sphere_curvature {d : ℕ} (hF : Module.finrank ℝ F = d) {Φ : M → EuclideanSpace ℝ (Fin (d + 1))} (hΦ : IsSphereModel F Φ) :
+  (∀ (x : M) (v w : TangentSpace 𝓘(ℝ, F) x), mRic F x v w = ((d : ℝ) - 1) * inner ℝ v w) ∧ (∀ c : ℝ, CD F ((d : ℝ) - 1) (fun _ : M => c)) ∧
+  (1 ≤ d → ∀ (_ : M) (c ρ : ℝ), (d : ℝ) - 1 < ρ → ¬ CD F ρ (fun _ : M => c)) := by
+  sorry
+
+/-- **Round sphere, spectral gap** (manuscript: `λ₁ = d` on the unit sphere), for a compact connected complete `M^d`, `d ≥ 2`, isometrically immersed in `S^d`, with a probability weighted volume `e^{-c} vol_g`: `λ₁ = d`. Since `CD(d-1,∞)` holds (`sphere_curvature`), `λ₁ = d ≠ d - 1`: the sphere is NOT a witness of the hypothesis `hgap : λ₁ = ρ` of `riemannian_k1_bounds` and Theorem 1.9. (That `hgap` cannot be dropped, `¬ (1 ≤ k₁ ≤ d)` on the concrete sphere, is proved in `Extra/Sphere*` but is not a statement here.) -/
+theorem sphere_gap {d : ℕ} [CompactSpace M] (hF : Module.finrank ℝ F = d) (hd : 2 ≤ d) {Φ : M → EuclideanSpace ℝ (Fin (d + 1))} (hΦ : IsSphereModel F Φ)
+  {μ : Measure M} [IsProbabilityMeasure μ] {c : ℝ} (hμ : IsWeightedVolume F μ (fun _ => c)) : mSpectralGap F μ = d := by
   sorry
 
 end Riemannian

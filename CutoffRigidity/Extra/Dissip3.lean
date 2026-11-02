@@ -5,7 +5,7 @@ public import CutoffRigidity.Extra.EuclideanDiffusion
 
 /-! # Entropy dissipation (de Bruijn), kernel form
 
-For the Euclidean Langevin semigroup `Pt` of a smooth potential `V` (`IsEuclideanLangevin V Pt`),
+For the Euclidean Langevin semigroup `Pt` of a smooth potential `V` (`IsEuclideanLangevinInf V Pt`),
 `μ_r := ν.bind (Pt r)`:
 
 * `langevin_dissipation_ge_K` (arbitrary `ν` with `H(ν|μ) < ∞`, `0 < s < t`):
@@ -30,7 +30,7 @@ private theorem hess_nonneg' {d : ℕ} {V : CutCur.Rd d → ℝ} {ρ : ℝ} (hρ
 
 /-- **Integrated de Bruijn inequality, kernel form, arbitrary initial law of finite entropy.** -/
 theorem langevin_dissipation_ge_K {d : ℕ} {V : CutCur.Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevin V Pt)
+    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevinInf V Pt)
     {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (ν : Measure (CutCur.Rd d)) [IsProbabilityMeasure ν]
@@ -53,7 +53,7 @@ theorem langevin_dissipation_ge_K {d : ℕ} {V : CutCur.Rd d → ℝ}
 
 /-- **Full integrated de Bruijn identity, kernel form, compact-perturbation initial densities.** -/
 theorem langevin_dissipation_core_K {d : ℕ} {V g : CutCur.Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevin V Pt)
+    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevinInf V Pt)
     {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (hg : ContDiff ℝ 2 g) (hgc : HasCompactSupport g)

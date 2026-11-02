@@ -17,8 +17,8 @@ public import CutoffRigidity.ConvexInteractionCurvature
 `ou_fisher_information_K`, `ou_mean_start_cutoff_K`, `ou_lp_infty_fails_K`,
 `langevin_entropy_decay_K`, `langevin_fisher_decay_K`, `langevin_fisher_dini_K`,
 `normalization_cutoff_K`, `temperature_cutoff_K`: the Challenge statements with the Brownian
-carrier `(Ω, B, P, X)` replaced by transition kernels `Pt` (`IsEuclideanLangevin`, resp.
-`IsSigmaLangevin` for the `σ`-diffusions). Proofs go through the transfer lemmas of
+carrier `(Ω, B, P, X)` replaced by transition kernels `Pt` (`IsEuclideanLangevinInf`, resp.
+`IsSigmaLangevinInf` for the `σ`-diffusions). Proofs go through the transfer lemmas of
 `EuclideanDiffusion`.
 -/
 
@@ -34,8 +34,8 @@ open scoped ENNReal NNReal ContDiff
 /-- Time change: the `σ`-diffusion `Y_t`, speeded up as `Y_{u/σ²}`, is the Euclidean Langevin
 diffusion for `V/σ²`. -/
 theorem isEuclideanLangevin_of_sigma {d : ℕ} {V : Rd d → ℝ} {σ : ℝ} (hσ : 0 < σ)
-    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (h : IsSigmaLangevin V σ Pt) :
-    IsEuclideanLangevin (fun x => V x / σ ^ 2)
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (h : IsSigmaLangevinInf V σ Pt) :
+    IsEuclideanLangevinInf (fun x => V x / σ ^ 2)
       (fun u => Pt (((σ ^ 2)⁻¹).toNNReal * u)) := by
   obtain ⟨hV, hp, hmk, hsg, hdyn⟩ := h
   have hs2 : 0 < σ ^ 2 := by positivity
@@ -91,7 +91,7 @@ theorem hasCutoff_congr_eventually_iff {p q : ℕ → ℝ → ℝ≥0∞} {t : �
 /-- Carriers, dimension by dimension, for a family of smooth convex Euclidean Langevin potentials. -/
 theorem exists_carriers_of_K {V : ∀ n, CutCur.Rd n → ℝ}
     {Pt : ∀ n, ℝ≥0 → Kernel (CutCur.Rd n) (CutCur.Rd n)}
-    (hL : ∀ n, 0 < n → CutCur.IsEuclideanLangevin (V n) (Pt n))
+    (hL : ∀ n, 0 < n → CutCur.IsEuclideanLangevinInf (V n) (Pt n))
     (hH : ∀ n, 0 < n → ∀ x z : CutCur.Rd n, 0 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z) :
     ∃ (Ω : ℕ → Type) (_ : ∀ n, MeasurableSpace (Ω n)) (B : ∀ n, ℝ≥0 → Ω n → CutCur.Rd n)
       (P : ∀ n, Measure (Ω n)) (X : ∀ n, CutCur.Rd n → ℝ≥0 → Ω n → CutCur.Rd n),
@@ -128,7 +128,7 @@ theorem hess_nonneg_of_rate {d : ℕ} {V : CutCur.Rd d → ℝ} {ρ : ℝ} (hρ 
 /-- **Fisher information and the heat kernel (OU case, manuscript Section 4.1), kernel form.** -/
 theorem ou_fisher_information_K {d : ℕ} {ρ c : ℝ} (hρ : 0 < ρ)
     {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)}
-    (hL : CutCur.IsEuclideanLangevin (fun x : CutCur.Rd d => ρ / 2 * ‖x‖ ^ 2 + c) Pt)
+    (hL : CutCur.IsEuclideanLangevinInf (fun x : CutCur.Rd d => ρ / 2 * ‖x‖ ^ 2 + c) Pt)
     (x₀ : CutCur.Rd d) {t : ℝ} (ht : 0 < t) :
     let V := fun x : CutCur.Rd d => ρ / 2 * ‖x‖ ^ 2 + c
     let μt := Pt t.toNNReal x₀
@@ -152,7 +152,7 @@ theorem ou_fisher_information_K {d : ℕ} {ρ c : ℝ} (hρ : 0 < ρ)
 /-- **OU started from the mean (after Corollary 1.3), kernel form.** -/
 theorem ou_mean_start_cutoff_K {ρ : ℝ} (hρ : 0 < ρ)
     {c : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (CutCur.Rd n) (CutCur.Rd n)} (hL : ∀ n, 0 < n →
-      CutCur.IsEuclideanLangevin (fun x : CutCur.Rd n => ρ / 2 * ‖x‖ ^ 2 + c n) (Pt n)) :
+      CutCur.IsEuclideanLangevinInf (fun x : CutCur.Rd n => ρ / 2 * ‖x‖ ^ 2 + c n) (Pt n)) :
     let V := fun n (x : CutCur.Rd n) => ρ / 2 * ‖x‖ ^ 2 + c n
     let prof := fun n => CutCur.worstK (Pt n) {∫ x, x ∂CutCur.gibbs (V n)}
       (CutCur.wasserstein2 · (CutCur.gibbs (V n)))
@@ -171,7 +171,7 @@ theorem ou_mean_start_cutoff_K {ρ : ℝ} (hρ : 0 < ρ)
 /-- **`p = ∞` fails for the Ornstein-Uhlenbeck process (after (1.25)), kernel form.** -/
 theorem ou_lp_infty_fails_K {ρ : ℝ} (hρ : 0 < ρ)
     {c' : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (CutCur.Rd n) (CutCur.Rd n)} (hL : ∀ n, 0 < n →
-      CutCur.IsEuclideanLangevin (fun x : CutCur.Rd n => ρ / 2 * ‖x‖ ^ 2 + c' n) (Pt n))
+      CutCur.IsEuclideanLangevinInf (fun x : CutCur.Rd n => ρ / 2 * ‖x‖ ^ 2 + c' n) (Pt n))
     {c : ℝ} (hc : 0 < c) :
     let V := fun n (x : CutCur.Rd n) => ρ / 2 * ‖x‖ ^ 2 + c' n
     let prof := fun n => CutCur.worstK (Pt n) (CutCur.meanBall (V n) c)
@@ -194,7 +194,7 @@ theorem ou_lp_infty_fails_K {ρ : ℝ} (hρ : 0 < ρ)
 
 /-- **Entropy decay and regularization, kernel form.** -/
 theorem langevin_entropy_decay_K {d : ℕ} {V : CutCur.Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevin V Pt)
+    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevinInf V Pt)
     (hd : 0 < d) {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (ν : Measure (CutCur.Rd d)) [IsProbabilityMeasure ν] :
@@ -224,7 +224,7 @@ theorem langevin_entropy_decay_K {d : ℕ} {V : CutCur.Rd d → ℝ}
 
 /-- **Fisher information decay, kernel form.** -/
 theorem langevin_fisher_decay_K {d : ℕ} {V : CutCur.Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevin V Pt)
+    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevinInf V Pt)
     {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (ν : Measure (CutCur.Rd d)) [IsProbabilityMeasure ν] :
@@ -241,7 +241,7 @@ theorem langevin_fisher_decay_K {d : ℕ} {V : CutCur.Rd d → ℝ}
 
 /-- **Upper Dini form of `∂ₜ I ≤ -2ρ I`, kernel form.** -/
 theorem langevin_fisher_dini_K {d : ℕ} {V : CutCur.Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevin V Pt)
+    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevinInf V Pt)
     {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (ν : Measure (CutCur.Rd d)) [IsProbabilityMeasure ν] (t : ℝ≥0)
@@ -333,10 +333,10 @@ theorem normalization_cutoff_K {Pt : ∀ n, ℝ≥0 → Kernel (CutCur.Rd n) (Cu
 /-! ### Temperature -/
 
 /-- **Temperature, cutoff (Section "Temperature"), kernel form**: the critical time is free of
-`σ`. The `σ`-diffusions are given by their transition kernels (`IsSigmaLangevin`). -/
+`σ`. The `σ`-diffusions are given by their transition kernels (`IsSigmaLangevinInf`). -/
 theorem temperature_cutoff_K {V : ∀ n, CutCur.Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {ρ : ℕ → ℝ}
     {Pt : ∀ n, ℝ≥0 → Kernel (CutCur.Rd n) (CutCur.Rd n)}
-    (hY : ∀ n, 0 < n → CutCur.IsSigmaLangevin (V n) σ (Pt n))
+    (hY : ∀ n, 0 < n → CutCur.IsSigmaLangevinInf (V n) σ (Pt n))
     (hρ : ∀ n, 0 < n → 0 < ρ n)
     (hHess : ∀ n, 0 < n → ∀ x z : CutCur.Rd n,
       ρ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
@@ -362,7 +362,7 @@ theorem temperature_cutoff_K {V : ∀ n, CutCur.Rd n → ℝ} {σ : ℝ} (hσ : 
   have hs2 : 0 < σ ^ 2 := by positivity
   have hgap' : ∀ n, 0 < n → CutCur.spectralGap (W n) = ρ n / σ ^ 2 := fun n hn => by
     rw [hgap n hn]; field_simp; rfl
-  have hK : CutCur.IsRigidSequenceK W Q := by
+  have hK : CutCur.IsRigidSequenceKInf W Q := by
     refine ⟨fun n hn => ⟨CutCur.isEuclideanLangevin_of_sigma hσ (hY n hn), ?_, ?_⟩, ?_⟩
     · rw [hgap' n hn]; exact div_pos (hρ n hn) hs2
     · rw [hgap' n hn]

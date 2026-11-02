@@ -369,12 +369,12 @@ replaced, under the same names and in the same positions, by kernel statements a
 `langevin_fisher_decay`, `langevin_fisher_dini`, `normalization_cutoff`, `temperature_cutoff`, and (integration 5) `wasserstein_cutoff_weak` (Rem. 3.4), `information_cutoff_weak` (Rem. 3.5), `langevin_w2_contraction`. Brownian motion is no longer a hypothesis of these statements.
 
 New Challenge definitions: `IsEuclideanDiffusion V Pt` (Markov kernels, semigroup law, Kolmogorov/Dynkin identity on `C_c^∞` with generator `Δ - ∇V·∇`), `IsEuclideanLangevin V Pt`
-(`V ∈ C^∞`, probability Gibbs measure, `IsEuclideanDiffusion`), `IsSigmaDiffusion`/`IsSigmaLangevin` (generator `σ²Δ - ∇V·∇`, for the temperature statement), `worstK`, `mixingTimeK`,
+(`V ∈ C²` since round 2, formerly `C^∞`; probability Gibbs measure, `IsEuclideanDiffusion`), `IsSigmaDiffusion`/`IsSigmaLangevin` (generator `σ²Δ - ∇V·∇`, for the temperature statement), `worstK`, `mixingTimeK`,
 `mixingTimeW2K`, `mixingTimeKLK`, `IsRigidSequenceK`. The old `mixingTime`, `mixingTimeW2`, `mixingTimeKL` are no longer used by any Challenge statement: removed from `Challenge.lean`
 and `comparator.json`; they live on in `CutoffRigidity/Paper/CarrierDefs.lean` for the carrier proofs. `worst` and `IsRigidSequence` (no Challenge user after integration 5) moved there too, and `comparator.json` lists 55 definitions. `IsLangevin`, `IsStdBrownian`, `IsLangevinSolution`,
 `IsSDESolution` remain (used by `normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`).
 
-Why `C^∞`. The kernel `Pt` is proved to be unique (`isEuclideanDiffusion_unique`, from the Riemannian `bridge_final`) only for smooth potentials with probability Gibbs measure
+Why `C^∞` (superseded by round 2: see "Round 2" below, the clause is `C²` now). The kernel `Pt` was proved to be unique (`isEuclideanDiffusion_unique`, from the Riemannian `bridge_final`) only for smooth potentials with probability Gibbs measure
 (elliptic regularity of resolvent solutions), so `V` is `C^∞` inside `IsEuclideanLangevin`/`IsSigmaLangevin` (and `W n` in `convex_interaction_cutoff`) instead of `C²`. This is an amendment
 (a smaller class of potentials), flagged in the docstrings and in `HUMAN_REVIEW.md`. Also: in `eigenmap_is_ou` the pathwise statement with a Brownian `β` is replaced by the law form
 `(Pt t x₀).map Tv = 𝒩(e^{-ρt}Tv x₀, (1-e^{-2ρt})I)`. The Brownian setting is recovered by transfer lemmas (`CutoffRigidity/Extra/EuclideanDiffusion.lean`: a Brownian carrier,
@@ -389,7 +389,7 @@ Remaining SDE-level statements (Brownian motion by hypothesis): `normalization_s
 Status: Comparator NOT rerun after this change (the 48-theorem counts are unchanged; the definitions list changed, see `comparator.json`); the 18 kernel statements have had no AI audit and no human review.
 
 The kernel (Brownian-free) statements and the new definitions were audited by two independent AI agents (`verification/audit-extra-K.md`, `audit-extra-L.md`): no defect.
-Trade-off: `C^∞` instead of `C²` for the process statements; the `C²` versions survive only as `*_carrier` theorems, which the Comparator does not check. Not a human review.
+Trade-off of the first version (removed in round 2): `C^∞` instead of `C²` for the process statements. Not a human review.
 
 
 ## Armstrong-method round (1 November 2026): worker/adversary items and nine new statements
@@ -406,4 +406,24 @@ All of this is AI work; no human review. `review.status` stays `unchecked`.
 - Added to `Challenge.lean` (9 theorems, 5 definitions): `isLangevinSolution_map_eq_kernel_of_rigid`, `eigenmap_is_ou_pathwise`, `langevin_dissipation_ge_K'`, `langevin_dissipation_dirac_K`, `dyson_ou_static`, `carre_eq_operator`, `carre_polarization`, `generator_comp`, `bochner_vector`; definitions `chamber`, `dysonProb`, `mSecondDeriv`, `mRoughLaplacian`, `mVecGenerator`.
   Existing statements were reflowed to stay under the 1000-line limit (a script confirmed that all older declarations are unchanged modulo comments and whitespace).
 - AI audit M (`verification/audit-extra-M.md`) found no defect in the nine statements, only remarks (the docstring of the kernel = law theorem now states the `C^∞` amendment; "extremal" for the Dyson statement holds in the closure sense).
-- The Challenge pair now has 57 theorems and 60 definitions; the sandboxed Comparator accepts it (con-ron 91445 declarations, nanoda, Lean kernel; `verification/comparator-sandboxed.log`).
+- After the first Armstrong integration the Challenge pair had 57 theorems and 60 definitions; the sandboxed Comparator accepted it (con-ron 91445 declarations, nanoda, Lean kernel; `verification/comparator-sandboxed.log`).
+
+## Armstrong-method round 2 (1 November 2026): integration of the second set of accepted items
+
+Reports: `extra-status/integration-round2.md` (full account), the worker/adversary reports `c2uniq-*`, `c2sigma-*`, `dissipeq-*`, `dysongap-*`, `sigma-*`, `gaussiso-*`, `rothaus-*`, `sphere-*`. All AI work; no human review; `review.status` stays `unchecked`;
+the AI audit of the new and changed statements is **pending** (not yet run; `verification/AUDIT_BRIEF.md` lists them).
+`Challenge.lean` now has 67 theorems, 67 definitions, 850 lines, 87 KB (limits: 1000 lines, 100 KiB). Existing declarations were reflowed (header and statement lines joined, a script and a kernel-level
+comparison of the type of every declaration of the old and new `Challenge` modules show that only the intended declarations changed).
+
+- `C²` for the Euclidean kernel statements. `IsEuclideanLangevin`, `IsSigmaLangevin` and `W n` of `convex_interaction_cutoff` require `C²` only. Uniqueness for convex `C²` potentials is `euclideanDiffusion_unique_convex` (`Extra/C2Uniq1..7`); the `C²` transfer lemmas and the ports of the 19 kernel theorems
+  are in `Extra/C2Uniq8..12` and `Extra/C2Sigma1,2`, applied directly in `Solution.lean` (`scripts/gen-solution.py`: `C2` list, `TARGET`, `CUSTOM` tables). The older `C^∞` proof modules were not rewritten: they use the copies `IsEuclideanLangevinInf`, `IsRigidSequenceKInf`,
+  `IsSigmaLangevinInf` (`Extra/SmoothLangevin.lean`, a mechanical renaming in 14 files); their `*_K` theorems and `Paper.<name>` aliases remain as smooth-case results and are no longer used by `Solution.lean` except the three OU statements, which go through `Paper.ouInf` (`Paper/ChallengeBridge.lean`).
+- Equality in the integrated de Bruijn identity: `langevin_dissipation_eq_K'`, `langevin_dissipation_eq_dirac_K` (`Extra/DissipEq1..5`, `C2Uniq12`) replace the two inequality statements (same hypotheses).
+- `dyson_spectralGap` with `dysonGap` (`Extra/DysonGap*`): `λ₁ = ρ` and the `H¹` approximation of `∑ xᵢ`. The Dyson–OU process is still not claimed.
+- Gaussian isoperimetry (`Extra/GaussIso*`), QUADRATIC CASE ONLY (`V = ρ|x|²/2 + c`): functional (Bobkov) form and set form (closed neighbourhoods); the open-neighbourhood version is in `Extra` only. General `Hess V ≥ ρ` is not formalized.
+- Rothaus (`Extra/Rothaus*`): `Form`, `Form.Compact`, `Form.optPI`, `Form.optLSI`, `rothaus_alternative_ne`, `two_optPI_le_optLSI`, `finite_rothaus` (stated for an arbitrary `Form` whose domain is all functions and whose energy is the Dirichlet form; bridge `Paper.formToR_finite`).
+  The Orlicz weight `Θ t = t² log(1+t²)` is inlined. The compact-manifold theorem is not proved.
+- Sphere (`Extra/Sphere1..17`, `Item6a`): `IsSphereModel` (the project's `IsIsometricSphereMap`, renamed in the Challenge to avoid an ambiguity with `CutoffRigidity.Extra.IsIsometricSphereMap`), `sphere_curvature`, `sphere_gap`. The concrete `Sph d`, `round_sphere` and `k1_fails` (`hgap` cannot be dropped) are in `Extra` only.
+- `temperature_kernel` (`C2Sigma2`: `temperature_kernel_C2`; the `C^∞` version of `Extra/Sigma.lean` was renamed `temperature_kernel_smooth`).
+- Comparator: the sandboxed run accepts the 67-theorem pair (con-ron 92444 declarations, nanoda, Lean kernel; `verification/comparator-sandboxed.log`). `comparator.json` lists 67 theorems and 66 definitions: Comparator accepts only `defnInfo` constants as definition targets, so the structure `CutCur.Form` is not listed; it is compared exactly (as a non-target dependency of `Form.optPI`, `Form.optLSI`, `Form.Compact` and of the Rothaus statements).
+- Challenge/Solution duplicates removed by renaming in the Extra files: the `gaussianIsoProfile` definition of `GaussIso13` (now the Challenge's) and the namespaces of the Gaussian theorems (`CutoffRigidity.GaussIso`); `C2Sigma1` is now `@[expose]` so that `IsSigmaLangevin2` unfolds to `IsSigmaLangevin`.

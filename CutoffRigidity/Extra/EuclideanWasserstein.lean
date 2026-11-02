@@ -8,7 +8,7 @@ public import CutoffRigidity.Paper.WassersteinCutoff
 /-! # Brownian-free kernel versions of Theorem 1.1, Corollary 1.3 and the W2 contraction
 
 Each statement replaces the Brownian carrier by the transition kernels `Pt` with hypothesis
-`IsEuclideanLangevin` (resp. `IsRigidSequenceK`), and is derived from the Brownian-based
+`IsEuclideanLangevinInf` (resp. `IsRigidSequenceKInf`), and is derived from the Brownian-based
 `Paper` theorem through the transfer lemmas of `EuclideanDiffusion`.
 -/
 
@@ -22,7 +22,7 @@ open scoped ENNReal NNReal Topology
 /-- **Theorem 1.1** (main Wasserstein estimate), kernel form (no Brownian motion). -/
 theorem main_wasserstein_estimate_K {d : ℕ} {V : CutCur.Rd d → ℝ}
     {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)}
-    (hL : CutCur.IsEuclideanLangevin V Pt) (hV : CutCur.RigidCurvature V) (t : ℝ≥0) :
+    (hL : CutCur.IsEuclideanLangevinInf V Pt) (hV : CutCur.RigidCurvature V) (t : ℝ≥0) :
     let gap := CutCur.spectralGap V
     let q := Real.exp (-2 * gap * t)
     let lower := fun Λ : ℝ≥0∞ => ENNReal.ofReal (q / gap) * Λ +
@@ -40,7 +40,7 @@ theorem main_wasserstein_estimate_K {d : ℕ} {V : CutCur.Rd d → ℝ}
 /-- **Corollary 1.3** (Wasserstein cutoff), kernel form (no Brownian motion). -/
 theorem wasserstein_cutoff_K {V : ∀ n, CutCur.Rd n → ℝ}
     {Pt : ∀ n, ℝ≥0 → Kernel (CutCur.Rd n) (CutCur.Rd n)}
-    (h : CutCur.IsRigidSequenceK V Pt) {c : ℝ} (hc : 0 < c) :
+    (h : CutCur.IsRigidSequenceKInf V Pt) {c : ℝ} (hc : 0 < c) :
     CutCur.HasCutoff (fun n => CutCur.worstK (Pt n) (CutCur.meanBall (V n) c)
       (CutCur.wasserstein2 · (CutCur.gibbs (V n))))
       (fun n => CutCur.criticalTime n (CutCur.spectralGap (V n))) ⊤ 0 := by
@@ -53,7 +53,7 @@ theorem wasserstein_cutoff_K {V : ∀ n, CutCur.Rd n → ℝ}
 /-- **Wasserstein contraction**, kernel form (no Brownian motion). -/
 theorem langevin_w2_contraction_K {d : ℕ} {V : CutCur.Rd d → ℝ}
     {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)}
-    (hL : CutCur.IsEuclideanLangevin V Pt) {ρ : ℝ} (hρ : 0 ≤ ρ)
+    (hL : CutCur.IsEuclideanLangevinInf V Pt) {ρ : ℝ} (hρ : 0 ≤ ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (ν₁ ν₂ : Measure (CutCur.Rd d)) [IsProbabilityMeasure ν₁] [IsProbabilityMeasure ν₂]
     (t : ℝ≥0) :

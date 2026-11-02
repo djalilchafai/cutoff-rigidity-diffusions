@@ -11,8 +11,8 @@ public import CutoffRigidity.ConvexInteractionCurvature
 
 Kernel versions `*_K` of `information_cutoff_carrier`, `lp_cutoff_carrier`, `convex_interaction_cutoff_carrier`,
 `product_condition_cutoff_carrier`, `mixing_time_rigid_carrier`, `mixing_time_w2_rigid_carrier`, `mixing_time_kl_rigid_carrier`,
-with the Brownian carrier `(Ω, B, P, X)` replaced by kernels `Pt` (`IsRigidSequenceK`,
-`IsEuclideanLangevin`), proved from the Brownian-based theorems through the transfer lemmas of
+with the Brownian carrier `(Ω, B, P, X)` replaced by kernels `Pt` (`IsRigidSequenceKInf`,
+`IsEuclideanLangevinInf`), proved from the Brownian-based theorems through the transfer lemmas of
 `CutoffRigidity.Extra.EuclideanDiffusion`.
 -/
 
@@ -27,7 +27,7 @@ open scoped ENNReal NNReal Topology Asymptotics ContDiff
 dimensions with `IsLangevin` and the prescribed laws, from convex smooth Euclidean Langevin
 semigroups. -/
 theorem exists_langevinSeq_of_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧
+    (h : ∀ n, 0 < n → IsEuclideanLangevinInf (V n) (Pt n) ∧
       ∀ x z : Rd n, 0 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z) :
     ∃ (Ω : ℕ → Type) (_ : ∀ n, MeasurableSpace (Ω n)) (B : ∀ n, ℝ≥0 → Ω n → Rd n)
       (P : ∀ n, Measure (Ω n)) (X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n),
@@ -48,7 +48,7 @@ theorem exists_langevinSeq_of_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 �
 
 /-- **Corollary 1.4**, kernel form. -/
 theorem information_cutoff_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
+    (h : IsRigidSequenceKInf V Pt)
     (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) :
     let t := fun n => CutCur.criticalTime n (spectralGap (V n))
     let S := fun n => meanBall (V n) c
@@ -64,7 +64,7 @@ theorem information_cutoff_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → 
 
 /-- **Display (1.25)**, kernel form. -/
 theorem lp_cutoff_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
+    (h : IsRigidSequenceKInf V Pt)
     (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
     {c : ℝ} (hc : 0 < c) {p : ℝ≥0∞} (hp : 1 ≤ p) (hpt : p ≠ ⊤) :
     HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c) (relLp · (gibbs (V n)) p))
@@ -78,7 +78,7 @@ theorem convex_interaction_cutoff_K {ρ : ℝ}
     (hρ : 0 < ρ) {W : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
     (hW : ∀ n, 0 < n → ContDiff ℝ ∞ (W n) ∧ ConvexOn ℝ univ (W n) ∧
       ∀ x (s : ℝ), W n (x + s • diagonal n) = W n x)
-    (hL : ∀ n, 0 < n → IsEuclideanLangevin (fun x => ρ / 2 * ‖x‖ ^ 2 + W n x) (Pt n))
+    (hL : ∀ n, 0 < n → IsEuclideanLangevinInf (fun x => ρ / 2 * ‖x‖ ^ 2 + W n x) (Pt n))
     {c : ℝ} (hc : 0 < c) :
     let V := fun n (x : Rd n) => ρ / 2 * ‖x‖ ^ 2 + W n x
     let t := fun n : ℕ => CutCur.criticalTime n ρ
@@ -112,7 +112,7 @@ theorem convex_interaction_cutoff_K {ρ : ℝ}
 theorem product_condition_cutoff_K
     {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
     {κ : ℕ → ℝ} {S : ∀ n, Set (Rd n)} {η : ℝ}
-    (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ 0 < κ n ∧
+    (hL : ∀ n, 0 < n → IsEuclideanLangevinInf (V n) (Pt n) ∧ 0 < κ n ∧
       ∀ x z : Rd n, κ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
     (hS : ∀ n, 0 < n → (S n).Nonempty) (hη : 0 < η) (hη1 : η < 1) :
     let t₀ := fun n => mixingTimeK (Pt n) (gibbs (V n)) (S n) η
@@ -179,7 +179,7 @@ theorem mixing_conclusion_congr {t₁ t₂ : ℕ → ℝ≥0∞} {g : ℕ → �
 
 /-- **Mixing time of rigid sequences**, kernel form. -/
 theorem mixing_time_rigid_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
+    (h : IsRigidSequenceKInf V Pt)
     (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
     {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) (hη1 : η < 1) :
     let t₀ := fun n => mixingTimeK (Pt n) (gibbs (V n)) (meanBall (V n) c) η
@@ -198,7 +198,7 @@ theorem mixing_time_rigid_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → K
 
 /-- **Wasserstein mixing time of rigid sequences**, kernel form. -/
 theorem mixing_time_w2_rigid_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
+    (h : IsRigidSequenceKInf V Pt) {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
     let t₀ := fun n => mixingTimeW2K (Pt n) (gibbs (V n)) (meanBall (V n) c) η
     (∀ᶠ n in atTop, t₀ n < ⊤) ∧
       Tendsto (fun n => (t₀ n).toReal / CutCur.criticalTime n (spectralGap (V n))) atTop (𝓝 1) ∧
@@ -219,7 +219,7 @@ theorem mixing_time_w2_rigid_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 �
 
 /-- **Entropy mixing time of rigid sequences**, kernel form. -/
 theorem mixing_time_kl_rigid_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
+    (h : IsRigidSequenceKInf V Pt)
     (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n))
     {c : ℝ} (hc : 0 < c) {η : ℝ} (hη : 0 < η) :
     let t₀ := fun n => mixingTimeKLK (Pt n) (gibbs (V n)) (meanBall (V n) c) η

@@ -26,7 +26,7 @@ of the first eigenspace is the OU Gaussian `𝒩(e^{-ρt} Tv x₀, (1 - e^{-2ρt
 of the process with generator `ρΔ - ρ y·∇` started at `Tv x₀`. -/
 theorem eigenmap_is_ou_K {d : ℕ} {V : CutCur.Rd d → ℝ}
     {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)}
-    (hL : CutCur.IsEuclideanLangevin V Pt) (hV : CutCur.RigidCurvature V)
+    (hL : CutCur.IsEuclideanLangevinInf V Pt) (hV : CutCur.RigidCurvature V)
     (T : Fin (CutCur.firstEigenDim V) → CutCur.Rd d → ℝ) (hT : CutCur.IsEigenbasis V T) :
     let ρ := CutCur.spectralGap V
     let Tv := fun x => (WithLp.toLp 2 fun i => T i x : CutCur.Rd (CutCur.firstEigenDim V))

@@ -1,6 +1,7 @@
 module
 
 public import CutoffRigidity.Statements
+public import CutoffRigidity.Extra.SmoothLangevin
 public import CutoffRigidity.Paper.CarrierDefs
 public import CutoffRigidity.Riemann.DiffFinal
 public import CutoffRigidity.Riemann.WitnessMain
@@ -10,8 +11,8 @@ public import CutoffRigidity.LangevinDynkin
 
 /-! # Brownian-free Euclidean Langevin setting
 
-Bridge lemmas for the Challenge definitions (`IsEuclideanDiffusion`, `IsEuclideanLangevin`, `worstK`, `mixingTimeK`,
-`mixingTimeW2K`, `mixingTimeKLK`, `IsRigidSequenceK`, now in `Challenge`/`CutoffRigidity.Statements`) replacing the Brownian carrier
+Bridge lemmas for the Challenge definitions (`IsEuclideanDiffusion`, `IsEuclideanLangevinInf`, `worstK`, `mixingTimeK`,
+`mixingTimeW2K`, `mixingTimeKLK`, `IsRigidSequenceKInf`, now in `Challenge`/`CutoffRigidity.Statements`) replacing the Brownian carrier
 `(Ω, B, P, X)` of `IsLangevin` by transition kernels `Pt`: equivalence with the Riemannian
 `IsDiffusionSemigroup` on flat `ℝ^d`, the library `langevinKernel` as a witness, uniqueness for
 `C^∞` potentials, non-vacuity, and the transfer lemmas producing a Brownian carrier whose
@@ -87,9 +88,9 @@ theorem isEuclideanDiffusion_unique {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff 
   rw [Diff.bridge_final (Rd d) hV' hμ (isEuclideanDiffusion_iff.1 h₁) t x,
     Diff.bridge_final (Rd d) hV' hμ (isEuclideanDiffusion_iff.1 h₂) t x]
 
-/-- Uniqueness, `IsEuclideanLangevin` form. -/
+/-- Uniqueness, `IsEuclideanLangevinInf` form. -/
 theorem isEuclideanLangevin_unique {d : ℕ} {V : Rd d → ℝ} {P₁ P₂ : ℝ≥0 → Kernel (Rd d) (Rd d)}
-    (h₁ : IsEuclideanLangevin V P₁) (h₂ : IsEuclideanLangevin V P₂) : ∀ t x, P₁ t x = P₂ t x :=
+    (h₁ : IsEuclideanLangevinInf V P₁) (h₂ : IsEuclideanLangevinInf V P₂) : ∀ t x, P₁ t x = P₂ t x :=
   isEuclideanDiffusion_unique h₁.1 h₁.2.1 h₁.2.2 h₂.2.2
 
 /-- An abstract Euclidean diffusion is the library Langevin kernel (smooth convex potential, any
@@ -109,7 +110,7 @@ Langevin semigroup. -/
 theorem exists_euclideanLangevin {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ ∞ V)
     (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (hp : IsProbabilityMeasure (gibbs V)) :
-    ∃ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsEuclideanLangevin V Pt := by
+    ∃ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsEuclideanLangevinInf V Pt := by
   obtain ⟨Ω, hΩ, P, B, hP, hB⟩ := Paper.exists_stdBrownian d
   have hH : ∀ x z : Rd d, (0 : ℝ) * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z := by
     intro x z; simpa using hHess x z
@@ -121,7 +122,7 @@ theorem exists_euclideanLangevin {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ
 space. -/
 theorem exists_euclideanLangevin_of_smooth {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ ∞ V)
     (hp : IsProbabilityMeasure (gibbs V)) :
-    ∃ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsEuclideanLangevin V Pt := by
+    ∃ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsEuclideanLangevinInf V Pt := by
   have hV' : ContMDiff 𝓘(ℝ, Rd d) 𝓘(ℝ, ℝ) ∞ V := contMDiff_iff_contDiff.2 hV
   have hμ := Riemann.Witness.isWeightedVolume_gibbs V
   exact ⟨Diff.Kk (Rd d) hV' hμ, hV, hp,
@@ -131,7 +132,7 @@ theorem exists_euclideanLangevin_of_smooth {d : ℕ} {V : Rd d → ℝ} (hV : Co
 are a probability space with a standard Brownian motion `B` and a family `X` of solutions of the
 Langevin SDE (`IsLangevin V B P X`) whose one-time laws are the kernels `Pt`. -/
 theorem exists_isLangevin_of_isEuclideanLangevin {d : ℕ} {V : Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt)
+    {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevinInf V Pt)
     (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z) :
     ∃ (Ω : Type) (_ : MeasurableSpace Ω) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω)
       (X : Rd d → ℝ≥0 → Ω → Rd d),
@@ -154,7 +155,7 @@ theorem RigidCurvature.hess_nonneg {d : ℕ} {V : Rd d → ℝ} (h : RigidCurvat
 
 /-- Transfer lemma for the rigid setting (convexity is implied by `RigidCurvature`). -/
 theorem exists_isLangevin_of_rigid {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
-    (hL : IsEuclideanLangevin V Pt) (hR : RigidCurvature V) :
+    (hL : IsEuclideanLangevinInf V Pt) (hR : RigidCurvature V) :
     ∃ (Ω : Type) (_ : MeasurableSpace Ω) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω)
       (X : Rd d → ℝ≥0 → Ω → Rd d),
       IsProbabilityMeasure P ∧ IsLangevin V B P X ∧ ∀ (t : ℝ≥0) (x₀ : Rd d), P.map (X x₀ t) = Pt t x₀ :=
@@ -164,7 +165,7 @@ theorem exists_isLangevin_of_rigid {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 �
 `IsRigidSequence V B P X` is the hypothesis of every sequence theorem of the Challenge, and the
 laws are the given kernels in every positive dimension. -/
 theorem exists_isRigidSequence_of_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt) :
+    (h : IsRigidSequenceKInf V Pt) :
     ∃ (Ω : ℕ → Type) (_ : ∀ n, MeasurableSpace (Ω n)) (B : ∀ n, ℝ≥0 → Ω n → Rd n)
       (P : ∀ n, Measure (Ω n)) (X : ∀ n, Rd n → ℝ≥0 → Ω n → Rd n),
       (∀ n, 0 < n → IsProbabilityMeasure (P n)) ∧ IsRigidSequence V B P X ∧

@@ -6,11 +6,11 @@ public import CutoffRigidity.Paper.ExistsBrownian
 
 /-! # `C²` kernel setting: what is recovered, and the exact remaining gap
 
-`IsEuclideanLangevinC2` is `IsEuclideanLangevin` with `ContDiff ℝ ∞ V` weakened to `ContDiff ℝ 2 V`.
+`IsEuclideanLangevinC2` is `IsEuclideanLangevinInf` with `ContDiff ℝ ∞ V` weakened to `ContDiff ℝ 2 V`.
 
 * Unconditional: for a smooth potential the two notions coincide; in particular for the quadratic
   potentials `ρ/2 ‖x‖² + c` of the Ornstein-Uhlenbeck statements the `C^∞` clause of
-  `IsEuclideanLangevin` is automatic, so those kernel statements hold verbatim under the `C²` hypothesis.
+  `IsEuclideanLangevinInf` is automatic, so those kernel statements hold verbatim under the `C²` hypothesis.
 * Conditional: the transfer to a Brownian carrier (hence all kernel statements) holds for a `C²` potential
   as soon as uniqueness of `IsEuclideanDiffusion V` holds (`C2Uniqueness V`). The uniqueness itself is NOT
   proved for non-smooth `V`; see `extra-status/c2-worker.md`.
@@ -26,7 +26,7 @@ open CutoffRigidity CutoffRigidity.Riemann
 open MeasureTheory ProbabilityTheory Filter Topology Set
 open scoped ENNReal NNReal ContDiff
 
-/-- `C²` version of `IsEuclideanLangevin`. -/
+/-- `C²` version of `IsEuclideanLangevinInf`. -/
 def IsEuclideanLangevinC2 {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
 
@@ -35,12 +35,12 @@ def C2Uniqueness {d : ℕ} (V : Rd d → ℝ) : Prop :=
   ∀ P₁ P₂ : ℝ≥0 → Kernel (Rd d) (Rd d), IsEuclideanDiffusion V P₁ → IsEuclideanDiffusion V P₂ →
     ∀ t x, P₁ t x = P₂ t x
 
-theorem IsEuclideanLangevin.toC2 {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
-    (h : IsEuclideanLangevin V Pt) : IsEuclideanLangevinC2 V Pt :=
+theorem IsEuclideanLangevinInf.toC2 {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
+    (h : IsEuclideanLangevinInf V Pt) : IsEuclideanLangevinC2 V Pt :=
   ⟨h.1.of_le (by norm_cast), h.2.1, h.2.2⟩
 
 theorem IsEuclideanLangevinC2.toSmooth {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)}
-    (h : IsEuclideanLangevinC2 V Pt) (hV : ContDiff ℝ ∞ V) : IsEuclideanLangevin V Pt :=
+    (h : IsEuclideanLangevinC2 V Pt) (hV : ContDiff ℝ ∞ V) : IsEuclideanLangevinInf V Pt :=
   ⟨hV, h.2.1, h.2.2⟩
 
 theorem c2Uniqueness_of_smooth {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ ∞ V)
@@ -51,7 +51,7 @@ theorem c2Uniqueness_of_smooth {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ �
 theorem isEuclideanLangevinC2_quadratic_iff {d : ℕ} {ρ c : ℝ}
     {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} :
     IsEuclideanLangevinC2 (fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c) Pt ↔
-      IsEuclideanLangevin (fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c) Pt := by
+      IsEuclideanLangevinInf (fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c) Pt := by
   have hs : ContDiff ℝ ∞ (fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + c) :=
     (contDiff_const.mul (contDiff_norm_sq ℝ)).add contDiff_const
   exact ⟨fun h => h.toSmooth hs, fun h => h.toC2⟩

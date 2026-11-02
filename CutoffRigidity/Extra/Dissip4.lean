@@ -20,7 +20,7 @@ open scoped ENNReal NNReal Topology
 
 /-- **Integrated de Bruijn inequality, kernel form, finite entropy at an earlier time `a < s`.** -/
 theorem langevin_dissipation_ge_K' {d : ℕ} {V : CutCur.Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevin V Pt)
+    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevinInf V Pt)
     {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (ν : Measure (CutCur.Rd d)) [IsProbabilityMeasure ν] {a s t : ℝ≥0}
@@ -67,7 +67,7 @@ theorem langevin_dissipation_ge_K' {d : ℕ} {V : CutCur.Rd d → ℝ}
 /-- **Integrated de Bruijn inequality for a Dirac initial law**: for every `x₀` and `0 < s < t`,
 `∫_s^t I(P_r(x₀,·)|μ) dr + H(P_t(x₀,·)|μ) ≤ H(P_s(x₀,·)|μ)`. -/
 theorem langevin_dissipation_dirac_K {d : ℕ} {V : CutCur.Rd d → ℝ}
-    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevin V Pt)
+    {Pt : ℝ≥0 → Kernel (CutCur.Rd d) (CutCur.Rd d)} (hL : CutCur.IsEuclideanLangevinInf V Pt)
     {ρ : ℝ} (hρ : 0 < ρ)
     (hHess : ∀ x z : CutCur.Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z)
     (x₀ : CutCur.Rd d) {s t : ℝ≥0} (hs : 0 < s) (hst : s < t) :

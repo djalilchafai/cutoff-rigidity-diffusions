@@ -7,8 +7,8 @@ public import CutoffRigidity.Extra.InformationCutoffWeak
 
 /-! # Brownian-free kernel versions of Remarks 3.4 and 3.5 and of the W2 contraction
 
-`wasserstein_cutoff_weak_K`, `information_cutoff_weak_K` (kernel `Pt`, hypotheses `IsEuclideanLangevin`
-/ `IsRigidSequenceK`), derived from the Brownian-based `_carrier` theorems by the transfer lemmas of
+`wasserstein_cutoff_weak_K`, `information_cutoff_weak_K` (kernel `Pt`, hypotheses `IsEuclideanLangevinInf`
+/ `IsRigidSequenceKInf`), derived from the Brownian-based `_carrier` theorems by the transfer lemmas of
 `EuclideanDiffusion` / `EuclideanCutoffs`.
 -/
 
@@ -21,7 +21,7 @@ open scoped ENNReal NNReal Topology Asymptotics ContDiff
 
 /-- **Remark 3.4**, kernel form. -/
 theorem wasserstein_cutoff_weak_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ RigidCurvature (V n))
+    (hL : ∀ n, 0 < n → IsEuclideanLangevinInf (V n) (Pt n) ∧ RigidCurvature (V n))
     (hgap : ∃ α : ℝ, 0 < α ∧
       ∀ᶠ n : ℕ in atTop, (spectralGap (V n))⁻¹ ≤ (Real.log n) ^ α)
     {c : ℝ} (hc : 0 < c) :
@@ -37,7 +37,7 @@ theorem wasserstein_cutoff_weak_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0
 
 /-- **Remark 3.5**, kernel form. -/
 theorem information_cutoff_weak_K {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
-    (h : IsRigidSequenceK V Pt)
+    (h : IsRigidSequenceKInf V Pt)
     (hsmall : ∀ ε : ℝ, 0 < ε → ∀ᶠ n : ℕ in atTop, spectralGap (V n) ≤ (n : ℝ) ^ ε)
     {c : ℝ} (hc : 0 < c) :
     let t := fun n => CutCur.criticalTime n (spectralGap (V n))

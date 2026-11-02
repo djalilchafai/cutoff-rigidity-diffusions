@@ -51,3 +51,9 @@ Nothing here is added to the Challenge yet. All numbers are agents' estimates.
 Done since this scoping (see `extra-status/` and PALOMAR.md, "Armstrong-method round"): the cheap block, Brownian existence (vendored library), the Brownian-free kernel reformulation, the static Dyson statement
 (1.4k lines instead of the estimated 1.5-4k), the inequality half of `dH/dt = -I`, kernel = SDE law, the Leibniz/vector-Bochner items. Still blocked: C² uniqueness (2.5-6k lines), equality in `dH/dt = -I` for general
 laws (1.5-2.5k), sphere (5-10k), Rothaus (3-6k), Gaussian isoperimetry (4-8k), Theorem 1.7 on manifolds.
+
+## Status update (1 November 2026, round 2)
+Integrated into the Challenge (67 theorems, 67 definitions): `C²` instead of `C^∞` for the kernel statements (convex `C²` uniqueness), equality in `dH/dt = -I`, `dyson_spectralGap`, Gaussian isoperimetry (QUADRATIC potential only), the Rothaus alternative (abstract form with a compactness
+hypothesis; unconditional for finite spaces; NOT the compact-manifold theorem), the sphere in model form (`Ric = (d-1)g`, `CD(d-1)`, `λ₁ = d`; the sphere is not a witness of `hgap` in Theorem 1.9), `temperature_kernel`. Proved in `Extra/` but not in the Challenge (no line budget or no clean statement):
+open-neighbourhood Gaussian isoperimetry, `twoPoint_rothaus`, Rellich/Sobolev variants of Rothaus, the concrete round sphere `Sph d`, `round_sphere`, `k1_fails`. Still open: general `CD(ρ,∞)` Gaussian isoperimetry, Rothaus on compact manifolds, Theorem 1.7 on manifolds, the Dyson–OU process, Question 1.10.
+See `extra-status/integration-round2.md`. AI audit of the new statements: pending. No human review.

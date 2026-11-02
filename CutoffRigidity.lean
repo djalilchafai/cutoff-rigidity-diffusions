@@ -373,3 +373,13 @@ public import CutoffRigidity.Extra.Dyson7
 public import CutoffRigidity.Extra.Item2a
 public import CutoffRigidity.Extra.Item2b
 public import CutoffRigidity.Paper.ChallengeExtras
+public import CutoffRigidity.Extra.SmoothLangevin
+public import CutoffRigidity.Extra.C2Uniq9
+public import CutoffRigidity.Extra.C2Uniq11
+public import CutoffRigidity.Extra.C2Uniq12
+public import CutoffRigidity.Extra.C2Sigma2
+public import CutoffRigidity.Extra.DysonGap4
+public import CutoffRigidity.Extra.GaussIso
+public import CutoffRigidity.Extra.Rothaus
+public import CutoffRigidity.Extra.Sphere17
+public import CutoffRigidity.Paper.ChallengeBridge

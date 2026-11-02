@@ -3,7 +3,7 @@
 
 The Challenge text is kept verbatim except that (1) definitions are removed, since
 they are imported from CutoffRigidity.Statements (a generated verbatim copy), and
-(2) each `sorry` is replaced by the identically stated `CutoffRigidity.Paper` theorem.
+(2) each `sorry` is replaced by an `apply` of the identically stated theorem (default `CutoffRigidity.Paper.<name>`, see `TARGET`) or by the short proof in `CUSTOM`.
 """
 import pathlib
 
@@ -11,13 +11,44 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 lines = (ROOT / "Challenge.lean").read_text(encoding="utf-8").split("\n")
 # Theorems whose universe/type `Ω` is not determined by the conclusion (it only occurs in the
 # hypotheses about Brownian motion, or `ρ` could be captured by an unrelated `0 < _` hypothesis): pass it explicitly to `apply`.
-EXPLICIT = {"langevin_dissipation_dirac_K": "(ρ := ρ)"}
+EXPLICIT = {"langevin_dissipation_eq_dirac_K": "(ρ := ρ)"}
+# Statements proved by a theorem of another name/namespace (default: `CutoffRigidity.Paper.<name>`).
+# The `C²` ports (`C2Uniq*`, `C2Sigma*`) have hypotheses `C2U.IsEucLangevin2` etc., definitionally the Challenge predicates.
+C2 = ["isLangevinSolution_map_eq_kernel_of_rigid", "main_wasserstein_estimate", "wasserstein_cutoff", "information_cutoff", "lp_cutoff",
+      "convex_interaction_cutoff", "product_condition_cutoff", "eigenmap_is_ou", "wasserstein_cutoff_weak", "information_cutoff_weak",
+      "mixing_time_rigid", "mixing_time_w2_rigid", "mixing_time_kl_rigid", "langevin_w2_contraction", "langevin_entropy_decay",
+      "langevin_fisher_decay", "langevin_fisher_dini", "temperature_cutoff"]
+TARGET = {n: f"CutoffRigidity.Paper.{n}_C2" for n in C2}
+TARGET.update({
+    "langevin_dissipation_eq_K'": "CutoffRigidity.DissipEq.langevin_dissipation_eq_C2'",
+    "langevin_dissipation_eq_dirac_K": "CutoffRigidity.DissipEq.langevin_dissipation_eq_dirac_C2",
+    "temperature_kernel": "CutCur.C2U.temperature_kernel_C2",
+    "gaussian_isoperimetric_functional": "CutoffRigidity.GaussIso.gaussian_isoperimetric_functional",
+    "gaussian_isoperimetric_sets": "CutoffRigidity.GaussIso.gaussian_isoperimetric_sets",
+    "gibbs_quadratic_isProb": "CutoffRigidity.GaussIso.gibbs_quadratic_isProb",
+})
+# Statements with a short explicit proof (bridges between the Challenge definitions and the proof-side ones).
+CUSTOM = {
+    "ou_fisher_information": "  exact CutoffRigidity.Paper.ou_fisher_information_K hρ (CutoffRigidity.Paper.ouInf hL) x₀ ht",
+    "ou_mean_start_cutoff": "  exact CutoffRigidity.Paper.ou_mean_start_cutoff_K hρ fun n hn => CutoffRigidity.Paper.ouInf (hL n hn)",
+    "ou_lp_infty_fails": "  exact CutoffRigidity.Paper.ou_lp_infty_fails_K hρ (fun n hn => CutoffRigidity.Paper.ouInf (hL n hn)) hc",
+    "dyson_spectralGap": "  exact ⟨(CutoffRigidity.Dyson.dyson_spectralGap_eigenfunction hd hρ hβ).1,\n    (CutoffRigidity.Dyson.dyson_spectralGap_eigenfunction hd hρ hβ).2.2.2⟩",
+    "rothaus_alternative_ne": "  exact CutoffRigidity.Rothaus.rothaus_alternative_ne (CutoffRigidity.Paper.formToR F) hPI hLSI hcomp hne",
+    "two_optPI_le_optLSI": "  exact CutoffRigidity.Rothaus.two_optPI_le_optLSI (CutoffRigidity.Paper.formToR F) hLSI",
+    "sphere_curvature": "  have hΦ' : CutoffRigidity.Extra.IsIsometricSphereMap F Φ := hΦ\n"
+        "  exact ⟨fun x v w => CutoffRigidity.Extra.Sphere.sphere_mRic hF hΦ' x v w,\n"
+        "    fun c => CutoffRigidity.Extra.Sphere.sphere_CD hF hΦ' c,\n"
+        "    fun hd x c ρ hρ => CutoffRigidity.Extra.Sphere.sphere_not_CD hF hd hΦ' x c hρ⟩",
+    "sphere_gap": "  have hΦ' : CutoffRigidity.Extra.IsIsometricSphereMap F Φ := hΦ\n"
+        "  exact le_antisymm (CutoffRigidity.Extra.Sphere.sphere_gap_le hF (by omega) hΦ' hμ)\n"
+        "    (CutoffRigidity.Extra.Sphere.sphere_gap_ge hF hd hΦ' hμ)",
+}
 out = []
 i = 0
 name = None
 while i < len(lines):
     line = lines[i]
-    if line.startswith(("def ", "abbrev ")):
+    if line.startswith(("def ", "abbrev ", "structure ")):
         while out and out[-1] != "" and not out[-1].startswith(("theorem", "variable")):
             if out.pop().startswith("/--"):
                 break
@@ -28,7 +59,11 @@ while i < len(lines):
         name = line.split()[1]
     if line == "  sorry":
         extra = EXPLICIT.get(name, "")
-        line = f"  apply CutoffRigidity.Paper.{name}{' ' + extra if extra else ''} <;> assumption"
+        if name in CUSTOM:
+            out.extend(CUSTOM[name].split("\n"))
+            i += 1
+            continue
+        line = f"  apply {TARGET.get(name, 'CutoffRigidity.Paper.' + name)}{' ' + extra if extra else ''} <;> assumption"
     if line == "public import Mathlib":
         line = "public import CutoffRigidity"
     out.append(line)
