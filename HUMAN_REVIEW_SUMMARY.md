@@ -1,6 +1,6 @@
 # Human review summary for the authors (draft)
 
-Repository: https://github.com/djalilchafai/cutoff-rigidity-diffusions, commit b3cd532 (or later; the 1 November 2026 rounds 1 and 2 are included in the working tree, not yet committed at the time of writing).
+Repository: https://github.com/djalilchafai/cutoff-rigidity-diffusions, commit fa7cab8 (1 November 2026 rounds 1 and 2 included; pushed to `main`).
 Companion files: `HUMAN_REVIEW.md` (full checklist), `PALOMAR.md`, `PAPER_AUDIT.md`, `verification/`.
 
 **No human has reviewed this formalization.** `review.status` in `formalization.yaml` is `unchecked`. Nothing was submitted
@@ -59,13 +59,14 @@ Lean does **not** certify that the statements and definitions mean what the manu
    It is imported only privately by `Paper/ExistsBrownian.lean`.
 
 ## 4. AI audits (reuse, do not trust)
-- Every statement has had at least one AI audit and most have had two. The reports are `verification/semantic-audit.md`,
+- Every statement of nos. 1-57 has had at least one AI audit and most have had two (nos. 58-67 and the changed statements: see below). The reports are `verification/semantic-audit.md`,
   `audit-second-{1,2}.md` and `audit-extra-{A..M}.md`. They covered statements and definitions only, not proofs.
 - **No audit found a defect.** The agents share blind spots with the tooling that wrote the statements, so form your own verdict first.
 - `exists_stdBrownian` and `exists_langevin` were audited in `audit-extra-J.md`. The kernel statements were audited in `-K` and `-L`.
 - The nine statements added in the first 1 November 2026 round were audited in `audit-extra-M.md` (no defect). **The round-2 statements (nos. 58-67), the equality versions (51, 52) and the `C²` change have not been audited by an AI agent yet (pending).** Each also went through a worker/adversary pass
   (`extra-status/*-worker.md`, `*-adversary.md`): the adversary found one repair (the entropy-dissipation statement excluded Dirac initial laws; fixed) and one vacuous conditional
   (a sphere result, not in the Challenge; fixed).
+- Round-2 worker/adversary passes (all ACCEPT, with scope limits, no human involvement): C² uniqueness (a concrete convex C² non-C³ witness was built for existence and uniqueness), equality dissipation, Dyson gap, σ-temperature, Gaussian isoperimetry (quadratic case only), Rothaus (abstract/finite only), sphere (the adversary found an overstated docstring and a missing `k1_fails` lemma; both fixed in `Extra/`). The integration step itself (statement rewrap to 160 columns, C²/C^∞ bridge) was checked by statement-diff and the full suite, not by an adversary.
 - Adversary reports can be read next to the statements, but they are AI work too.
 
 ## 5. Known limits
