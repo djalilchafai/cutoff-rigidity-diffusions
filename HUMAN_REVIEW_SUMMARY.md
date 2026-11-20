@@ -1,12 +1,12 @@
-# Human review summary for the authors (draft)
+# Human review summary for the authors
 
 Repository: https://github.com/djalilchafai/cutoff-rigidity-diffusions, commit fa7cab8 (1 November 2026 rounds 1 and 2 included; pushed to `main`).
 Companion files: `HUMAN_REVIEW.md` (full checklist), `PALOMAR.md`, `PAPER_AUDIT.md`, `verification/`.
 
 Reference version of the paper: **arXiv:2412.15969v5** (archived in `paper/`; `cutcur-lean.tex` is the same text).
 
-**Human review (20 November 2026):** Djalil Chafaï checked the 16 statements of `PalomarChallenge.lean` and their definitions against arXiv v5 (`review.status: author-verified`). The other 53 statements of `Challenge.lean` have had AI audits only. Nothing was submitted
-to a registry or attested. Everything labelled "AI" below was done by language-model agents. This page says what you would be
+**Human review (20 November 2026):** Djalil Chafaï checked the 16 statements of `PalomarChallenge.lean` and their definitions against arXiv v5 (`review.status: author-verified`). The other 53 statements of `Challenge.lean` have had AI audits only. Submitted to Palomar on
+20 November 2026 by the responsible maintainer. Everything labelled "AI" below was done by language-model agents. This page says what you would be
 signing up to check.
 
 ## 0. What to review for the Palomar submission
@@ -96,6 +96,6 @@ Lean does **not** certify that the statements and definitions mean what the manu
 3. Go through the table in `HUMAN_REVIEW.md` §2 and tick each of the 69 statements against the manuscript (start with the 16 of the Palomar surface).
 4. Decide on the convexity requirement hidden in the `C²` kernel statements, the two forms of Lemma 3.3 and the Thm 1.7 amendment, and whether the static Dyson statement plus the gap (nos. 53, 58) suffice, and whether the quadratic-only Gaussian isoperimetry (59-61), the abstract/finite Rothaus (62-64) and the model-form sphere (66-67) are acceptable scopes.
 5. Check the vendored code provenance (`vendor/README.md`).
-6. Only after a real review: fill the `review` fields in `formalization.yaml` and decide on registry submission and attestation (humans only).
+6. After the review (done on 20 November 2026 for the 16 statements): fill the `review` fields in `formalization.yaml` and decide on registry submission and attestation (humans only).
 
 Sign-off: Reviewer(s): Djalil Chafaï  Date: 20 November 2026  Scope: the 16 statements of `PalomarChallenge.lean` (nos. 1-12, 48, 49, 68, 69) and their 41 definitions, against arXiv v5; the other 53 statements of `Challenge.lean`: AI audits only.  Commit: the commit that records this sign-off.

@@ -1,6 +1,6 @@
 # Palomar preparation status
 
-**Current status (20 November 2026).** Not yet submitted. The reference version of the
+**Current status (20 November 2026).** Submitted to Palomar on 20 November 2026 (not yet registered). The reference version of the
 paper is arXiv:2412.15969v5 (25 October 2026; source archived in `paper/`), which includes
 the corrections of the erratum to the published article (CRAS 2025). The surface proposed
 for registration is `PalomarChallenge.lean` with `comparator-palomar.json` (16 theorems: the
@@ -12,7 +12,7 @@ definitions; `comparator.json` lists the 69 theorems and 66 definitions. Both So
 accepts both pairs. `formalization.yaml`
 validates against the official v0.4 schema and names D. Chafaï as author and responsible
 maintainer. The toolchain `v4.35.0-rc2` is the minimum accepted by Palomar. Remaining steps,
-for humans only: the submission itself. The semantic review of the submitted surface was
+for humans only: the registration decision. The semantic review of the submitted surface was
 done by D. Chafaï on 20 November 2026 (`review.status: author-verified`); M. Fathi agreed to
 the registration. The new project code uses Apache-2.0; the
 downloaded paper sources retain CC-BY-4.0.
@@ -450,7 +450,7 @@ comparison of the type of every declaration of the old and new `Challenge` modul
   `Challenge.lean` header and Theorem 1.7 docstring updated (docstrings only), `Statements.lean` and `Solution.lean` regenerated.
 - `formalization.yaml`: new description, source entry (v5, `author_endorsement: participated`), concise `status.scope`,
   `status.axioms` corrected (it was empty although three axioms are used), `status.main_results` added, `fidelity.divergences`
-  rewritten against v5, `review.status: agent-reviewed` (AI audits only). Validated against the official v0.4 schema.
+  rewritten against v5, `review.status: agent-reviewed` (AI audits only; superseded the same day by `author-verified`, see below). Validated against the official v0.4 schema.
   The former `status.scope` and `fidelity.divergences` texts are kept in the appendix below.
 - `verification/SHA256SUMS` removed: it was a checksum snapshot of the first commit, referenced nowhere, and 15 of its
   286 entries no longer matched. The Git commit hash identifies the checked sources.

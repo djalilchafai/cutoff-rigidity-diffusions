@@ -195,8 +195,8 @@ automation:
         inconsistencies found in a Palomar-readiness review.
   spend_usd: not tracked
   notes: >-
-    AI contributions are recorded here, not as human authorship. No human
-    mathematical review has been asserted.
+    AI contributions are recorded here, not as human authorship. The human
+    review is recorded under review below; the AI agents asserted none.
 fidelity:
   divergences: >-
     Reference: arXiv:2412.15969v5. Differences between the Lean statements and v5.

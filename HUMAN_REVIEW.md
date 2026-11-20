@@ -1,8 +1,11 @@
-# Human review checklist (draft)
+# Human review checklist
 
-Status (updated 1 November 2026, after round 2 of the Armstrong method, which changed the smoothness clause of 23 statements to `C²`, made nos. 51-52 equalities and added nos. 58-67): **no human review has taken place.** (Update 20 November 2026: reference version arXiv:2412.15969v5; the round-2 changes passed AI audit N, `audit-extra-N.md`.) The nine added statements were audited by one AI agent (`audit-extra-M.md`) and went through worker/adversary passes. The 21 statements converted to kernel form were re-audited by two AI agents after the conversion (`audit-extra-K.md`, `audit-extra-L.md`; earlier audits of the same statements concerned the Brownian-carrier text). This file is a checklist for the people who will do it. It records nothing
-as reviewed, and the sign-off block at the end is intentionally blank. Everything below that is marked "AI" was done by
-language-model agents and is not a substitute for a person.
+Status (20 November 2026): **human review done for the submitted surface.** D. Chafaï, co-author, checked the 16 statements
+of `PalomarChallenge.lean` (nos. 1-12, 48, 49, 68, 69 below) and the 41 definitions they use against arXiv:2412.15969v5
+(`review.status: author-verified`, `reviewers: [Djalil Chafaï]` in `formalization.yaml`). The other 53 statements of
+`Challenge.lean` had AI audits only (`verification/semantic-audit.md`, `audit-second-*.md`, `audit-extra-*.md`, the last
+ones N and O); they are not part of the submitted surface. Everything below marked "AI" was done by language-model agents
+and is not a substitute for a person.
 
 What Lean already guarantees (machine-checked, rerunnable, see README "How to rebuild and verify"): the 67 theorems of
 `Challenge.lean` are proved by `Solution.lean` with the same statements, using only `propext`, `Classical.choice`,
@@ -10,7 +13,7 @@ What Lean already guarantees (machine-checked, rerunnable, see README "How to re
 definitions* mean what the manuscript says. That is what a reviewer must establish.
 
 Short versions for the authors: [HUMAN_REVIEW_SUMMARY.md](HUMAN_REVIEW_SUMMARY.md) (what to check first, review plan) and the README section
-"What is not formalized" (the full list of gaps, kept in sync with section 3 below). Both are drafts and claim no review.
+"What is not formalized" (the full list of gaps, kept in sync with section 3 below). Neither records a review by itself; the review status is the one stated above.
 
 ## AI audits done so far (to reuse, not to trust)
 Statements 1-57 have had at least one AI audit (statements and definitions read against the manuscript; proofs not read); the round-2 changes (the `C²` clause of 23 statements, the equality statements 51-52 and the new statements 58-67) were audited on 20 November 2026 (`verification/audit-extra-N.md`, no defect, minor docstring fixes applied):
@@ -173,9 +176,9 @@ statements and their definitions is enough for a submission of the reduced surfa
 - [ ] **Cosmetic/lint:** deprecation warnings (`if_pos`, `if_neg`, `haveI`, `Set.mem_setOf_eq`) are harmless.
 
 ## 4. Process items (outside Lean)
-- [ ] `review.status` is `agent-reviewed` (AI audits only, set on 20 November 2026) and `reviewers` is empty. Change them (e.g. `author-verified`, with the reviewers' names) only after a real human review.
+- [x] `review.status` is `author-verified`, `reviewers: [Djalil Chafaï]` (20 November 2026), scope: the 16 statements of `PalomarChallenge.lean`.
 - [x] `formalization.yaml` validates against the official v0.4 schema (checked 20 November 2026 with `jsonschema`; the `alignment` field is free-form in the schema).
-- [ ] Authors/responsible humans decide on registry submission and sign the attestation. Nothing was submitted or attested by the AI agents.
+- [x] Authors decided on registry submission (D. Chafaï, M. Fathi agreeing); submitted to Palomar by the responsible maintainer on 20 November 2026.
 - [ ] Decide on the license/attribution statement for the archived paper (CC BY 4.0, `paper/SOURCE.txt`) and the project's Apache-2.0.
 
 ## 5. Vendored third-party code (Brownian existence)
@@ -188,7 +191,8 @@ The item "existence of Brownian motion" moved from not formalized to formalized,
 - [ ] The Challenge closure stays Mathlib-only (the Brownian existence statements use only Challenge definitions); the vendored code is imported only
       (privately) by `CutoffRigidity/Paper/ExistsBrownian.lean`. Check that it adds no axiom (`#print axioms CutCur.exists_stdBrownian`).
 
-## Sign-off (to be completed by humans; left blank on purpose)
-Reviewer(s): ____________  Date: ____________  Commit reviewed: ____________
-Scope reviewed (definitions / statements 1-57 / vendored code / other): ____________
-Findings and decision: ____________
+## Sign-off
+Reviewer(s): Djalil Chafaï  Date: 20 November 2026  Commit reviewed: de51ec5
+Scope reviewed: the 16 statements of `PalomarChallenge.lean` (nos. 1-12, 48, 49, 68, 69) and the 41 definitions they use, against arXiv:2412.15969v5.
+The other 53 statements of `Challenge.lean` and the vendored code: AI audits only, not human-reviewed.
+Findings and decision: no defect; submission to Palomar (M. Fathi agreeing).

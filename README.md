@@ -185,7 +185,7 @@ actual product diffeomorphism. The complete paper is not yet formalized. Project
 Twenty-one Euclidean statements of `Challenge.lean` (Thm 1.1, Cor 1.3, 1.4, 1.6, Remarks 3.4/3.5, the W2 contraction, display (1.25), Thm 1.7, Lemma 3.3, the three mixing-time statements, the OU examples and Fisher
 information, entropy/Fisher decay and Dini form, normalization and temperature cutoffs) no longer mention Brownian motion: they are stated for transition kernels `Pt`
 (`IsEuclideanLangevin`, `IsRigidSequenceK`, `worstK`, `mixingTimeK`, ...). Amendment: Lemma 3.3 is stated in law form (the first version also assumed `V ∈ C^∞`; round 2 reinstated `C²`). The Brownian versions remain as `*_carrier` theorems used inside the proofs. The only statements still mentioning Brownian motion are the SDE-level
-`normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`. See `PALOMAR.md`. The sandboxed Comparator accepts the solution (`verification/comparator-sandboxed.log`); no human review.
+`normalization_sde`, `temperature_sde`, `exists_stdBrownian`, `exists_langevin`. See `PALOMAR.md`. The sandboxed Comparator accepts the solution (`verification/comparator-sandboxed.log`). Human review: see the section below.
 
 **Convexity and `C²` in the Brownian-free statements.** The Euclidean process statements are stated for `C²` potentials (kernel formulation `IsEuclideanLangevin`), as in the manuscript. Uniqueness of the diffusion kernel is proved for convex `C²` potentials
 (`euclideanDiffusion_unique_convex`), and every such statement carries a convexity hypothesis (`Hess V ≥ ρ`, `RigidCurvature`, convex `W n`, or the explicitly smooth OU potential). Nonconvex potentials are not covered (the manuscript's setting is convex). The `C^∞` kernel results of the earlier version survive as
@@ -251,8 +251,10 @@ for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fre
    ```
 
 These checks establish that the Lean proofs are kernel-valid and match the Challenge statements. They do
-not replace human review that the statements faithfully formalize the paper; none has taken place
-(`review.status: agent-reviewed` in `formalization.yaml`, meaning AI audits only; see `verification/`).
+not replace human review that the statements faithfully formalize the paper. That review was done by
+D. Chafaï on 20 November 2026 for the 16 statements of the submitted surface `PalomarChallenge.lean` and their definitions
+(`review.status: author-verified` in `formalization.yaml`); the other 53 statements of `Challenge.lean` had AI audits only
+(`verification/`).
 
 ## Reproduction
 
@@ -274,7 +276,10 @@ is not part of the project sources.
 
 ## Human review
 
-[HUMAN_REVIEW.md](HUMAN_REVIEW.md) is a draft checklist for the human semantic review, which has not taken place.
+Human semantic review (20 November 2026): D. Chafaï, co-author, checked the 16 statements of `PalomarChallenge.lean`
+(the submitted surface) and the 41 definitions they use against arXiv v5; `formalization.yaml` records
+`review.status: author-verified`. The other 53 statements of the full surface `Challenge.lean` had AI audits only.
+[HUMAN_REVIEW.md](HUMAN_REVIEW.md) is the checklist used; its rows record which statements were checked by whom.
 
 ## Palomar status
 
@@ -292,8 +297,8 @@ is not part of the project sources.
 - **Metadata:** `formalization.yaml` validates against the official v0.4 schema; `python3 scripts/check-palomar.py --ready` passes.
 - **Statement audits:** AI audits only (`verification/semantic-audit.md`, `audit-second-*.md`, `audit-extra-*.md`). A Gaussian
   witness (`Riemann/WitnessMain.lean`) shows the Riemannian hypotheses are jointly satisfiable.
-- **Not done (humans only):** human semantic review ([HUMAN_REVIEW.md](HUMAN_REVIEW.md)), the decision to submit, and the
-  attestation of the responsible maintainer.
+- **Human review:** the 16 statements of the submitted surface, by D. Chafaï (20 November 2026, `review.status: author-verified`);
+  the other 53 statements of `Challenge.lean`: AI audits only. Submitted to Palomar by the responsible maintainer (20 November 2026).
 - **Earlier replay reports** (62 supporting results across ten exports, superseded by the Comparator runs):
   [development](verification/development-replay.json), [core](verification/core-replay.json),
   [operator](verification/operator-replay.json), [spectral](verification/spectral-replay.json),
