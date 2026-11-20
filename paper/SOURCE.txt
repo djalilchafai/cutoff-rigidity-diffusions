@@ -1,13 +1,31 @@
 Chafaï, Djalil and Fathi, Max.
-On cutoff via rigidity for high-dimensional curved diffusions.
+On cutoff via rigidity for high dimensional curved diffusions.
+Comptes Rendus. Mathématique 363 (2025) 1103-1121, doi:10.5802/crmath.776.
+
+Reference version for the formalization:
+arXiv:2412.15969v5, 25 October 2026 (post-publication version, corrections
+included; the same corrections are listed in the erratum to the published article).
+https://arxiv.org/abs/2412.15969v5
+https://arxiv.org/src/2412.15969v5
+Downloaded 20 November 2026.
+SHA256 source archive (arxiv-2412.15969v5.tar.gz):
+44543048a1fbcc321e0868dcbaa84a6d2edc35d867124f2d28230c0023190019
+SHA256 cutcur-arxiv-v5-261025.tex:
+307f36844596c6c7919076a659653aec2796d0fdd5cf82e8124b1b8294da5bed
+00README-v5.json is the arXiv 00README.json of this archive (renamed).
+The project file ../cutcur-lean.tex has the same text as cutcur-arxiv-v5-261025.tex,
+except that its bibliography is produced by BibTeX (cutcur.bib) instead of being inlined.
+
+Earlier version, kept for the audit history (PAPER_AUDIT.md):
 arXiv:2412.15969v4, 24 March 2026.
 https://arxiv.org/abs/2412.15969v4
 https://arxiv.org/src/2412.15969v4
 Downloaded 23 October 2026.
-Source licence: CC BY 4.0 (arXiv record).
-The archived source files retain their original ownership and licence.
-
-SHA256 source archive:
+SHA256 source archive (arxiv-2412.15969v4.tar.gz):
 ce1ecb26d6e017360aeb1169f3d36e0417423ae023db001fa24536e75be5f5b5
 SHA256 cutcur-arxiv-v4-260324.tex:
 1bcc6502c9e18c8843ea6bc877603cd02a827a095eecd9003d31d4e02e172cf3
+00README-v4.json is the arXiv 00README.json of that archive (renamed).
+
+Source licence (both versions): CC BY 4.0 (arXiv record).
+The archived source files retain their original ownership and licence.

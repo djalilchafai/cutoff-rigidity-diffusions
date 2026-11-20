@@ -5,7 +5,10 @@
 #        PATH=/tmp/bwrapfix:$PATH lake comparator --config <config>
 # It hides the real home tree (resolved from $HOME) instead of /home, and re-exposes read-only the
 # local packages directory that .lake/packages points to. The sandbox is otherwise unchanged.
-real_home=$(readlink -f "$HOME")
+# lake may call bwrap with an empty HOME: fall back to the passwd entry of the current user.
+home_dir=${HOME:-$(getent passwd "$(id -u)" | cut -d: -f6)}
+real_home=$(readlink -f "$home_dir")
+[ -n "$real_home" ] || { echo "bwrap wrapper: cannot resolve the home directory" >&2; exit 1; }
 packages=$(readlink -f "$(dirname "$0")/../.lake/packages" 2>/dev/null || readlink -f .lake/packages)
 args=(); done=
 for a in "$@"; do

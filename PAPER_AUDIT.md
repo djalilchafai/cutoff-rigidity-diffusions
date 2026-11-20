@@ -1,3 +1,5 @@
+> **Update 20 November 2026.** The corrected manuscript `cutcur-lean.tex` described below was published as arXiv:2412.15969v5 (25 October 2026), which is now the reference version; the same corrections are listed in the erratum to the published article. "Local manuscript" below means v5; "archived source" means v4.
+
 > **Update 25 October 2026.** The status column below is partly stale: all 12 Challenge theorems are now proved (Theorem 1.9 without extra hypotheses, see PALOMAR.md); rows not touched below were not re-audited.
 
 # Paper audit and formalization dependency plan

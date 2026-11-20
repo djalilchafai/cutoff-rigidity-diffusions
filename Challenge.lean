@@ -5,8 +5,8 @@ public import Mathlib
 /-!
 # Cutoff via rigidity for high-dimensional curved diffusions: statements
 
-Statement surface for D. Chafaï and M. Fathi, *On cutoff via rigidity for high-dimensional curved diffusions* (local corrected manuscript `cutcur-lean.tex`, based on arXiv:2412.15969v4). Every object
-is defined from Mathlib alone. Each theorem below corresponds to a numbered result of the paper; amendments to the printed statements are flagged in the docstrings.
+Statement surface for D. Chafaï and M. Fathi, *On cutoff via rigidity for high dimensional curved diffusions*, arXiv:2412.15969v5 (25 October 2026; TeX source `cutcur-lean.tex`). Every object
+is defined from Mathlib alone. Each theorem below corresponds to a result of the paper; deviations from v5 are flagged in the docstrings.
 
 Conventions. `ℝ^d` is `EuclideanSpace ℝ (Fin d)`. Suprema of nonnegative discrepancies over sets of initial conditions are taken in `ℝ≥0∞`, so that infinite values are meaningful. Laws of processes at
 a real time `t` use the time `t.toNNReal`; all times appearing in the statements are nonnegative.
@@ -77,7 +77,7 @@ def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (
   ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
   ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
 
-/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for convex `V`: `exists_langevin` and the proved `exists_euclideanLangevin_C2`. -/
+/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for `C²` `V` with `Hess V ≥ ρ > 0`: `temperature_kernel` with `σ = 1` (the convex case is `exists_euclideanLangevin_C2`, outside the Challenge). -/
 def IsEuclideanLangevin {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
 
@@ -219,7 +219,7 @@ def mixingTimeW2K {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measur
 def mixingTimeKLK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (μ : Measure (Rd d)) (S : Set (Rd d)) (η : ℝ) : ℝ≥0∞ :=
   ⨅ (t : ℝ≥0) (_ : worstK Pt S (fun ν => InformationTheory.klDiv ν μ) t ≤ .ofReal η), (t : ℝ≥0∞)
 
-/-- **Theorem 1.7** (curvature product condition), in the amended form of the corrected manuscript: TV and entropy cutoff at the mixing time `t₀⁽ⁿ⁾` under `κ⁽ⁿ⁾t₀⁽ⁿ⁾ → ∞` and eventual finiteness of `t₀⁽ⁿ⁾`; Fisher and Wasserstein cutoffs under the additional assumptions `liminf κ⁽ⁿ⁾ > 0` and `t₀⁽ⁿ⁾ → ∞` (absent from the archived arXiv v4 statement, which is false without it, see `PAPER_AUDIT.md`). Brownian-free kernel form. -/
+/-- **Theorem 1.7** (curvature product condition), as stated in arXiv v5: TV and entropy cutoff at the mixing time `t₀⁽ⁿ⁾` under `κ⁽ⁿ⁾t₀⁽ⁿ⁾ → ∞` and eventual finiteness of `t₀⁽ⁿ⁾`; Fisher and Wasserstein cutoffs under the additional assumptions `liminf κ⁽ⁿ⁾ > 0` and `t₀⁽ⁿ⁾ → ∞` (added in v5; the v4 and published statements are false without them, see `PAPER_AUDIT.md`). Brownian-free kernel form. -/
 theorem product_condition_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} {κ : ℕ → ℝ} {S : ∀ n, Set (Rd n)} {η : ℝ}
   (hL : ∀ n, 0 < n → IsEuclideanLangevin (V n) (Pt n) ∧ 0 < κ n ∧ ∀ x z : Rd n, κ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z)
   (hS : ∀ n, 0 < n → (S n).Nonempty) (hη : 0 < η) (hη1 : η < 1) :
@@ -333,7 +333,7 @@ theorem optimal_constants_extremal {d : ℕ} (hd : 0 < d) {ρ : ℝ} (hρ : 0 < 
 /-- The Gaussian isoperimetric profile `I = φ ∘ Φ⁻¹` on `(0,1)` and `0` elsewhere (`φ`, `Φ` the standard normal density and cdf, `Φ⁻¹ u = inf {x | u ≤ Φ x}`). -/
 def gaussianIsoProfile (u : ℝ) : ℝ := if 0 < u ∧ u < 1 then gaussianPDFReal 0 1 (sInf {x : ℝ | u ≤ cdf (gaussianReal 0 1) x}) else 0
 
-/-- **Gaussian isoperimetry, functional (Bobkov) form, QUADRATIC CASE ONLY** (manuscript remark: `CD(ρ,∞)` implies Gaussian isoperimetry). Only `V = ρ|x|²/2 + c`, i.e. `μ = 𝒩(0, ρ⁻¹ I_d)`, the equality case of `CD(ρ,∞)`, is proved; the general case `Hess V ≥ ρ` is NOT formalized. For `f : ℝ^d → [0,1]` smooth, bounded and Lipschitz: `I(∫ f dμ) ≤ ∫ √(I(f)² + ρ⁻¹ |∇f|²) dμ`. -/
+/-- **Gaussian isoperimetry, functional (Bobkov) form, QUADRATIC CASE ONLY** (manuscript remark: `CD(ρ,∞)` implies Gaussian isoperimetry). Only `V = ρ|x|²/2 + c`, i.e. the centred Gaussian `μ = 𝒩(0, ρ⁻¹ I_d)` on `ℝ^d`, is proved; the general case `Hess V ≥ ρ` is NOT formalized. For `f : ℝ^d → [0,1]` smooth, bounded and Lipschitz: `I(∫ f dμ) ≤ ∫ √(I(f)² + ρ⁻¹ |∇f|²) dμ`. -/
 theorem gaussian_isoperimetric_functional {d : ℕ} {ρ : ℝ} (hρ : 0 < ρ) {V : Rd d → ℝ} (hV : ∃ c : ℝ, ∀ x, V x = ρ / 2 * ‖x‖ ^ 2 + c)
   (hp : IsProbabilityMeasure (gibbs V)) {f : Rd d → ℝ} (hf : IsTestFunction f) (h01 : ∀ x, 0 ≤ f x ∧ f x ≤ 1) :
   gaussianIsoProfile (∫ x, f x ∂gibbs V) ≤ ∫ x, Real.sqrt (gaussianIsoProfile (f x) ^ 2 + ρ⁻¹ * ‖gradient f x‖ ^ 2) ∂gibbs V := by
@@ -349,7 +349,7 @@ theorem gaussian_isoperimetric_sets {d : ℕ} {ρ : ℝ} (hρ : 0 < ρ) {V : Rd 
 theorem gibbs_quadratic_isProb {d : ℕ} {ρ : ℝ} (hρ : 0 < ρ) : IsProbabilityMeasure (gibbs fun x : Rd d => ρ / 2 * ‖x‖ ^ 2 + (d : ℝ) / 2 * Real.log (2 * Real.pi / ρ)) := by
   sorry
 
-/-- An abstract Dirichlet-type form `(Q, E)` on a probability space `(X, μ)` (for the Rothaus alternative): `Q` is the energy domain (e.g. `H¹`), `E ≥ 0` the energy, quadratic and invariant under adding constants; members of `Q` lie in `L²(μ)` and have `f² log (1 + f²)` integrable. -/
+/-- An abstract Dirichlet-type form `(Q, E)` on a probability space `(X, μ)` (for the Rothaus alternative): `Q` is the energy domain (e.g. `H¹`), `E ≥ 0` the energy, 2-homogeneous (`E(c f) = c² E f`; `Q` need not be a vector space) and invariant under adding constants; members of `Q` lie in `L²(μ)` and have `f² log (1 + f²)` integrable. -/
 structure Form {X : Type*} [MeasurableSpace X] (μ : Measure X) where
   Q : Set (X → ℝ)
   E : (X → ℝ) → ℝ
@@ -455,7 +455,7 @@ theorem temperature_sde {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d �
   (fun x u w => Y x (((σ ^ 2)⁻¹).toNNReal * u) w) ∧ ∀ t : ℝ≥0, (gibbs fun x => V x / σ ^ 2).bind (fun x => P.map (Y x t)) = gibbs fun x => V x / σ ^ 2 := by
   sorry
 
-/-- **Temperature, cutoff** (Section "Temperature"), kernel form: the critical time is free of `σ`. `Pt n` is the semigroup of the `σ`-diffusion `dY = -∇Vₙ dt + √2 σ dB` (`IsSigmaLangevin`, generator `σ²Δ - ∇Vₙ·∇`). If `Hess Vₙ ≥ ρₙ`, `liminf ρₙ > 0`, the Wasserstein cutoff on `B(m, c√n)` occurs at `log n/(2ρₙ)`; if `ρₙ = o(log n)`, so do Fisher, entropy and TV cutoffs. Flags: "rigid" is `ρₙ = σ² λ₁(Vₙ/σ²)` (`hgap`); amendment: `Vₙ` is `C²`, and normalizability of `e^{-Vₙ/σ²}` is inside `IsSigmaLangevin`. -/
+/-- **Temperature, cutoff** (Section "Temperature"), kernel form: the critical time is free of `σ`. `Pt n` is the semigroup of the `σ`-diffusion `dY = -∇Vₙ dt + √2 σ dB` (`IsSigmaLangevin`, generator `σ²Δ - ∇Vₙ·∇`). If `Hess Vₙ ≥ ρₙ`, `liminf ρₙ > 0`, the Wasserstein cutoff on `B(m, c√n)` occurs at `log n/(2ρₙ)`; if `ρₙ = o(log n)`, so do Fisher, entropy and TV cutoffs. Flags: "rigid" is `ρₙ = σ² λ₁(Vₙ/σ²)` (`hgap`); `Vₙ` is `C²` as in the manuscript, and normalizability of `e^{-Vₙ/σ²}` is inside `IsSigmaLangevin`. -/
 theorem temperature_cutoff {V : ∀ n, Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {ρ : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
   (hY : ∀ n, 0 < n → IsSigmaLangevin (V n) σ (Pt n)) (hρ : ∀ n, 0 < n → 0 < ρ n) (hHess : ∀ n, 0 < n → ∀ x z : Rd n,
   ρ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z) (hgap : ∀ n, 0 < n → ρ n = σ ^ 2 * spectralGap (fun x => V n x / σ ^ 2))
@@ -635,7 +635,7 @@ theorem dyson_ou_static {d : ℕ} (hd : 0 < d) {ρ β : ℝ} (hρ : 0 < ρ) (hβ
   variance (fun x : Rd d => ∑ i, x i) (dysonProb d ρ β) = ρ⁻¹ * ∫ x, ‖gradient (fun x : Rd d => ∑ i, x i) x‖ ^ 2 ∂dysonProb d ρ β) := by
   sorry
 
-/-- Spectral gap of the Dyson–OU law: the Rayleigh infimum over `C_c^∞(ℝ^d)` (test functions are not required to vanish on the walls), as `spectralGap`. -/
+/-- Spectral gap of the Dyson–OU law: the Rayleigh infimum over `C_c^∞(ℝ^d)` (test functions are not required to vanish on the walls: Neumann gap, which may differ from the gap over functions vanishing on the walls when `0 < β < 1`), as `spectralGap`. -/
 def dysonGap (d : ℕ) (ρ β : ℝ) : ℝ := sInf {r : ℝ | ∃ f : Rd d → ℝ, ContDiff ℝ ∞ f ∧ HasCompactSupport f ∧ 0 < variance f (dysonProb d ρ β) ∧
   r = (∫ x, ‖gradient f x‖ ^ 2 ∂dysonProb d ρ β) / variance f (dysonProb d ρ β)}
 
@@ -834,7 +834,7 @@ theorem riemannian_gaussian_splitting {V : M → ℝ} (hV : ContMDiff 𝓘(ℝ, 
       (∀ x, f x = inner ℝ a (Φ x).1) → (∀ x, g x = inner ℝ b (Φ x).1) → ∫ x, f x * g x ∂μ = 0 → inner ℝ a b = 0 := by
   sorry
 
-/-- **Round sphere, curvature** (Section 1.4, "for the unit sphere `ρ = d - 1`"), for every Riemannian `M^d` isometrically immersed in `S^d ⊂ ℝ^{d+1}`: `Ric = (d-1) g`; `CD(d-1,∞)` holds for every constant potential (unweighted Laplace–Beltrami operator); and `d - 1` is optimal (`d ≥ 1`, `M` nonempty). -/
+/-- **Round sphere, curvature** (Section 1.4, "for the unit sphere `ρ = d - 1`"), for every connected complete Riemannian `M^d` (section variables) isometrically immersed in `S^d ⊂ ℝ^{d+1}`: `Ric = (d-1) g`; `CD(d-1,∞)` holds for every constant potential (unweighted Laplace–Beltrami operator); and `d - 1` is optimal (`d ≥ 1`, `M` nonempty). -/
 theorem sphere_curvature {d : ℕ} (hF : Module.finrank ℝ F = d) {Φ : M → EuclideanSpace ℝ (Fin (d + 1))} (hΦ : IsSphereModel F Φ) :
   (∀ (x : M) (v w : TangentSpace 𝓘(ℝ, F) x), mRic F x v w = ((d : ℝ) - 1) * inner ℝ v w) ∧ (∀ c : ℝ, CD F ((d : ℝ) - 1) (fun _ : M => c)) ∧
   (1 ≤ d → ∀ (_ : M) (c ρ : ℝ), (d : ℝ) - 1 < ρ → ¬ CD F ρ (fun _ : M => c)) := by

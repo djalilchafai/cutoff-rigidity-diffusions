@@ -7,8 +7,8 @@ public import Mathlib
 /-!
 # Definitions of the Challenge statement surface (generated)
 
-Statement surface for D. Chafaï and M. Fathi, *On cutoff via rigidity for high-dimensional curved diffusions* (local corrected manuscript `cutcur-lean.tex`, based on arXiv:2412.15969v4). Every object
-is defined from Mathlib alone. Each theorem below corresponds to a numbered result of the paper; amendments to the printed statements are flagged in the docstrings.
+Statement surface for D. Chafaï and M. Fathi, *On cutoff via rigidity for high dimensional curved diffusions*, arXiv:2412.15969v5 (25 October 2026; TeX source `cutcur-lean.tex`). Every object
+is defined from Mathlib alone. Each theorem below corresponds to a result of the paper; deviations from v5 are flagged in the docstrings.
 
 Conventions. `ℝ^d` is `EuclideanSpace ℝ (Fin d)`. Suprema of nonnegative discrepancies over sets of initial conditions are taken in `ℝ≥0∞`, so that infinite values are meaningful. Laws of processes at
 a real time `t` use the time `t.toNNReal`; all times appearing in the statements are nonnegative.
@@ -79,7 +79,7 @@ def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (
   ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
   ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
 
-/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for convex `V`: `exists_langevin` and the proved `exists_euclideanLangevin_C2`. -/
+/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for `C²` `V` with `Hess V ≥ ρ > 0`: `temperature_kernel` with `σ = 1` (the convex case is `exists_euclideanLangevin_C2`, outside the Challenge). -/
 def IsEuclideanLangevin {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
 
@@ -162,7 +162,7 @@ def optimalLSI {d : ℕ} (V : Rd d → ℝ) : ℝ := sInf {C : ℝ | 0 ≤ C ∧
 /-- The Gaussian isoperimetric profile `I = φ ∘ Φ⁻¹` on `(0,1)` and `0` elsewhere (`φ`, `Φ` the standard normal density and cdf, `Φ⁻¹ u = inf {x | u ≤ Φ x}`). -/
 def gaussianIsoProfile (u : ℝ) : ℝ := if 0 < u ∧ u < 1 then gaussianPDFReal 0 1 (sInf {x : ℝ | u ≤ cdf (gaussianReal 0 1) x}) else 0
 
-/-- An abstract Dirichlet-type form `(Q, E)` on a probability space `(X, μ)` (for the Rothaus alternative): `Q` is the energy domain (e.g. `H¹`), `E ≥ 0` the energy, quadratic and invariant under adding constants; members of `Q` lie in `L²(μ)` and have `f² log (1 + f²)` integrable. -/
+/-- An abstract Dirichlet-type form `(Q, E)` on a probability space `(X, μ)` (for the Rothaus alternative): `Q` is the energy domain (e.g. `H¹`), `E ≥ 0` the energy, 2-homogeneous (`E(c f) = c² E f`; `Q` need not be a vector space) and invariant under adding constants; members of `Q` lie in `L²(μ)` and have `f² log (1 + f²)` integrable. -/
 structure Form {X : Type*} [MeasurableSpace X] (μ : Measure X) where
   Q : Set (X → ℝ)
   E : (X → ℝ) → ℝ
@@ -209,7 +209,7 @@ def dysonProb (d : ℕ) (ρ β : ℝ) : Measure (Rd d) :=
   let m := (volume.restrict (chamber d)).withDensity fun x => ENNReal.ofReal (Real.exp (-(ρ / 2 * ‖x‖ ^ 2 + ∑ i, ∑ j with i < j, -β * Real.log (x i - x j))))
   (m univ)⁻¹ • m
 
-/-- Spectral gap of the Dyson–OU law: the Rayleigh infimum over `C_c^∞(ℝ^d)` (test functions are not required to vanish on the walls), as `spectralGap`. -/
+/-- Spectral gap of the Dyson–OU law: the Rayleigh infimum over `C_c^∞(ℝ^d)` (test functions are not required to vanish on the walls: Neumann gap, which may differ from the gap over functions vanishing on the walls when `0 < β < 1`), as `spectralGap`. -/
 def dysonGap (d : ℕ) (ρ β : ℝ) : ℝ := sInf {r : ℝ | ∃ f : Rd d → ℝ, ContDiff ℝ ∞ f ∧ HasCompactSupport f ∧ 0 < variance f (dysonProb d ρ β) ∧
   r = (∫ x, ‖gradient f x‖ ^ 2 ∂dysonProb d ρ β) / variance f (dysonProb d ρ β)}
 

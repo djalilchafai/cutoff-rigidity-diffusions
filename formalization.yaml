@@ -1,14 +1,18 @@
-# Not yet a submission: no human semantic review has taken place.
+# Not yet submitted to Palomar: no human semantic review has taken place (see HUMAN_REVIEW.md).
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
 version: v0.4
 project:
   name: Cutoff via rigidity for curved diffusions
   description: >-
-    Work in progress towards a Lean formalization of Chafaï and Fathi,
-    the local manuscript cutcur-lean.tex, based on arXiv:2412.15969v4.
-    The target includes Wasserstein estimates, high-dimensional
-    cutoff, rigidity, convex interactions, and Riemannian extensions. Current
-    supporting results must not be read as proofs of these paper-level claims.
+    Lean 4 formalization of Chafaï and Fathi, "On cutoff via rigidity for high
+    dimensional curved diffusions" (Comptes Rendus Mathématique 363 (2025)
+    1103-1121), in the corrected version arXiv:2412.15969v5. Challenge.lean
+    states 67 results of the paper, including all its numbered theorems,
+    corollaries and lemmas (Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6, Corollaries
+    1.3, 1.4, 1.6, Lemma 3.3, Remarks 1.2, 3.4, 3.5, display (1.25)) and further
+    claims of its remarks, examples and Section 4. Solution.lean proves all of
+    them with the standard axioms only. Some statements are restricted or
+    amended; every difference with arXiv v5 is listed in fidelity.divergences.
   authors: [Djalil Chafaï]
   responsible_maintainers: [Djalil Chafaï]
   license: Apache-2.0
@@ -16,20 +20,24 @@ classification:
   arxiv: [math.PR, math.DG]
   msc2020: ['60J60', '47D07', '53C21', '58J50']
 sources:
-  - title: On cutoff via rigidity for high-dimensional curved diffusions
+  - title: On cutoff via rigidity for high dimensional curved diffusions
     authors: [Djalil Chafaï, Max Fathi]
-    id: arXiv:2412.15969v4
-    type: paper
-    location: https://arxiv.org/abs/2412.15969v4
+    id: arXiv:2412.15969v5
+    type: article
+    location: https://arxiv.org/abs/2412.15969v5
     relationship: formalizes
+    author_endorsement: participated
     note: >-
-      Background source: the 24 March 2026 postpublication revision.
-      The current formalization target is the local manuscript cutcur-lean.tex,
-      which adds a time-divergence hypothesis to Theorem 1.7 and explicitly
-      assumes complete, connected manifolds without boundary for the
-      Riemannian results. PAPER_AUDIT.md records the archived-source audit
-      and the local completeness correction. Formalization is incomplete;
-      see PALOMAR.md.
+      Post-publication version of 25 October 2026 of the article published in
+      Comptes Rendus Mathématique 363 (2025) 1103-1121, doi:10.5802/crmath.776.
+      It includes the corrections listed in the erratum to the published
+      article: L^p cutoff for finite p only (it fails for p = infinity),
+      additional hypotheses in Theorem 1.7 (the printed version is false, see
+      PAPER_AUDIT.md), and complete connected manifolds without boundary in the
+      Riemannian results. The numbering of results is the same in v4 and v5.
+      The TeX source is archived in paper/ (SHA-256 in paper/SOURCE.txt);
+      cutcur-lean.tex is the same text with a BibTeX bibliography. Source-author
+      involvement: D. Chafaï, co-author, is the maintainer of this formalization.
     license: CC-BY-4.0
 related_formalizations:
   - id: https://github.com/RemyDegenne/brownian-motion
@@ -48,53 +56,87 @@ related_formalizations:
       module Compat/CompactSystemExtra.lean (vendor/README.md). Apache-2.0.
 status:
   scope: >-
-    Update 1 November 2026 (Armstrong round 2): Challenge.lean now states 67 theorems and 67 definitions (850 lines, 87 KB). Changes: (1) the smoothness clause of IsEuclideanLangevin and IsSigmaLangevin, and of W_n in convex_interaction_cutoff, is C^2 instead of C^infinity (uniqueness of the diffusion semigroup for convex C^2 potentials, euclideanDiffusion_unique_convex, proved in Extra/C2Uniq*; 23 statements become strictly stronger; the older C^infinity proof modules use the proof-side copies IsEuclideanLangevinInf, IsRigidSequenceKInf, IsSigmaLangevinInf of Extra/SmoothLangevin.lean); (2) langevin_dissipation_ge_K' and langevin_dissipation_dirac_K are replaced by the equality versions langevin_dissipation_eq_K' and langevin_dissipation_eq_dirac_K (same hypotheses; equality of the integrated de Bruijn identity); (3) ten new theorems and seven new definitions: dysonGap and dyson_spectralGap (lambda_1 = rho for Dyson-OU, every beta >= 0, with the H^1 approximation of sum x_i); gaussianIsoProfile, gaussian_isoperimetric_functional, gaussian_isoperimetric_sets and gibbs_quadratic_isProb (Gaussian isoperimetry for the QUADRATIC potential V = rho|x|^2/2 + c only, not for general Hess V >= rho); Form, Form.optPI, Form.optLSI, Form.Compact, rothaus_alternative_ne, two_optPI_le_optLSI and finite_rothaus (Rothaus alternative for an abstract Dirichlet-type form under a Compact hypothesis, and unconditionally for finite spaces; the compact-manifold theorem is NOT proved); IsSphereModel, sphere_curvature and sphere_gap (Ric = (d-1)g, CD(d-1), optimality of d-1 and lambda_1 = d for any manifold isometrically immersed in S^d; the sphere is NOT a witness of the hypothesis lambda_1 = rho of Theorem 1.9, since d != d-1); temperature_kernel (existence, Gibbs invariance, uniqueness and time change of the sigma-diffusion kernel, V in C^2, with Hess V >= rho > 0). Proved in Extra/ but not in the Challenge: the open-neighbourhood Gaussian isoperimetry, twoPoint_rothaus, the Rellich/Sobolev variants of Rothaus, the concrete round sphere Sph d and the proof that hgap cannot be dropped in riemannian_k1_bounds (k1_fails), the C^infinity kernel results. AI audit of the new and changed statements: pending (not yet run). The sandboxed Comparator accepts the 67-theorem pair (con-ron 92444 declarations, nanoda, Lean kernel; verification/comparator-sandboxed.log; the structure Form is not a Comparator definition target and is compared exactly as a dependency). No human review; review.status stays unchecked.
-    Update 1 November 2026 (Armstrong round): Challenge.lean now states 57 theorems and 60 definitions. Nine statements were added, each after a worker and an adversary AI pass and an AI audit (verification/audit-extra-M.md): isLangevinSolution_map_eq_kernel_of_rigid (kernel = law of any SDE solution; V in C^infinity, rigid curvature), eigenmap_is_ou_pathwise (pathwise Lemma 3.3), langevin_dissipation_ge_K' and langevin_dissipation_dirac_K (inequality half of the integrated de Bruijn identity; equality for general laws is not proved), dyson_ou_static (static Dyson-OU on the Weyl chamber: Poincare constant 1/rho, Var h = rho^-1 int |grad h|^2; the Dyson-OU process and the identification with the project's spectralGap are not claimed), carre_eq_operator, carre_polarization, generator_comp (Gamma as the operator, polarization, scalar chain rule) and bochner_vector (vector-form Bochner; Ric(v, grad f) slot order, frame-independence of the rough Laplacian not asserted). Attempted and not achieved: C^2 instead of C^infinity for the 18 general-V kernel statements (C^2 uniqueness of the diffusion semigroup), the equality in dH/dt = -I for general laws, the sphere claims (only a conditional upper bound lambda_1 <= d, outside the Challenge), the Rothaus remark, Gaussian isoperimetry, Theorem 1.7 on manifolds. The sandboxed Comparator accepts the pair (con-ron, nanoda, Lean kernel). No human review; review.status stays unchecked.
-    Update 25 October 2026 (Brownian-free Euclidean statements): eighteen Euclidean Challenge statements (main_wasserstein_estimate, wasserstein_cutoff, information_cutoff, lp_cutoff, convex_interaction_cutoff, product_condition_cutoff, eigenmap_is_ou, mixing_time_rigid, mixing_time_w2_rigid, mixing_time_kl_rigid, ou_fisher_information, ou_mean_start_cutoff, ou_lp_infty_fails, langevin_entropy_decay, langevin_fisher_decay, langevin_fisher_dini, normalization_cutoff, temperature_cutoff) were replaced by kernel statements without Brownian motion (IsEuclideanDiffusion, IsEuclideanLangevin, IsSigmaLangevin, worstK, mixingTimeK, IsRigidSequenceK); still 48 theorems, proofs in Solution.lean via aliases of the kernel theorems. Not yet re-run through Comparator; not audited by AI or human after this change.
-    Update 25 October 2026 (Brownian existence): Challenge.lean now also states exists_stdBrownian (a standard Brownian motion on R^d exists on some probability space) and exists_langevin (for C^2 V with Hess V >= 0 and probability Gibbs measure, IsLangevin V B P X holds for some space, B, P, X), 48 theorems in all, proved in Solution.lean with only the standard axioms. The standing hypothesis IsLangevin of every Langevin statement is therefore shown satisfiable (for convex V, the paper's standing assumption). The proof vendors the Brownian motion library of Degenne, Ledvinka, Marion and Pfaffelhuber (vendor/, Apache-2.0, with minimal porting patches; see vendor/README.md). Brownian existence is no longer in the not-formalized list. Not yet run through Comparator after this extension.
-    Update 25 October 2026 (cheap block): Challenge.lean now states 46 theorems and 51 definitions: 11 further statements (Bochner identity and CD iff Ric + Hess V >= rho, Riemannian k1 bounds, Riemannian Poincare and log-Sobolev, Fisher decay for all initial laws and its Dini form, Brownian scaling at the SDE level, temperature SDE and cutoffs, W2 and entropy mixing times), all proved in Solution.lean with only the standard axioms; `entropyOf` is now stated on any measurable space. Divergences flagged in the docstrings: temperature_sde adds Hess V >= rho > 0; temperature_cutoff takes rho_n = sigma^2 spectralGap(V_n/sigma^2) as hypothesis; the last conjunct of mixing_time_w2_rigid is an implication (t0 -> infinity only under lambda_1 = o(log n)); riemannian_k1_bounds needs the gap hypothesis; solutions of SDEs and Brownian motions are given by hypothesis; the Dini form is stated on toReal at times with finite Fisher information. Not formalized: Question 1.10 (open), eq:loggradbound (conjectural), dH/dt = -I for general laws, Theorem 1.7 on manifolds, sphere, Dyson, Gaussian isoperimetry, Brownian existence, Leibniz identity for the carre du champ, vector-form Bochner, the Rothaus remark. Not yet run through Comparator after this extension.
-    Update 25 October 2026 (later): Challenge.lean then stated 34 theorems (the 12 above plus 22 further manuscript claims: Remarks 3.4 and 3.5, the Lichnerowicz bound and (R2) => (R1), examples, proof ingredients and Section 4 items), all proved in Solution.lean with only the standard axioms. The splitting theorem now also states the potential identity and the connectedness and completeness of the factor. (Superseded list of non-formalized items: see the cheap block update above.)
-    Update 25 October 2026: all twelve Challenge theorems are proved in Solution.lean with only
-    the standard axioms, and a sandboxed Comparator run accepts them. Theorem 1.9 (Riemannian Wasserstein estimate) is proved for every diffusion semigroup in the sense of IsDiffusionSemigroup, with no extra hypotheses.
-    Historical scope notes follow. The full paper remains incomplete. The actual Euclidean Langevin process,
-    measurable Brownian kernel, Markov semigroup and coupling contraction are
-    constructed. Actual Gaussian projection laws, compact weak Bochner
-    rigidity, compact weighted H¹ embedding, the nonnegative self-adjoint form
-    operator, attained first gap and sharp Poincare are proved. At curvature
-    equality, actual operator eigenfunctions have affine representatives and
-    the full first eigenspace agrees with the classical one. Genuine Gibbs
-    invariance of the constructed stochastic kernel is derived by its actual
-    weak backward PDE and strong L² evolution, operator-domain identification,
-    nonnegative-graph uniqueness and finite-measure equality on compact tests.
-    The stochastic and canonical form semigroups agree on all Gibbs L², with
-    equality of their full generator domains. The final Euclidean Wasserstein
-    set/ball theorem uses the actual first gap, eigenspace and evaluation Lambda,
-    with no supplied invariance or regularity premise. Wasserstein cutoff on
-    balls about the actual barycenter and convex-interaction spectral/ball
-    results are checked. Entropy/TV lower cutoffs, actual C¹ relative Fisher
-    formulae, Fisher decay, density evolution and de Bruijn for normalized
-    bounded-positive constant-plus-compact initial densities are proved.
-    The full log-Sobolev inequality holds for arbitrary probability laws by
-    actual closed-gradient approximation and Fatou. Fisher decay holds for
-    every probability law. Full entropy-cost regularization for arbitrary laws
-    follows from the genuine optimized-path logarithmic interpolation and
-    compact C² entropy variational representation; actual positive-time Dirac
-    transitions have finite entropy and genuine RN densities. Full entropy
-    contraction and Fisher entropy-endpoint estimates use constructed finite-KL
-    approximants. Euclidean information upper cutoffs and the fixed-curvature
-    convex-interaction corollary on both source sets are proved. The full product-condition theorem packages all eight actual TV/H/I/W2
-    cutoff limits, using actual varentropy, Salez window and Talagrand proofs.
-    Full Gaussian product splitting identifies the actual first eigenspace
-    dimension and normalized product in finite coordinates. The Lp extension and the Riemannian theorems are now proved (see the update above). Actual complete bounded global
-    flows are C¹ diffeomorphisms; parallel gradient trajectories and the product
-    homeomorphism are proved. No Euclidean result is advertised as the manifold
-    theorem.
-    Sixty-two results across ten proof streams pass Lean,
-    NanoDa and con-ron replay. Full-paper Comparator and human semantic review
-    remain outstanding. See verification/alignment.json for current scope.
+    Challenge.lean (850 lines) states 67 theorems and 67 definitions; all
+    definitions are built from Mathlib only. Solution.lean proves every theorem
+    with exactly the Challenge type; the sandboxed lake comparator accepts the
+    pair (Lean kernel, nanoda, con-ron; verification/comparator-sandboxed.log).
+    Covered: the Euclidean results of Section 1 (Theorem 1.1, Remark 1.2,
+    Corollaries 1.3 and 1.4, display (1.25), Theorem 1.5, Corollary 1.6,
+    Theorem 1.7), the Riemannian results (Theorem 1.9, Theorem 3.6 with Lemma
+    3.7, Bochner identity, CD(rho,infty) iff Ric + Hess V >= rho, k_1 bounds,
+    Lichnerowicz, Poincaré and log-Sobolev), Section 3 (Theorem 3.1, Lemma 3.3
+    in law and pathwise form, Remarks 3.4 and 3.5), the examples and proof
+    ingredients (Ornstein-Uhlenbeck, pairwise interaction, moment bounds,
+    Wasserstein contraction, entropy and Fisher decay, integrated de Bruijn
+    identity, Pinsker, Talagrand, optimal constants, static Dyson-OU and its
+    spectral gap, carré du champ identities) and Section 4 (normalization,
+    temperature, Fisher information of the OU heat kernel), plus existence of
+    Brownian motion and of the Langevin diffusion. Not formalized: Question
+    1.10 (open) and the conjectural bound eq:loggradbound; Theorem 1.7 on
+    manifolds (no precise statement in the paper); the Dyson-OU process itself;
+    Gaussian isoperimetry beyond the quadratic potential; the Rothaus remark on
+    compact manifolds (only an abstract form and finite spaces); the concrete
+    round sphere (only a model form). Details: README.md, section "What is not
+    formalized", and PALOMAR.md.
   sorry_count: 0
   sorry_in_definitions: 0
-  axioms: []
+  axioms: [propext, Classical.choice, Quot.sound]
+  main_results:
+    - declaration: CutCur.main_wasserstein_estimate  # Theorem 1.1 (Wasserstein estimate under rigidity)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.wasserstein_cutoff  # Corollary 1.3 (Wasserstein cutoff)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.information_cutoff  # Corollary 1.4 (total variation, entropy and Fisher cutoff)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.lp_cutoff  # Display (1.25) (L^p cutoff, finite p)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.convex_interaction  # Theorem 1.5 (convex interactions)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.convex_interaction_cutoff  # Corollary 1.6 (cutoff for convex interactions)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.product_condition_cutoff  # Theorem 1.7 (curvature product condition, as corrected in v5)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.riemannian_wasserstein_estimate  # Theorem 1.9 (Riemannian Wasserstein estimate)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.euclidean_gaussian_factorization  # Theorem 3.1 (Euclidean Gaussian factorization)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.eigenmap_is_ou  # Lemma 3.3 (the eigenmap is an Ornstein-Uhlenbeck process)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: CutCur.riemannian_gaussian_splitting  # Theorem 3.6 and Lemma 3.7 (Riemannian Gaussian splitting)
+      file: Solution.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
 automation:
   methods:
     - method: agent
@@ -125,26 +167,83 @@ automation:
       prompting_notes: >-
         The owner asked for full formalization of every Challenge statement using agents, then
         for removal of the extra diffusion hypotheses that an intermediate version carried.
+    - method: agent
+      models: [claude-opus-5-5]
+      framework: Claude Code
+      tool_setup: >-
+        Single session with one auditing subagent: metadata update to the reference
+        version arXiv:2412.15969v5, consistency of the documentation, AI audit of the
+        statements added on 1 November 2026 (verification/audit-extra-N.md), schema
+        validation of this file, rebuild and sandboxed Comparator rerun.
+      cost:
+        wall_time: not tracked
+        spend_usd: not tracked
+        hardware: local Linux environment and model API
+      prompting_notes: >-
+        The owner asked to use arXiv v5 as the reference and to repair the
+        inconsistencies found in a Palomar-readiness review.
   spend_usd: not tracked
   notes: >-
     AI contributions are recorded here, not as human authorship. No human
-    mathematical review or source-author endorsement has been asserted.
+    mathematical review has been asserted.
 fidelity:
   divergences: >-
-    Brownian-free Euclidean statements (25 October 2026): 21 statements (wasserstein_cutoff_weak, information_cutoff_weak, langevin_w2_contraction, main_wasserstein_estimate, wasserstein_cutoff, information_cutoff, lp_cutoff, convex_interaction_cutoff, product_condition_cutoff, eigenmap_is_ou, mixing_time_rigid, mixing_time_w2_rigid, mixing_time_kl_rigid, ou_fisher_information, ou_mean_start_cutoff, ou_lp_infty_fails, langevin_entropy_decay, langevin_fisher_decay, langevin_fisher_dini, normalization_cutoff, temperature_cutoff) were first stated for V in C^infinity (superseded on 1 November 2026, round 2: IsEuclideanLangevin, IsSigmaLangevin and W_n in convex_interaction_cutoff now require C^2; the statements all carry a convexity hypothesis, Hess V >= 0 or stronger, under which uniqueness holds). The diffusion is encoded by IsEuclideanDiffusion (Markov kernels, semigroup law, Kolmogorov/Dynkin identity on C_c^infty with generator Laplacian - grad V . grad); its uniqueness for convex C^2 V is proved (euclideanDiffusion_unique_convex), not assumed, and Brownian motion is no longer a hypothesis of these statements. eigenmap_is_ou is stated in law form (the pushforward of Pt t x0 by the eigenmap is the Ornstein-Uhlenbeck marginal) instead of the pathwise equation with a Brownian beta. temperature_cutoff uses IsSigmaLangevin (generator sigma^2 Laplacian - grad V . grad). The remaining SDE-level statements (normalization_sde, temperature_sde, exists_stdBrownian, exists_langevin) keep Brownian motion as hypothesis.     Amendments in the additional statements: 0 < d is assumed where the formal objects are degenerate for d = 0 (spectral_gap_ge_curvature, mSpectralGap_ge_of_CD (finrank), ou_first_eigenspace, optimal_constants_extremal, langevin_entropy_decay, talagrand_logSobolev); optimal_lsi_twice_pi, optimal_constants_extremal and talagrand_logSobolev have no Brownian hypothesis; temperature_cd takes the smoothness of the standard metric of R^d as an instance argument; langevin_entropy_decay states the printed constants of the regularization inequality although the formalization proves a sharper one.     The diffusion of Theorem 1.9 is encoded by IsDiffusionSemigroup (Markov, semigroup law, Kolmogorov equation on C_c^infty); uniqueness of such semigroups under CD(rho,infty) is proved, not assumed. The paper-level development is incomplete. Any conditional transfer theorem
-    or special case must be labelled as such and cannot replace the original
-    statements in the final Comparator interface. The source audit reports an
-    invalid inference from a curvature product condition to divergence of time
-    in the archived proof of Theorem 1.7. The local target adds time divergence
-    and explicit Riemannian completeness assumptions; its rigidity proof now
-    explains how completeness gives the global flow used in splitting.
-    These manuscript amendments are not new Lean proofs; see PAPER_AUDIT.md.
+    Reference: arXiv:2412.15969v5. Differences between the Lean statements and v5.
+    (1) Encoding of the diffusion. The Euclidean statements are stated for transition
+    kernels: IsEuclideanDiffusion (Markov kernels, semigroup law, Dynkin identity on
+    C_c^infty with generator Laplacian - grad V . grad), IsEuclideanLangevin (adds V in C^2
+    and a probability Gibbs measure), IsSigmaLangevin (generator sigma^2 Laplacian - grad V
+    . grad). Uniqueness of such kernels is proved for convex C^2 V
+    (euclideanDiffusion_unique_convex), and isLangevinSolution_map_eq_kernel_of_rigid
+    proves that Pt t x is the law at time t of any solution of the SDE (rigid curvature).
+    Every statement using these predicates assumes convexity (Hess V >= 0 or stronger,
+    as in the paper's standing assumptions). Theorem 1.9 encodes the diffusion as
+    IsDiffusionSemigroup (Markov kernels, semigroup law, Kolmogorov equation on
+    C_c^infty); uniqueness under CD(rho,infty) is proved, not assumed.
+    (2) SDE-level statements (normalization_sde, temperature_sde, eigenmap_is_ou_pathwise,
+    exists_langevin) take Brownian motions and SDE solutions as hypotheses or produce
+    them; exists_stdBrownian and exists_langevin (Hess V >= 0) show these hypotheses are
+    satisfiable. Lemma 3.3 is stated in law form (eigenmap_is_ou) and in pathwise form
+    without a filtration statement for the Brownian motion (eigenmap_is_ou_pathwise).
+    (3) Added hypotheses not in v5: 0 < d or 0 < finrank where the formal objects are
+    degenerate in dimension 0; hgap (lambda_1 = rho) in riemannian_k1_bounds, without
+    which the bounds fail on spheres; Hess V >= rho > 0 in temperature_sde and
+    temperature_kernel; rho_n = sigma^2 lambda_1(V_n/sigma^2) as hypothesis in
+    temperature_cutoff; finite entropy at an earlier time in langevin_dissipation_eq_K'.
+    Theorem 3.6 also states the potential identity V o Phi^-1 and that the factor is
+    connected and complete.
+    (4) Restricted scope: Gaussian isoperimetry for the quadratic potential only
+    (gaussian_isoperimetric_functional, gaussian_isoperimetric_sets); the Rothaus
+    alternative for an abstract Dirichlet-type form under the hypothesis Form.Compact
+    and for finite spaces (rothaus_alternative_ne, finite_rothaus), not for compact
+    manifolds; the sphere in model form (IsSphereModel: isometric immersion into S^d;
+    sphere_curvature, sphere_gap); Dyson-OU static statement and spectral gap only
+    (dyson_ou_static, dyson_spectralGap, the latter with its own definition dysonGap);
+    the last conjunct of mixing_time_w2_rigid is an implication; langevin_fisher_dini
+    is stated on toReal at times with finite Fisher information; langevin_entropy_decay
+    states the constants of the paper although a sharper inequality is proved.
+    (5) Junk values of total definitions: spectralGap and mSpectralGap use sInf (0 on
+    the empty set), mixingTimeKLK uses an infimum (top on the empty set), fisherInfo,
+    wasserstein2 and entropyOf take conventional values outside their natural domain;
+    the hypotheses of each statement exclude the degenerate cases (see the docstrings).
+    mRic is the Ricci tensor with the sign convention positive on spheres.
+    (6) Corrections of the published article (CRAS 2025) that are part of v5 and of
+    its erratum, and hence of the Lean statements: Theorem 1.7 with liminf kappa > 0
+    and t_0 -> infinity for the Wasserstein and Fisher conclusions (the published
+    statement fails for the Ornstein-Uhlenbeck process; the counterexample is a written
+    derivation in PAPER_AUDIT.md, not checked in Lean); display (1.25) for finite p
+    (ou_lp_infty_fails proves that p = infinity fails); complete connected manifolds
+    without boundary in the Riemannian results.
 review:
-  status: unchecked
+  status: agent-reviewed
   reviewers: []
   notes: >-
-    Preparatory source and standards audit only. No external semantic review,
-    registry verification or completed-paper proof audit has occurred.
+    No human semantic review has taken place. Every Challenge statement has been
+    audited against the paper by at least one AI agent (verification/semantic-audit.md,
+    audit-second-1.md, audit-second-2.md, audit-extra-A.md to audit-extra-N.md); these
+    audits cover statements and definitions, not proofs (which are kernel-checked).
+    The checklist for a human review is HUMAN_REVIEW.md, summarized in
+    HUMAN_REVIEW_SUMMARY.md.
 alignment:
   namespace: CutoffRigidity
   statements:

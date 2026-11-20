@@ -3,7 +3,9 @@
 Repository: https://github.com/djalilchafai/cutoff-rigidity-diffusions, commit fa7cab8 (1 November 2026 rounds 1 and 2 included; pushed to `main`).
 Companion files: `HUMAN_REVIEW.md` (full checklist), `PALOMAR.md`, `PAPER_AUDIT.md`, `verification/`.
 
-**No human has reviewed this formalization.** `review.status` in `formalization.yaml` is `unchecked`. Nothing was submitted
+Reference version of the paper: **arXiv:2412.15969v5** (archived in `paper/`; `cutcur-lean.tex` is the same text).
+
+**No human has reviewed this formalization.** `review.status` in `formalization.yaml` is `agent-reviewed` (AI audits only). Nothing was submitted
 to a registry or attested. Everything labelled "AI" below was done by language-model agents. This page says what you would be
 signing up to check.
 
@@ -31,7 +33,7 @@ Lean does **not** certify that the statements and definitions mean what the manu
    Uniqueness of such `Pt` is proved for convex `C²` `V` (`euclideanDiffusion_unique_convex`). That `Pt t x` is the law of any SDE solution is a Challenge statement (no. 49, rigid curvature, `V ∈ C²`).
 2. **`C²` (round 2) instead of `C^∞`.** The 23 statements using `IsEuclideanLangevin`/`IsRigidSequenceK`/`IsSigmaLangevin` now assume `V ∈ C²` (and `W n ∈ C²` for Cor 1.6), as in the manuscript.
    This rests on uniqueness of the diffusion kernel for **convex** `C²` potentials (`euclideanDiffusion_unique_convex`, about 3000 lines in `Extra/C2Uniq*`: mollification, Bakry–Émery for the approximants, radial cutoff). Every statement carries a convexity hypothesis; nonconvex `V` is not covered.
-   The earlier `C^∞` statement texts are gone from the Challenge; the `C^∞` results are proof-side only (`IsEuclideanLangevinInf`). The AI audit of this change is pending.
+   The earlier `C^∞` statement texts are gone from the Challenge; the `C^∞` results are proof-side only (`IsEuclideanLangevinInf`). AI audit: `audit-extra-N.md` (no defect; all 24 statements using the predicates carry a convexity hypothesis).
 3. **Amendments to the printed statements:**
    - Thm 1.7 is false as printed (OU counterexample in `PAPER_AUDIT.md`, written derivation only). It is amended to `liminf κ > 0` and `t₀ → ∞`.
    - `p` is finite in (1.25); `p = ∞` fails for OU.
@@ -50,7 +52,7 @@ Lean does **not** certify that the statements and definitions mean what the manu
 6. **Brownian-level statements** (nos. 42, 43, 47, 48). Solutions are hypotheses, and `exists_langevin` assumes `Hess V ≥ 0`.
 7. **New statements nos. 49-57** (audit M, no defect, remarks only):
    - no. 49 kernel = law of any SDE solution (`V ∈ C²`, rigid curvature);
-   - nos. 51-52 originally only the inequality half of `H(μ_s) − H(μ_t) = ∫_s^t I`; in round 2 they became the **equality**, with `Hess V ≥ ρ > 0` (AI audit pending);
+   - nos. 51-52 originally only the inequality half of `H(μ_s) − H(μ_t) = ∫_s^t I`; in round 2 they became the **equality**, with `Hess V ≥ ρ > 0` (AI audit N: no defect);
    - no. 53 static Dyson–OU: the optimal Poincaré constant `1/ρ` follows from the Poincaré inequality plus `Var h = ρ⁻¹∫|∇h|²` for the unbounded `h`, by a truncation argument that is not itself a conjunct;
      `λ₁ = ρ` is no. 58 (`dyson_spectralGap`, round 2, via the separate definition `dysonGap`, not the project's `spectralGap`);
    - nos. 54-56 Γ as the operator, polarization, scalar chain rule;
@@ -63,7 +65,7 @@ Lean does **not** certify that the statements and definitions mean what the manu
   `audit-second-{1,2}.md` and `audit-extra-{A..M}.md`. They covered statements and definitions only, not proofs.
 - **No audit found a defect.** The agents share blind spots with the tooling that wrote the statements, so form your own verdict first.
 - `exists_stdBrownian` and `exists_langevin` were audited in `audit-extra-J.md`. The kernel statements were audited in `-K` and `-L`.
-- The nine statements added in the first 1 November 2026 round were audited in `audit-extra-M.md` (no defect). **The round-2 statements (nos. 58-67), the equality versions (51, 52) and the `C²` change have not been audited by an AI agent yet (pending).** Each also went through a worker/adversary pass
+- The nine statements added in the first 1 November 2026 round were audited in `audit-extra-M.md` (no defect). The round-2 statements (nos. 58-67), the equality versions (51, 52) and the `C²` change were audited on 20 November 2026 in `audit-extra-N.md` (no defect; six minor docstring fixes applied: `Form` is 2-homogeneous, the Gaussian is centred, `C²` is no longer an amendment in `temperature_cutoff`, satisfiability of `IsEuclideanLangevin` via `temperature_kernel`, connected complete in `sphere_curvature`, Neumann gap in `dysonGap`). Each also went through a worker/adversary pass
   (`extra-status/*-worker.md`, `*-adversary.md`): the adversary found one repair (the entropy-dissipation statement excluded Dirac initial laws; fixed) and one vacuous conditional
   (a sphere result, not in the Challenge; fixed).
 - Round-2 worker/adversary passes (all ACCEPT, with scope limits, no human involvement): C² uniqueness (a concrete convex C² non-C³ witness was built for existence and uniqueness), equality dissipation, Dyson gap, σ-temperature, Gaussian isoperimetry (quadratic case only), Rothaus (abstract/finite only), sphere (the adversary found an overstated docstring and a missing `k1_fails` lemma; both fixed in `Extra/`). The integration step itself (statement rewrap to 160 columns, C²/C^∞ bridge) was checked by statement-diff and the full suite, not by an adversary.

@@ -1,7 +1,10 @@
 # Cutoff via rigidity: Lean development
 
-This project is a Lean 4 formalization of the manuscript [cutcur-lean.tex](cutcur-lean.tex)
-by Chafaï–Fathi, based on [arXiv:2412.15969v4](https://arxiv.org/abs/2412.15969v4).
+This project is a Lean 4 formalization of D. Chafaï and M. Fathi, *On cutoff via rigidity for high dimensional curved
+diffusions*, Comptes Rendus Mathématique 363 (2025) 1103–1121 ([doi:10.5802/crmath.776](https://doi.org/10.5802/crmath.776)).
+**The reference version is [arXiv:2412.15969v5](https://arxiv.org/abs/2412.15969v5)** (25 October 2026), which includes the
+corrections of the erratum to the published article. Its TeX source is archived in [`paper/`](paper/SOURCE.txt);
+[cutcur-lean.tex](cutcur-lean.tex) is the same text with a BibTeX bibliography. The numbering of results is the same in v4 and v5.
 
 **Status (1 November 2026, round 2).** `Challenge.lean` states 67 theorems and 67 definitions (850 lines, 87 KB): the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
 3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and further claims of the
@@ -20,7 +23,7 @@ measure); they rely on the vendored Brownian motion library of Degenne et al. (s
 Nine further statements (Armstrong-method round, 1 November 2026): kernel = SDE law for rigid curvature, pathwise Lemma 3.3, the integrated entropy-dissipation
 inequality (general and Dirac initial laws), the static Dyson–OU statement on the Weyl chamber, the operator/polarization/chain-rule forms of the carré du champ, and the vector
 form of the Bochner identity.
-Round 2 (1 November 2026, second integration; every item went through a worker and an adversary AI pass, `extra-status/*-adversary.md`; the AI audit of the new and changed statements is pending): (a) the smoothness clause of `IsEuclideanLangevin`,
+Round 2 (1 November 2026, second integration; every item went through a worker and an adversary AI pass, `extra-status/*-adversary.md`; the new and changed statements passed AI audit N, `verification/audit-extra-N.md`): (a) the smoothness clause of `IsEuclideanLangevin`,
 `IsSigmaLangevin` and of `W n` in `convex_interaction_cutoff` is now `C²` instead of `C^∞` (uniqueness of the diffusion semigroup for convex `C²` potentials is proved, `Extra/C2Uniq*`; 23 statements become stronger);
 (b) the integrated de Bruijn identity is now an equality (`langevin_dissipation_eq_K'`, `langevin_dissipation_eq_dirac_K` replace the two inequality statements);
 (c) `dyson_spectralGap`: `λ₁ = ρ` for the Dyson–OU law; (d) Gaussian isoperimetry, **quadratic potential `ρ|x|²/2 + c` only** (not general `Hess V ≥ ρ`): `gaussian_isoperimetric_functional` (Bobkov) and `gaussian_isoperimetric_sets`;
@@ -30,12 +33,12 @@ Round 2 (1 November 2026, second integration; every item went through a worker a
 Not formalized: see the section "What is not formalized" below. Theorem 1.9 is proved for every
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
 log-Sobolev, gap attainment and the Kuwada contraction are formalized (see [PALOMAR.md](PALOMAR.md)).
-No human semantic review has taken place; the statements were checked only by an AI audit
-(`verification/semantic-audit.md`).
+No human semantic review has taken place; the statements were checked only by AI audits
+(`verification/semantic-audit.md`, `audit-second-*.md`, `audit-extra-A.md` to `audit-extra-N.md`).
 
-**Corrections to the printed paper**, both reflected in the local manuscript and in the Lean statements
-(details in [PAPER_AUDIT.md](PAPER_AUDIT.md)):
-- *Theorem 1.7.* The arXiv v4 statement is false as printed. For the Ornstein–Uhlenbeck potential
+**Corrections to the published paper and to arXiv v4**, found during the formalization, included in arXiv v5 and in the
+erratum, and reflected in the Lean statements (details in [PAPER_AUDIT.md](PAPER_AUDIT.md)):
+- *Theorem 1.7.* The published (and arXiv v4) statement is false. For the Ornstein–Uhlenbeck potential
   `V_d(x)=d|x|²/2+C_d` and singleton initial set `{sqrt(d)e₁}`, curvature is `d`, equilibrium is
   `N(0,I_d/d)`, and the TV mixing time is asymptotic to `log(d)/d`. The printed hypotheses hold, yet for
   `epsilon=1/4`, Wasserstein distance at `3t0/4` tends to zero and Fisher information at `5t0/4` tends to
@@ -44,6 +47,8 @@ No human semantic review has taken place; the statements were checked only by an
   checked in Lean.
 - *Riemannian theorems.* The setup assumes completeness, connectedness and no boundary; a punctured plane
   is a counterexample otherwise. This is formalized in the Lean statements.
+- *Display (1.25).* The `L^p` cutoff holds for finite `p` only; `ou_lp_infty_fails` proves that `p = ∞` fails for the
+  Ornstein–Uhlenbeck process.
 
 The sections below under "Checked scope" describe the supporting development, written in stages.
 
@@ -209,7 +214,7 @@ for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fre
    ```sh
    python3 scripts/check-palomar.py --ready
    ```
-3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 48 endpoint theorems
+3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 67 endpoint theorems
    (`CutoffRigidity.Paper.*`), run a `#print axioms` on each from a scratch file importing `Solution`; each
    should depend only on `propext`, `Classical.choice`, `Quot.sound`. The Comparator in step 4 enforces the
    same permitted axioms.
@@ -239,7 +244,7 @@ for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fre
 
 These checks establish that the Lean proofs are kernel-valid and match the Challenge statements. They do
 not replace human review that the statements faithfully formalize the paper; none has taken place
-(`review.status: unchecked` in `formalization.yaml`; the AI audit is in `verification/semantic-audit.md`).
+(`review.status: agent-reviewed` in `formalization.yaml`, meaning AI audits only; see `verification/`).
 
 ## Reproduction
 
@@ -265,24 +270,20 @@ is not part of the project sources.
 
 ## Palomar status
 
-[PALOMAR.md](PALOMAR.md) records the official requirements and the detailed status.
+[PALOMAR.md](PALOMAR.md) records the official requirements and the detailed history.
 
-- **Challenge/Solution pair:** `Challenge.lean` states 67 theorems; `Solution.lean` proves all of
-  them. `comparator.json` lists the 67 theorems and 67 definitions. The Comparator runs below were made for the
-  earlier 12-theorem pair and must be repeated for the extended one.
-- **Comparator (12-theorem pair, before the extension):** `lake comparator` accepted the solution (con-ron, nanda and the Lean kernel; 88114
-  declarations), both without a sandbox (`verification/comparator-final.log`) and inside the bwrap
-  sandbox (`verification/comparator-sandboxed.log`). Only `propext`, `Classical.choice` and
-  `Quot.sound` are used.
-- **Statement audit:** an AI audit of the 12 statements found no defect
-  (`verification/semantic-audit.md`). A Gaussian witness (`Riemann/WitnessMain.lean`) shows the
-  Riemannian hypotheses are jointly satisfiable.
-- **Amendments:** Theorem 1.7 is stated with the amendment described in [PAPER_AUDIT.md](PAPER_AUDIT.md),
-  since the printed version has a counterexample. The Riemannian setting assumes completeness and
-  connectedness. Theorem 1.9 has no extra hypothesis on `Pt` beyond `IsDiffusionSemigroup`.
-- **Not done:** no human semantic review (`review.status: unchecked` in `formalization.yaml`), no
-  registry submission, and no responsible-human attestation. `formalization.yaml` is therefore not yet a submission.
-- **Earlier replay reports** (62 results across ten exports; superseded by the full run above):
+- **Challenge/Solution pair:** `Challenge.lean` states 67 theorems and 67 definitions; `Solution.lean` proves all of
+  them. `comparator.json` lists the 67 theorems and 66 definitions (the structure `CutCur.Form` is compared as a dependency).
+- **Comparator:** the sandboxed `lake comparator` accepts the pair (Lean kernel, nanoda and con-ron;
+  `verification/comparator-sandboxed.log`). Only `propext`, `Classical.choice` and `Quot.sound` are used.
+- **Toolchain:** `leanprover/lean4:v4.35.0-rc2`, the minimum accepted by Palomar (`toolchains.json`, checked 20 November 2026),
+  matching the pinned Mathlib.
+- **Metadata:** `formalization.yaml` validates against the official v0.4 schema; `python3 scripts/check-palomar.py --ready` passes.
+- **Statement audits:** AI audits only (`verification/semantic-audit.md`, `audit-second-*.md`, `audit-extra-*.md`). A Gaussian
+  witness (`Riemann/WitnessMain.lean`) shows the Riemannian hypotheses are jointly satisfiable.
+- **Not done (humans only):** human semantic review ([HUMAN_REVIEW.md](HUMAN_REVIEW.md)), the decision to submit, and the
+  attestation of the responsible maintainer.
+- **Earlier replay reports** (62 supporting results across ten exports, superseded by the Comparator runs):
   [development](verification/development-replay.json), [core](verification/core-replay.json),
   [operator](verification/operator-replay.json), [spectral](verification/spectral-replay.json),
   [curvature](verification/curvature-replay.json), [rigidity](verification/rigidity-replay.json).
@@ -295,5 +296,5 @@ New project code is Apache-2.0. The existence of Brownian motion (`exists_stdBro
 [kolmogorov_extension4](https://github.com/RemyDegenne/kolmogorov_extension4)), Apache-2.0. The needed 29 modules are vendored under
 [`vendor/`](vendor/README.md) with minimal porting patches (3 library files lightly patched, plus one added Mathlib backport module), with
 their licence texts and origin commits; the Challenge does not depend on them. Only the new module `CutoffRigidity/Paper/ExistsBrownian.lean`
-imports them (privately). The archived paper in `paper/` retains its The archived paper in `paper/` retains its
+imports them (privately). The archived paper sources in `paper/` (arXiv v5, and v4 for the audit history) retain their
 separate CC BY 4.0 licence and attribution; see `paper/SOURCE.txt`.

@@ -1,6 +1,6 @@
 # Human review checklist (draft)
 
-Status (updated 1 November 2026, after round 2 of the Armstrong method, which changed the smoothness clause of 23 statements to `C²`, made nos. 51-52 equalities and added nos. 58-67): **no human review has taken place; the AI audit of the round-2 changes is pending.** The nine added statements were audited by one AI agent (`audit-extra-M.md`) and went through worker/adversary passes. The 21 statements converted to kernel form were re-audited by two AI agents after the conversion (`audit-extra-K.md`, `audit-extra-L.md`; earlier audits of the same statements concerned the Brownian-carrier text). This file is a checklist for the people who will do it. It records nothing
+Status (updated 1 November 2026, after round 2 of the Armstrong method, which changed the smoothness clause of 23 statements to `C²`, made nos. 51-52 equalities and added nos. 58-67): **no human review has taken place.** (Update 20 November 2026: reference version arXiv:2412.15969v5; the round-2 changes passed AI audit N, `audit-extra-N.md`.) The nine added statements were audited by one AI agent (`audit-extra-M.md`) and went through worker/adversary passes. The 21 statements converted to kernel form were re-audited by two AI agents after the conversion (`audit-extra-K.md`, `audit-extra-L.md`; earlier audits of the same statements concerned the Brownian-carrier text). This file is a checklist for the people who will do it. It records nothing
 as reviewed, and the sign-off block at the end is intentionally blank. Everything below that is marked "AI" was done by
 language-model agents and is not a substitute for a person.
 
@@ -13,7 +13,7 @@ Short versions for the authors: [HUMAN_REVIEW_SUMMARY.md](HUMAN_REVIEW_SUMMARY.m
 "What is not formalized" (the full list of gaps, kept in sync with section 3 below). Both are drafts and claim no review.
 
 ## AI audits done so far (to reuse, not to trust)
-Statements 1-57 have had at least one AI audit (statements and definitions read against the manuscript; proofs not read); **the round-2 changes (the `C²` clause of 23 statements, the equality statements 51-52 and the new statements 58-67) are pending an AI audit** (listed in `verification/AUDIT_BRIEF.md`):
+Statements 1-57 have had at least one AI audit (statements and definitions read against the manuscript; proofs not read); the round-2 changes (the `C²` clause of 23 statements, the equality statements 51-52 and the new statements 58-67) were audited on 20 November 2026 (`verification/audit-extra-N.md`, no defect, minor docstring fixes applied):
 - original 12: `verification/semantic-audit.md` (first audit) and independent second audits `audit-second-1.md` (theorems 1-7),
   `audit-second-2.md` (theorems 9-12 and the Riemannian definitions);
 - 22 added statements: `audit-extra-A.md` (sequence cutoffs), `-B.md` (spectral gap, constants), `-C.md` (OU, time change, temperature),
@@ -62,7 +62,7 @@ Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `
       "the diffusion" of Theorem 1.9?
 - [ ] Optimal constants: `entropyOf`, `IsTestFunction` (smooth bounded Lipschitz), `optimalPI`, `optimalLSI` and the factor-2
       convention (`Var f ≤ C∫|∇f|²`, `Ent(f²) ≤ C∫|∇f|²`).
-- [ ] Round-2 definitions (AI audit pending): `dysonGap` (same Rayleigh infimum as `spectralGap` with `dysonProb`); `gaussianIsoProfile` (`φ ∘ Φ⁻¹` on `(0,1)`, `0` elsewhere);
+- [ ] Round-2 definitions (AI audit N, no defect): `dysonGap` (same Rayleigh infimum as `spectralGap` with `dysonProb`); `gaussianIsoProfile` (`φ ∘ Φ⁻¹` on `(0,1)`, `0` elsewhere);
       `Form` (abstract Dirichlet-type form: `Q`, `E`, closure under scaling/constants, `E ≥ 0`, quadratic, constant-invariant, `L²` and `f² log(1+f²)` integrable), `Form.optPI`, `Form.optLSI` (same normalization as `optimalPI`, `optimalLSI`:
       `Var ≤ C·E`, `Ent(f²) ≤ C·E`), `Form.Compact` (energy balls of mean-zero functions are sequentially compact in `L²` and in the Orlicz weight, with lower semicontinuous energy: a hypothesis, satisfiable for finite spaces
       and for `H¹` of compact manifolds in reality, but only the finite case is proved); `IsSphereModel` (isometric smooth map into the unit sphere of `E`; `inner v w` equals the pulled back inner product).
@@ -123,23 +123,23 @@ deviation to judge. AI audits: see the list above.
 | 48 | `exists_langevin` | non-vacuity of `IsLangevin` | assumes `Hess V ≥ 0` (convexity, the paper's standing assumption; for non-convex `V` no global solution is claimed) and `IsProbabilityMeasure (gibbs V)`; `X x₀` is the project's selected pathwise solution; no AI audit yet |
 | 49 | `isLangevinSolution_map_eq_kernel_of_rigid` | kernel replacement (Sect. 1) | `V ∈ C²` (via `IsEuclideanLangevin`, round 2); rigid curvature; any carrier |
 | 50 | `eigenmap_is_ou_pathwise` | Lemma 3.3 | pathwise form (re-export of an existing theorem); `IsLangevin`, `C²` only |
-| 51 | `langevin_dissipation_eq_K'` | eq. HI | round 2: **equality** (replaces the inequality `langevin_dissipation_ge_K'`, same hypotheses); `hρ`, `hHess`; finite entropy at an earlier time; AI audit pending |
-| 52 | `langevin_dissipation_eq_dirac_K` | eq. HI (Dirac) | round 2: **equality** (replaces `langevin_dissipation_dirac_K`); Dirac initial law; `ρ` explicit via `EXPLICIT` entry in `gen-solution.py`; AI audit pending |
+| 51 | `langevin_dissipation_eq_K'` | eq. HI | round 2: **equality** (replaces the inequality `langevin_dissipation_ge_K'`, same hypotheses); `hρ`, `hHess`; finite entropy at an earlier time; AI audit N: no defect |
+| 52 | `langevin_dissipation_eq_dirac_K` | eq. HI (Dirac) | round 2: **equality** (replaces `langevin_dissipation_dirac_K`); Dirac initial law; `ρ` explicit via `EXPLICIT` entry in `gen-solution.py`; AI audit N: no defect |
 | 53 | `dyson_ou_static` | L315-335 (Dyson-OU) | static only; Poincaré `1/ρ`, `Var h = ρ⁻¹∫|∇h|²`; no process (the gap is no. 58); `0 < d` |
 | 54 | `carre_eq_operator` | L640-654 | Γ as the operator; smooth `f, g` |
 | 55 | `carre_polarization` | L1417 | trivial bilinearity; read with 54 |
 | 56 | `generator_comp` | L640-654 | scalar chain rule |
 | 57 | `bochner_vector` | L633-663 | `mRic x v (∇f)` slot order (Ric symmetric in reality, not built in); rough Laplacian with chart-constant frame, frame independence not asserted |
-| 58 | `dyson_spectralGap` | L315-335 (Dyson-OU) | round 2, AI audit pending: `dysonGap` is the Rayleigh infimum over `C_c^∞(ℝ^d)` (not vanishing on the walls: Neumann/Friedrichs form); `λ₁ = ρ` and `∑ xᵢ` an `H¹(μ)` limit of test functions; `0 < d`, `β ≥ 0`; no process |
-| 59 | `gaussian_isoperimetric_functional` | L626-636 (remark: `CD(ρ,∞)` implies Gaussian isoperimetry) | round 2, AI audit pending: **QUADRATIC CASE ONLY** `V = ρ|x|²/2 + c` (hypothesis `hV`), not general `Hess V ≥ ρ`; Bobkov form with `gaussianIsoProfile`; `IsTestFunction` valued in `[0,1]` |
-| 60 | `gaussian_isoperimetric_sets` | same | round 2, AI audit pending: same quadratic case; arbitrary `A` (outer measure `.real`), closed neighbourhoods `r ≥ 0`, `a` real |
+| 58 | `dyson_spectralGap` | L315-335 (Dyson-OU) | round 2, AI audit N (no defect): `dysonGap` is the Rayleigh infimum over `C_c^∞(ℝ^d)` (not vanishing on the walls: Neumann/Friedrichs form); `λ₁ = ρ` and `∑ xᵢ` an `H¹(μ)` limit of test functions; `0 < d`, `β ≥ 0`; no process |
+| 59 | `gaussian_isoperimetric_functional` | L626-636 (remark: `CD(ρ,∞)` implies Gaussian isoperimetry) | round 2, AI audit N (no defect): **QUADRATIC CASE ONLY** `V = ρ|x|²/2 + c` (hypothesis `hV`), not general `Hess V ≥ ρ`; Bobkov form with `gaussianIsoProfile`; `IsTestFunction` valued in `[0,1]` |
+| 60 | `gaussian_isoperimetric_sets` | same | round 2, AI audit N (no defect): same quadratic case; arbitrary `A` (outer measure `.real`), closed neighbourhoods `r ≥ 0`, `a` real |
 | 61 | `gibbs_quadratic_isProb` | (non-vacuity of 59, 60) | round 2: `e^{-V}dx` is a probability measure for `V = ρ|x|²/2 + (d/2) log(2π/ρ)` |
-| 62 | `rothaus_alternative_ne` | "Optimal constants" (Rothaus alternative) | round 2, AI audit pending: **abstract** `Form` (domain `Q`, energy `E`) with the hypothesis `Form.Compact` and `hPI`, `hLSI`; the compact-manifold theorem is NOT proved; the Orlicz weight is inlined |
+| 62 | `rothaus_alternative_ne` | "Optimal constants" (Rothaus alternative) | round 2, AI audit N (no defect): **abstract** `Form` (domain `Q`, energy `E`) with the hypothesis `Form.Compact` and `hPI`, `hLSI`; the compact-manifold theorem is NOT proved; the Orlicz weight is inlined |
 | 63 | `two_optPI_le_optLSI` | same | round 2: `2 optPI ≤ optLSI` whenever an LSI holds |
-| 64 | `finite_rothaus` | same (Saloff-Coste Th. 2.2.3) | round 2, AI audit pending: unconditional on finite spaces; stated for any `Form` whose domain is all functions and energy the Dirichlet form (the proof uses `Rothaus.finiteForm`); irreducibility `hconn`, full support `hπ` |
-| 65 | `temperature_kernel` | Sect. 4.4 (kernel form) | round 2, AI audit pending: `V ∈ C²`, `Hess V ≥ ρ > 0` added (not in the manuscript); `e^{-V/σ²}` probability; existence, Gibbs invariance, time change/uniqueness |
-| 66 | `sphere_curvature` | Sect. 1.4 (unit sphere `ρ = d-1`) | round 2, AI audit pending: model form (`IsSphereModel`: any `M` isometrically immersed in `S^d`), not the concrete sphere; `Ric = (d-1) g`, `CD(d-1)` for constants, optimal (`M` nonempty, `d ≥ 1`) |
-| 67 | `sphere_gap` | Sect. 1.4 (`λ₁ = d` on the sphere) | round 2, AI audit pending: model form; `d ≥ 2`, compact connected complete, constant potential probability volume; shows `λ₁ ≠ d-1`: the sphere is NOT a witness of `hgap` of Thm 1.9; `hgap` cannot be dropped is in `Extra` only |
+| 64 | `finite_rothaus` | same (Saloff-Coste Th. 2.2.3) | round 2, AI audit N (no defect): unconditional on finite spaces; stated for any `Form` whose domain is all functions and energy the Dirichlet form (the proof uses `Rothaus.finiteForm`); irreducibility `hconn`, full support `hπ` |
+| 65 | `temperature_kernel` | Sect. 4.4 (kernel form) | round 2, AI audit N (no defect): `V ∈ C²`, `Hess V ≥ ρ > 0` added (not in the manuscript); `e^{-V/σ²}` probability; existence, Gibbs invariance, time change/uniqueness |
+| 66 | `sphere_curvature` | Sect. 1.4 (unit sphere `ρ = d-1`) | round 2, AI audit N (no defect): model form (`IsSphereModel`: any `M` isometrically immersed in `S^d`), not the concrete sphere; `Ric = (d-1) g`, `CD(d-1)` for constants, optimal (`M` nonempty, `d ≥ 1`) |
+| 67 | `sphere_gap` | Sect. 1.4 (`λ₁ = d` on the sphere) | round 2, AI audit N (no defect): model form; `d ≥ 2`, compact connected complete, constant potential probability volume; shows `λ₁ ≠ d-1`: the sphere is NOT a witness of `hgap` of Thm 1.9; `hgap` cannot be dropped is in `Extra` only |
 
 ## 3. Cross-cutting questions
 - [ ] **Vacuity.** Only the Riemannian hypotheses have a Lean witness in the repository (`Riemann/WitnessMain.lean`, Gaussian on ℝᵏ, flat
@@ -151,11 +151,11 @@ deviation to judge. AI audits: see the list above.
 - [ ] **Each amendment** (`0 < d`, `0 < finrank`, Thm 1.7, `hS`) necessary and harmless?
 - [ ] **`C²` in the kernel statements (round 2).** `IsEuclideanLangevin`, `IsSigmaLangevin` and `W n` of `convex_interaction_cutoff` require `C²` only (the first kernel version required `C^∞`). Uniqueness of the diffusion kernel is proved
       for convex `C²` `V` (`euclideanDiffusion_unique_convex`; mollification, Bakry–Émery for the approximants, localization with a radial cutoff). Check that every statement using these predicates carries a convexity hypothesis
-      (`Hess V ≥ ρ`, `RigidCurvature`, convex `W n`, the OU potential, `Hess V ≥ ρ > 0` in `temperature_kernel`) so that the claim is not weaker than intended, and that nothing needs `V ∈ C³`. AI audit pending.
+      (`Hess V ≥ ρ`, `RigidCurvature`, convex `W n`, the OU potential, `Hess V ≥ ρ > 0` in `temperature_kernel`) so that the claim is not weaker than intended, and that nothing needs `V ∈ C³`. AI audit N: no defect, 24 statements checked.
 - [ ] **Law form of Lemma 3.3 (no. 10).** The pathwise statement (a Brownian `β` on the same space with `dY = -ρY dt + √(2ρ) dβ`) is replaced by the law form
       `(Pt t x₀).map Tv = 𝒩(e^{-ρt} Tv x₀, (1-e^{-2ρt}) I)`. Confirm that this is an acceptable reading (the pathwise `β` cannot be stated without a Brownian motion; the generator and the Markov property of `T(X)` are not stated).
 - [ ] **Convexity for kernels.** Statements 29, 40, 41 use `Hess V ≥ ρ > 0`; sequence statements use `RigidCurvature`; no extra convexity hypothesis was added to any kernel statement.
-- [ ] **Manuscript vs printed paper.** The local `cutcur-lean.tex` differs from arXiv:2412.15969v4 (Thm 1.7 hypotheses, completeness and
+- [ ] **Manuscript vs printed paper.** The reference arXiv:2412.15969v5 (= `cutcur-lean.tex`) differs from the published article and from v4 (Thm 1.7 hypotheses, completeness and
       connectedness in the Riemannian setting, finite `p`, Thm 3.6). Judge whether the corrections are mathematically right
       (`PAPER_AUDIT.md`: the Ornstein–Uhlenbeck counterexample to Thm 1.7 is a written derivation, not checked in Lean) and agree with the authors' intent.
 - [ ] **Global instance.** `Riemann/WitnessGeometry.lean` adds `instIsContMDiffRiemannianBundleRd`; confirm it cannot change the meaning of
@@ -167,8 +167,8 @@ deviation to judge. AI audits: see the list above.
 - [ ] **Cosmetic/lint:** deprecation warnings (`if_pos`, `if_neg`, `haveI`, `Set.mem_setOf_eq`) are harmless.
 
 ## 4. Process items (outside Lean)
-- [ ] Fill `formalization.yaml` review fields only after a real review (`review.status`, reviewers); do not edit them before.
-- [ ] Verify the `formalization.yaml` alignment entries (`lean: CutCur.<name>`) against the official schema; the format was not validated.
+- [ ] `review.status` is `agent-reviewed` (AI audits only, set on 20 November 2026) and `reviewers` is empty. Change them (e.g. `author-verified`, with the reviewers' names) only after a real human review.
+- [x] `formalization.yaml` validates against the official v0.4 schema (checked 20 November 2026 with `jsonschema`; the `alignment` field is free-form in the schema).
 - [ ] Authors/responsible humans decide on registry submission and sign the attestation. Nothing was submitted or attested by the AI agents.
 - [ ] Decide on the license/attribution statement for the archived paper (CC BY 4.0, `paper/SOURCE.txt`) and the project's Apache-2.0.
 
