@@ -53,7 +53,7 @@ Read `Challenge.lean` lines 1-150 (Euclidean) and the Riemannian section (from `
       `IsSigmaDiffusion` / `IsSigmaLangevin` (generator `σ²Δ - ∇V·∇`, `V ∈ C²`, `e^{-V/σ²}` a probability density), `worstK`, `mixingTimeK`, `mixingTimeW2K`,
       `mixingTimeKLK` (`⨅ ∅ = ⊤`), `IsRigidSequenceK`. Confirm in particular that **`IsEuclideanDiffusion` is a faithful encoding of the law of the solution of the SDE (1.1)**
       (`Pt t x = Law(X_t^x)`): uniqueness of such `Pt` for convex `C²` `V` with probability Gibbs measure is *proved* (`euclideanDiffusion_unique_convex`; the smooth case `isEuclideanDiffusion_unique` via the Riemannian
-      `bridge_final`), and the Brownian `langevinKernel` is shown to satisfy it, and the identification with the SDE solution is Challenge statement no. 49 (`isLangevinSolution_map_eq_kernel_of_rigid`, rigid curvature).
+      `bridge_final`), and the Brownian `langevinKernel` is shown to satisfy it, and the identification with the SDE solution is Challenge statement no. 49 (`isLangevinSolution_map_eq_kernel_of_convex`, convex `V`; it was stated under rigid curvature until 20 November 2026).
 - [ ] Riemannian: `mgrad`, `mlaplacian`, `carre` (Γ), `carre2` (Γ₂), `CD` (Γ₂ ≥ ρΓ), `chartVolumeDensity`,
       `IsWeightedVolume` (μ = e^{-V} vol_g, no stray constant), `mSpectralGap`, `IsMEigenfunction`, `mFirstEigenDim`, `mLambda`;
       `mCurv`, `mExt`, `mRic` (sign and extension conventions), `mHess`, `mHessSq`.
@@ -125,7 +125,7 @@ statements and their definitions is enough for a submission of the reduced surfa
 | 46 | `mixing_time_kl_rigid` | summary after Cor 1.6 | needs `λ₁ = o(log n)`; any `η > 0`; kernel form |
 | 47 | `exists_stdBrownian` | existence of Brownian motion (classical) | proved from the vendored library; space `Ω : Type`; no AI audit yet |
 | 48 | `exists_langevin` | non-vacuity of `IsLangevin` | assumes `Hess V ≥ 0` (convexity, the paper's standing assumption; for non-convex `V` no global solution is claimed) and `IsProbabilityMeasure (gibbs V)`; `X x₀` is the project's selected pathwise solution; no AI audit yet |
-| 49 | `isLangevinSolution_map_eq_kernel_of_rigid` | kernel replacement (Sect. 1) | `V ∈ C²` (via `IsEuclideanLangevin`, round 2); rigid curvature; any carrier |
+| 49 | `isLangevinSolution_map_eq_kernel_of_convex` | kernel replacement (Sect. 1) | `V ∈ C²` (via `IsEuclideanLangevin`); convex `V` (`Hess V ≥ 0`; was rigid curvature until 20 November 2026), so it covers every kernel statement, including Thm 1.7; any carrier |
 | 50 | `eigenmap_is_ou_pathwise` | Lemma 3.3 | pathwise form (re-export of an existing theorem); `IsLangevin`, `C²` only |
 | 51 | `langevin_dissipation_eq_K'` | eq. HI | round 2: **equality** (replaces the inequality `langevin_dissipation_ge_K'`, same hypotheses); `hρ`, `hHess`; finite entropy at an earlier time; AI audit N: no defect |
 | 52 | `langevin_dissipation_eq_dirac_K` | eq. HI (Dirac) | round 2: **equality** (replaces `langevin_dissipation_dirac_K`); Dirac initial law; `ρ` explicit via `EXPLICIT` entry in `gen-solution.py`; AI audit N: no defect |

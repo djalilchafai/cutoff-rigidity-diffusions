@@ -6,20 +6,20 @@ diffusions*, Comptes Rendus Mathématique 363 (2025) 1103–1121 ([doi:10.5802/c
 corrections of the erratum to the published article. Its TeX source is archived in [`paper/`](paper/SOURCE.txt);
 [cutcur-lean.tex](cutcur-lean.tex) is the same text with a BibTeX bibliography. The numbering of results is the same in v4 and v5.
 
-**Palomar surface (20 November 2026).** [`PalomarChallenge.lean`](PalomarChallenge.lean) (339 lines, 16 theorems, 41 definitions; Comparator
+**Palomar surface (20 November 2026).** [`PalomarChallenge.lean`](PalomarChallenge.lean) (335 lines, 16 theorems, 41 definitions; Comparator
 config [`comparator-palomar.json`](comparator-palomar.json)) is the surface proposed for registration: the numbered results of the paper, the
 identification of the kernel with the law of the SDE, the existence of the diffusion and of SDE solutions for convex potentials, and the
 uniqueness of the kernel. It is
 generated verbatim from `Challenge.lean` by `scripts/gen-palomar.py`, together with `PalomarSolution.lean`; the sandboxed Comparator accepts it
-(Lean kernel, nanoda, con-ron 90936 declarations; `verification/comparator-palomar-sandboxed.log`).
+(Lean kernel, nanoda, con-ron 90935 declarations; `verification/comparator-palomar-sandboxed.log`).
 
-**Status (1 November 2026, round 2; 69 theorems since 20 November 2026).** `Challenge.lean` states 69 theorems and 67 definitions (860 lines, 89 KB): the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
+**Status (1 November 2026, round 2; 69 theorems since 20 November 2026).** `Challenge.lean` states 69 theorems and 67 definitions (860 lines, 92 KB): the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
 3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and further claims of the
 manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound (Euclidean and Riemannian), (R2) => (R1), examples, proof ingredients such as W2
 contraction, entropy decay, Pinsker and Talagrand, the optimal constants, and the Section 4 items; see
 [PALOMAR.md](PALOMAR.md)). `Solution.lean` proves all of them (no `sorry`, axioms `propext`,
 `Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 69-theorem pair
-(con-ron 92446 declarations, nanoda and the Lean kernel; `comparator.json` lists the 69 theorems and 66 definitions, the structure `CutCur.Form` being checked as a dependency). The splitting theorem now also states the
+(con-ron 92445 declarations, nanoda and the Lean kernel; `comparator.json` lists the 69 theorems and 66 definitions, the structure `CutCur.Form` being checked as a dependency). The splitting theorem now also states the
 potential identity of Theorem 3.6 and the connectedness and completeness of the factor.
 A further block of 11 statements (Bochner identity and `CD ⇔ Ric + Hess V ≥ ρ`, Riemannian `k₁` bounds and Poincaré/log-Sobolev, Fisher
 decay for all laws and its Dini form, Brownian scaling at the SDE level, the temperature SDE and cutoffs, W2 and entropy mixing times) is
@@ -40,7 +40,7 @@ Round 2 (1 November 2026, second integration; every item went through a worker a
 Not formalized: see the section "What is not formalized" below. Theorem 1.9 is proved for every
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
 log-Sobolev, gap attainment and the Kuwada contraction are formalized (see [PALOMAR.md](PALOMAR.md)).
-No human semantic review has taken place; the statements were checked only by AI audits
+Human review (20 November 2026): D. Chafaï checked the 16 statements of `PalomarChallenge.lean` against arXiv v5; the other statements were checked only by AI audits
 (`verification/semantic-audit.md`, `audit-second-*.md`, `audit-extra-A.md` to `audit-extra-O.md`).
 
 **Corrections to the published paper and to arXiv v4**, found during the formalization, included in arXiv v5 and in the
@@ -203,7 +203,7 @@ The 69 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md
   - the Rothaus remark: only an abstract Dirichlet-type form `(Q, E)` under the hypothesis `Form.Compact`, and the unconditional finite-space case; the compact weighted Riemannian manifold (Sobolev embedding `H¹ ⊂ L^{2+δ}`, Rellich, density of smooth functions) is not formalized; the (VW) extremality claims are covered by `optimal_constants_extremal`;
   - Dyson: the static statement (`dyson_ou_static`) and `λ₁ = ρ` (`dyson_spectralGap`) are formalized; the Dyson–OU process and the Neumann realization of the generator are not.
 - **Formalized only in a weakened or changed form:** `IsEuclideanLangevin`/`IsSigmaLangevin` are `C²` but the statements all assume convexity (uniqueness of the diffusion kernel is proved for convex `V` only); Theorem 1.9 with the diffusion encoded as `IsDiffusionSemigroup`; `normalization_sde` and `temperature_sde` take the SDE solutions as hypotheses, and `temperature_sde` and `temperature_kernel` add `Hess V ≥ ρ > 0`; Theorem 1.7 amended (the printed statement is false; the counterexample is a written derivation, not checked in Lean); (1.25) for finite `p` only; extra hypotheses `0 < d`, `0 < finrank`, and `hgap` for the `k₁` bounds; the Dyson Poincaré statement is for bounded smooth Lipschitz test functions with `h` extremal in the closure sense; Gaussian isoperimetry and the Rothaus alternative as described above.
-- **Now formalized (previously listed here):** that `Pt t x` is the law of any SDE solution (`isLangevinSolution_map_eq_kernel_of_rigid`); the pathwise form of Lemma 3.3 (`eigenmap_is_ou_pathwise`); the Leibniz/chain rule and operator form of `carre`; the vector form of Bochner; `C²` instead of `C^∞` for the kernel statements; the equality `H(μ_s) - H(μ_t) = ∫_s^t I` for general laws (finite entropy at an earlier time) and Dirac laws; `λ₁ = ρ` for Dyson–OU; existence and uniqueness of the `σ`-diffusion kernel (`temperature_kernel`).
+- **Now formalized (previously listed here):** that `Pt t x` is the law of any SDE solution (`isLangevinSolution_map_eq_kernel_of_convex`, for every convex `C²` `V`); the pathwise form of Lemma 3.3 (`eigenmap_is_ou_pathwise`); the Leibniz/chain rule and operator form of `carre`; the vector form of Bochner; `C²` instead of `C^∞` for the kernel statements; the equality `H(μ_s) - H(μ_t) = ∫_s^t I` for general laws (finite entropy at an earlier time) and Dirac laws; `λ₁ = ρ` for Dyson–OU; existence and uniqueness of the `σ`-diffusion kernel (`temperature_kernel`).
 - **Not checked in Lean:** a curved Riemannian witness for the theorems of Section 1.4 (only the flat Gaussian on ℝᵏ and, in model form, the sphere); that `Form.Compact` holds for `H¹` of a compact manifold (only for finite spaces, `Rothaus.finite_compact`, not a Challenge statement); non-vacuity of the Gaussian isoperimetric statements for a non-constant test function (`gibbs_quadratic_isProb` only shows the measure hypothesis is satisfiable).
 
 ## How to rebuild and verify

@@ -4,7 +4,7 @@
   "theorem_names": [
     "CutCur.exists_stdBrownian",
     "CutCur.exists_langevin",
-    "CutCur.isLangevinSolution_map_eq_kernel_of_rigid",
+    "CutCur.isLangevinSolution_map_eq_kernel_of_convex",
     "CutCur.exists_euclideanLangevin_of_convex",
     "CutCur.euclideanDiffusion_unique_of_convex",
     "CutCur.main_wasserstein_estimate",

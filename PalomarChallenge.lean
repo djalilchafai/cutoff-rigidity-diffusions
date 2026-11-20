@@ -5,15 +5,11 @@ public import Mathlib
 /-!
 # Cutoff via rigidity for high dimensional curved diffusions: main results
 
-Palomar statement surface (generated from `Challenge.lean` by `scripts/gen-palomar.py`) for
-D. Chafaï and M. Fathi, *On cutoff via rigidity for high dimensional curved diffusions*,
-Comptes Rendus Mathématique 363 (2025) 1103–1121, in the corrected version arXiv:2412.15969v5
-(25 October 2026). It states the numbered results of the paper (Theorems 1.1, 1.5, 1.7, 1.9, 3.1,
-3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6 and display (1.25)), the identification of the
-transition kernel with the law of the solution of the SDE (1.1), the existence of the diffusion and of
-solutions of (1.1) for convex potentials (so that the standing hypotheses are not vacuous), and the
-uniqueness of the kernel. Every object is defined from Mathlib alone; deviations from v5 are flagged in the docstrings. The full set of
-69 statements (remarks, examples, Section 4) is `Challenge.lean`, checked with `comparator.json`. -/
+Generated from `Challenge.lean` by `scripts/gen-palomar.py`. D. Chafaï and M. Fathi, CRAS 363 (2025)
+1103–1121, corrected version arXiv:2412.15969v5. Statements: Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6,
+Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25); for convex potentials, existence and
+uniqueness of the kernel and its identification with the law of the SDE (1.1). Definitions use Mathlib
+only; deviations from v5 are flagged in the docstrings. Full surface (69 statements): `Challenge.lean`. -/
 
 open MeasureTheory ProbabilityTheory Filter Topology Set
 open scoped ENNReal NNReal ContDiff Manifold
@@ -70,7 +66,7 @@ def IsLangevinSolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d →
 def IsLangevin {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d) : Prop :=
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsStdBrownian B P ∧ ∀ x₀, IsLangevinSolution V B P x₀ (X x₀)
 
-/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For convex `C²` `V` with probability Gibbs measure (the setting of every statement below) such a semigroup is unique (`euclideanDiffusion_unique_of_convex`). That it is the law of the solution of the SDE (1.1) is the statement `isLangevinSolution_map_eq_kernel_of_rigid`, proved here under `RigidCurvature` only. -/
+/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For convex `C²` `V` with probability Gibbs measure (the setting of every statement below) such a semigroup is unique (`euclideanDiffusion_unique_of_convex`). That it is the law of the solution of the SDE (1.1) is `isLangevinSolution_map_eq_kernel_of_convex`. -/
 def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop := (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
   ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
   ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
@@ -115,9 +111,9 @@ theorem exists_langevin (d : ℕ) (V : Rd d → ℝ) (hV : ContDiff ℝ 2 V) (hH
   IsProbabilityMeasure P ∧ IsLangevin V B P X := by
   sorry
 
-/-- **The kernel is the law of the SDE** (the kernel formulation is faithful): under `RigidCurvature V`, every solution `X` of (1.1) driven by a standard Brownian motion `B` (on any probability space) has `Law(Xₜ) = Pt t x₀` for the Euclidean Langevin semigroup `Pt`. -/
-theorem isLangevinSolution_map_eq_kernel_of_rigid {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
-  {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hR : RigidCurvature V) {B : ℝ≥0 → Ω → Rd d}
+/-- **The kernel is the law of the SDE** (the kernel formulation is faithful): for a convex `C²` potential (`Hess V ≥ 0`), every solution `X` of (1.1) driven by a standard Brownian motion `B` (on any probability space) has `Law(Xₜ) = Pt t x₀` for the Euclidean Langevin semigroup `Pt`. Every kernel statement of this file assumes convexity, so this applies to all of them. -/
+theorem isLangevinSolution_map_eq_kernel_of_convex {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
+  {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z) {B : ℝ≥0 → Ω → Rd d}
   {P : Measure Ω} (hB : IsStdBrownian B P) {x₀ : Rd d} {X : ℝ≥0 → Ω → Rd d} (hX : IsLangevinSolution V B P x₀ X) (t : ℝ≥0) : P.map (X t) = Pt t x₀ := by
   sorry
 

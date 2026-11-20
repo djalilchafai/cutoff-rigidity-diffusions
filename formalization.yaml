@@ -1,4 +1,4 @@
-# Not yet submitted to Palomar: no human semantic review has taken place (see HUMAN_REVIEW.md).
+# Proposed Palomar surface: PalomarChallenge.lean with comparator-palomar.json (reviewed by the author, see review).
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
 version: v0.4
 project:
@@ -41,7 +41,9 @@ sources:
       Riemannian results. The numbering of results is the same in v4 and v5.
       The TeX source is archived in paper/ (SHA-256 in paper/SOURCE.txt);
       cutcur-lean.tex is the same text with a BibTeX bibliography. Source-author
-      involvement: D. Chafaï, co-author, is the maintainer of this formalization.
+      involvement: D. Chafaï, co-author, is the maintainer of this formalization and
+      reviewed the statements of the submitted surface; M. Fathi, co-author, was
+      informed and agreed to the registration (20 November 2026).
     license: CC-BY-4.0
 related_formalizations:
   - id: https://github.com/RemyDegenne/brownian-motion
@@ -61,7 +63,7 @@ related_formalizations:
 status:
   scope: >-
     Two Comparator surfaces, both built from Mathlib-only definitions.
-    PalomarChallenge.lean (339 lines, 16 theorems, 41 definitions;
+    PalomarChallenge.lean (335 lines, 16 theorems, 41 definitions;
     comparator-palomar.json) is generated verbatim from Challenge.lean by
     scripts/gen-palomar.py and is the surface proposed for registration.
     Challenge.lean (860 lines, 69 theorems, 67 definitions; comparator.json) is
@@ -203,8 +205,13 @@ fidelity:
     C_c^infty with generator Laplacian - grad V . grad), IsEuclideanLangevin (adds V in C^2
     and a probability Gibbs measure), IsSigmaLangevin (generator sigma^2 Laplacian - grad V
     . grad). Uniqueness of such kernels is proved for convex C^2 V
-    (euclideanDiffusion_unique_convex), and isLangevinSolution_map_eq_kernel_of_rigid
-    proves that Pt t x is the law at time t of any solution of the SDE (rigid curvature).
+    (euclideanDiffusion_unique_of_convex), it exists
+    (exists_euclideanLangevin_of_convex), and isLangevinSolution_map_eq_kernel_of_convex
+    proves that Pt t x is the law at time t of any solution of the SDE (1.1), for every
+    convex C^2 V. Every kernel statement assumes convexity, so the kernel form is
+    equivalent to the SDE form of the paper; this is not so for the sigma-diffusion of
+    Section 4 (IsSigmaLangevin) with sigma different from 1, whose SDE identification is
+    not a statement.
     Every statement using these predicates assumes convexity (Hess V >= 0 or stronger,
     as in the paper's standing assumptions). Theorem 1.9 encodes the diffusion as
     IsDiffusionSemigroup (Markov kernels, semigroup law, Kolmogorov equation on
@@ -244,10 +251,14 @@ fidelity:
     (ou_lp_infty_fails proves that p = infinity fails); complete connected manifolds
     without boundary in the Riemannian results.
 review:
-  status: agent-reviewed
-  reviewers: []
+  status: author-verified
+  reviewers: [Djalil Chafaï]
   notes: >-
-    No human semantic review has taken place. Every Challenge statement has been
+    Scope of the human review: the 16 statements of the submitted surface
+    PalomarChallenge.lean (comparator-palomar.json) and the definitions they use
+    were checked against arXiv:2412.15969v5 by Djalil Chafaï, co-author of the paper,
+    on 20 November 2026. The other 53 statements of the full surface Challenge.lean
+    have had AI audits only. Every Challenge statement has been
     audited against the paper by at least one AI agent (verification/semantic-audit.md,
     audit-second-1.md, audit-second-2.md, audit-extra-A.md to audit-extra-O.md); these
     audits cover statements and definitions, not proofs (which are kernel-checked).
@@ -258,7 +269,7 @@ alignment:
   statements:
     - lean: CutCur.exists_stdBrownian  # existence of a standard Brownian motion on R^d (vendored Degenne et al. library; Mathlib IsBrownianReal)
     - lean: CutCur.exists_langevin  # non-vacuity of IsLangevin: assumes Hess V >= 0 (convexity, standing assumption) and probability Gibbs measure
-    - lean: CutCur.isLangevinSolution_map_eq_kernel_of_rigid  # every SDE solution has the law prescribed by the kernel Pt (RigidCurvature version); makes the kernel formulation faithful
+    - lean: CutCur.isLangevinSolution_map_eq_kernel_of_convex  # every SDE solution has the law prescribed by the kernel Pt, for convex C^2 V; makes the kernel formulation faithful
     - lean: CutCur.exists_euclideanLangevin_of_convex  # non-vacuity of IsEuclideanLangevin: the kernel exists for convex C^2 V with probability Gibbs measure
     - lean: CutCur.euclideanDiffusion_unique_of_convex  # uniqueness of the kernel in IsEuclideanDiffusion for convex C^2 V
     - lean: CutCur.main_wasserstein_estimate

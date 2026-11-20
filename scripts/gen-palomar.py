@@ -23,7 +23,7 @@ CORE = [
     "exists_euclideanLangevin_of_convex",
     "euclideanDiffusion_unique_of_convex",
     "exists_langevin",
-    "isLangevinSolution_map_eq_kernel_of_rigid",
+    "isLangevinSolution_map_eq_kernel_of_convex",
     "main_wasserstein_estimate",
     "eigenspace_dim_and_lambda",
     "wasserstein_cutoff",
@@ -41,15 +41,11 @@ CORE = [
 HEADER_DOC = """/-!
 # Cutoff via rigidity for high dimensional curved diffusions: main results
 
-Palomar statement surface (generated from `Challenge.lean` by `scripts/gen-palomar.py`) for
-D. Chafaï and M. Fathi, *On cutoff via rigidity for high dimensional curved diffusions*,
-Comptes Rendus Mathématique 363 (2025) 1103–1121, in the corrected version arXiv:2412.15969v5
-(25 October 2026). It states the numbered results of the paper (Theorems 1.1, 1.5, 1.7, 1.9, 3.1,
-3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6 and display (1.25)), the identification of the
-transition kernel with the law of the solution of the SDE (1.1), the existence of the diffusion and of
-solutions of (1.1) for convex potentials (so that the standing hypotheses are not vacuous), and the
-uniqueness of the kernel. Every object is defined from Mathlib alone; deviations from v5 are flagged in the docstrings. The full set of
-69 statements (remarks, examples, Section 4) is `Challenge.lean`, checked with `comparator.json`.
+Generated from `Challenge.lean` by `scripts/gen-palomar.py`. D. Chafaï and M. Fathi, CRAS 363 (2025)
+1103–1121, corrected version arXiv:2412.15969v5. Statements: Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6,
+Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25); for convex potentials, existence and
+uniqueness of the kernel and its identification with the law of the SDE (1.1). Definitions use Mathlib
+only; deviations from v5 are flagged in the docstrings. Full surface (69 statements): `Challenge.lean`.
 """
 
 DECL = re.compile(r"^(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+)*(theorem|def|abbrev|structure)\s+([^\s({\[:]+)", re.M)
@@ -117,8 +113,8 @@ def main():
     (ROOT / "PalomarChallenge.lean").write_text(challenge, encoding="utf-8")
 
     shead, sblocks = split("Solution.lean")
-    sdoc = HEADER_DOC.replace("Palomar statement surface (generated from `Challenge.lean` by `scripts/gen-palomar.py`)",
-                              "Proofs of the Palomar statement surface (generated from `Solution.lean` by `scripts/gen-palomar.py`)")
+    sdoc = HEADER_DOC.replace("Generated from `Challenge.lean` by `scripts/gen-palomar.py`.",
+                              "Proofs, generated from `Solution.lean` by `scripts/gen-palomar.py`.")
     shead = re.sub(r"/-!.*?-/\n", sdoc.rstrip("\n") + " -/\n", shead, count=1, flags=re.S)
     solution = shead + "\n" + "\n\n".join(select(sblocks, set())) + "\n"
     (ROOT / "PalomarSolution.lean").write_text(solution, encoding="utf-8")

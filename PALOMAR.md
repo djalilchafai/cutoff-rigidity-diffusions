@@ -5,15 +5,16 @@ paper is arXiv:2412.15969v5 (25 October 2026; source archived in `paper/`), whic
 the corrections of the erratum to the published article (CRAS 2025). The surface proposed
 for registration is `PalomarChallenge.lean` with `comparator-palomar.json` (16 theorems: the
 numbered results, the kernel = SDE law link, existence of the diffusion and of SDE solutions,
-uniqueness of the kernel; 41 definitions; 339 lines, 32 KB), generated verbatim from the full surface by
+uniqueness of the kernel; 41 definitions; 335 lines, 32 KB), generated verbatim from the full surface by
 `scripts/gen-palomar.py`. The full surface `Challenge.lean` states 69 theorems and 67
 definitions; `comparator.json` lists the 69 theorems and 66 definitions. Both Solutions use
 `propext`, `Classical.choice` and `Quot.sound` only and the sandboxed `lake comparator`
 accepts both pairs. `formalization.yaml`
 validates against the official v0.4 schema and names D. Chafaï as author and responsible
 maintainer. The toolchain `v4.35.0-rc2` is the minimum accepted by Palomar. Remaining steps,
-for humans only: the semantic review (`HUMAN_REVIEW.md`), the choice of the submitted
-Challenge surface, and the submission itself. The new project code uses Apache-2.0; the
+for humans only: the submission itself. The semantic review of the submitted surface was
+done by D. Chafaï on 20 November 2026 (`review.status: author-verified`); M. Fathi agreed to
+the registration. The new project code uses Apache-2.0; the
 downloaded paper sources retain CC-BY-4.0.
 
 The sections below are a chronological log. Earlier statements in them (an empty Comparator
@@ -467,6 +468,17 @@ comparison of the type of every declaration of the old and new `Challenge` modul
   is now a statement, `euclideanDiffusion_unique_of_convex` (69th theorem; 16th of the reduced surface). Sandboxed
   Comparator after these changes: reduced pair accepted (con-ron 90936 declarations, nanoda, Lean kernel), full pair
   accepted (con-ron 92446).
+- Docstrings of the 15 kernel statements that do not assume `RigidCurvature` (among them Corollary 1.6, Theorem 1.7, nos. 68
+  and 69) now say that the identification of `Pt` with the law of the SDE solution is a statement only under rigid curvature
+  (`isLangevinSolution_map_eq_kernel_of_rigid`). The header of `PalomarChallenge.lean` was shortened to stay under 32 KiB.
+- Superseding the previous item: no. 49 is now stated for convex `C²` `V` (`Hess V ≥ 0`) instead of rigid curvature,
+  as `isLangevinSolution_map_eq_kernel_of_convex` (proof: `Paper.isLangevinSolution_map_eq_kernel_C2`, which never used
+  rigidity). Every kernel statement assumes convexity, so the identification of `Pt` with the law of the SDE (1.1) now
+  covers all of them, Theorem 1.7 included; the caveats added to the docstrings were removed again, except for the
+  `σ`-diffusion of Section 4 (`temperature_cutoff`, `temperature_kernel`). Sandboxed Comparator after this change:
+  reduced pair accepted (con-ron 90935 declarations, nanoda, Lean kernel), full pair accepted (con-ron 92445).
+- Human review of the submitted surface by D. Chafaï; M. Fathi agreed to the registration. `.github/workflows/palomar-preflight.yml`
+  runs Palomar's reusable verification workflow (manual dispatch) on the submitted configuration.
 - AI audit N (`verification/audit-extra-N.md`) of the round-2 statements, the equality statements 51-52 and the `C²` clause:
   no defect; six minor docstring fixes applied in `Challenge.lean` (docstrings only, derived files regenerated).
 - `scripts/bwrap-home-symlink-wrapper.sh`: `lake comparator` now calls `bwrap` with an empty `HOME`; the wrapper falls back

@@ -14,7 +14,7 @@ lines = (ROOT / "Challenge.lean").read_text(encoding="utf-8").split("\n")
 EXPLICIT = {"langevin_dissipation_eq_dirac_K": "(ρ := ρ)"}
 # Statements proved by a theorem of another name/namespace (default: `CutoffRigidity.Paper.<name>`).
 # The `C²` ports (`C2Uniq*`, `C2Sigma*`) have hypotheses `C2U.IsEucLangevin2` etc., definitionally the Challenge predicates.
-C2 = ["isLangevinSolution_map_eq_kernel_of_rigid", "main_wasserstein_estimate", "wasserstein_cutoff", "information_cutoff", "lp_cutoff",
+C2 = ["main_wasserstein_estimate", "wasserstein_cutoff", "information_cutoff", "lp_cutoff",
       "convex_interaction_cutoff", "product_condition_cutoff", "eigenmap_is_ou", "wasserstein_cutoff_weak", "information_cutoff_weak",
       "mixing_time_rigid", "mixing_time_w2_rigid", "mixing_time_kl_rigid", "langevin_w2_contraction", "langevin_entropy_decay",
       "langevin_fisher_decay", "langevin_fisher_dini", "temperature_cutoff"]
@@ -29,6 +29,7 @@ TARGET.update({
 })
 # Statements with a short explicit proof (bridges between the Challenge definitions and the proof-side ones).
 CUSTOM = {
+    "isLangevinSolution_map_eq_kernel_of_convex": "  exact CutoffRigidity.Paper.isLangevinSolution_map_eq_kernel_C2 hL hHess hB hX t",
     "euclideanDiffusion_unique_of_convex": "  funext t\n  exact Kernel.ext fun x => CutCur.C2U.euclideanDiffusion_unique_convex hV\n    (CutoffRigidity.NoBm.convexOn_univ_of_hessian_nonneg hV hHess) h₁ h₂ t x",
     "exists_euclideanLangevin_of_convex": "  exact CutCur.C2U.exists_euclideanLangevin_C2 hV hHess hp",
     "ou_fisher_information": "  exact CutoffRigidity.Paper.ou_fisher_information_K hρ (CutoffRigidity.Paper.ouInf hL) x₀ ht",

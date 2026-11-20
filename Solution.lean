@@ -62,11 +62,11 @@ theorem exists_langevin (d : ℕ) (V : Rd d → ℝ) (hV : ContDiff ℝ 2 V) (hH
   IsProbabilityMeasure P ∧ IsLangevin V B P X := by
   apply CutoffRigidity.Paper.exists_langevin <;> assumption
 
-/-- **The kernel is the law of the SDE** (the kernel formulation is faithful): under `RigidCurvature V`, every solution `X` of (1.1) driven by a standard Brownian motion `B` (on any probability space) has `Law(Xₜ) = Pt t x₀` for the Euclidean Langevin semigroup `Pt`. -/
-theorem isLangevinSolution_map_eq_kernel_of_rigid {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
-  {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hR : RigidCurvature V) {B : ℝ≥0 → Ω → Rd d}
+/-- **The kernel is the law of the SDE** (the kernel formulation is faithful): for a convex `C²` potential (`Hess V ≥ 0`), every solution `X` of (1.1) driven by a standard Brownian motion `B` (on any probability space) has `Law(Xₜ) = Pt t x₀` for the Euclidean Langevin semigroup `Pt`. Every kernel statement of this file assumes convexity, so this applies to all of them. -/
+theorem isLangevinSolution_map_eq_kernel_of_convex {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
+  {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z) {B : ℝ≥0 → Ω → Rd d}
   {P : Measure Ω} (hB : IsStdBrownian B P) {x₀ : Rd d} {X : ℝ≥0 → Ω → Rd d} (hX : IsLangevinSolution V B P x₀ X) (t : ℝ≥0) : P.map (X t) = Pt t x₀ := by
-  apply CutoffRigidity.Paper.isLangevinSolution_map_eq_kernel_of_rigid_C2 <;> assumption
+  exact CutoffRigidity.Paper.isLangevinSolution_map_eq_kernel_C2 hL hHess hB hX t
 
 /-- Non-vacuity of the standing hypothesis `IsEuclideanLangevin` of the kernel statements: for a `C²` potential with nonnegative Hessian (that is, convex) and probability Gibbs measure, a kernel family satisfying `IsEuclideanLangevin` exists. The hypotheses are weaker than the paper's (strict convexity is not required; `V → ∞` follows from convexity and integrability of `e^{-V}`). Uniqueness: `euclideanDiffusion_unique_of_convex`. -/
 theorem exists_euclideanLangevin_of_convex {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z)
@@ -344,7 +344,7 @@ theorem temperature_sde {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d �
   (fun x u w => Y x (((σ ^ 2)⁻¹).toNNReal * u) w) ∧ ∀ t : ℝ≥0, (gibbs fun x => V x / σ ^ 2).bind (fun x => P.map (Y x t)) = gibbs fun x => V x / σ ^ 2 := by
   apply CutoffRigidity.Paper.temperature_sde <;> assumption
 
-/-- **Temperature, cutoff** (Section "Temperature"), kernel form: the critical time is free of `σ`. `Pt n` is the semigroup of the `σ`-diffusion `dY = -∇Vₙ dt + √2 σ dB` (`IsSigmaLangevin`, generator `σ²Δ - ∇Vₙ·∇`). If `Hess Vₙ ≥ ρₙ`, `liminf ρₙ > 0`, the Wasserstein cutoff on `B(m, c√n)` occurs at `log n/(2ρₙ)`; if `ρₙ = o(log n)`, so do Fisher, entropy and TV cutoffs. Flags: "rigid" is `ρₙ = σ² λ₁(Vₙ/σ²)` (`hgap`); `Vₙ` is `C²` as in the manuscript, and normalizability of `e^{-Vₙ/σ²}` is inside `IsSigmaLangevin`. -/
+/-- **Temperature, cutoff** (Section "Temperature"), kernel form: the critical time is free of `σ`. `Pt n` is the semigroup of the `σ`-diffusion `dY = -∇Vₙ dt + √2 σ dB` (`IsSigmaLangevin`, generator `σ²Δ - ∇Vₙ·∇`). If `Hess Vₙ ≥ ρₙ`, `liminf ρₙ > 0`, the Wasserstein cutoff on `B(m, c√n)` occurs at `log n/(2ρₙ)`; if `ρₙ = o(log n)`, so do Fisher, entropy and TV cutoffs. Flags: "rigid" is `ρₙ = σ² λ₁(Vₙ/σ²)` (`hgap`); `Vₙ` is `C²` as in the manuscript, and normalizability of `e^{-Vₙ/σ²}` is inside `IsSigmaLangevin`. Kernel form: that the kernel is the law of the solution of the `σ`-SDE is not a statement of this file (for `σ = 1` it is `isLangevinSolution_map_eq_kernel_of_convex`). -/
 theorem temperature_cutoff {V : ∀ n, Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {ρ : ℕ → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)}
   (hY : ∀ n, 0 < n → IsSigmaLangevin (V n) σ (Pt n)) (hρ : ∀ n, 0 < n → 0 < ρ n) (hHess : ∀ n, 0 < n → ∀ x z : Rd n,
   ρ n * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ (V n)) x z z) (hgap : ∀ n, 0 < n → ρ n = σ ^ 2 * spectralGap (fun x => V n x / σ ^ 2))
@@ -357,7 +357,7 @@ theorem temperature_cutoff {V : ∀ n, Rd n → ℝ} {σ : ℝ} (hσ : 0 < σ) {
       (fun ν => .ofReal (tvDist ν (gibbs fun x => V n x / σ ^ 2)))) t 1 0) := by
   apply CutoffRigidity.Paper.temperature_cutoff_C2 <;> assumption
 
-/-- **Temperature, kernel form** (Section "Temperature"): for `σ > 0`, `V` of class `C²` with `Hess V ≥ ρ > 0` and `e^{-V/σ²}` a probability density, the `σ`-diffusion (generator `σ²Δ - ∇V·∇`) exists, leaves `e^{-V/σ²}dx` invariant, and equals the time change `Pt t = P̃ (σ² t)` of every Euclidean Langevin semigroup `P̃` of `V/σ²`, hence is unique. Flag: the convexity `Hess V ≥ ρ > 0` is added (not in the manuscript). -/
+/-- **Temperature, kernel form** (Section "Temperature"): for `σ > 0`, `V` of class `C²` with `Hess V ≥ ρ > 0` and `e^{-V/σ²}` a probability density, the `σ`-diffusion (generator `σ²Δ - ∇V·∇`) exists, leaves `e^{-V/σ²}dx` invariant, and equals the time change `Pt t = P̃ (σ² t)` of every Euclidean Langevin semigroup `P̃` of `V/σ²`, hence is unique. Flag: the convexity `Hess V ≥ ρ > 0` is added (not in the manuscript). Kernel form: that the kernel is the law of the solution of the `σ`-SDE is not a statement of this file (for `σ = 1` it is `isLangevinSolution_map_eq_kernel_of_convex`). -/
 theorem temperature_kernel {d : ℕ} {V : Rd d → ℝ} {σ : ℝ} (hσ : 0 < σ) (hV : ContDiff ℝ 2 V) {ρ : ℝ} (hρ : 0 < ρ)
   (hHess : ∀ x z : Rd d, ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z) (hp : IsProbabilityMeasure (gibbs fun x => V x / σ ^ 2)) :
   (∃ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsSigmaLangevin V σ Pt) ∧ ∀ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsSigmaLangevin V σ Pt →

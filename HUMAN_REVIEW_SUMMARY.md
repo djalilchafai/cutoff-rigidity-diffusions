@@ -5,20 +5,20 @@ Companion files: `HUMAN_REVIEW.md` (full checklist), `PALOMAR.md`, `PAPER_AUDIT.
 
 Reference version of the paper: **arXiv:2412.15969v5** (archived in `paper/`; `cutcur-lean.tex` is the same text).
 
-**No human has reviewed this formalization.** `review.status` in `formalization.yaml` is `agent-reviewed` (AI audits only). Nothing was submitted
+**Human review (20 November 2026):** Djalil Chafaï checked the 16 statements of `PalomarChallenge.lean` and their definitions against arXiv v5 (`review.status: author-verified`). The other 53 statements of `Challenge.lean` have had AI audits only. Nothing was submitted
 to a registry or attested. Everything labelled "AI" below was done by language-model agents. This page says what you would be
 signing up to check.
 
 ## 0. What to review for the Palomar submission
-The proposed surface is `PalomarChallenge.lean` (339 lines): 16 theorems (nos. 1-12, 48, 49, 68 and 69 of `HUMAN_REVIEW.md` §2) and the 41
+The proposed surface is `PalomarChallenge.lean` (335 lines): 16 theorems (nos. 1-12, 48, 49, 68 and 69 of `HUMAN_REVIEW.md` §2) and the 41
 definitions they use, copied verbatim from `Challenge.lean`. Reviewing it is enough for that submission (a few hours rather than a day);
 sections 2-7 below concern the full surface.
 
 ## 1. What is machine-checked
-- `Challenge.lean` has 69 theorems and 67 definitions (860 lines, 89 KB). `Solution.lean` proves each theorem with the same statement.
+- `Challenge.lean` has 69 theorems and 67 definitions (860 lines, 92 KB). `Solution.lean` proves each theorem with the same statement.
 - All 69 use only `propext`, `Classical.choice` and `Quot.sound`. There is no `sorry`, `axiom` or `native_decide`.
-- The reduced pair `PalomarChallenge.lean`/`PalomarSolution.lean` (16 theorems) is accepted by the sandboxed Comparator as well (con-ron 90936 declarations).
-- The sandboxed Comparator accepts the solution, with the Lean kernel, nanoda and con-ron (92446 declarations, 69-theorem pair, 20 November 2026).
+- The reduced pair `PalomarChallenge.lean`/`PalomarSolution.lean` (16 theorems) is accepted by the sandboxed Comparator as well (con-ron 90935 declarations).
+- The sandboxed Comparator accepts the solution, with the Lean kernel, nanoda and con-ron (92445 declarations, 69-theorem pair, 20 November 2026).
 - Rebuild instructions are in the README section "How to rebuild and verify".
 
 Lean does **not** certify that the statements and definitions mean what the manuscript says. That is the review.
@@ -98,4 +98,4 @@ Lean does **not** certify that the statements and definitions mean what the manu
 5. Check the vendored code provenance (`vendor/README.md`).
 6. Only after a real review: fill the `review` fields in `formalization.yaml` and decide on registry submission and attestation (humans only).
 
-Sign-off: Reviewer(s): ____________  Date: ____________  Commit: ____________
+Sign-off: Reviewer(s): Djalil Chafaï  Date: 20 November 2026  Scope: the 16 statements of `PalomarChallenge.lean` (nos. 1-12, 48, 49, 68, 69) and their 41 definitions, against arXiv v5; the other 53 statements of `Challenge.lean`: AI audits only.  Commit: the commit that records this sign-off.
