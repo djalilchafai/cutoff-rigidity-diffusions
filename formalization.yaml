@@ -13,8 +13,8 @@ project:
     Remark 1.2, display (1.25)), the identification of the transition kernel
     with the law of the SDE solution, and the existence of the diffusion and of
     SDE solutions for convex potentials (non-vacuity of the standing
-    hypotheses): 15 theorems. The repository also contains a larger surface,
-    Challenge.lean with comparator.json (68 theorems: remarks, examples and
+    hypotheses) and the uniqueness of the kernel: 16 theorems. The repository also contains a larger surface,
+    Challenge.lean with comparator.json (69 theorems: remarks, examples and
     Section 4 as well). Both are proved with the standard axioms only. Some statements are restricted or
     amended; every difference with arXiv v5 is listed in fidelity.divergences.
   authors: [Djalil Chafaï]
@@ -61,10 +61,10 @@ related_formalizations:
 status:
   scope: >-
     Two Comparator surfaces, both built from Mathlib-only definitions.
-    PalomarChallenge.lean (334 lines, 15 theorems, 41 definitions;
+    PalomarChallenge.lean (339 lines, 16 theorems, 41 definitions;
     comparator-palomar.json) is generated verbatim from Challenge.lean by
     scripts/gen-palomar.py and is the surface proposed for registration.
-    Challenge.lean (855 lines, 68 theorems, 67 definitions; comparator.json) is
+    Challenge.lean (860 lines, 69 theorems, 67 definitions; comparator.json) is
     the full surface. PalomarSolution.lean and Solution.lean prove every theorem
     with exactly the Challenge type; the sandboxed lake comparator accepts both
     pairs (Lean kernel, nanoda, con-ron; verification/comparator-palomar-sandboxed.log
@@ -249,7 +249,7 @@ review:
   notes: >-
     No human semantic review has taken place. Every Challenge statement has been
     audited against the paper by at least one AI agent (verification/semantic-audit.md,
-    audit-second-1.md, audit-second-2.md, audit-extra-A.md to audit-extra-N.md); these
+    audit-second-1.md, audit-second-2.md, audit-extra-A.md to audit-extra-O.md); these
     audits cover statements and definitions, not proofs (which are kernel-checked).
     The checklist for a human review is HUMAN_REVIEW.md, summarized in
     HUMAN_REVIEW_SUMMARY.md.
@@ -260,6 +260,7 @@ alignment:
     - lean: CutCur.exists_langevin  # non-vacuity of IsLangevin: assumes Hess V >= 0 (convexity, standing assumption) and probability Gibbs measure
     - lean: CutCur.isLangevinSolution_map_eq_kernel_of_rigid  # every SDE solution has the law prescribed by the kernel Pt (RigidCurvature version); makes the kernel formulation faithful
     - lean: CutCur.exists_euclideanLangevin_of_convex  # non-vacuity of IsEuclideanLangevin: the kernel exists for convex C^2 V with probability Gibbs measure
+    - lean: CutCur.euclideanDiffusion_unique_of_convex  # uniqueness of the kernel in IsEuclideanDiffusion for convex C^2 V
     - lean: CutCur.main_wasserstein_estimate
     - lean: CutCur.eigenspace_dim_and_lambda
     - lean: CutCur.wasserstein_cutoff

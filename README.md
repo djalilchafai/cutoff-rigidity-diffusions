@@ -6,19 +6,20 @@ diffusions*, Comptes Rendus Mathématique 363 (2025) 1103–1121 ([doi:10.5802/c
 corrections of the erratum to the published article. Its TeX source is archived in [`paper/`](paper/SOURCE.txt);
 [cutcur-lean.tex](cutcur-lean.tex) is the same text with a BibTeX bibliography. The numbering of results is the same in v4 and v5.
 
-**Palomar surface (20 November 2026).** [`PalomarChallenge.lean`](PalomarChallenge.lean) (334 lines, 15 theorems, 41 definitions; Comparator
+**Palomar surface (20 November 2026).** [`PalomarChallenge.lean`](PalomarChallenge.lean) (339 lines, 16 theorems, 41 definitions; Comparator
 config [`comparator-palomar.json`](comparator-palomar.json)) is the surface proposed for registration: the numbered results of the paper, the
-identification of the kernel with the law of the SDE, and the existence of the diffusion and of SDE solutions for convex potentials. It is
+identification of the kernel with the law of the SDE, the existence of the diffusion and of SDE solutions for convex potentials, and the
+uniqueness of the kernel. It is
 generated verbatim from `Challenge.lean` by `scripts/gen-palomar.py`, together with `PalomarSolution.lean`; the sandboxed Comparator accepts it
-(Lean kernel, nanoda, con-ron 90935 declarations; `verification/comparator-palomar-sandboxed.log`).
+(Lean kernel, nanoda, con-ron 90936 declarations; `verification/comparator-palomar-sandboxed.log`).
 
-**Status (1 November 2026, round 2; 68 theorems since 20 November 2026).** `Challenge.lean` states 68 theorems and 67 definitions (855 lines, 88 KB): the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
+**Status (1 November 2026, round 2; 69 theorems since 20 November 2026).** `Challenge.lean` states 69 theorems and 67 definitions (860 lines, 89 KB): the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
 3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and further claims of the
 manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound (Euclidean and Riemannian), (R2) => (R1), examples, proof ingredients such as W2
 contraction, entropy decay, Pinsker and Talagrand, the optimal constants, and the Section 4 items; see
 [PALOMAR.md](PALOMAR.md)). `Solution.lean` proves all of them (no `sorry`, axioms `propext`,
-`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 68-theorem pair
-(con-ron 92445 declarations, nanoda and the Lean kernel; `comparator.json` lists the 68 theorems and 66 definitions, the structure `CutCur.Form` being checked as a dependency). The splitting theorem now also states the
+`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 69-theorem pair
+(con-ron 92446 declarations, nanoda and the Lean kernel; `comparator.json` lists the 69 theorems and 66 definitions, the structure `CutCur.Form` being checked as a dependency). The splitting theorem now also states the
 potential identity of Theorem 3.6 and the connectedness and completeness of the factor.
 A further block of 11 statements (Bochner identity and `CD ⇔ Ric + Hess V ≥ ρ`, Riemannian `k₁` bounds and Poincaré/log-Sobolev, Fisher
 decay for all laws and its Dini form, Brownian scaling at the SDE level, the temperature SDE and cutoffs, W2 and entropy mixing times) is
@@ -40,7 +41,7 @@ Not formalized: see the section "What is not formalized" below. Theorem 1.9 is p
 `IsDiffusionSemigroup` `Pt`, with no extra hypothesis: uniqueness of the minimal diffusion, Bakry–Émery,
 log-Sobolev, gap attainment and the Kuwada contraction are formalized (see [PALOMAR.md](PALOMAR.md)).
 No human semantic review has taken place; the statements were checked only by AI audits
-(`verification/semantic-audit.md`, `audit-second-*.md`, `audit-extra-A.md` to `audit-extra-N.md`).
+(`verification/semantic-audit.md`, `audit-second-*.md`, `audit-extra-A.md` to `audit-extra-O.md`).
 
 **Corrections to the published paper and to arXiv v4**, found during the formalization, included in arXiv v5 and in the
 erratum, and reflected in the Lean statements (details in [PAPER_AUDIT.md](PAPER_AUDIT.md)):
@@ -192,7 +193,7 @@ proof-side lemmas (`IsEuclideanLangevinInf` in `Extra/SmoothLangevin.lean`).
 
 ## What is not formalized
 
-The 68 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`, `extra-status/` (worker and adversary reports of the 1 November 2026 rounds, and `extra-status/integration-round2.md`).
+The 69 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`, `extra-status/` (worker and adversary reports of the 1 November 2026 rounds, and `extra-status/integration-round2.md`).
 
 - **Open or conjectural in the paper:** Question 1.10; `eq:loggradbound`.
 - **Attempted, blocked, partial or without a precise statement:**
@@ -220,7 +221,7 @@ for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fre
    ```sh
    python3 scripts/check-palomar.py --ready
    ```
-3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 68 endpoint theorems
+3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 69 endpoint theorems
    (`CutoffRigidity.Paper.*`), run a `#print axioms` on each from a scratch file importing `Solution`; each
    should depend only on `propext`, `Classical.choice`, `Quot.sound`. The Comparator in step 4 enforces the
    same permitted axioms.
@@ -279,10 +280,10 @@ is not part of the project sources.
 
 [PALOMAR.md](PALOMAR.md) records the official requirements and the detailed history.
 
-- **Proposed surface:** `PalomarChallenge.lean` / `PalomarSolution.lean` / `comparator-palomar.json` (15 theorems, 41 definitions),
+- **Proposed surface:** `PalomarChallenge.lean` / `PalomarSolution.lean` / `comparator-palomar.json` (16 theorems, 41 definitions),
   generated by `scripts/gen-palomar.py`; `formalization.yaml` points its main results to this configuration.
-- **Full surface:** `Challenge.lean` states 68 theorems and 67 definitions; `Solution.lean` proves all of them.
-  `comparator.json` lists the 68 theorems and 66 definitions (the structure `CutCur.Form` is compared as a dependency).
+- **Full surface:** `Challenge.lean` states 69 theorems and 67 definitions; `Solution.lean` proves all of them.
+  `comparator.json` lists the 69 theorems and 66 definitions (the structure `CutCur.Form` is compared as a dependency).
 - **Comparator:** the sandboxed `lake comparator` accepts both pairs (Lean kernel, nanoda and con-ron;
   `verification/comparator-palomar-sandboxed.log`, `verification/comparator-sandboxed.log`); run
   `scripts/verify-comparator.sh [comparator.json | comparator-palomar.json]`. Only `propext`, `Classical.choice` and `Quot.sound` are used.

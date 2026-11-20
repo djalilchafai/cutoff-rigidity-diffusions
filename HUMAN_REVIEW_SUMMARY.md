@@ -10,26 +10,27 @@ to a registry or attested. Everything labelled "AI" below was done by language-m
 signing up to check.
 
 ## 0. What to review for the Palomar submission
-The proposed surface is `PalomarChallenge.lean` (334 lines): 15 theorems (nos. 1-12, 48, 49 and 68 of `HUMAN_REVIEW.md` §2) and the 41
+The proposed surface is `PalomarChallenge.lean` (339 lines): 16 theorems (nos. 1-12, 48, 49, 68 and 69 of `HUMAN_REVIEW.md` §2) and the 41
 definitions they use, copied verbatim from `Challenge.lean`. Reviewing it is enough for that submission (a few hours rather than a day);
 sections 2-7 below concern the full surface.
 
 ## 1. What is machine-checked
-- `Challenge.lean` has 68 theorems and 67 definitions (855 lines, 88 KB). `Solution.lean` proves each theorem with the same statement.
-- All 68 use only `propext`, `Classical.choice` and `Quot.sound`. There is no `sorry`, `axiom` or `native_decide`.
-- The reduced pair `PalomarChallenge.lean`/`PalomarSolution.lean` (15 theorems) is accepted by the sandboxed Comparator as well (con-ron 90935 declarations).
-- The sandboxed Comparator accepts the solution, with the Lean kernel, nanoda and con-ron (92445 declarations, 68-theorem pair, 20 November 2026).
+- `Challenge.lean` has 69 theorems and 67 definitions (860 lines, 89 KB). `Solution.lean` proves each theorem with the same statement.
+- All 69 use only `propext`, `Classical.choice` and `Quot.sound`. There is no `sorry`, `axiom` or `native_decide`.
+- The reduced pair `PalomarChallenge.lean`/`PalomarSolution.lean` (16 theorems) is accepted by the sandboxed Comparator as well (con-ron 90936 declarations).
+- The sandboxed Comparator accepts the solution, with the Lean kernel, nanoda and con-ron (92446 declarations, 69-theorem pair, 20 November 2026).
 - Rebuild instructions are in the README section "How to rebuild and verify".
 
 Lean does **not** certify that the statements and definitions mean what the manuscript says. That is the review.
 
-## 2. What the 68 theorems cover
+## 2. What the 69 theorems cover
 - **Euclidean results (Section 1):** Thm 1.1, Cor 1.3, 1.4, (1.25), Thm 1.5, Cor 1.6, Thm 1.7, Remarks 1.2, 3.4, 3.5.
 - **Riemannian results:** Thm 1.9, Thm 3.6 and Lemma 3.7, the Bochner and CD equivalence, the `k₁` bounds, and Poincaré/LSI from CD.
 - **Section 3 and 4 material:** the Gaussian factorization, Lemma 3.3 (the Ornstein–Uhlenbeck eigenmap), normalization and temperature.
 - **Supporting results:** Wasserstein contraction, entropy and Fisher decay, Pinsker, Talagrand, optimal constants.
 - **1 November 2026 round (nos. 49-57):** kernel = SDE law, pathwise Lemma 3.3, integrated entropy-dissipation inequality, static Dyson-OU, Γ operator/polarization/chain rule, vector Bochner.
 - **Brownian motion:** existence of Brownian motion and of a Langevin solution (nos. 47, 48), from the vendored Degenne et al. library.
+- **No. 68 (20 November 2026):** `exists_euclideanLangevin_of_convex`, existence of the kernel for convex `C²` `V` (non-vacuity of `IsEuclideanLangevin`); AI audit O, no defect. **No. 69:** `euclideanDiffusion_unique_of_convex`, uniqueness of the kernel for convex `C²` `V` (added on the recommendation of audit O).
 - **Round 2 (nos. 58-67, plus changed nos. 51-52):** `dyson_spectralGap`; Gaussian isoperimetry for the **quadratic potential only** (nos. 59-61); the Rothaus alternative for an **abstract form with a compactness hypothesis** and for **finite spaces** (nos. 62-64);
   `temperature_kernel` (65); the sphere in **model form** (66, 67: `Ric = (d-1)g`, `CD(d-1)`, `λ₁ = d`, so the sphere is not a witness of `hgap` of Thm 1.9); the equality in the integrated de Bruijn identity (51, 52).
 
@@ -92,7 +93,7 @@ Lean does **not** certify that the statements and definitions mean what the manu
 ## 6. Suggested review plan (about a day)
 1. Run the README rebuild steps and record the commit hash (15 min).
 2. Read the definitions: Euclidean (`Challenge.lean` lines 1-150), the kernel definitions, and the Riemannian section from `mgrad` (about line 712).
-3. Go through the table in `HUMAN_REVIEW.md` §2 and tick each of the 68 statements against the manuscript (start with the 15 of the Palomar surface).
+3. Go through the table in `HUMAN_REVIEW.md` §2 and tick each of the 69 statements against the manuscript (start with the 16 of the Palomar surface).
 4. Decide on the convexity requirement hidden in the `C²` kernel statements, the two forms of Lemma 3.3 and the Thm 1.7 amendment, and whether the static Dyson statement plus the gap (nos. 53, 58) suffice, and whether the quadratic-only Gaussian isoperimetry (59-61), the abstract/finite Rothaus (62-64) and the model-form sphere (66-67) are acceptable scopes.
 5. Check the vendored code provenance (`vendor/README.md`).
 6. Only after a real review: fill the `review` fields in `formalization.yaml` and decide on registry submission and attestation (humans only).

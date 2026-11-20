@@ -5,6 +5,7 @@
     "CutCur.exists_langevin",
     "CutCur.isLangevinSolution_map_eq_kernel_of_rigid",
     "CutCur.exists_euclideanLangevin_of_convex",
+    "CutCur.euclideanDiffusion_unique_of_convex",
     "CutCur.main_wasserstein_estimate",
     "CutCur.eigenspace_dim_and_lambda",
     "CutCur.wasserstein_cutoff",

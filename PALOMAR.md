@@ -3,11 +3,11 @@
 **Current status (20 November 2026).** Not yet submitted. The reference version of the
 paper is arXiv:2412.15969v5 (25 October 2026; source archived in `paper/`), which includes
 the corrections of the erratum to the published article (CRAS 2025). The surface proposed
-for registration is `PalomarChallenge.lean` with `comparator-palomar.json` (15 theorems: the
-numbered results, the kernel = SDE law link, existence of the diffusion and of SDE solutions;
-41 definitions; 334 lines, 31 KB), generated verbatim from the full surface by
-`scripts/gen-palomar.py`. The full surface `Challenge.lean` states 68 theorems and 67
-definitions; `comparator.json` lists the 68 theorems and 66 definitions. Both Solutions use
+for registration is `PalomarChallenge.lean` with `comparator-palomar.json` (16 theorems: the
+numbered results, the kernel = SDE law link, existence of the diffusion and of SDE solutions,
+uniqueness of the kernel; 41 definitions; 339 lines, 32 KB), generated verbatim from the full surface by
+`scripts/gen-palomar.py`. The full surface `Challenge.lean` states 69 theorems and 67
+definitions; `comparator.json` lists the 69 theorems and 66 definitions. Both Solutions use
 `propext`, `Classical.choice` and `Quot.sound` only and the sandboxed `lake comparator`
 accepts both pairs. `formalization.yaml`
 validates against the official v0.4 schema and names D. Chafaï as author and responsible
@@ -462,6 +462,11 @@ comparison of the type of every declaration of the old and new `Challenge` modul
   Sandboxed Comparator: reduced pair accepted (con-ron 90935 declarations, nanoda, Lean kernel;
   `verification/comparator-palomar-sandboxed.log`), full pair accepted (con-ron 92445; `verification/comparator-sandboxed.log`).
   All `verification/*.log` files are now tracked.
+- AI audit O (`verification/audit-extra-O.md`) of `exists_euclideanLangevin_of_convex`: no defect; docstrings of the
+  theorem, `IsEuclideanLangevin` and `IsEuclideanDiffusion` made precise. On its recommendation, uniqueness of the kernel
+  is now a statement, `euclideanDiffusion_unique_of_convex` (69th theorem; 16th of the reduced surface). Sandboxed
+  Comparator after these changes: reduced pair accepted (con-ron 90936 declarations, nanoda, Lean kernel), full pair
+  accepted (con-ron 92446).
 - AI audit N (`verification/audit-extra-N.md`) of the round-2 statements, the equality statements 51-52 and the `C²` clause:
   no defect; six minor docstring fixes applied in `Challenge.lean` (docstrings only, derived files regenerated).
 - `scripts/bwrap-home-symlink-wrapper.sh`: `lake comparator` now calls `bwrap` with an empty `HOME`; the wrapper falls back

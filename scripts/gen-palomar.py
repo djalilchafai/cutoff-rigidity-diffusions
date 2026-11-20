@@ -21,6 +21,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # non-vacuity of the two standing Euclidean hypotheses.
 CORE = [
     "exists_euclideanLangevin_of_convex",
+    "euclideanDiffusion_unique_of_convex",
     "exists_langevin",
     "isLangevinSolution_map_eq_kernel_of_rigid",
     "main_wasserstein_estimate",
@@ -45,10 +46,10 @@ D. Chafaï and M. Fathi, *On cutoff via rigidity for high dimensional curved dif
 Comptes Rendus Mathématique 363 (2025) 1103–1121, in the corrected version arXiv:2412.15969v5
 (25 October 2026). It states the numbered results of the paper (Theorems 1.1, 1.5, 1.7, 1.9, 3.1,
 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6 and display (1.25)), the identification of the
-transition kernel with the law of the solution of the SDE (1.1), and the existence of the diffusion and
-of solutions of (1.1) for convex potentials, so that the standing hypotheses are not vacuous. Every
-object is defined from Mathlib alone; deviations from v5 are flagged in the docstrings. The full set of
-68 statements (remarks, examples, Section 4) is `Challenge.lean`, checked with `comparator.json`.
+transition kernel with the law of the solution of the SDE (1.1), the existence of the diffusion and of
+solutions of (1.1) for convex potentials (so that the standing hypotheses are not vacuous), and the
+uniqueness of the kernel. Every object is defined from Mathlib alone; deviations from v5 are flagged in the docstrings. The full set of
+69 statements (remarks, examples, Section 4) is `Challenge.lean`, checked with `comparator.json`.
 """
 
 DECL = re.compile(r"^(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+)*(theorem|def|abbrev|structure)\s+([^\s({\[:]+)", re.M)

@@ -10,10 +10,10 @@ D. Chafaï and M. Fathi, *On cutoff via rigidity for high dimensional curved dif
 Comptes Rendus Mathématique 363 (2025) 1103–1121, in the corrected version arXiv:2412.15969v5
 (25 October 2026). It states the numbered results of the paper (Theorems 1.1, 1.5, 1.7, 1.9, 3.1,
 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6 and display (1.25)), the identification of the
-transition kernel with the law of the solution of the SDE (1.1), and the existence of the diffusion and
-of solutions of (1.1) for convex potentials, so that the standing hypotheses are not vacuous. Every
-object is defined from Mathlib alone; deviations from v5 are flagged in the docstrings. The full set of
-68 statements (remarks, examples, Section 4) is `Challenge.lean`, checked with `comparator.json`. -/
+transition kernel with the law of the solution of the SDE (1.1), the existence of the diffusion and of
+solutions of (1.1) for convex potentials (so that the standing hypotheses are not vacuous), and the
+uniqueness of the kernel. Every object is defined from Mathlib alone; deviations from v5 are flagged in the docstrings. The full set of
+69 statements (remarks, examples, Section 4) is `Challenge.lean`, checked with `comparator.json`. -/
 
 open MeasureTheory ProbabilityTheory Filter Topology Set
 open scoped ENNReal NNReal ContDiff Manifold
@@ -34,10 +34,17 @@ theorem isLangevinSolution_map_eq_kernel_of_rigid {Ω : Type*} [MeasurableSpace 
   {P : Measure Ω} (hB : IsStdBrownian B P) {x₀ : Rd d} {X : ℝ≥0 → Ω → Rd d} (hX : IsLangevinSolution V B P x₀ X) (t : ℝ≥0) : P.map (X t) = Pt t x₀ := by
   apply CutoffRigidity.Paper.isLangevinSolution_map_eq_kernel_of_rigid_C2 <;> assumption
 
-/-- Non-vacuity of the standing hypothesis `IsEuclideanLangevin` of the kernel statements: for a `C²` potential with nonnegative Hessian (that is, convex) and probability Gibbs measure, the Euclidean Langevin semigroup exists. -/
+/-- Non-vacuity of the standing hypothesis `IsEuclideanLangevin` of the kernel statements: for a `C²` potential with nonnegative Hessian (that is, convex) and probability Gibbs measure, a kernel family satisfying `IsEuclideanLangevin` exists. The hypotheses are weaker than the paper's (strict convexity is not required; `V → ∞` follows from convexity and integrability of `e^{-V}`). Uniqueness: `euclideanDiffusion_unique_of_convex`. -/
 theorem exists_euclideanLangevin_of_convex {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z)
   (hp : IsProbabilityMeasure (gibbs V)) : ∃ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsEuclideanLangevin V Pt := by
   exact CutCur.C2U.exists_euclideanLangevin_C2 hV hHess hp
+
+/-- Uniqueness of the kernel in the standing hypothesis: for a `C²` potential with nonnegative Hessian (that is, convex), two families of kernels satisfying `IsEuclideanDiffusion` coincide. No assumption on the Gibbs measure is needed. With `exists_euclideanLangevin_of_convex`, `Pt` in the kernel statements is the Euclidean Langevin semigroup. -/
+theorem euclideanDiffusion_unique_of_convex {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z)
+  {P₁ P₂ : ℝ≥0 → Kernel (Rd d) (Rd d)} (h₁ : IsEuclideanDiffusion V P₁) (h₂ : IsEuclideanDiffusion V P₂) : P₁ = P₂ := by
+  funext t
+  exact Kernel.ext fun x => CutCur.C2U.euclideanDiffusion_unique_convex hV
+    (CutoffRigidity.NoBm.convexOn_univ_of_hessian_nonneg hV hHess) h₁ h₂ t x
 
 /-- **Theorem 1.1** (main Wasserstein estimate), including the ball refinement; Brownian-free kernel form: `Pt t x₀ = Law(X_t^{x₀})` (`IsEuclideanLangevin`). -/
 theorem main_wasserstein_estimate {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V) (t : ℝ≥0) :
