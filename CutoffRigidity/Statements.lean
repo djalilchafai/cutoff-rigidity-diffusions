@@ -79,7 +79,7 @@ def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (
   ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
   ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
 
-/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for `C²` `V` with `Hess V ≥ ρ > 0`: `temperature_kernel` with `σ = 1` (the convex case is `exists_euclideanLangevin_C2`, outside the Challenge). -/
+/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for convex `C²` `V`: `exists_euclideanLangevin_of_convex`. -/
 def IsEuclideanLangevin {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
 

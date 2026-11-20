@@ -5,4 +5,4 @@ __pycache__/
 *.fdb_latexmk
 *.aux
 *.log
-!verification/comparator-sandboxed.log
+!verification/*.log

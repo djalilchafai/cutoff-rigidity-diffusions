@@ -6,12 +6,16 @@ project:
   description: >-
     Lean 4 formalization of Chafaï and Fathi, "On cutoff via rigidity for high
     dimensional curved diffusions" (Comptes Rendus Mathématique 363 (2025)
-    1103-1121), in the corrected version arXiv:2412.15969v5. Challenge.lean
-    states 67 results of the paper, including all its numbered theorems,
-    corollaries and lemmas (Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6, Corollaries
-    1.3, 1.4, 1.6, Lemma 3.3, Remarks 1.2, 3.4, 3.5, display (1.25)) and further
-    claims of its remarks, examples and Section 4. Solution.lean proves all of
-    them with the standard axioms only. Some statements are restricted or
+    1103-1121), in the corrected version arXiv:2412.15969v5. The submitted
+    statement surface PalomarChallenge.lean (Comparator configuration
+    comparator-palomar.json) states the numbered results of the paper
+    (Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6, Corollaries 1.3, 1.4, 1.6, Lemma 3.3,
+    Remark 1.2, display (1.25)), the identification of the transition kernel
+    with the law of the SDE solution, and the existence of the diffusion and of
+    SDE solutions for convex potentials (non-vacuity of the standing
+    hypotheses): 15 theorems. The repository also contains a larger surface,
+    Challenge.lean with comparator.json (68 theorems: remarks, examples and
+    Section 4 as well). Both are proved with the standard axioms only. Some statements are restricted or
     amended; every difference with arXiv v5 is listed in fidelity.divergences.
   authors: [Djalil Chafaï]
   responsible_maintainers: [Djalil Chafaï]
@@ -56,11 +60,16 @@ related_formalizations:
       module Compat/CompactSystemExtra.lean (vendor/README.md). Apache-2.0.
 status:
   scope: >-
-    Challenge.lean (850 lines) states 67 theorems and 67 definitions; all
-    definitions are built from Mathlib only. Solution.lean proves every theorem
-    with exactly the Challenge type; the sandboxed lake comparator accepts the
-    pair (Lean kernel, nanoda, con-ron; verification/comparator-sandboxed.log).
-    Covered: the Euclidean results of Section 1 (Theorem 1.1, Remark 1.2,
+    Two Comparator surfaces, both built from Mathlib-only definitions.
+    PalomarChallenge.lean (334 lines, 15 theorems, 41 definitions;
+    comparator-palomar.json) is generated verbatim from Challenge.lean by
+    scripts/gen-palomar.py and is the surface proposed for registration.
+    Challenge.lean (855 lines, 68 theorems, 67 definitions; comparator.json) is
+    the full surface. PalomarSolution.lean and Solution.lean prove every theorem
+    with exactly the Challenge type; the sandboxed lake comparator accepts both
+    pairs (Lean kernel, nanoda, con-ron; verification/comparator-palomar-sandboxed.log
+    and verification/comparator-sandboxed.log). Covered by the full surface:
+    the Euclidean results of Section 1 (Theorem 1.1, Remark 1.2,
     Corollaries 1.3 and 1.4, display (1.25), Theorem 1.5, Corollary 1.6,
     Theorem 1.7), the Riemannian results (Theorem 1.9, Theorem 3.6 with Lemma
     3.7, Bochner identity, CD(rho,infty) iff Ric + Hess V >= rho, k_1 bounds,
@@ -86,57 +95,57 @@ status:
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.wasserstein_cutoff  # Corollary 1.3 (Wasserstein cutoff)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.information_cutoff  # Corollary 1.4 (total variation, entropy and Fisher cutoff)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.lp_cutoff  # Display (1.25) (L^p cutoff, finite p)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.convex_interaction  # Theorem 1.5 (convex interactions)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.convex_interaction_cutoff  # Corollary 1.6 (cutoff for convex interactions)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.product_condition_cutoff  # Theorem 1.7 (curvature product condition, as corrected in v5)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.riemannian_wasserstein_estimate  # Theorem 1.9 (Riemannian Wasserstein estimate)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.euclidean_gaussian_factorization  # Theorem 3.1 (Euclidean Gaussian factorization)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.eigenmap_is_ou  # Lemma 3.3 (the eigenmap is an Ornstein-Uhlenbeck process)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
     - declaration: CutCur.riemannian_gaussian_splitting  # Theorem 3.6 and Lemma 3.7 (Riemannian Gaussian splitting)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator.json
+      comparator_config: comparator-palomar.json
 automation:
   methods:
     - method: agent
@@ -250,6 +259,7 @@ alignment:
     - lean: CutCur.exists_stdBrownian  # existence of a standard Brownian motion on R^d (vendored Degenne et al. library; Mathlib IsBrownianReal)
     - lean: CutCur.exists_langevin  # non-vacuity of IsLangevin: assumes Hess V >= 0 (convexity, standing assumption) and probability Gibbs measure
     - lean: CutCur.isLangevinSolution_map_eq_kernel_of_rigid  # every SDE solution has the law prescribed by the kernel Pt (RigidCurvature version); makes the kernel formulation faithful
+    - lean: CutCur.exists_euclideanLangevin_of_convex  # non-vacuity of IsEuclideanLangevin: the kernel exists for convex C^2 V with probability Gibbs measure
     - lean: CutCur.main_wasserstein_estimate
     - lean: CutCur.eigenspace_dim_and_lambda
     - lean: CutCur.wasserstein_cutoff

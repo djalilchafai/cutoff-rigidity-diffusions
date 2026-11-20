@@ -1,94 +1,96 @@
-ven. 20 nov. 2026 16:39:12 UTC
-Local source checks passed for 908 Lean files; official verification remains required.
+ven. 20 nov. 2026 17:12:21 UTC
+config: comparator.json
+Local source checks passed for 910 Lean files; official verification remains required.
 Current branch: HEAD
 Using cache from origin: (some leanprover-community/mathlib4)
 No files to download
 Already decompressed 8915 file(s)
 Resolving dependencies
 Building Challenge
-⚠ [8931/8932] Built Challenge (18s)
+⚠ [8931/8932] Replayed Challenge
 warning: Challenge.lean:119:8: declaration uses `sorry`
 warning: Challenge.lean:123:8: declaration uses `sorry`
 warning: Challenge.lean:129:8: declaration uses `sorry`
 warning: Challenge.lean:135:8: declaration uses `sorry`
-warning: Challenge.lean:146:8: declaration uses `sorry`
-warning: Challenge.lean:159:8: declaration uses `sorry`
-warning: Challenge.lean:165:8: declaration uses `sorry`
-warning: Challenge.lean:175:8: declaration uses `sorry`
-warning: Challenge.lean:184:8: declaration uses `sorry`
-warning: Challenge.lean:197:8: declaration uses `sorry`
-warning: Challenge.lean:223:8: declaration uses `sorry`
-warning: Challenge.lean:236:8: declaration uses `sorry`
-warning: Challenge.lean:247:8: declaration uses `sorry`
-warning: Challenge.lean:262:8: declaration uses `sorry`
-warning: Challenge.lean:271:8: declaration uses `sorry`
-warning: Challenge.lean:278:8: declaration uses `sorry`
-warning: Challenge.lean:288:8: declaration uses `sorry`
+warning: Challenge.lean:140:8: declaration uses `sorry`
+warning: Challenge.lean:151:8: declaration uses `sorry`
+warning: Challenge.lean:164:8: declaration uses `sorry`
+warning: Challenge.lean:170:8: declaration uses `sorry`
+warning: Challenge.lean:180:8: declaration uses `sorry`
+warning: Challenge.lean:189:8: declaration uses `sorry`
+warning: Challenge.lean:202:8: declaration uses `sorry`
+warning: Challenge.lean:228:8: declaration uses `sorry`
+warning: Challenge.lean:241:8: declaration uses `sorry`
+warning: Challenge.lean:252:8: declaration uses `sorry`
+warning: Challenge.lean:267:8: declaration uses `sorry`
+warning: Challenge.lean:276:8: declaration uses `sorry`
+warning: Challenge.lean:283:8: declaration uses `sorry`
 warning: Challenge.lean:293:8: declaration uses `sorry`
-warning: Challenge.lean:315:8: declaration uses `sorry`
+warning: Challenge.lean:298:8: declaration uses `sorry`
 warning: Challenge.lean:320:8: declaration uses `sorry`
-warning: Challenge.lean:337:8: declaration uses `sorry`
-warning: Challenge.lean:343:8: declaration uses `sorry`
-warning: Challenge.lean:349:8: declaration uses `sorry`
-warning: Challenge.lean:378:8: declaration uses `sorry`
-warning: Challenge.lean:384:8: declaration uses `sorry`
+warning: Challenge.lean:325:8: declaration uses `sorry`
+warning: Challenge.lean:342:8: declaration uses `sorry`
+warning: Challenge.lean:348:8: declaration uses `sorry`
+warning: Challenge.lean:354:8: declaration uses `sorry`
+warning: Challenge.lean:383:8: declaration uses `sorry`
 warning: Challenge.lean:389:8: declaration uses `sorry`
-warning: Challenge.lean:396:8: declaration uses `sorry`
-warning: Challenge.lean:421:8: declaration uses `sorry`
-warning: Challenge.lean:431:8: declaration uses `sorry`
-warning: Challenge.lean:438:8: declaration uses `sorry`
-warning: Challenge.lean:450:8: declaration uses `sorry`
-warning: Challenge.lean:459:8: declaration uses `sorry`
-warning: Challenge.lean:472:8: declaration uses `sorry`
-warning: Challenge.lean:480:8: declaration uses `sorry`
-warning: Challenge.lean:488:8: declaration uses `sorry`
-warning: Challenge.lean:494:8: declaration uses `sorry`
-warning: Challenge.lean:501:8: declaration uses `sorry`
-warning: Challenge.lean:509:8: declaration uses `sorry`
-warning: Challenge.lean:517:8: declaration uses `sorry`
-warning: Challenge.lean:525:8: declaration uses `sorry`
-warning: Challenge.lean:533:8: declaration uses `sorry`
-warning: Challenge.lean:541:8: declaration uses `sorry`
-warning: Challenge.lean:550:8: declaration uses `sorry`
-warning: Challenge.lean:557:8: declaration uses `sorry`
-warning: Challenge.lean:564:8: declaration uses `sorry`
-warning: Challenge.lean:579:8: declaration uses `sorry`
-warning: Challenge.lean:586:8: declaration uses `sorry`
-warning: Challenge.lean:594:8: declaration uses `sorry`
-warning: Challenge.lean:602:8: declaration uses `sorry`
-warning: Challenge.lean:608:8: declaration uses `sorry`
+warning: Challenge.lean:394:8: declaration uses `sorry`
+warning: Challenge.lean:401:8: declaration uses `sorry`
+warning: Challenge.lean:426:8: declaration uses `sorry`
+warning: Challenge.lean:436:8: declaration uses `sorry`
+warning: Challenge.lean:443:8: declaration uses `sorry`
+warning: Challenge.lean:455:8: declaration uses `sorry`
+warning: Challenge.lean:464:8: declaration uses `sorry`
+warning: Challenge.lean:477:8: declaration uses `sorry`
+warning: Challenge.lean:485:8: declaration uses `sorry`
+warning: Challenge.lean:493:8: declaration uses `sorry`
+warning: Challenge.lean:499:8: declaration uses `sorry`
+warning: Challenge.lean:506:8: declaration uses `sorry`
+warning: Challenge.lean:514:8: declaration uses `sorry`
+warning: Challenge.lean:522:8: declaration uses `sorry`
+warning: Challenge.lean:530:8: declaration uses `sorry`
+warning: Challenge.lean:538:8: declaration uses `sorry`
+warning: Challenge.lean:546:8: declaration uses `sorry`
+warning: Challenge.lean:555:8: declaration uses `sorry`
+warning: Challenge.lean:562:8: declaration uses `sorry`
+warning: Challenge.lean:569:8: declaration uses `sorry`
+warning: Challenge.lean:584:8: declaration uses `sorry`
+warning: Challenge.lean:591:8: declaration uses `sorry`
+warning: Challenge.lean:599:8: declaration uses `sorry`
+warning: Challenge.lean:607:8: declaration uses `sorry`
 warning: Challenge.lean:613:8: declaration uses `sorry`
-warning: Challenge.lean:628:8: declaration uses `sorry`
-warning: Challenge.lean:643:8: declaration uses `sorry`
-warning: Challenge.lean:679:8: declaration uses `sorry`
+warning: Challenge.lean:618:8: declaration uses `sorry`
+warning: Challenge.lean:633:8: declaration uses `sorry`
+warning: Challenge.lean:648:8: declaration uses `sorry`
 warning: Challenge.lean:684:8: declaration uses `sorry`
 warning: Challenge.lean:689:8: declaration uses `sorry`
-warning: Challenge.lean:700:8: declaration uses `sorry`
-warning: Challenge.lean:727:8: declaration uses `sorry`
-warning: Challenge.lean:745:8: declaration uses `sorry`
+warning: Challenge.lean:694:8: declaration uses `sorry`
+warning: Challenge.lean:705:8: declaration uses `sorry`
+warning: Challenge.lean:732:8: declaration uses `sorry`
 warning: Challenge.lean:750:8: declaration uses `sorry`
-warning: Challenge.lean:792:8: declaration uses `sorry`
+warning: Challenge.lean:755:8: declaration uses `sorry`
 warning: Challenge.lean:797:8: declaration uses `sorry`
-warning: Challenge.lean:803:8: declaration uses `sorry`
-warning: Challenge.lean:810:8: declaration uses `sorry`
-warning: Challenge.lean:821:8: declaration uses `sorry`
-warning: Challenge.lean:838:8: declaration uses `sorry`
-warning: Challenge.lean:844:8: declaration uses `sorry`
+warning: Challenge.lean:802:8: declaration uses `sorry`
+warning: Challenge.lean:808:8: declaration uses `sorry`
+warning: Challenge.lean:815:8: declaration uses `sorry`
+warning: Challenge.lean:826:8: declaration uses `sorry`
+warning: Challenge.lean:843:8: declaration uses `sorry`
+warning: Challenge.lean:849:8: declaration uses `sorry`
 Build completed successfully (8932 jobs).
-Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, CutCur.exists_stdBrownian, CutCur.exists_langevin, CutCur.isLangevinSolution_map_eq_kernel_of_rigid, CutCur.main_wasserstein_estimate, CutCur.eigenspace_dim_and_lambda, CutCur.wasserstein_cutoff, CutCur.information_cutoff, CutCur.lp_cutoff, CutCur.convex_interaction, CutCur.convex_interaction_cutoff, CutCur.product_condition_cutoff, CutCur.euclidean_gaussian_factorization, CutCur.eigenmap_is_ou, CutCur.eigenmap_is_ou_pathwise, CutCur.wasserstein_cutoff_weak, CutCur.information_cutoff_weak, CutCur.spectral_gap_ge_curvature, CutCur.rigidity_of_gaussian_factor, CutCur.optimal_lsi_twice_pi, CutCur.optimal_constants_extremal, CutCur.gaussian_isoperimetric_functional, CutCur.gaussian_isoperimetric_sets, CutCur.gibbs_quadratic_isProb, CutCur.rothaus_alternative_ne, CutCur.two_optPI_le_optLSI, CutCur.finite_rothaus, CutCur.ou_fisher_information, CutCur.normalization_cutoff, CutCur.normalization_sde, CutCur.temperature_bakry_emery, CutCur.temperature_sde, CutCur.temperature_cutoff, CutCur.temperature_kernel, CutCur.heat_kernel_score, CutCur.pairwise_interaction, CutCur.ou_first_eigenspace, CutCur.mixing_time_rigid, CutCur.mixing_time_w2_rigid, CutCur.mixing_time_kl_rigid, CutCur.ou_mean_start_cutoff, CutCur.ou_lp_infty_fails, CutCur.langevin_moment_bounds, CutCur.sup_eigenLambda_ball, CutCur.langevin_w2_contraction, CutCur.langevin_entropy_decay, CutCur.langevin_fisher_decay, CutCur.langevin_fisher_dini, CutCur.langevin_dissipation_eq_K', CutCur.langevin_dissipation_eq_dirac_K, CutCur.pinsker_tvDist, CutCur.talagrand_logSobolev, CutCur.dyson_ou_static, CutCur.dyson_spectralGap, CutCur.carre_eq_operator, CutCur.carre_polarization, CutCur.generator_comp, CutCur.temperature_cd, CutCur.bochner_identity, CutCur.bochner_vector, CutCur.CD_iff_ricci, CutCur.mSpectralGap_ge_of_CD, CutCur.riemannian_k1_bounds, CutCur.riemannian_poincare_lsi, CutCur.riemannian_wasserstein_estimate, CutCur.riemannian_gaussian_splitting, CutCur.sphere_curvature, CutCur.sphere_gap, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, CutCur.Rd, CutCur.gibbs, CutCur.laplacian, CutCur.generator, CutCur.spectralGap, CutCur.IsEigenfunction, CutCur.firstEigenspace, CutCur.firstEigenDim, CutCur.IsEigenbasis, CutCur.eigenLambda, CutCur.RigidCurvature, CutCur.IsStdBrownian, CutCur.IsLangevinSolution, CutCur.IsLangevin, CutCur.IsEuclideanDiffusion, CutCur.IsEuclideanLangevin, CutCur.wasserstein2, CutCur.tvDist, CutCur.fisherInfo, CutCur.relLp, CutCur.worstK, CutCur.HasCutoff, CutCur.meanBall, CutCur.meanCube, CutCur.IsRigidSequenceK, CutCur.criticalTime, CutCur.diagonal, CutCur.mixingTimeK, CutCur.mixingTimeW2K, CutCur.mixingTimeKLK, CutCur.entropyOf, CutCur.IsTestFunction, CutCur.optimalPI, CutCur.optimalLSI, CutCur.gaussianIsoProfile, CutCur.Form.optPI, CutCur.Form.optLSI, CutCur.Form.Compact, CutCur.IsSDESolution, CutCur.IsSigmaDiffusion, CutCur.IsSigmaLangevin, CutCur.chamber, CutCur.dysonProb, CutCur.dysonGap, CutCur.mgrad, CutCur.mlaplacian, CutCur.mgenerator, CutCur.carre, CutCur.carre2, CutCur.CD, CutCur.mCurv, CutCur.mExt, CutCur.mRic, CutCur.mHess, CutCur.mHessSq, CutCur.mSecondDeriv, CutCur.mRoughLaplacian, CutCur.mVecGenerator, CutCur.chartVolumeDensity, CutCur.IsWeightedVolume, CutCur.mSpectralGap, CutCur.IsMEigenfunction, CutCur.mFirstEigenDim, CutCur.mLambda, CutCur.IsDiffusionSemigroup, CutCur.IsSphereModel] from Challenge
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, CutCur.exists_stdBrownian, CutCur.exists_langevin, CutCur.isLangevinSolution_map_eq_kernel_of_rigid, CutCur.exists_euclideanLangevin_of_convex, CutCur.main_wasserstein_estimate, CutCur.eigenspace_dim_and_lambda, CutCur.wasserstein_cutoff, CutCur.information_cutoff, CutCur.lp_cutoff, CutCur.convex_interaction, CutCur.convex_interaction_cutoff, CutCur.product_condition_cutoff, CutCur.euclidean_gaussian_factorization, CutCur.eigenmap_is_ou, CutCur.eigenmap_is_ou_pathwise, CutCur.wasserstein_cutoff_weak, CutCur.information_cutoff_weak, CutCur.spectral_gap_ge_curvature, CutCur.rigidity_of_gaussian_factor, CutCur.optimal_lsi_twice_pi, CutCur.optimal_constants_extremal, CutCur.gaussian_isoperimetric_functional, CutCur.gaussian_isoperimetric_sets, CutCur.gibbs_quadratic_isProb, CutCur.rothaus_alternative_ne, CutCur.two_optPI_le_optLSI, CutCur.finite_rothaus, CutCur.ou_fisher_information, CutCur.normalization_cutoff, CutCur.normalization_sde, CutCur.temperature_bakry_emery, CutCur.temperature_sde, CutCur.temperature_cutoff, CutCur.temperature_kernel, CutCur.heat_kernel_score, CutCur.pairwise_interaction, CutCur.ou_first_eigenspace, CutCur.mixing_time_rigid, CutCur.mixing_time_w2_rigid, CutCur.mixing_time_kl_rigid, CutCur.ou_mean_start_cutoff, CutCur.ou_lp_infty_fails, CutCur.langevin_moment_bounds, CutCur.sup_eigenLambda_ball, CutCur.langevin_w2_contraction, CutCur.langevin_entropy_decay, CutCur.langevin_fisher_decay, CutCur.langevin_fisher_dini, CutCur.langevin_dissipation_eq_K', CutCur.langevin_dissipation_eq_dirac_K, CutCur.pinsker_tvDist, CutCur.talagrand_logSobolev, CutCur.dyson_ou_static, CutCur.dyson_spectralGap, CutCur.carre_eq_operator, CutCur.carre_polarization, CutCur.generator_comp, CutCur.temperature_cd, CutCur.bochner_identity, CutCur.bochner_vector, CutCur.CD_iff_ricci, CutCur.mSpectralGap_ge_of_CD, CutCur.riemannian_k1_bounds, CutCur.riemannian_poincare_lsi, CutCur.riemannian_wasserstein_estimate, CutCur.riemannian_gaussian_splitting, CutCur.sphere_curvature, CutCur.sphere_gap, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, CutCur.Rd, CutCur.gibbs, CutCur.laplacian, CutCur.generator, CutCur.spectralGap, CutCur.IsEigenfunction, CutCur.firstEigenspace, CutCur.firstEigenDim, CutCur.IsEigenbasis, CutCur.eigenLambda, CutCur.RigidCurvature, CutCur.IsStdBrownian, CutCur.IsLangevinSolution, CutCur.IsLangevin, CutCur.IsEuclideanDiffusion, CutCur.IsEuclideanLangevin, CutCur.wasserstein2, CutCur.tvDist, CutCur.fisherInfo, CutCur.relLp, CutCur.worstK, CutCur.HasCutoff, CutCur.meanBall, CutCur.meanCube, CutCur.IsRigidSequenceK, CutCur.criticalTime, CutCur.diagonal, CutCur.mixingTimeK, CutCur.mixingTimeW2K, CutCur.mixingTimeKLK, CutCur.entropyOf, CutCur.IsTestFunction, CutCur.optimalPI, CutCur.optimalLSI, CutCur.gaussianIsoProfile, CutCur.Form.optPI, CutCur.Form.optLSI, CutCur.Form.Compact, CutCur.IsSDESolution, CutCur.IsSigmaDiffusion, CutCur.IsSigmaLangevin, CutCur.chamber, CutCur.dysonProb, CutCur.dysonGap, CutCur.mgrad, CutCur.mlaplacian, CutCur.mgenerator, CutCur.carre, CutCur.carre2, CutCur.CD, CutCur.mCurv, CutCur.mExt, CutCur.mRic, CutCur.mHess, CutCur.mHessSq, CutCur.mSecondDeriv, CutCur.mRoughLaplacian, CutCur.mVecGenerator, CutCur.chartVolumeDensity, CutCur.IsWeightedVolume, CutCur.mSpectralGap, CutCur.IsMEigenfunction, CutCur.mFirstEigenDim, CutCur.mLambda, CutCur.IsDiffusionSemigroup, CutCur.IsSphereModel] from Challenge
 Building Solution
-⚠ [4244/4323] Replayed CutoffRigidity.L2TimeIntegral
+⚠ [4244/4361] Replayed CutoffRigidity.L2TimeIntegral
 warning: CutoffRigidity/L2TimeIntegral.lean:25:60: Variable name `hM` is not explicitly referenced.
 
 Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
   [apply] _hM
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [4246/4323] Replayed CutoffRigidity.LangevinDomainDynkin
+⚠ [4246/4361] Replayed CutoffRigidity.LangevinDomainDynkin
 warning: CutoffRigidity/LangevinDomainDynkin.lean:129:22: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-⚠ [4250/4323] Replayed CutoffRigidity.RiemannianParallelProductTopology
+⚠ [4250/4361] Replayed CutoffRigidity.RiemannianParallelProductTopology
 warning: CutoffRigidity/RiemannianParallelProductTopology.lean:33:0: automatically included section variable(s) unused in theorem `CutoffRigidity.unitParallelField_enorm_le_one`:
   [CompleteSpace M]
   [IsRiemannianManifold I M]
@@ -103,14 +105,14 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [CompleteSpace M] [IsRiemannianManifold I M] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4252/4323] Replayed CutoffRigidity.L2PointwiseEvolution
+⚠ [4252/4361] Replayed CutoffRigidity.L2PointwiseEvolution
 warning: CutoffRigidity/L2PointwiseEvolution.lean:99:13: Variable name `hM` is not explicitly referenced.
 
 Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
   [apply] _hM
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [4256/4323] Replayed CutoffRigidity.BGLInterpolationAlgebra
+⚠ [4256/4361] Replayed CutoffRigidity.BGLInterpolationAlgebra
 warning: CutoffRigidity/BGLInterpolationAlgebra.lean:39:22: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
@@ -123,35 +125,35 @@ info: CutoffRigidity/BGLInterpolationAlgebra.lean:57:41: Try this:
 warning: CutoffRigidity/BGLInterpolationAlgebra.lean:57:37: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-⚠ [4281/4323] Replayed CutoffRigidity.LangevinEntropyCost
+⚠ [4281/4361] Replayed CutoffRigidity.LangevinEntropyCost
 warning: CutoffRigidity/LangevinEntropyCost.lean:118:24: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
 warning: CutoffRigidity/LangevinEntropyCost.lean:118:43: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-⚠ [4283/4323] Replayed CutoffRigidity.LangevinEntropyVariationalCost
+⚠ [4283/4361] Replayed CutoffRigidity.LangevinEntropyVariationalCost
 warning: CutoffRigidity/LangevinEntropyVariationalCost.lean:43:4: `simp` already closes the goal
 
 Hint: Use `simp` instead of `simpa`:
   [apply] simp [g, hz] at hx
 
 Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
-⚠ [4290/4323] Replayed CutoffRigidity.C1CoordinateFlowRegularity
+⚠ [4290/4361] Replayed CutoffRigidity.C1CoordinateFlowRegularity
 warning: CutoffRigidity/C1CoordinateFlowRegularity.lean:25:24: Variable name `hr` is not explicitly referenced.
 
 Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
   [apply] _hr
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [4305/4323] Replayed CutoffRigidity.RNDensityWeakConvergence
+⚠ [4309/4361] Replayed CutoffRigidity.RNDensityWeakConvergence
 warning: CutoffRigidity/RNDensityWeakConvergence.lean:18:17: Variable name `hφ` is not explicitly referenced.
 
 Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
   [apply] _hφ
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [4324/4897] Replayed CutoffRigidity.RiemannianChartFrames
+⚠ [4324/4361] Replayed CutoffRigidity.RiemannianChartFrames
 warning: CutoffRigidity/RiemannianChartFrames.lean:40:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartFrame_self`:
   [BoundarylessManifold I M]
   [RiemannianBundle fun x => TangentSpace I x]
@@ -186,7 +188,7 @@ Note: The updated constant is in a different namespace. Dot notation may need to
 
 Hint: Replace the deprecated name:
   C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵zero_apply
-⚠ [4325/4897] Replayed CutoffRigidity.RiemannianChartMetric
+⚠ [4325/4361] Replayed CutoffRigidity.RiemannianChartMetric
 warning: CutoffRigidity/RiemannianChartMetric.lean:32:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartMetric_apply`:
   [FiniteDimensional ℝ E]
   [BoundarylessManifold I M]
@@ -202,14 +204,14 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [FiniteDimensional ℝ E] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4327/4897] Replayed CutoffRigidity.CoordinateFlowTangentEvolution
+⚠ [4327/4361] Replayed CutoffRigidity.CoordinateFlowTangentEvolution
 warning: CutoffRigidity/CoordinateFlowTangentEvolution.lean:24:0: automatically included section variable(s) unused in theorem `CutoffRigidity.hasFDerivAt_coordinateFlow_of_symmetric_variation`:
   [CompleteSpace E]
 consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
   omit [CompleteSpace E] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4329/4897] Replayed CutoffRigidity.RiemannianChartFlowDifferential
+⚠ [4329/4361] Replayed CutoffRigidity.RiemannianChartFlowDifferential
 warning: CutoffRigidity/RiemannianChartFlowDifferential.lean:28:0: automatically included section variable(s) unused in theorem `CutoffRigidity.mfderiv_extChartAt_chartFrame`:
   [FiniteDimensional ℝ E]
   [BoundarylessManifold I M]
@@ -234,7 +236,7 @@ consider restructuring your `variable` declarations so that the variables are no
   TangentSpace I x] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4330/4897] Replayed CutoffRigidity.ManifoldChartODE
+⚠ [4330/4361] Replayed CutoffRigidity.ManifoldChartODE
 warning: CutoffRigidity/ManifoldChartODE.lean:25:0: automatically included section variable(s) unused in theorem `CutoffRigidity.hasMFDerivAt_chart_inverse_of_coordinateODE`:
   [BoundarylessManifold I M]
   [RiemannianBundle fun x => TangentSpace I x]
@@ -242,21 +244,21 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [BoundarylessManifold I M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4331/4897] Replayed CutoffRigidity.TangentMetricGerm
+⚠ [4331/4361] Replayed CutoffRigidity.TangentMetricGerm
 warning: CutoffRigidity/TangentMetricGerm.lean:29:0: automatically included section variable(s) unused in theorem `CutoffRigidity.inner_mfderiv_eq_of_eventuallyEq`:
   [IsManifold I 1 M]
 consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
   omit [IsManifold I 1 M] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4333/4897] Replayed CutoffRigidity.ParallelFlowTangentMetric
+⚠ [4333/4361] Replayed CutoffRigidity.ParallelFlowTangentMetric
 warning: CutoffRigidity/ParallelFlowTangentMetric.lean:30:0: automatically included section variable(s) unused in theorem `CutoffRigidity.completeBoundedFlow_gram_add`:
   [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
 consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
   omit [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4334/4897] Replayed CutoffRigidity.RiemannianTangentIsometry
+⚠ [4334/4361] Replayed CutoffRigidity.RiemannianTangentIsometry
 warning: CutoffRigidity/RiemannianTangentIsometry.lean:25:0: automatically included section variable(s) unused in theorem `CutoffRigidity.pathELength_comp_eq_of_norm_mfderiv_eq`:
   [IsManifold I 1 M]
   [IsRiemannianManifold I M]
@@ -276,7 +278,7 @@ Hint: Use `simp` instead of `simpa`:
   [apply] simp only [Function.comp_apply, hγy]
 
 Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
-⚠ [4345/4897] Replayed CutoffRigidity.RNDensityLocalDomination
+⚠ [4345/4361] Replayed CutoffRigidity.RNDensityLocalDomination
 warning: CutoffRigidity/RNDensityLocalDomination.lean:12:62: Variable name `hM` is not explicitly referenced.
 
 Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
@@ -290,7 +292,7 @@ Hint: Omit it from the simp argument list.
   [apply] simp [lintegral_const]
 
 Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-⚠ [4361/4897] Replayed CutoffRigidity.LangevinEntropyDrop
+⚠ [4361/4931] Replayed CutoffRigidity.LangevinEntropyDrop
 warning: CutoffRigidity/LangevinEntropyDrop.lean:140:54: This simp argument is unused:
   Pi.mul_apply
 
@@ -301,7 +303,7 @@ Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
 warning: CutoffRigidity/LangevinEntropyDrop.lean:140:26: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-⚠ [4363/4897] Replayed CutoffRigidity.SalezDiscreteEntropyWindow
+⚠ [4363/4931] Replayed CutoffRigidity.SalezDiscreteEntropyWindow
 warning: CutoffRigidity/SalezDiscreteEntropyWindow.lean:99:24: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
@@ -311,7 +313,7 @@ Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus fa
 warning: CutoffRigidity/SalezDiscreteEntropyWindow.lean:135:68: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-⚠ [4368/4897] Replayed CutoffRigidity.GibbsSobolevLipschitz
+⚠ [4368/4931] Replayed CutoffRigidity.GibbsSobolevLipschitz
 warning: CutoffRigidity/GibbsSobolevLipschitz.lean:71:6: This simp argument is unused:
   abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)
 
@@ -320,7 +322,7 @@ Hint: Omit it from the simp argument list.
     abs_of_nonneg (hχbounds n x).1]
 
 Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-⚠ [4373/4897] Replayed CutoffRigidity.ManifoldScalarChartDerivative
+⚠ [4373/4931] Replayed CutoffRigidity.ManifoldScalarChartDerivative
 warning: CutoffRigidity/ManifoldScalarChartDerivative.lean:39:2: Try this: 
   haveI̵
 
@@ -336,7 +338,7 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [FiniteDimensional ℝ E] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4374/4897] Replayed CutoffRigidity.ParallelGradientRegularLevel
+⚠ [4374/4931] Replayed CutoffRigidity.ParallelGradientRegularLevel
 warning: CutoffRigidity/ParallelGradientRegularLevel.lean:31:0: automatically included section variable(s) unused in theorem `CutoffRigidity.parallelField_ne_zero_everywhere`:
   [CompleteSpace M]
   [IsRiemannianManifold I M]
@@ -368,7 +370,7 @@ warning: CutoffRigidity/ParallelGradientRegularLevel.lean:76:8: Overlapping inst
 💡️ Of these, `[PreconnectedSpace M]` may be removed.
 
 Note: This linter can be disabled with `set_option linter.overlappingInstances false`
-⚠ [4377/4897] Replayed CutoffRigidity.RegularScalarChart
+⚠ [4377/4931] Replayed CutoffRigidity.RegularScalarChart
 warning: CutoffRigidity/RegularScalarChart.lean:42:0: automatically included section variable(s) unused in theorem `CutoffRigidity.hasStrictFDerivAt_chartScalar`:
   [FiniteDimensional ℝ E]
   [IsManifold I 2 M]
@@ -377,7 +379,7 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [FiniteDimensional ℝ E] [IsManifold I 2 M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4384/4897] Replayed CutoffRigidity.SmoothImplicitChart
+⚠ [4384/4931] Replayed CutoffRigidity.SmoothImplicitChart
 warning: CutoffRigidity/SmoothImplicitChart.lean:53:0: automatically included section variable(s) unused in theorem `CutoffRigidity.exists_contDiff_restriction`:
   [CompleteSpace E]
   [CompleteSpace F]
@@ -385,7 +387,7 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [CompleteSpace E] [CompleteSpace F] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4385/4897] Replayed CutoffRigidity.SmoothRegularLevelCoordinates
+⚠ [4385/4931] Replayed CutoffRigidity.SmoothRegularLevelCoordinates
 warning: CutoffRigidity/SmoothRegularLevelCoordinates.lean:24:2: Try this: 
   letI̵
 
@@ -408,10 +410,10 @@ Hint: The binding can be removed (if unused) or named `_` (if used implicitly). 
   [apply] _hn
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [4386/4897] Replayed CutoffRigidity.RegularLevelChartedSpace
+⚠ [4386/4931] Replayed CutoffRigidity.RegularLevelChartedSpace
 warning: CutoffRigidity/RegularLevelChartedSpace.lean:56:0: Definition `CutoffRigidity.regularLevelChartedSpace` of class type is semireducible. Most type class instances should be instance-reducible, so consider marking this
 definition with `@[instance_reducible]`. If it is intentionally semireducible, this warning can be disabled with `set_option warn.classDefReducibility false`.
-⚠ [4387/4897] Replayed CutoffRigidity.SmoothRegularLevelData
+⚠ [4387/4931] Replayed CutoffRigidity.SmoothRegularLevelData
 warning: CutoffRigidity/SmoothRegularLevelData.lean:70:0: automatically included section variable(s) unused in theorem `CutoffRigidity.SmoothRegularLevelData.ambientChart_first`:
   [FiniteDimensional ℝ E]
   [RiemannianBundle fun x => TangentSpace I x]
@@ -419,7 +421,7 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [FiniteDimensional ℝ E] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4388/4897] Replayed CutoffRigidity.SmoothRegularLevelTransition
+⚠ [4388/4931] Replayed CutoffRigidity.SmoothRegularLevelTransition
 warning: CutoffRigidity/SmoothRegularLevelTransition.lean:34:0: automatically included section variable(s) unused in theorem `CutoffRigidity.SmoothRegularLevelData.contMDiffAt_forwardExtension`:
   [FiniteDimensional ℝ E]
   [RiemannianBundle fun x => TangentSpace I x]
@@ -427,7 +429,7 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [FiniteDimensional ℝ E] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4389/4897] Replayed CutoffRigidity.SmoothRegularLevelManifold
+⚠ [4389/4931] Replayed CutoffRigidity.SmoothRegularLevelManifold
 warning: CutoffRigidity/SmoothRegularLevelManifold.lean:49:2: Try this: 
   letI̵
 
@@ -474,12 +476,12 @@ Hint: Omit it from the simp argument list.
   [apply] simp only [extChartAt_coe, modelWithCornersSelf_coe]
 
 Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-⚠ [4399/4897] Replayed CutoffRigidity.TransportCouplingCompactness
+⚠ [4399/4931] Replayed CutoffRigidity.TransportCouplingCompactness
 warning: CutoffRigidity/TransportCouplingCompactness.lean:58:17: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
 
 Hint: Replace the deprecated name:
   m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
-⚠ [4400/4897] Replayed CutoffRigidity.CompactTransportDuality
+⚠ [4400/4931] Replayed CutoffRigidity.CompactTransportDuality
 warning: CutoffRigidity/CompactTransportDuality.lean:24:18: Variable name `a` is not explicitly referenced.
 
 Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
@@ -500,12 +502,12 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [T2Space X] [SecondCountableTopology X] [T2Space Y] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4401/4897] Replayed CutoffRigidity.EuclideanCompactClipping
+⚠ [4401/4931] Replayed CutoffRigidity.EuclideanCompactClipping
 warning: CutoffRigidity/EuclideanCompactClipping.lean:60:39: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
 
 Hint: Replace the deprecated name:
   m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
-⚠ [4402/4897] Replayed CutoffRigidity.EuclideanTransportDuality
+⚠ [4402/4931] Replayed CutoffRigidity.EuclideanTransportDuality
 warning: CutoffRigidity/EuclideanTransportDuality.lean:28:2: Try this: 
   letI̵
 
@@ -530,14 +532,14 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-⚠ [4404/4897] Replayed CutoffRigidity.CompactLipschitzTransportDuality
+⚠ [4404/4931] Replayed CutoffRigidity.CompactLipschitzTransportDuality
 warning: CutoffRigidity/CompactLipschitzTransportDuality.lean:14:0: automatically included section variable(s) unused in theorem `CutoffRigidity.integral_continuous_le_of_uniform_approx`:
   [SecondCountableTopology X]
 consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
   omit [SecondCountableTopology X] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4405/4897] Replayed CutoffRigidity.EuclideanLipschitzTransportDuality
+⚠ [4405/4931] Replayed CutoffRigidity.EuclideanLipschitzTransportDuality
 warning: CutoffRigidity/EuclideanLipschitzTransportDuality.lean:30:2: Try this: 
   letI̵
 
@@ -562,21 +564,21 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-⚠ [4407/4897] Replayed CutoffRigidity.LinearVariationJointContinuity
+⚠ [4407/4931] Replayed CutoffRigidity.LinearVariationJointContinuity
 warning: CutoffRigidity/LinearVariationJointContinuity.lean:20:44: Variable name `hT` is not explicitly referenced.
 
 Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
   [apply] _hT
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [4408/4897] Replayed CutoffRigidity.C1CoordinateJointFlow
+⚠ [4408/4931] Replayed CutoffRigidity.C1CoordinateJointFlow
 warning: CutoffRigidity/C1CoordinateJointFlow.lean:23:24: Variable name `hr` is not explicitly referenced.
 
 Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
   [apply] _hr
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [4412/4897] Replayed CutoffRigidity.RiemannianPullbackMetric
+⚠ [4412/4931] Replayed CutoffRigidity.RiemannianPullbackMetric
 warning: CutoffRigidity/RiemannianPullbackMetric.lean:78:0: automatically included section variable(s) unused in theorem `CutoffRigidity.immersionPullbackRiemannianMetric_inner`:
   [IsManifold I 2 M]
   [IsManifold J 2 N]
@@ -599,7 +601,7 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [IsManifold I 2 M] [IsManifold J 2 N] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [4413/4897] Replayed CutoffRigidity.RiemannianMetricChartCriterion
+⚠ [4413/4931] Replayed CutoffRigidity.RiemannianMetricChartCriterion
 warning: CutoffRigidity/RiemannianMetricChartCriterion.lean:43:69: This simp argument is unused:
   hy
 
@@ -632,7 +634,7 @@ Hint: Omit it from the simp argument list.
     Trivialization.linearMapAt_apply, hy, hy']
 
 Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-⚠ [4414/4897] Replayed CutoffRigidity.SmoothRiemannianPullbackMetric
+⚠ [4414/4931] Replayed CutoffRigidity.SmoothRiemannianPullbackMetric
 warning: CutoffRigidity/SmoothRiemannianPullbackMetric.lean:28:2: Try this: 
   letI̵
 
@@ -641,7 +643,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-⚠ [4415/4897] Replayed CutoffRigidity.ParallelGradientLevelMetric
+⚠ [4415/4931] Replayed CutoffRigidity.ParallelGradientLevelMetric
 warning: CutoffRigidity/ParallelGradientLevelMetric.lean:53:2: Try this: 
   letI̵
 
@@ -674,7 +676,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-⚠ [4416/4897] Replayed CutoffRigidity.SmoothRegularLevelMaps
+⚠ [4416/4931] Replayed CutoffRigidity.SmoothRegularLevelMaps
 warning: CutoffRigidity/SmoothRegularLevelMaps.lean:32:2: Try this: 
   letI̵
 
@@ -683,7 +685,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-⚠ [4417/4897] Replayed CutoffRigidity.ParallelGradientProductDiffeomorph
+⚠ [4417/4931] Replayed CutoffRigidity.ParallelGradientProductDiffeomorph
 warning: CutoffRigidity/ParallelGradientProductDiffeomorph.lean:36:2: Try this: 
   letI̵
 
@@ -700,7 +702,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-⚠ [4442/4897] Replayed CutoffRigidity.EntropyLpBound
+⚠ [4442/4931] Replayed CutoffRigidity.EntropyLpBound
 warning: CutoffRigidity/EntropyLpBound.lean:31:24: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
@@ -711,7 +713,7 @@ Hint: Omit it from the simp argument list.
   [apply] simp only [enorm_one, measure_univ, ENNReal.one_rpow, mul_one]
 
 Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
-⚠ [4460/4897] Replayed CutoffRigidity.RiemannianTangentMetricMap
+⚠ [4460/4931] Replayed CutoffRigidity.RiemannianTangentMetricMap
 warning: CutoffRigidity/RiemannianTangentMetricMap.lean:30:0: automatically included section variable(s) unused in theorem `CutoffRigidity.pathELength_comp_eq_of_norm_mfderiv_eq_between`:
   [IsManifold I 1 M]
   [IsRiemannianManifold I M]
@@ -743,7 +745,7 @@ Note: This linter can be disabled with `set_option linter.unusedSectionVars fals
 warning: CutoffRigidity/RiemannianTangentMetricMap.lean:124:24: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-⚠ [4462/4897] Replayed CutoffRigidity.ParallelGradientProductDifferential
+⚠ [4462/4931] Replayed CutoffRigidity.ParallelGradientProductDifferential
 warning: CutoffRigidity/ParallelGradientProductDifferential.lean:41:2: Try this: 
   letI̵
 
@@ -871,7 +873,7 @@ The difference between `let` and `letI` is that `letI` inlines the value.
 But this is not relevant for proofs because of proof irrelevance.
 
 Note: This linter can be disabled with `set_option linter.style.haveILetI false`
-⚠ [9396/9823] Replayed CutoffRigidity.RiemannianCoordinateGradient
+⚠ [9395/9425] Replayed CutoffRigidity.RiemannianCoordinateGradient
 warning: CutoffRigidity/RiemannianCoordinateGradient.lean:56:0: automatically included section variable(s) unused in theorem `CutoffRigidity.fderiv_chartScalar_frame`:
   [FiniteDimensional ℝ E]
   [RiemannianBundle fun x => TangentSpace I x]
@@ -894,7 +896,7 @@ consider restructuring your `variable` declarations so that the variables are no
   TangentSpace I x] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [9397/9823] Replayed CutoffRigidity.RiemannianChristoffel
+⚠ [9396/9425] Replayed CutoffRigidity.RiemannianChristoffel
 warning: CutoffRigidity/RiemannianChristoffel.lean:25:0: automatically included section variable(s) unused in theorem `CutoffRigidity.mlieBracket_chartFrames`:
   [FiniteDimensional ℝ E]
   [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
@@ -902,7 +904,7 @@ consider restructuring your `variable` declarations so that the variables are no
   omit [FiniteDimensional ℝ E] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-⚠ [9398/9823] Replayed CutoffRigidity.RiemannianChartVolumeDensity
+⚠ [9397/9425] Replayed CutoffRigidity.RiemannianChartVolumeDensity
 warning: CutoffRigidity/RiemannianChartVolumeDensity.lean:34:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartRiemannianVolumeDensity_nonneg`:
   [BoundarylessManifold I M]
   [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
@@ -2685,53 +2687,53 @@ Hint: The binding can be removed (if unused) or named `_` (if used implicitly). 
   [apply] _hd
 
 Note: This linter can be disabled with `set_option linter.unusedVariables false`
-⚠ [9822/9823] Built Solution (10s)
+⚠ [9822/9823] Replayed Solution
 warning: Solution.lean:57:52: Unused tactic linter: `assumption` does nothing
 
 Note: This linter can be disabled with `set_option linter.unusedTactic false`
 warning: Solution.lean:57:52: this tactic is never executed
 
 Note: This linter can be disabled with `set_option linter.unreachableTactic false`
-warning: Solution.lean:259:55: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+warning: Solution.lean:264:55: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-warning: Solution.lean:305:50: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+warning: Solution.lean:310:50: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-warning: Solution.lean:368:50: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+warning: Solution.lean:373:50: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-warning: Solution.lean:487:48: Unused tactic linter: `assumption` does nothing
+warning: Solution.lean:492:48: Unused tactic linter: `assumption` does nothing
 
 Note: This linter can be disabled with `set_option linter.unusedTactic false`
-warning: Solution.lean:487:48: this tactic is never executed
+warning: Solution.lean:492:48: this tactic is never executed
 
 Note: This linter can be disabled with `set_option linter.unreachableTactic false`
-warning: Solution.lean:567:0: automatically included section variable(s) unused in theorem `CutCur.bochner_identity`:
+warning: Solution.lean:572:0: automatically included section variable(s) unused in theorem `CutCur.bochner_identity`:
   [MeasurableSpace F]
   [BorelSpace F]
 consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
   omit [MeasurableSpace F] [BorelSpace F] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-warning: Solution.lean:575:0: automatically included section variable(s) unused in theorem `CutCur.bochner_vector`:
+warning: Solution.lean:580:0: automatically included section variable(s) unused in theorem `CutCur.bochner_vector`:
   [MeasurableSpace F]
   [BorelSpace F]
 consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
   omit [MeasurableSpace F] [BorelSpace F] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-warning: Solution.lean:580:0: automatically included section variable(s) unused in theorem `CutCur.CD_iff_ricci`:
+warning: Solution.lean:585:0: automatically included section variable(s) unused in theorem `CutCur.CD_iff_ricci`:
   [MeasurableSpace F]
   [BorelSpace F]
 consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
   omit [MeasurableSpace F] [BorelSpace F] in theorem ...
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
-warning: Solution.lean:582:42: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+warning: Solution.lean:587:42: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
 
 Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
-warning: Solution.lean:642:0: automatically included section variable(s) unused in theorem `CutCur.sphere_curvature`:
+warning: Solution.lean:647:0: automatically included section variable(s) unused in theorem `CutCur.sphere_curvature`:
   [IsRiemannianManifold 𝓘(ℝ, F) M]
   [ConnectedSpace M]
   [CompleteSpace M]
@@ -2743,10 +2745,10 @@ consider restructuring your `variable` declarations so that the variables are no
 
 Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
 Build completed successfully (9823 jobs).
-Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, CutCur.exists_stdBrownian, CutCur.exists_langevin, CutCur.isLangevinSolution_map_eq_kernel_of_rigid, CutCur.main_wasserstein_estimate, CutCur.eigenspace_dim_and_lambda, CutCur.wasserstein_cutoff, CutCur.information_cutoff, CutCur.lp_cutoff, CutCur.convex_interaction, CutCur.convex_interaction_cutoff, CutCur.product_condition_cutoff, CutCur.euclidean_gaussian_factorization, CutCur.eigenmap_is_ou, CutCur.eigenmap_is_ou_pathwise, CutCur.wasserstein_cutoff_weak, CutCur.information_cutoff_weak, CutCur.spectral_gap_ge_curvature, CutCur.rigidity_of_gaussian_factor, CutCur.optimal_lsi_twice_pi, CutCur.optimal_constants_extremal, CutCur.gaussian_isoperimetric_functional, CutCur.gaussian_isoperimetric_sets, CutCur.gibbs_quadratic_isProb, CutCur.rothaus_alternative_ne, CutCur.two_optPI_le_optLSI, CutCur.finite_rothaus, CutCur.ou_fisher_information, CutCur.normalization_cutoff, CutCur.normalization_sde, CutCur.temperature_bakry_emery, CutCur.temperature_sde, CutCur.temperature_cutoff, CutCur.temperature_kernel, CutCur.heat_kernel_score, CutCur.pairwise_interaction, CutCur.ou_first_eigenspace, CutCur.mixing_time_rigid, CutCur.mixing_time_w2_rigid, CutCur.mixing_time_kl_rigid, CutCur.ou_mean_start_cutoff, CutCur.ou_lp_infty_fails, CutCur.langevin_moment_bounds, CutCur.sup_eigenLambda_ball, CutCur.langevin_w2_contraction, CutCur.langevin_entropy_decay, CutCur.langevin_fisher_decay, CutCur.langevin_fisher_dini, CutCur.langevin_dissipation_eq_K', CutCur.langevin_dissipation_eq_dirac_K, CutCur.pinsker_tvDist, CutCur.talagrand_logSobolev, CutCur.dyson_ou_static, CutCur.dyson_spectralGap, CutCur.carre_eq_operator, CutCur.carre_polarization, CutCur.generator_comp, CutCur.temperature_cd, CutCur.bochner_identity, CutCur.bochner_vector, CutCur.CD_iff_ricci, CutCur.mSpectralGap_ge_of_CD, CutCur.riemannian_k1_bounds, CutCur.riemannian_poincare_lsi, CutCur.riemannian_wasserstein_estimate, CutCur.riemannian_gaussian_splitting, CutCur.sphere_curvature, CutCur.sphere_gap, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, CutCur.Rd, CutCur.gibbs, CutCur.laplacian, CutCur.generator, CutCur.spectralGap, CutCur.IsEigenfunction, CutCur.firstEigenspace, CutCur.firstEigenDim, CutCur.IsEigenbasis, CutCur.eigenLambda, CutCur.RigidCurvature, CutCur.IsStdBrownian, CutCur.IsLangevinSolution, CutCur.IsLangevin, CutCur.IsEuclideanDiffusion, CutCur.IsEuclideanLangevin, CutCur.wasserstein2, CutCur.tvDist, CutCur.fisherInfo, CutCur.relLp, CutCur.worstK, CutCur.HasCutoff, CutCur.meanBall, CutCur.meanCube, CutCur.IsRigidSequenceK, CutCur.criticalTime, CutCur.diagonal, CutCur.mixingTimeK, CutCur.mixingTimeW2K, CutCur.mixingTimeKLK, CutCur.entropyOf, CutCur.IsTestFunction, CutCur.optimalPI, CutCur.optimalLSI, CutCur.gaussianIsoProfile, CutCur.Form.optPI, CutCur.Form.optLSI, CutCur.Form.Compact, CutCur.IsSDESolution, CutCur.IsSigmaDiffusion, CutCur.IsSigmaLangevin, CutCur.chamber, CutCur.dysonProb, CutCur.dysonGap, CutCur.mgrad, CutCur.mlaplacian, CutCur.mgenerator, CutCur.carre, CutCur.carre2, CutCur.CD, CutCur.mCurv, CutCur.mExt, CutCur.mRic, CutCur.mHess, CutCur.mHessSq, CutCur.mSecondDeriv, CutCur.mRoughLaplacian, CutCur.mVecGenerator, CutCur.chartVolumeDensity, CutCur.IsWeightedVolume, CutCur.mSpectralGap, CutCur.IsMEigenfunction, CutCur.mFirstEigenDim, CutCur.mLambda, CutCur.IsDiffusionSemigroup, CutCur.IsSphereModel] from Solution
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, CutCur.exists_stdBrownian, CutCur.exists_langevin, CutCur.isLangevinSolution_map_eq_kernel_of_rigid, CutCur.exists_euclideanLangevin_of_convex, CutCur.main_wasserstein_estimate, CutCur.eigenspace_dim_and_lambda, CutCur.wasserstein_cutoff, CutCur.information_cutoff, CutCur.lp_cutoff, CutCur.convex_interaction, CutCur.convex_interaction_cutoff, CutCur.product_condition_cutoff, CutCur.euclidean_gaussian_factorization, CutCur.eigenmap_is_ou, CutCur.eigenmap_is_ou_pathwise, CutCur.wasserstein_cutoff_weak, CutCur.information_cutoff_weak, CutCur.spectral_gap_ge_curvature, CutCur.rigidity_of_gaussian_factor, CutCur.optimal_lsi_twice_pi, CutCur.optimal_constants_extremal, CutCur.gaussian_isoperimetric_functional, CutCur.gaussian_isoperimetric_sets, CutCur.gibbs_quadratic_isProb, CutCur.rothaus_alternative_ne, CutCur.two_optPI_le_optLSI, CutCur.finite_rothaus, CutCur.ou_fisher_information, CutCur.normalization_cutoff, CutCur.normalization_sde, CutCur.temperature_bakry_emery, CutCur.temperature_sde, CutCur.temperature_cutoff, CutCur.temperature_kernel, CutCur.heat_kernel_score, CutCur.pairwise_interaction, CutCur.ou_first_eigenspace, CutCur.mixing_time_rigid, CutCur.mixing_time_w2_rigid, CutCur.mixing_time_kl_rigid, CutCur.ou_mean_start_cutoff, CutCur.ou_lp_infty_fails, CutCur.langevin_moment_bounds, CutCur.sup_eigenLambda_ball, CutCur.langevin_w2_contraction, CutCur.langevin_entropy_decay, CutCur.langevin_fisher_decay, CutCur.langevin_fisher_dini, CutCur.langevin_dissipation_eq_K', CutCur.langevin_dissipation_eq_dirac_K, CutCur.pinsker_tvDist, CutCur.talagrand_logSobolev, CutCur.dyson_ou_static, CutCur.dyson_spectralGap, CutCur.carre_eq_operator, CutCur.carre_polarization, CutCur.generator_comp, CutCur.temperature_cd, CutCur.bochner_identity, CutCur.bochner_vector, CutCur.CD_iff_ricci, CutCur.mSpectralGap_ge_of_CD, CutCur.riemannian_k1_bounds, CutCur.riemannian_poincare_lsi, CutCur.riemannian_wasserstein_estimate, CutCur.riemannian_gaussian_splitting, CutCur.sphere_curvature, CutCur.sphere_gap, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, CutCur.Rd, CutCur.gibbs, CutCur.laplacian, CutCur.generator, CutCur.spectralGap, CutCur.IsEigenfunction, CutCur.firstEigenspace, CutCur.firstEigenDim, CutCur.IsEigenbasis, CutCur.eigenLambda, CutCur.RigidCurvature, CutCur.IsStdBrownian, CutCur.IsLangevinSolution, CutCur.IsLangevin, CutCur.IsEuclideanDiffusion, CutCur.IsEuclideanLangevin, CutCur.wasserstein2, CutCur.tvDist, CutCur.fisherInfo, CutCur.relLp, CutCur.worstK, CutCur.HasCutoff, CutCur.meanBall, CutCur.meanCube, CutCur.IsRigidSequenceK, CutCur.criticalTime, CutCur.diagonal, CutCur.mixingTimeK, CutCur.mixingTimeW2K, CutCur.mixingTimeKLK, CutCur.entropyOf, CutCur.IsTestFunction, CutCur.optimalPI, CutCur.optimalLSI, CutCur.gaussianIsoProfile, CutCur.Form.optPI, CutCur.Form.optLSI, CutCur.Form.Compact, CutCur.IsSDESolution, CutCur.IsSigmaDiffusion, CutCur.IsSigmaLangevin, CutCur.chamber, CutCur.dysonProb, CutCur.dysonGap, CutCur.mgrad, CutCur.mlaplacian, CutCur.mgenerator, CutCur.carre, CutCur.carre2, CutCur.CD, CutCur.mCurv, CutCur.mExt, CutCur.mRic, CutCur.mHess, CutCur.mHessSq, CutCur.mSecondDeriv, CutCur.mRoughLaplacian, CutCur.mVecGenerator, CutCur.chartVolumeDensity, CutCur.IsWeightedVolume, CutCur.mSpectralGap, CutCur.IsMEigenfunction, CutCur.mFirstEigenDim, CutCur.mLambda, CutCur.IsDiffusionSemigroup, CutCur.IsSphereModel] from Solution
 Running con-ron kernel on solution
 con-ron: 1 inductive blocks modelled in-process: Lean.Syntax (30 generated records, checked by the fold as declarations and not counted as records of the file)
-con-ron: accepted 92444 declarations (--verified)
+con-ron: accepted 92445 declarations (--verified)
 con-ron kernel accepts the solution
 Running nanoda kernel on solution
 nanoda kernel accepts the solution

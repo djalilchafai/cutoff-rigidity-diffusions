@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Local independent proof replay following the official Palomar template.
+# Usage: scripts/verify-comparator.sh [comparator.json | comparator-palomar.json]
 set -euo pipefail
+config_file=${1:-comparator.json}
 repository_root=$(cd "$(dirname "$0")/.." && pwd)
 cd "$repository_root"
 python3 scripts/check-palomar.py --ready
@@ -19,7 +21,7 @@ for bundled_tool in lake leanexport leanchecker nanoda_bin con-ron; do
 done
 temporary_config=$(mktemp "${TMPDIR:-/tmp}/cutoff-comparator.XXXXXX")
 trap 'rm -f "$temporary_config"' EXIT
-python3 - comparator.json "$temporary_config" "$prefix" <<'PY'
+python3 - "$config_file" "$temporary_config" "$prefix" <<'PY'
 import json
 import pathlib
 import sys

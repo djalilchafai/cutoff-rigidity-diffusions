@@ -1,0 +1,2648 @@
+ven. 20 nov. 2026 17:03:20 UTC
+config: comparator-palomar.json
+Local source checks passed for 910 Lean files; official verification remains required.
+Current branch: HEAD
+Using cache from origin: (some leanprover-community/mathlib4)
+No files to download
+Already decompressed 8915 file(s)
+Resolving dependencies
+Building PalomarChallenge
+⚠ [8931/8932] Replayed PalomarChallenge
+warning: PalomarChallenge.lean:113:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:119:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:125:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:130:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:141:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:154:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:160:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:170:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:179:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:192:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:210:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:223:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:234:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:305:8: declaration uses `sorry`
+warning: PalomarChallenge.lean:316:8: declaration uses `sorry`
+Build completed successfully (8932 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, CutCur.exists_langevin, CutCur.isLangevinSolution_map_eq_kernel_of_rigid, CutCur.exists_euclideanLangevin_of_convex, CutCur.main_wasserstein_estimate, CutCur.eigenspace_dim_and_lambda, CutCur.wasserstein_cutoff, CutCur.information_cutoff, CutCur.lp_cutoff, CutCur.convex_interaction, CutCur.convex_interaction_cutoff, CutCur.product_condition_cutoff, CutCur.euclidean_gaussian_factorization, CutCur.eigenmap_is_ou, CutCur.riemannian_wasserstein_estimate, CutCur.riemannian_gaussian_splitting, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, CutCur.Rd, CutCur.gibbs, CutCur.laplacian, CutCur.generator, CutCur.spectralGap, CutCur.IsEigenfunction, CutCur.firstEigenspace, CutCur.firstEigenDim, CutCur.IsEigenbasis, CutCur.eigenLambda, CutCur.RigidCurvature, CutCur.IsStdBrownian, CutCur.IsLangevinSolution, CutCur.IsLangevin, CutCur.IsEuclideanDiffusion, CutCur.IsEuclideanLangevin, CutCur.wasserstein2, CutCur.tvDist, CutCur.fisherInfo, CutCur.relLp, CutCur.worstK, CutCur.HasCutoff, CutCur.meanBall, CutCur.meanCube, CutCur.IsRigidSequenceK, CutCur.criticalTime, CutCur.diagonal, CutCur.mixingTimeK, CutCur.mgrad, CutCur.mlaplacian, CutCur.mgenerator, CutCur.carre, CutCur.carre2, CutCur.CD, CutCur.chartVolumeDensity, CutCur.IsWeightedVolume, CutCur.mSpectralGap, CutCur.IsMEigenfunction, CutCur.mFirstEigenDim, CutCur.mLambda, CutCur.IsDiffusionSemigroup] from PalomarChallenge
+Building PalomarSolution
+⚠ [4244/4796] Replayed CutoffRigidity.L2TimeIntegral
+warning: CutoffRigidity/L2TimeIntegral.lean:25:60: Variable name `hM` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hM
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [4246/4796] Replayed CutoffRigidity.LangevinDomainDynkin
+warning: CutoffRigidity/LangevinDomainDynkin.lean:129:22: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [4250/4796] Replayed CutoffRigidity.RiemannianParallelProductTopology
+warning: CutoffRigidity/RiemannianParallelProductTopology.lean:33:0: automatically included section variable(s) unused in theorem `CutoffRigidity.unitParallelField_enorm_le_one`:
+  [CompleteSpace M]
+  [IsRiemannianManifold I M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace M] [IsRiemannianManifold I M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianParallelProductTopology.lean:45:0: automatically included section variable(s) unused in theorem `CutoffRigidity.unitParallelGradient_rate`:
+  [CompleteSpace M]
+  [IsRiemannianManifold I M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace M] [IsRiemannianManifold I M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4252/4796] Replayed CutoffRigidity.L2PointwiseEvolution
+warning: CutoffRigidity/L2PointwiseEvolution.lean:99:13: Variable name `hM` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hM
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [4256/4796] Replayed CutoffRigidity.BGLInterpolationAlgebra
+warning: CutoffRigidity/BGLInterpolationAlgebra.lean:39:22: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+info: CutoffRigidity/BGLInterpolationAlgebra.lean:57:41: Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+warning: CutoffRigidity/BGLInterpolationAlgebra.lean:57:37: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [4281/4796] Replayed CutoffRigidity.LangevinEntropyCost
+warning: CutoffRigidity/LangevinEntropyCost.lean:118:24: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CutoffRigidity/LangevinEntropyCost.lean:118:43: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [4283/4796] Replayed CutoffRigidity.LangevinEntropyVariationalCost
+warning: CutoffRigidity/LangevinEntropyVariationalCost.lean:43:4: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [g, hz] at hx
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [4290/4796] Replayed CutoffRigidity.C1CoordinateFlowRegularity
+warning: CutoffRigidity/C1CoordinateFlowRegularity.lean:25:24: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [4309/4796] Replayed CutoffRigidity.RNDensityWeakConvergence
+warning: CutoffRigidity/RNDensityWeakConvergence.lean:18:17: Variable name `hφ` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hφ
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [4324/4796] Replayed CutoffRigidity.RiemannianChartFrames
+warning: CutoffRigidity/RiemannianChartFrames.lean:40:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartFrame_self`:
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [BoundarylessManifold I M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianChartFrames.lean:47:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartCoordinateField_frame`:
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [BoundarylessManifold I M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianChartFrames.lean:64:0: automatically included section variable(s) unused in theorem `CutoffRigidity.contMDiffAt_chartFrame`:
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [BoundarylessManifold I M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianChartFrames.lean:86:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartCoordinateField_self`:
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [BoundarylessManifold I M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianChartFrames.lean:116:10: `ContinuousLinearMap.zero_apply` has been deprecated: Use `zero_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.zero_apply` to `zero_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵zero_apply
+⚠ [4325/4796] Replayed CutoffRigidity.RiemannianChartMetric
+warning: CutoffRigidity/RiemannianChartMetric.lean:32:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartMetric_apply`:
+  [FiniteDimensional ℝ E]
+  [BoundarylessManifold I M]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  E] [BoundarylessManifold I M] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianChartMetric.lean:47:0: automatically included section variable(s) unused in theorem `CutoffRigidity.contMDiffAt_chartFrame_inner`:
+  [FiniteDimensional ℝ E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4327/4796] Replayed CutoffRigidity.CoordinateFlowTangentEvolution
+warning: CutoffRigidity/CoordinateFlowTangentEvolution.lean:24:0: automatically included section variable(s) unused in theorem `CutoffRigidity.hasFDerivAt_coordinateFlow_of_symmetric_variation`:
+  [CompleteSpace E]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace E] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4329/4796] Replayed CutoffRigidity.RiemannianChartFlowDifferential
+warning: CutoffRigidity/RiemannianChartFlowDifferential.lean:28:0: automatically included section variable(s) unused in theorem `CutoffRigidity.mfderiv_extChartAt_chartFrame`:
+  [FiniteDimensional ℝ E]
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  E] [BoundarylessManifold I
+  M] [RiemannianBundle fun x =>
+  TangentSpace I x] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianChartFlowDifferential.lean:35:0: automatically included section variable(s) unused in theorem `CutoffRigidity.mfderiv_extChartAt_symm_apply_eq_frame`:
+  [FiniteDimensional ℝ E]
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  E] [BoundarylessManifold I
+  M] [RiemannianBundle fun x =>
+  TangentSpace I x] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4330/4796] Replayed CutoffRigidity.ManifoldChartODE
+warning: CutoffRigidity/ManifoldChartODE.lean:25:0: automatically included section variable(s) unused in theorem `CutoffRigidity.hasMFDerivAt_chart_inverse_of_coordinateODE`:
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [BoundarylessManifold I M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4331/4796] Replayed CutoffRigidity.TangentMetricGerm
+warning: CutoffRigidity/TangentMetricGerm.lean:29:0: automatically included section variable(s) unused in theorem `CutoffRigidity.inner_mfderiv_eq_of_eventuallyEq`:
+  [IsManifold I 1 M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsManifold I 1 M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4333/4796] Replayed CutoffRigidity.ParallelFlowTangentMetric
+warning: CutoffRigidity/ParallelFlowTangentMetric.lean:30:0: automatically included section variable(s) unused in theorem `CutoffRigidity.completeBoundedFlow_gram_add`:
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4334/4796] Replayed CutoffRigidity.RiemannianTangentIsometry
+warning: CutoffRigidity/RiemannianTangentIsometry.lean:25:0: automatically included section variable(s) unused in theorem `CutoffRigidity.pathELength_comp_eq_of_norm_mfderiv_eq`:
+  [IsManifold I 1 M]
+  [IsRiemannianManifold I M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsManifold I 1 M] [IsRiemannianManifold I M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianTangentIsometry.lean:54:10: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp only [Function.comp_apply, hγx]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: CutoffRigidity/RiemannianTangentIsometry.lean:54:53: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp only [Function.comp_apply, hγy]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [4345/4796] Replayed CutoffRigidity.RNDensityLocalDomination
+warning: CutoffRigidity/RNDensityLocalDomination.lean:12:62: Variable name `hM` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hM
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/RNDensityLocalDomination.lean:32:65: This simp argument is unused:
+  mul_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [lintegral_const]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [4361/4796] Replayed CutoffRigidity.LangevinEntropyDrop
+warning: CutoffRigidity/LangevinEntropyDrop.lean:140:54: This simp argument is unused:
+  Pi.mul_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [liminf_const, I, K]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/LangevinEntropyDrop.lean:140:26: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [4363/4796] Replayed CutoffRigidity.SalezDiscreteEntropyWindow
+warning: CutoffRigidity/SalezDiscreteEntropyWindow.lean:99:24: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CutoffRigidity/SalezDiscreteEntropyWindow.lean:99:71: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CutoffRigidity/SalezDiscreteEntropyWindow.lean:135:68: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [4368/4796] Replayed CutoffRigidity.GibbsSobolevLipschitz
+warning: CutoffRigidity/GibbsSobolevLipschitz.lean:71:6: This simp argument is unused:
+  abs_of_nonneg (by norm_num : (0 : ℝ) ≤ 2)
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Nat.reduceSub, pow_one, nsmul_eq_mul, norm_smul, Real.norm_eq_abs, abs_mul,
+    abs_of_nonneg (hχbounds n x).1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [4373/4796] Replayed CutoffRigidity.ManifoldScalarChartDerivative
+warning: CutoffRigidity/ManifoldScalarChartDerivative.lean:39:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ManifoldScalarChartDerivative.lean:24:0: automatically included section variable(s) unused in theorem `CutoffRigidity.fderiv_chartScalar_direction`:
+  [FiniteDimensional ℝ E]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4374/4796] Replayed CutoffRigidity.ParallelGradientRegularLevel
+warning: CutoffRigidity/ParallelGradientRegularLevel.lean:31:0: automatically included section variable(s) unused in theorem `CutoffRigidity.parallelField_ne_zero_everywhere`:
+  [CompleteSpace M]
+  [IsRiemannianManifold I M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace M] [IsRiemannianManifold I M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/ParallelGradientRegularLevel.lean:70:0: automatically included section variable(s) unused in theorem `CutoffRigidity.completeSpace_parallelGradient_zeroLevel`:
+  [FiniteDimensional ℝ E]
+  [IsManifold I 2 M]
+  [BoundarylessManifold I M]
+  [PreconnectedSpace M]
+  [RiemannianBundle fun x => TangentSpace I x]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+  [IsRiemannianManifold I M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  E] [IsManifold I 2
+  M] [BoundarylessManifold I
+  M] [PreconnectedSpace
+  M] [RiemannianBundle fun x =>
+  TangentSpace I
+    x] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] [IsRiemannianManifold I M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/ParallelGradientRegularLevel.lean:76:8: Overlapping instance parameters in `connectedSpace_parallelGradient_zeroLevel`:
+
+⚠️ `[PreconnectedSpace M]` and `[ConnectedSpace M]` each imply `[PreconnectedSpace M]`.
+💡️ Of these, `[PreconnectedSpace M]` may be removed.
+
+Note: This linter can be disabled with `set_option linter.overlappingInstances false`
+⚠ [4377/4796] Replayed CutoffRigidity.RegularScalarChart
+warning: CutoffRigidity/RegularScalarChart.lean:42:0: automatically included section variable(s) unused in theorem `CutoffRigidity.hasStrictFDerivAt_chartScalar`:
+  [FiniteDimensional ℝ E]
+  [IsManifold I 2 M]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [IsManifold I 2 M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4384/4796] Replayed CutoffRigidity.SmoothImplicitChart
+warning: CutoffRigidity/SmoothImplicitChart.lean:53:0: automatically included section variable(s) unused in theorem `CutoffRigidity.exists_contDiff_restriction`:
+  [CompleteSpace E]
+  [CompleteSpace F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace E] [CompleteSpace F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4385/4796] Replayed CutoffRigidity.SmoothRegularLevelCoordinates
+warning: CutoffRigidity/SmoothRegularLevelCoordinates.lean:24:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/SmoothRegularLevelCoordinates.lean:21:0: automatically included section variable(s) unused in theorem `CutoffRigidity.contDiffAt_chartScalar_of_le_two`:
+  [FiniteDimensional ℝ E]
+  [IsManifold I 2 M]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [IsManifold I 2 M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/SmoothRegularLevelCoordinates.lean:22:40: Variable name `hn` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hn
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [4386/4796] Replayed CutoffRigidity.RegularLevelChartedSpace
+warning: CutoffRigidity/RegularLevelChartedSpace.lean:56:0: Definition `CutoffRigidity.regularLevelChartedSpace` of class type is semireducible. Most type class instances should be instance-reducible, so consider marking this
+definition with `@[instance_reducible]`. If it is intentionally semireducible, this warning can be disabled with `set_option warn.classDefReducibility false`.
+⚠ [4387/4796] Replayed CutoffRigidity.SmoothRegularLevelData
+warning: CutoffRigidity/SmoothRegularLevelData.lean:70:0: automatically included section variable(s) unused in theorem `CutoffRigidity.SmoothRegularLevelData.ambientChart_first`:
+  [FiniteDimensional ℝ E]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4388/4796] Replayed CutoffRigidity.SmoothRegularLevelTransition
+warning: CutoffRigidity/SmoothRegularLevelTransition.lean:34:0: automatically included section variable(s) unused in theorem `CutoffRigidity.SmoothRegularLevelData.contMDiffAt_forwardExtension`:
+  [FiniteDimensional ℝ E]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4389/4796] Replayed CutoffRigidity.SmoothRegularLevelManifold
+warning: CutoffRigidity/SmoothRegularLevelManifold.lean:49:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/SmoothRegularLevelManifold.lean:65:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/SmoothRegularLevelManifold.lean:90:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/SmoothRegularLevelManifold.lean:91:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/SmoothRegularLevelManifold.lean:103:31: This simp argument is unused:
+  modelWithCornersSelf_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [extChartAt_coe, Function.id_comp]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/SmoothRegularLevelManifold.lean:103:57: This simp argument is unused:
+  Function.id_comp
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [extChartAt_coe, modelWithCornersSelf_coe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [4399/4796] Replayed CutoffRigidity.TransportCouplingCompactness
+warning: CutoffRigidity/TransportCouplingCompactness.lean:58:17: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [4400/4796] Replayed CutoffRigidity.CompactTransportDuality
+warning: CutoffRigidity/CompactTransportDuality.lean:24:18: Variable name `a` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _a
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/CompactTransportDuality.lean:24:20: Variable name `b` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _b
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/CompactTransportDuality.lean:57:0: automatically included section variable(s) unused in theorem `CutoffRigidity.compactProductIntegral_marginalSum`:
+  [T2Space X]
+  [SecondCountableTopology X]
+  [T2Space Y]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [T2Space X] [SecondCountableTopology X] [T2Space Y] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4401/4796] Replayed CutoffRigidity.EuclideanCompactClipping
+warning: CutoffRigidity/EuclideanCompactClipping.lean:60:39: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [4402/4796] Replayed CutoffRigidity.EuclideanTransportDuality
+warning: CutoffRigidity/EuclideanTransportDuality.lean:28:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/EuclideanTransportDuality.lean:33:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/EuclideanTransportDuality.lean:34:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [4404/4796] Replayed CutoffRigidity.CompactLipschitzTransportDuality
+warning: CutoffRigidity/CompactLipschitzTransportDuality.lean:14:0: automatically included section variable(s) unused in theorem `CutoffRigidity.integral_continuous_le_of_uniform_approx`:
+  [SecondCountableTopology X]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [SecondCountableTopology X] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4405/4796] Replayed CutoffRigidity.EuclideanLipschitzTransportDuality
+warning: CutoffRigidity/EuclideanLipschitzTransportDuality.lean:30:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/EuclideanLipschitzTransportDuality.lean:36:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/EuclideanLipschitzTransportDuality.lean:37:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [4407/4796] Replayed CutoffRigidity.LinearVariationJointContinuity
+warning: CutoffRigidity/LinearVariationJointContinuity.lean:20:44: Variable name `hT` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hT
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [4408/4796] Replayed CutoffRigidity.C1CoordinateJointFlow
+warning: CutoffRigidity/C1CoordinateJointFlow.lean:23:24: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [4412/4796] Replayed CutoffRigidity.RiemannianPullbackMetric
+warning: CutoffRigidity/RiemannianPullbackMetric.lean:78:0: automatically included section variable(s) unused in theorem `CutoffRigidity.immersionPullbackRiemannianMetric_inner`:
+  [IsManifold I 2 M]
+  [IsManifold J 2 N]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsManifold I 2 M] [IsManifold J 2 N] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianPullbackMetric.lean:96:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/RiemannianPullbackMetric.lean:92:0: automatically included section variable(s) unused in theorem `CutoffRigidity.norm_mfderiv_immersionPullback`:
+  [IsManifold I 2 M]
+  [IsManifold J 2 N]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsManifold I 2 M] [IsManifold J 2 N] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [4413/4796] Replayed CutoffRigidity.RiemannianMetricChartCriterion
+warning: CutoffRigidity/RiemannianMetricChartCriterion.lean:43:69: This simp argument is unused:
+  hy
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, chartFrame, chartFrameCLM,
+    Trivialization.linearMapAt_apply, hy', ht]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/RiemannianMetricChartCriterion.lean:43:78: This simp argument is unused:
+  ht
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, chartFrame, chartFrameCLM,
+    Trivialization.linearMapAt_apply, hy, hy']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/RiemannianMetricChartCriterion.lean:47:69: This simp argument is unused:
+  hy
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, chartFrame, chartFrameCLM,
+    Trivialization.linearMapAt_apply, hy', ht]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/RiemannianMetricChartCriterion.lean:47:78: This simp argument is unused:
+  ht
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, chartFrame, chartFrameCLM,
+    Trivialization.linearMapAt_apply, hy, hy']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [4414/4796] Replayed CutoffRigidity.SmoothRiemannianPullbackMetric
+warning: CutoffRigidity/SmoothRiemannianPullbackMetric.lean:28:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [4415/4796] Replayed CutoffRigidity.ParallelGradientLevelMetric
+warning: CutoffRigidity/ParallelGradientLevelMetric.lean:53:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientLevelMetric.lean:54:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientLevelMetric.lean:74:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientLevelMetric.lean:75:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [4416/4796] Replayed CutoffRigidity.SmoothRegularLevelMaps
+warning: CutoffRigidity/SmoothRegularLevelMaps.lean:32:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [4417/4796] Replayed CutoffRigidity.ParallelGradientProductDiffeomorph
+warning: CutoffRigidity/ParallelGradientProductDiffeomorph.lean:36:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDiffeomorph.lean:53:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [4442/4796] Replayed CutoffRigidity.EntropyLpBound
+warning: CutoffRigidity/EntropyLpBound.lean:31:24: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: CutoffRigidity/EntropyLpBound.lean:89:67: This simp argument is unused:
+  add_right_inj
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [enorm_one, measure_univ, ENNReal.one_rpow, mul_one]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [4460/4796] Replayed CutoffRigidity.RiemannianTangentMetricMap
+warning: CutoffRigidity/RiemannianTangentMetricMap.lean:30:0: automatically included section variable(s) unused in theorem `CutoffRigidity.pathELength_comp_eq_of_norm_mfderiv_eq_between`:
+  [IsManifold I 1 M]
+  [IsRiemannianManifold I M]
+  [IsManifold J 1 N]
+  [IsRiemannianManifold J N]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsManifold I 1 M] [IsRiemannianManifold I M] [IsManifold J 1 N] [IsRiemannianManifold J N] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianTangentMetricMap.lean:59:10: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp only [Function.comp_apply, hγx]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: CutoffRigidity/RiemannianTangentMetricMap.lean:59:53: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp only [Function.comp_apply, hγy]
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: CutoffRigidity/RiemannianTangentMetricMap.lean:64:0: automatically included section variable(s) unused in theorem `CutoffRigidity.pathELength_comp_le_of_norm_mfderiv_le_between`:
+  [IsManifold I 1 M]
+  [IsManifold J 1 N]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsManifold I 1 M] [IsManifold J 1 N] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianTangentMetricMap.lean:124:24: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [4462/4796] Replayed CutoffRigidity.ParallelGradientProductDifferential
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:41:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:42:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:43:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:74:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:75:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:76:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:111:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:112:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:113:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:137:0: automatically included section variable(s) unused in theorem `CutoffRigidity.norm_unitParallelField_eq_one`:
+  [CompleteSpace M]
+  [IsRiemannianManifold I M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [CompleteSpace M] [IsRiemannianManifold I M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:154:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:155:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:156:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:182:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:183:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/ParallelGradientProductDifferential.lean:184:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9395/9755] Replayed CutoffRigidity.RiemannianCoordinateGradient
+warning: CutoffRigidity/RiemannianCoordinateGradient.lean:56:0: automatically included section variable(s) unused in theorem `CutoffRigidity.fderiv_chartScalar_frame`:
+  [FiniteDimensional ℝ E]
+  [RiemannianBundle fun x => TangentSpace I x]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  E] [RiemannianBundle fun x =>
+  TangentSpace I x] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianCoordinateGradient.lean:88:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartFrame_chartCoordinateField`:
+  [FiniteDimensional ℝ E]
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  E] [BoundarylessManifold I
+  M] [RiemannianBundle fun x =>
+  TangentSpace I x] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9396/9755] Replayed CutoffRigidity.RiemannianChristoffel
+warning: CutoffRigidity/RiemannianChristoffel.lean:25:0: automatically included section variable(s) unused in theorem `CutoffRigidity.mlieBracket_chartFrames`:
+  [FiniteDimensional ℝ E]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9397/9755] Replayed CutoffRigidity.RiemannianChartVolumeDensity
+warning: CutoffRigidity/RiemannianChartVolumeDensity.lean:34:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartRiemannianVolumeDensity_nonneg`:
+  [BoundarylessManifold I M]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [BoundarylessManifold I M] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianChartVolumeDensity.lean:37:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartFrameCLM_injective_of_mem_target`:
+  [FiniteDimensional ℝ E]
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  E] [BoundarylessManifold I
+  M] [RiemannianBundle fun x =>
+  TangentSpace I x] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/RiemannianChartVolumeDensity.lean:63:0: automatically included section variable(s) unused in theorem `CutoffRigidity.chartRiemannianVolumeDensity_sq`:
+  [BoundarylessManifold I M]
+  [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [BoundarylessManifold I M] [IsContMDiffRiemannianBundle I 1 E fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9404/9755] Replayed CutoffRigidity.Riemann.SplitMetric
+warning: CutoffRigidity/Riemann/SplitMetric.lean:25:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.contMDiffAt_chartFrame_top`:
+  [FiniteDimensional ℝ E]
+  [BoundarylessManifold I M]
+  [RiemannianBundle fun x => TangentSpace I x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [BoundarylessManifold I M] [RiemannianBundle fun x => TangentSpace I x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/SplitMetric.lean:57:69: This simp argument is unused:
+  hy
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, chartFrame, chartFrameCLM,
+    Trivialization.linearMapAt_apply, hy', ht]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/SplitMetric.lean:57:78: This simp argument is unused:
+  ht
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, chartFrame, chartFrameCLM,
+    Trivialization.linearMapAt_apply, hy, hy']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/SplitMetric.lean:61:69: This simp argument is unused:
+  hy
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, chartFrame, chartFrameCLM,
+    Trivialization.linearMapAt_apply, hy', ht]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/SplitMetric.lean:61:78: This simp argument is unused:
+  ht
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hom_trivializationAt_apply, ContinuousLinearMap.inCoordinates, chartFrame, chartFrameCLM,
+    Trivialization.linearMapAt_apply, hy, hy']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/SplitMetric.lean:90:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/SplitMetric.lean:86:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.isContMDiffRiemannianBundle_immersionPullback_top`:
+  [FiniteDimensional ℝ E]
+  [BoundarylessManifold I M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ E] [BoundarylessManifold I M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9406/9755] Replayed CutoffRigidity.Riemann.WeightedIBPCoord
+warning: CutoffRigidity/Riemann/WeightedIBPCoord.lean:122:18: This simp argument is unused:
+  h0
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [mvfderiv, this]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9407/9755] Replayed CutoffRigidity.Riemann.WeightedIBPEuclid
+warning: CutoffRigidity/Riemann/WeightedIBPEuclid.lean:67:0: automatically included section variable(s) unused in theorem `CutoffRigidity.traceCLM_apply`:
+  [MeasurableSpace F]
+  [BorelSpace F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace F] [BorelSpace F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedIBPEuclid.lean:79:7: `Set.union_diff_cancel` has been deprecated: Use `Set.union_sdiff_cancel` instead
+
+Hint: Replace the deprecated name:
+  union_s̲diff_cancel
+⚠ [9411/9755] Replayed CutoffRigidity.Riemann.SplitGaussian
+warning: CutoffRigidity/Riemann/SplitGaussian.lean:53:33: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.diagonal_apply, h, hvc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/SplitGaussian.lean:53:51: This simp argument is unused:
+  Matrix.diagonal_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Matrix.one_apply, h, hvc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9414/9755] Replayed CutoffRigidity.Riemann.DiffFrComplex
+warning: CutoffRigidity/Riemann/DiffFrComplex.lean:119:56: This simp argument is unused:
+  real_inner_self_eq_norm_sq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/DiffFrComplex.lean:274:13: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵s̲m̲u̲l̲_̲a̲p̲p̲l̲y̲
+warning: CutoffRigidity/Riemann/DiffFrComplex.lean:274:45: `ContinuousLinearMap.one_apply` has been deprecated: Use `one_apply_eq_self` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.one_apply` to `one_apply_eq_self x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵o̵n̵e̵_̵a̵p̵p̵l̵y̵o̲n̲e̲_̲a̲p̲p̲l̲y̲_̲e̲q̲_̲s̲e̲l̲f̲
+warning: CutoffRigidity/Riemann/DiffFrComplex.lean:394:6: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/DiffFrComplex.lean:418:15: `ContinuousLinearMap.sub_apply` has been deprecated: Use `sub_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.sub_apply` to `sub_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵s̵u̵b̵_̵a̵p̵p̵l̵y̵s̲u̲b̲_̲a̲p̲p̲l̲y̲
+warning: CutoffRigidity/Riemann/DiffFrComplex.lean:418:46: `ContinuousLinearMap.one_apply` has been deprecated: Use `one_apply_eq_self` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.one_apply` to `one_apply_eq_self x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵o̵n̵e̵_̵a̵p̵p̵l̵y̵o̲n̲e̲_̲a̲p̲p̲l̲y̲_̲e̲q̲_̲s̲e̲l̲f̲
+⚠ [9415/9755] Replayed CutoffRigidity.Riemann.DiffCfcSemigroup
+warning: CutoffRigidity/Riemann/DiffCfcSemigroup.lean:57:42: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp [ht] at h
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: CutoffRigidity/Riemann/DiffCfcSemigroup.lean:296:28: Variable name `r` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _r
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffCfcSemigroup.lean:424:4: This simp argument is unused:
+  Function.comp_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [mul_apply_eq_comp, add_apply, smul_apply, one_apply_eq_self, hu] at h
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9418/9755] Replayed CutoffRigidity.Riemann.DiffFrResolvent
+warning: CutoffRigidity/Riemann/DiffFrResolvent.lean:99:32: This simp argument is unused:
+  Function.comp_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [mul_apply_eq_comp, hf] at h2
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9419/9755] Replayed CutoffRigidity.Riemann.DiffFrBridge
+warning: CutoffRigidity/Riemann/DiffFrBridge.lean:154:19: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/DiffFrBridge.lean:181:15: Variable name `f` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _f
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffFrBridge.lean:181:17: Variable name `g` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _g
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffFrBridge.lean:181:19: Variable name `u` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _u
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffFrBridge.lean:181:21: Variable name `v` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _v
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9426/9755] Replayed CutoffRigidity.Riemann.DiffSobolevRn7
+warning: CutoffRigidity/Riemann/DiffSobolevRn7.lean:28:37: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffSobolevRn7.lean:159:39: This simp argument is unused:
+  Measure.restrict_apply MeasurableSet.univ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [this, integral_const, hν, Set.univ_inter, Real.volume_Ioc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/DiffSobolevRn7.lean:159:82: This simp argument is unused:
+  Set.univ_inter
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [this, integral_const, hν, Measure.restrict_apply MeasurableSet.univ, Real.volume_Ioc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/DiffSobolevRn7.lean:160:4: This simp argument is unused:
+  Real.volume_Ioc
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [this, integral_const, hν, Measure.restrict_apply MeasurableSet.univ, Set.univ_inter]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9427/9755] Replayed CutoffRigidity.Riemann.DiffSobolevRn8
+warning: CutoffRigidity/Riemann/DiffSobolevRn8.lean:124:5: Variable name `hM` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hM
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9428/9755] Replayed CutoffRigidity.Riemann.DiffEllipticRn1
+warning: CutoffRigidity/Riemann/DiffEllipticRn1.lean:109:4: `tendsto_finset_sum` has been deprecated: Use `tendsto_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  tendsto_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn1.lean:109:37: `tendsto_finset_sum` has been deprecated: Use `tendsto_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  tendsto_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn1.lean:117:4: `tendsto_finset_sum` has been deprecated: Use `tendsto_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  tendsto_finset_̵s̵S̲um
+⚠ [9429/9755] Replayed CutoffRigidity.Riemann.DiffEllipticRn2
+warning: CutoffRigidity/Riemann/DiffEllipticRn2.lean:139:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffEllipticRn2.lean:194:10: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn2.lean:194:44: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn2.lean:195:44: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn2.lean:197:30: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn2.lean:199:27: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn2.lean:200:7: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn2.lean:200:43: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+⚠ [9432/9755] Replayed CutoffRigidity.Riemann.DiffEllipticRn5
+warning: CutoffRigidity/Riemann/DiffEllipticRn5.lean:103:7: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn5.lean:104:6: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+⚠ [9436/9755] Replayed CutoffRigidity.Riemann.DiffSobolevRn10
+warning: CutoffRigidity/Riemann/DiffSobolevRn10.lean:23:36: Variable name `hw` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hw
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffSobolevRn10.lean:66:7: `tendsto_finset_sum` has been deprecated: Use `tendsto_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  tendsto_finset_̵s̵S̲um
+⚠ [9437/9755] Replayed CutoffRigidity.Riemann.DiffEllipticRn8
+warning: CutoffRigidity/Riemann/DiffEllipticRn8.lean:209:23: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: CutoffRigidity/Riemann/DiffEllipticRn8.lean:226:23: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: CutoffRigidity/Riemann/DiffEllipticRn8.lean:232:13: `continuousOn_finset_sum` has been deprecated: Use `continuousOn_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  continuousOn_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn8.lean:232:51: `continuousOn_finset_sum` has been deprecated: Use `continuousOn_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  continuousOn_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn8.lean:256:23: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [9438/9755] Replayed CutoffRigidity.Riemann.DiffEllipticRn9
+warning: CutoffRigidity/Riemann/DiffEllipticRn9.lean:204:7: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn9.lean:204:43: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn9.lean:205:6: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn9.lean:205:40: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn9.lean:207:43: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn9.lean:217:12: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn9.lean:112:17: Variable name `hV` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hV
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9441/9755] Replayed CutoffRigidity.Riemann.DiffEllipticRn12
+warning: CutoffRigidity/Riemann/DiffEllipticRn12.lean:25:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9443/9755] Replayed CutoffRigidity.Riemann.DiffEllipticRn14
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:46:13: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:136:17: This simp argument is unused:
+  e2'
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [e1']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:265:14: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:265:48: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:266:46: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:268:30: `MeasureTheory.integral_finset_sum` has been deprecated: Use `MeasureTheory.integral_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integral_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:270:27: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:271:7: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+warning: CutoffRigidity/Riemann/DiffEllipticRn14.lean:271:43: `MeasureTheory.integrable_finset_sum` has been deprecated: Use `MeasureTheory.integrable_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  integrable_finset_̵s̵S̲um
+⚠ [9450/9755] Replayed CutoffRigidity.Riemann.DiffKantorovichProper1
+warning: CutoffRigidity/Riemann/DiffKantorovichProper1.lean:79:9: Variable name `G` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _G
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9451/9755] Replayed CutoffRigidity.Riemann.DiffBESemi3
+warning: CutoffRigidity/Riemann/DiffBESemi3.lean:96:5: Variable name `hGh` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hGh
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffBESemi3.lean:96:48: Variable name `hG0` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hG0
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffBESemi3.lean:170:48: Variable name `hum` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hum
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9492/9823] Replayed CutoffRigidity.Paper.GapBridge
+warning: CutoffRigidity/Paper/GapBridge.lean:41:17: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [9505/9823] Replayed CutoffRigidity.Paper.ProductCondition
+warning: CutoffRigidity/Paper/ProductCondition.lean:305:66: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [9510/9823] Replayed CutoffRigidity.Riemann.MeasureGram
+warning: CutoffRigidity/Riemann/MeasureGram.lean:58:41: This simp argument is unused:
+  Pi.single_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [EuclideanSpace.basisFun_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/MeasureGram.lean:67:8: This simp argument is unused:
+  Sum.inl.injEq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Matrix.gram, Matrix.of_apply, hl, hX, Matrix.fromBlocks_apply₁₁, Matrix.one_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9513/9823] Replayed CutoffRigidity.Riemann.SplitAction
+warning: CutoffRigidity/Riemann/SplitAction.lean:143:13: This simp argument is unused:
+  ContinuousLinearMap.comp_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only at h2
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9517/9823] Replayed CutoffRigidity.Riemann.SplitLevelAtlas
+warning: CutoffRigidity/Riemann/SplitLevelAtlas.lean:39:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/SplitLevelAtlas.lean:50:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/SplitLevelAtlas.lean:73:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/SplitLevelAtlas.lean:74:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/SplitLevelAtlas.lean:86:31: This simp argument is unused:
+  modelWithCornersSelf_coe
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [extChartAt_coe, Function.id_comp]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/SplitLevelAtlas.lean:86:57: This simp argument is unused:
+  Function.id_comp
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [extChartAt_coe, modelWithCornersSelf_coe]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/SplitLevelAtlas.lean:112:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9519/9823] Replayed CutoffRigidity.Riemann.SplitTangent
+warning: CutoffRigidity/Riemann/SplitTangent.lean:101:50: `ContinuousLinearMap.one_apply` has been deprecated: Use `one_apply_eq_self` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.one_apply` to `one_apply_eq_self x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵o̵n̵e̵_̵a̵p̵p̵l̵y̵o̲n̲e̲_̲a̲p̲p̲l̲y̲_̲e̲q̲_̲s̲e̲l̲f̲
+warning: CutoffRigidity/Riemann/SplitTangent.lean:101:50: This simp argument is unused:
+  ContinuousLinearMap.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [ContinuousLinearMap.smulRight_apply] at h2
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9520/9823] Replayed CutoffRigidity.Riemann.SplitIsometry
+warning: CutoffRigidity/Riemann/SplitIsometry.lean:42:10: This simp argument is unused:
+  Finset.sum_ite_eq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [sq]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9523/9823] Replayed CutoffRigidity.Riemann.WeightedPointwise
+warning: CutoffRigidity/Riemann/WeightedPointwise.lean:64:0: automatically included section variable(s) unused in theorem `CutCur.mdiffAt_of_smooth`:
+  [FiniteDimensional ℝ F]
+  [IsManifold 𝓘(ℝ, F) ∞ M]
+  [RiemannianBundle fun x => TangentSpace 𝓘(ℝ, F) x]
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [FiniteDimensional ℝ
+  F] [IsManifold 𝓘(ℝ, F) ∞
+  M] [RiemannianBundle fun x =>
+  TangentSpace 𝓘(ℝ, F) x] [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedPointwise.lean:78:0: automatically included section variable(s) unused in theorem `CutCur.carre_eq_mvfderiv`:
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedPointwise.lean:83:0: automatically included section variable(s) unused in theorem `CutCur.carre_nonneg`:
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedPointwise.lean:86:0: automatically included section variable(s) unused in theorem `CutCur.carre_self_eq`:
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedPointwise.lean:103:0: automatically included section variable(s) unused in theorem `CutCur.abs_carre_le`:
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedPointwise.lean:132:0: automatically included section variable(s) unused in theorem `CutCur.mgrad_eq_zero_of_notMem_tsupport`:
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9524/9823] Replayed CutoffRigidity.Riemann.WeightedRigidity
+warning: CutoffRigidity/Riemann/WeightedRigidity.lean:25:0: automatically included section variable(s) unused in theorem `CutCur.mgrad_const`:
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedRigidity.lean:60:0: automatically included section variable(s) unused in theorem `CutCur.hcs_of_zero`:
+  [MeasurableSpace M]
+  [BorelSpace M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace M] [BorelSpace M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedRigidity.lean:140:5: Variable name `hε0` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hε0
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/WeightedRigidity.lean:206:0: automatically included section variable(s) unused in theorem `CutCur.lintegral_ofReal_le_of_approx`:
+  [EMetricSpace M]
+  [BorelSpace M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [EMetricSpace M] [BorelSpace M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/WeightedRigidity.lean:300:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵S̲e̲t̲.̲m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [9525/9823] Replayed CutoffRigidity.Riemann.WeightedSupport
+warning: CutoffRigidity/Riemann/WeightedSupport.lean:27:0: automatically included section variable(s) unused in theorem `CutCur.measure_pos_of_isWeightedVolume`:
+  [IsManifold 𝓘(ℝ, F) ∞ M]
+  [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [IsManifold 𝓘(ℝ, F) ∞ M] [IsContMDiffRiemannianBundle 𝓘(ℝ, F) ∞ F fun x => TangentSpace 𝓘(ℝ, F) x] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9530/9823] Replayed CutoffRigidity.Riemann.WeightedIBPLocalIBP
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:41:105: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:41:112: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:41:124: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:42:105: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:42:112: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:42:124: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:43:105: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:43:112: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:43:124: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:41:105: Unused tactic linter: `simp` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:41:112: Unused tactic linter: `norm_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:41:124: Unused tactic linter: `exact le_of_lt (by simp)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:42:105: Unused tactic linter: `simp` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:42:112: Unused tactic linter: `norm_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:42:124: Unused tactic linter: `exact le_of_lt (by simp)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:43:105: Unused tactic linter: `simp` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:43:112: Unused tactic linter: `norm_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPLocalIBP.lean:43:124: Unused tactic linter: `exact le_of_lt (by simp)` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [9531/9823] Replayed CutoffRigidity.Riemann.WeightedIBPContinuity
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:29:64: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:29:71: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:30:64: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:30:71: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:29:64: Unused tactic linter: `simp` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:29:71: Unused tactic linter: `norm_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:30:64: Unused tactic linter: `simp` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:30:71: Unused tactic linter: `norm_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:35:63: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:35:70: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:37:63: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:37:70: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:35:63: Unused tactic linter: `simp` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:35:70: Unused tactic linter: `norm_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:37:63: Unused tactic linter: `simp` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: CutoffRigidity/Riemann/WeightedIBPContinuity.lean:37:70: Unused tactic linter: `norm_cast` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [9532/9823] Replayed CutoffRigidity.Riemann.WeightedIBPGlobal
+warning: CutoffRigidity/Riemann/WeightedIBPGlobal.lean:72:36: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/WeightedIBPGlobal.lean:83:4: Overlapping instance parameters in `IBPFor`:
+
+⚠️ There are 2 `[MeasurableSpace M]` instances; one is sufficient.
+
+Note: This linter can be disabled with `set_option linter.overlappingInstances false`
+⚠ [9535/9823] Replayed CutoffRigidity.Riemann.WeightedBochnerCurv
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:78:64: Variable name `hY` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hY
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:90:13: This simp argument is unused:
+  Pi.smul_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [map_add, map_neg, map_smul, smul_add, smul_neg] at hl ⊢
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:90:37: This simp argument is unused:
+  map_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Pi.smul_apply, map_add, map_smul, smul_add, smul_neg] at hl ⊢
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:90:56: This simp argument is unused:
+  smul_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Pi.smul_apply, map_add, map_neg, map_smul, smul_neg] at hl ⊢
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:90:66: This simp argument is unused:
+  smul_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Pi.smul_apply, map_add, map_neg, map_smul, smul_add] at hl ⊢
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:92:18: This simp argument is unused:
+  smul_eq_mul
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [nab, Pi.smul_apply, smul_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:92:31: This simp argument is unused:
+  Pi.smul_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [nab, smul_eq_mul, smul_add]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:92:46: This simp argument is unused:
+  smul_add
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [nab, smul_eq_mul, Pi.smul_apply]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:99:43: Variable name `hY` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hY
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/WeightedBochnerCurv.lean:217:22: This simp argument is unused:
+  map_sub
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [nab, hb, sub_smul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9536/9823] Replayed CutoffRigidity.Riemann.WeightedBochnerTrace
+warning: CutoffRigidity/Riemann/WeightedBochnerTrace.lean:232:66: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+⚠ [9537/9823] Replayed CutoffRigidity.Riemann.WeightedBochnerQuad
+warning: CutoffRigidity/Riemann/WeightedBochnerQuad.lean:109:13: This simp argument is unused:
+  add_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [smul_apply, zero_apply, smul_zero, add_zero, smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/WeightedBochnerQuad.lean:109:36: This simp argument is unused:
+  zero_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [add_apply, smul_apply, smul_zero, add_zero, smul_eq_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9542/9823] Replayed CutoffRigidity.Riemann.WeightedChartLip
+warning: CutoffRigidity/Riemann/WeightedChartLip.lean:65:52: Variable name `hr` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hr
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9545/9823] Replayed CutoffRigidity.Riemann.WeightedSmoothing
+warning: CutoffRigidity/Riemann/WeightedSmoothing.lean:71:58: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/WeightedSmoothing.lean:72:58: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [9548/9823] Replayed CutoffRigidity.Riemann.SplitWeight
+warning: CutoffRigidity/Riemann/SplitWeight.lean:78:22: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+⚠ [9555/9823] Replayed CutoffRigidity.Riemann.EigenFinite
+warning: CutoffRigidity/Riemann/EigenFinite.lean:63:0: automatically included section variable(s) unused in theorem `CutCur.mem_eigenSub`:
+  [MeasurableSpace F]
+  [BorelSpace F]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace F] [BorelSpace F] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/EigenFinite.lean:70:0: automatically included section variable(s) unused in theorem `CutCur.eigenfunction_eq_zero_of_grad_zero`:
+  [MeasurableSpace F]
+  [BorelSpace F]
+  [IsRiemannianManifold 𝓘(ℝ, F) M]
+  [CompleteSpace M]
+  [BorelSpace M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace
+  F] [BorelSpace F] [IsRiemannianManifold 𝓘(ℝ, F) M] [CompleteSpace M] [BorelSpace M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/EigenFinite.lean:175:0: automatically included section variable(s) unused in theorem `CutCur.mFirstEigenDim_eq_finrank`:
+  [MeasurableSpace F]
+  [BorelSpace F]
+  [IsRiemannianManifold 𝓘(ℝ, F) M]
+  [ConnectedSpace M]
+  [CompleteSpace M]
+  [BorelSpace M]
+  hV
+  [IsProbabilityMeasure μ]
+  hμ
+  hρ
+  hCD
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace
+  F] [BorelSpace
+  F] [IsRiemannianManifold 𝓘(ℝ, F)
+  M] [ConnectedSpace M] [CompleteSpace M] [BorelSpace M] hV [IsProbabilityMeasure μ] hμ hρ hCD in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/EigenFinite.lean:220:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+⚠ [9557/9823] Replayed CutoffRigidity.Riemann.SplitEigenFrame
+warning: CutoffRigidity/Riemann/SplitEigenFrame.lean:94:7: Variable name `U` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _U
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/SplitEigenFrame.lean:95:12: Variable name `z` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _z
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/SplitEigenFrame.lean:106:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/SplitEigenFrame.lean:107:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9558/9823] Replayed CutoffRigidity.Riemann.CDFactorMain
+warning: CutoffRigidity/Riemann/CDFactorMain.lean:144:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9559/9823] Replayed CutoffRigidity.Riemann.AssembleMain
+warning: CutoffRigidity/Riemann/AssembleMain.lean:106:23: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/AssembleMain.lean:107:12: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9565/9823] Replayed CutoffRigidity.Riemann.TransportCoupling
+warning: CutoffRigidity/Riemann/TransportCoupling.lean:58:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.bind_eq_of_reversible`:
+  [PseudoEMetricSpace M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [PseudoEMetricSpace M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9566/9823] Replayed CutoffRigidity.Riemann.TransportMain
+warning: CutoffRigidity/Riemann/TransportMain.lean:68:19: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+warning: CutoffRigidity/Riemann/TransportMain.lean:69:45: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/TransportMain.lean:72:12: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: CutoffRigidity/Riemann/TransportMain.lean:74:17: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: CutoffRigidity/Riemann/TransportMain.lean:55:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.mLambda_eq_of_splitting`:
+  [MeasurableSpace F]
+  [BorelSpace F]
+  [OpensMeasurableSpace M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MeasurableSpace F] [BorelSpace F] [OpensMeasurableSpace M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9567/9823] Replayed CutoffRigidity.Riemann.DiffusionRegular
+warning: CutoffRigidity/Riemann/DiffusionRegular.lean:69:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.dynkin_bound`:
+  [BorelSpace M]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [BorelSpace M] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/DiffusionRegular.lean:94:6: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffusionRegular.lean:94:23: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffusionRegular.lean:93:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffusionRegular.lean:99:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9569/9823] Replayed CutoffRigidity.Riemann.WassAssemble
+warning: CutoffRigidity/Riemann/WassAssemble.lean:45:43: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/WassAssemble.lean:48:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: CutoffRigidity/Riemann/WassAssemble.lean:50:15: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: CutoffRigidity/Riemann/WassAssemble.lean:146:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9572/9823] Replayed CutoffRigidity.Riemann.DiffMoments
+warning: CutoffRigidity/Riemann/DiffMoments.lean:140:15: This simp argument is unused:
+  hu
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/DiffMoments.lean:164:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffMoments.lean:266:43: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/DiffMoments.lean:269:10: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: CutoffRigidity/Riemann/DiffMoments.lean:271:15: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [9573/9823] Replayed CutoffRigidity.Riemann.DiffAssembleCanonical
+warning: CutoffRigidity/Riemann/DiffAssembleCanonical.lean:84:4: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9589/9823] Replayed CutoffRigidity.Riemann.DiffPenal
+warning: CutoffRigidity/Riemann/DiffPenal.lean:288:24: Variable name `x` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _x
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+ℹ [9592/9823] Replayed CutoffRigidity.Riemann.DiffRegSmooth
+info: CutoffRigidity/Riemann/DiffRegSmooth.lean:82:0: 'CutoffRigidity.Riemann.Diff.smooth_rep_of_pow' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: CutoffRigidity/Riemann/DiffRegSmooth.lean:83:0: 'CutoffRigidity.Riemann.Diff.smooth_rep_of_pow_R' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: CutoffRigidity/Riemann/DiffRegSmooth.lean:84:0: 'CutoffRigidity.Riemann.Diff.smooth_rep_semigroup' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: CutoffRigidity/Riemann/DiffRegSmooth.lean:85:0: 'CutoffRigidity.Riemann.Diff.regularity_step_Rn' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: CutoffRigidity/Riemann/DiffRegSmooth.lean:86:0: 'CutoffRigidity.Riemann.Diff.weak_solution_locSob_step' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [9595/9823] Replayed CutoffRigidity.Riemann.DiffReg5
+warning: CutoffRigidity/Riemann/DiffReg5.lean:80:5: Variable name `hpos` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hpos
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffReg5.lean:211:14: This simp argument is unused:
+  pd_eq_zero_of_notMem hx
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [pd]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Riemann/DiffReg5.lean:241:8: `simp` already closes the goal
+
+Hint: Use `simp` instead of `simpa`:
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [9596/9823] Replayed CutoffRigidity.Riemann.DiffReg6
+warning: CutoffRigidity/Riemann/DiffReg6.lean:42:27: Variable name `hψc` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hψc
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffReg6.lean:43:5: Variable name `hψT` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hψT
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffReg6.lean:65:11: `MeasureTheory.IntegrableOn.of_forall_diff_eq_zero` has been deprecated: Use `MeasureTheory.IntegrableOn.of_forall_sdiff_eq_zero` instead
+ℹ [9599/9823] Replayed CutoffRigidity.Riemann.DiffRegPot
+info: CutoffRigidity/Riemann/DiffRegPot.lean:65:0: 'CutoffRigidity.Riemann.Diff.Q_smooth_of_weak_eq_pot' depends on axioms: [propext, Classical.choice, Quot.sound]
+info: CutoffRigidity/Riemann/DiffRegPot.lean:66:0: 'CutoffRigidity.Riemann.Diff.interior_sup_estimate_manifold' depends on axioms: [propext, Classical.choice, Quot.sound]
+⚠ [9602/9823] Replayed CutoffRigidity.Riemann.DiffPerron1
+warning: CutoffRigidity/Riemann/DiffPerron1.lean:145:37: Variable name `hlam` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hlam
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9604/9823] Replayed CutoffRigidity.Riemann.DiffPerronBarrier
+warning: CutoffRigidity/Riemann/DiffPerronBarrier.lean:362:17: Variable name `w` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _w
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9605/9823] Replayed CutoffRigidity.Riemann.DiffPenalMain
+warning: CutoffRigidity/Riemann/DiffPenalMain.lean:98:19: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  S̵e̵t̵.̵m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [9611/9823] Replayed CutoffRigidity.Riemann.DiffKer2
+warning: CutoffRigidity/Riemann/DiffKer2.lean:39:17: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/DiffKer2.lean:44:17: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/DiffKer2.lean:99:38: `ContinuousLinearMap.mul_apply` has been deprecated: Use `mul_apply_eq_comp` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mul_apply` to `mul_apply_eq_comp x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵m̵u̵l̵_̵a̵p̵p̵l̵y̵m̲u̲l̲_̲a̲p̲p̲l̲y̲_̲e̲q̲_̲c̲o̲m̲p̲
+warning: CutoffRigidity/Riemann/DiffKer2.lean:95:42: Variable name `ht` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _ht
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9615/9823] Replayed CutoffRigidity.Riemann.DiffKer6
+warning: CutoffRigidity/Riemann/DiffKer6.lean:68:15: `ContinuousLinearMap.mul_apply` has been deprecated: Use `mul_apply_eq_comp` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mul_apply` to `mul_apply_eq_comp x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵m̵u̵l̵_̵a̵p̵p̵l̵y̵m̲u̲l̲_̲a̲p̲p̲l̲y̲_̲e̲q̲_̲c̲o̲m̲p̲
+⚠ [9621/9823] Replayed CutoffRigidity.Riemann.DiffKer12
+warning: CutoffRigidity/Riemann/DiffKer12.lean:52:33: `ContinuousLinearMap.mul_apply` has been deprecated: Use `mul_apply_eq_comp` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.mul_apply` to `mul_apply_eq_comp x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵m̵u̵l̵_̵a̵p̵p̵l̵y̵m̲u̲l̲_̲a̲p̲p̲l̲y̲_̲e̲q̲_̲c̲o̲m̲p̲
+⚠ [9629/9823] Replayed CutoffRigidity.Riemann.DiffBridge
+warning: CutoffRigidity/Riemann/DiffBridge.lean:206:32: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: CutoffRigidity/Riemann/DiffBridge.lean:270:28: Variable name `hP` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hP
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffBridge.lean:284:43: Variable name `s` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _s
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9633/9823] Replayed CutoffRigidity.Riemann.DiffKantorovichProper2
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:89:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:90:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:91:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:191:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.measurable_truncTo`:
+  [MetricSpace X]
+  [BorelSpace X]
+  [SecondCountableTopology X]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MetricSpace X] [BorelSpace X] [SecondCountableTopology X] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:194:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.truncTo_mem`:
+  [MetricSpace X]
+  [MeasurableSpace X]
+  [BorelSpace X]
+  [SecondCountableTopology X]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MetricSpace X] [MeasurableSpace X] [BorelSpace X] [SecondCountableTopology X] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:201:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.truncTo_of_mem`:
+  [MetricSpace X]
+  [MeasurableSpace X]
+  [BorelSpace X]
+  [SecondCountableTopology X]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MetricSpace X] [MeasurableSpace X] [BorelSpace X] [SecondCountableTopology X] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:205:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.truncTo_of_notMem`:
+  [MetricSpace X]
+  [MeasurableSpace X]
+  [BorelSpace X]
+  [SecondCountableTopology X]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [MetricSpace X] [MeasurableSpace X] [BorelSpace X] [SecondCountableTopology X] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:221:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:229:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:230:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper2.lean:277:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9634/9823] Replayed CutoffRigidity.Riemann.DiffKantorovichProper
+warning: CutoffRigidity/Riemann/DiffKantorovichProper.lean:65:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.cR_mono`:
+  [ProperSpace X]
+  [SecondCountableTopology X]
+  [MeasurableSpace X]
+  [BorelSpace X]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [ProperSpace X] [SecondCountableTopology X] [MeasurableSpace X] [BorelSpace X] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper.lean:70:0: automatically included section variable(s) unused in theorem `CutoffRigidity.Riemann.tendsto_of_map_truncTo`:
+  [ProperSpace X]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [ProperSpace X] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper.lean:193:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Riemann/DiffKantorovichProper.lean:194:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9640/9823] Replayed CutoffRigidity.Riemann.DiffKuwApprox1
+warning: CutoffRigidity/Riemann/DiffKuwApprox1.lean:38:28: Variable name `hfin` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hfin
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9641/9823] Replayed CutoffRigidity.Riemann.DiffKuwApprox2
+warning: CutoffRigidity/Riemann/DiffKuwApprox2.lean:69:22: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: CutoffRigidity/Riemann/DiffKuwApprox2.lean:101:58: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Riemann/DiffKuwApprox2.lean:102:58: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [9652/9823] Replayed CutoffRigidity.Riemann.DiffTight
+warning: CutoffRigidity/Riemann/DiffTight.lean:118:9: Variable name `V` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _V
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9654/9823] Replayed CutoffRigidity.Riemann.DiffBEClass
+warning: CutoffRigidity/Riemann/DiffBEClass.lean:262:33: Variable name `hρ` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hρ
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9655/9823] Replayed CutoffRigidity.Riemann.DiffBEHess
+warning: CutoffRigidity/Riemann/DiffBEHess.lean:42:55: Variable name `hρ` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hρ
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffBEHess.lean:43:5: Variable name `hε` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hε
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffBEHess.lean:43:54: Variable name `ha` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _ha
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Riemann/DiffBEHess.lean:43:67: Variable name `hs` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hs
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9661/9823] Replayed CutoffRigidity.Riemann.DiffBESemi
+warning: CutoffRigidity/Riemann/DiffBESemi.lean:240:76: Variable name `ht` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _ht
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9675/9823] Replayed CutoffRigidity.Riemann.DiffRellich
+warning: CutoffRigidity/Riemann/DiffRellich.lean:143:67: Variable name `hb` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hb
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9696/9823] Replayed CutoffRigidity.Extra.OUInfty
+warning: CutoffRigidity/Extra/OUInfty.lean:100:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Extra/OUInfty.lean:114:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [9698/9823] Replayed CutoffRigidity.Extra.SplitPotential
+warning: CutoffRigidity/Extra/SplitPotential.lean:108:23: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+warning: CutoffRigidity/Extra/SplitPotential.lean:109:12: This simp argument is unused:
+  Matrix.one_apply
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hij]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9702/9823] Replayed CutoffRigidity.Extra.NoBmMollify
+warning: CutoffRigidity/Extra/NoBmMollify.lean:145:13: `ContinuousLinearMap.add_apply` has been deprecated: Use `add_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.add_apply` to `add_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵a̵d̵d̵_̵a̵p̵p̵l̵y̵a̲d̲d̲_̲a̲p̲p̲l̲y̲
+warning: CutoffRigidity/Extra/NoBmMollify.lean:259:0: automatically included section variable(s) unused in theorem `CutoffRigidity.NoBm.gibbs_Wn_integral`:
+  hρ
+  hH
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit hρ hH in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [9703/9823] Replayed CutoffRigidity.Extra.NoBmLSI2
+warning: CutoffRigidity/Extra/NoBmLSI2.lean:17:41: Variable name `hF` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hF
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Extra/NoBmLSI2.lean:26:37: Variable name `hF` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hF
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9705/9823] Replayed CutoffRigidity.Extra.NoBmChain
+warning: CutoffRigidity/Extra/NoBmChain.lean:31:5: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9708/9823] Replayed CutoffRigidity.Extra.RiemannK1
+warning: CutoffRigidity/Extra/RiemannK1.lean:38:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9729/9823] Replayed CutoffRigidity.Extra.Dyson2
+warning: CutoffRigidity/Extra/Dyson2.lean:154:17: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9730/9823] Replayed CutoffRigidity.Extra.Dyson3
+warning: CutoffRigidity/Extra/Dyson3.lean:79:31: Variable name `hε` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hε
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9732/9823] Replayed CutoffRigidity.Extra.Dyson5
+warning: CutoffRigidity/Extra/Dyson5.lean:20:20: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Extra/Dyson5.lean:26:40: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9733/9823] Replayed CutoffRigidity.Extra.Dyson6
+warning: CutoffRigidity/Extra/Dyson6.lean:65:30: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9735/9823] Replayed CutoffRigidity.Extra.Item2a
+warning: CutoffRigidity/Extra/Item2a.lean:78:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Extra/Item2a.lean:79:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Extra/Item2a.lean:86:2: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Extra/Item2a.lean:87:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9741/9823] Replayed CutoffRigidity.Extra.C2Uniq4
+warning: CutoffRigidity/Extra/C2Uniq4.lean:101:15: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵s̲m̲u̲l̲_̲a̲p̲p̲l̲y̲
+warning: CutoffRigidity/Extra/C2Uniq4.lean:131:22: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵s̲m̲u̲l̲_̲a̲p̲p̲l̲y̲
+warning: CutoffRigidity/Extra/C2Uniq4.lean:154:13: `ContinuousLinearMap.add_apply` has been deprecated: Use `add_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.add_apply` to `add_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵a̵d̵d̵_̵a̵p̵p̵l̵y̵a̲d̲d̲_̲a̲p̲p̲l̲y̲
+warning: CutoffRigidity/Extra/C2Uniq4.lean:154:44: `ContinuousLinearMap.smul_apply` has been deprecated: Use `smul_apply` instead
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.smul_apply` to `smul_apply x`).
+
+Hint: Replace the deprecated name:
+  C̵o̵n̵t̵i̵n̵u̵o̵u̵s̵L̵i̵n̵e̵a̵r̵M̵a̵p̵.̵s̵m̵u̵l̵_̵a̵p̵p̵l̵y̵s̲m̲u̲l̲_̲a̲p̲p̲l̲y̲
+warning: CutoffRigidity/Extra/C2Uniq4.lean:234:41: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+⚠ [9742/9823] Replayed CutoffRigidity.Extra.C2Uniq5
+warning: CutoffRigidity/Extra/C2Uniq5.lean:228:23: Variable name `hA2` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hA2
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9743/9823] Replayed CutoffRigidity.Extra.C2Uniq6
+warning: CutoffRigidity/Extra/C2Uniq6.lean:71:2: Unused tactic linter: `beta_reduce  at lo` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+⚠ [9749/9823] Replayed CutoffRigidity.Extra.DissipEq2
+warning: CutoffRigidity/Extra/DissipEq2.lean:86:56: Variable name `hb0` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hb0
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9750/9823] Replayed CutoffRigidity.Extra.DissipEq4
+warning: CutoffRigidity/Extra/DissipEq4.lean:83:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Extra/DissipEq4.lean:156:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9759/9823] Replayed CutoffRigidity.Extra.DysonGap4
+warning: CutoffRigidity/Extra/DysonGap4.lean:20:43: Variable name `hR` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hR
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9760/9823] Replayed CutoffRigidity.Extra.GaussIso1
+warning: CutoffRigidity/Extra/GaussIso1.lean:104:10: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Extra/GaussIso1.lean:108:10: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  d̵i̵f̵_̵p̵o̵s̵d̲i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Extra/GaussIso1.lean:136:69: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+⚠ [9765/9823] Replayed CutoffRigidity.Extra.GaussIso6
+warning: CutoffRigidity/Extra/GaussIso6.lean:47:63: Variable name `hk'c` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hk'c
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9772/9823] Replayed CutoffRigidity.Extra.GaussIso13
+warning: CutoffRigidity/Extra/GaussIso13.lean:23:8: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Extra/GaussIso13.lean:23:27: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+warning: CutoffRigidity/Extra/GaussIso13.lean:26:17: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: CutoffRigidity/Extra/GaussIso13.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+warning: CutoffRigidity/Extra/GaussIso13.lean:40:43: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+⚠ [9774/9823] Replayed CutoffRigidity.Extra.GaussIso15
+warning: CutoffRigidity/Extra/GaussIso15.lean:79:10: This simp argument is unused:
+  κ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [φ.integral_normed, hg0]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+⚠ [9776/9823] Replayed CutoffRigidity.Extra.GaussIso17
+warning: CutoffRigidity/Extra/GaussIso17.lean:92:15: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [9777/9823] Replayed CutoffRigidity.Extra.GaussIso18
+warning: CutoffRigidity/Extra/GaussIso18.lean:115:19: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: CutoffRigidity/Extra/GaussIso18.lean:119:19: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+warning: CutoffRigidity/Extra/GaussIso18.lean:64:75: Variable name `hA` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hA
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9778/9823] Replayed CutoffRigidity.Extra.GaussIso19
+warning: CutoffRigidity/Extra/GaussIso19.lean:24:6: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+
+Hint: Replace the deprecated name:
+  m̵e̵m̵_̵s̵e̵t̵O̵f̵_̵e̵q̵m̲e̲m̲_̲o̲f̲P̲r̲e̲d̲_̲e̲q̲
+⚠ [9804/9823] Replayed CutoffRigidity.Extra.Sphere2
+warning: CutoffRigidity/Extra/Sphere2.lean:44:54: Variable name `hY` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hY
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+⚠ [9809/9823] Replayed CutoffRigidity.Extra.Sphere7
+warning: CutoffRigidity/Extra/Sphere7.lean:87:5: Variable name `hΞ` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hΞ
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+warning: CutoffRigidity/Extra/Sphere7.lean:267:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Extra/Sphere7.lean:323:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9812/9823] Replayed CutoffRigidity.Extra.Sphere10
+warning: CutoffRigidity/Extra/Sphere10.lean:89:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+⚠ [9813/9823] Replayed CutoffRigidity.Extra.Sphere11
+warning: CutoffRigidity/Extra/Sphere11.lean:31:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9817/9823] Replayed CutoffRigidity.Extra.Sphere15
+warning: CutoffRigidity/Extra/Sphere15.lean:33:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Extra/Sphere15.lean:49:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [9818/9823] Replayed CutoffRigidity.Extra.Sphere16
+warning: CutoffRigidity/Extra/Sphere16.lean:48:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+warning: CutoffRigidity/Extra/Sphere16.lean:71:4: `continuous_finset_sum` has been deprecated: Use `continuous_finsetSum` instead
+
+Hint: Replace the deprecated name:
+  continuous_finset_̵s̵S̲um
+warning: CutoffRigidity/Extra/Sphere16.lean:81:43: `EuclideanSpace.single_apply` has been deprecated: Use `PiLp.single_apply` instead
+
+Note: The updated constant has a different type:
+  ∀ (p : ENNReal) (𝕜 : Type u_1) {ι : Type u_2} [inst : DecidableEq ι] [inst_1 : Zero 𝕜] (i : ι) (a : 𝕜) (j : ι),
+    (PiLp.single p i a).ofLp j = if j = i then a else 0
+instead of
+  ∀ {ι : Type u_1} {𝕜 : Type u_3} [inst : RCLike 𝕜] [inst_1 : DecidableEq ι] (i : ι) (a : 𝕜) (j : ι),
+    (EuclideanSpace.single i a).ofLp j = if j = i then a else 0
+
+Note: The updated constant is in a different namespace. Dot notation may need to be changed (e.g., from `x.single_apply` to `PiLp.single_apply x`).
+warning: CutoffRigidity/Extra/Sphere16.lean:44:34: Variable name `hd` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hd
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+Build completed successfully (9823 jobs).
+Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, CutCur.exists_langevin, CutCur.isLangevinSolution_map_eq_kernel_of_rigid, CutCur.exists_euclideanLangevin_of_convex, CutCur.main_wasserstein_estimate, CutCur.eigenspace_dim_and_lambda, CutCur.wasserstein_cutoff, CutCur.information_cutoff, CutCur.lp_cutoff, CutCur.convex_interaction, CutCur.convex_interaction_cutoff, CutCur.product_condition_cutoff, CutCur.euclidean_gaussian_factorization, CutCur.eigenmap_is_ou, CutCur.riemannian_wasserstein_estimate, CutCur.riemannian_gaussian_splitting, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam, CutCur.Rd, CutCur.gibbs, CutCur.laplacian, CutCur.generator, CutCur.spectralGap, CutCur.IsEigenfunction, CutCur.firstEigenspace, CutCur.firstEigenDim, CutCur.IsEigenbasis, CutCur.eigenLambda, CutCur.RigidCurvature, CutCur.IsStdBrownian, CutCur.IsLangevinSolution, CutCur.IsLangevin, CutCur.IsEuclideanDiffusion, CutCur.IsEuclideanLangevin, CutCur.wasserstein2, CutCur.tvDist, CutCur.fisherInfo, CutCur.relLp, CutCur.worstK, CutCur.HasCutoff, CutCur.meanBall, CutCur.meanCube, CutCur.IsRigidSequenceK, CutCur.criticalTime, CutCur.diagonal, CutCur.mixingTimeK, CutCur.mgrad, CutCur.mlaplacian, CutCur.mgenerator, CutCur.carre, CutCur.carre2, CutCur.CD, CutCur.chartVolumeDensity, CutCur.IsWeightedVolume, CutCur.mSpectralGap, CutCur.IsMEigenfunction, CutCur.mFirstEigenDim, CutCur.mLambda, CutCur.IsDiffusionSemigroup] from PalomarSolution
+Running con-ron kernel on solution
+con-ron: 1 inductive blocks modelled in-process: Lean.Syntax (30 generated records, checked by the fold as declarations and not counted as records of the file)
+con-ron: accepted 90935 declarations (--verified)
+con-ron kernel accepts the solution
+Running nanoda kernel on solution
+nanoda kernel accepts the solution
+Running Lean default kernel on solution
+Lean default kernel accepts the solution
+Your solution is okay!
+exit=0

@@ -18,6 +18,14 @@ roots = ["Challenge"]
 name = "Solution"
 roots = ["Solution"]
 
+[[lean_lib]]
+name = "PalomarChallenge"
+roots = ["PalomarChallenge"]
+
+[[lean_lib]]
+name = "PalomarSolution"
+roots = ["PalomarSolution"]
+
 # Vendored third-party code (Apache-2.0), see vendor/README.md. Only the transitive closure of
 # `BrownianMotion.Gaussian.BrownianMotion` is vendored; `globs` (not `roots`) builds all listed siblings.
 [[lean_lib]]

@@ -6,13 +6,19 @@ diffusions*, Comptes Rendus Mathématique 363 (2025) 1103–1121 ([doi:10.5802/c
 corrections of the erratum to the published article. Its TeX source is archived in [`paper/`](paper/SOURCE.txt);
 [cutcur-lean.tex](cutcur-lean.tex) is the same text with a BibTeX bibliography. The numbering of results is the same in v4 and v5.
 
-**Status (1 November 2026, round 2).** `Challenge.lean` states 67 theorems and 67 definitions (850 lines, 87 KB): the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
+**Palomar surface (20 November 2026).** [`PalomarChallenge.lean`](PalomarChallenge.lean) (334 lines, 15 theorems, 41 definitions; Comparator
+config [`comparator-palomar.json`](comparator-palomar.json)) is the surface proposed for registration: the numbered results of the paper, the
+identification of the kernel with the law of the SDE, and the existence of the diffusion and of SDE solutions for convex potentials. It is
+generated verbatim from `Challenge.lean` by `scripts/gen-palomar.py`, together with `PalomarSolution.lean`; the sandboxed Comparator accepts it
+(Lean kernel, nanoda, con-ron 90935 declarations; `verification/comparator-palomar-sandboxed.log`).
+
+**Status (1 November 2026, round 2; 68 theorems since 20 November 2026).** `Challenge.lean` states 68 theorems and 67 definitions (855 lines, 88 KB): the 12 numbered results (Theorems 1.1, 1.5, 1.7, 1.9,
 3.1, 3.6, Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25)) and further claims of the
 manuscript (Remarks 3.4 and 3.5, the Lichnerowicz bound (Euclidean and Riemannian), (R2) => (R1), examples, proof ingredients such as W2
 contraction, entropy decay, Pinsker and Talagrand, the optimal constants, and the Section 4 items; see
 [PALOMAR.md](PALOMAR.md)). `Solution.lean` proves all of them (no `sorry`, axioms `propext`,
-`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 67-theorem pair
-(con-ron 92444 declarations, nanoda and the Lean kernel; `comparator.json` lists the 67 theorems and 66 definitions, the structure `CutCur.Form` being checked as a dependency). The splitting theorem now also states the
+`Classical.choice`, `Quot.sound` only). A `lake comparator` run inside the bwrap sandbox accepts the full 68-theorem pair
+(con-ron 92445 declarations, nanoda and the Lean kernel; `comparator.json` lists the 68 theorems and 66 definitions, the structure `CutCur.Form` being checked as a dependency). The splitting theorem now also states the
 potential identity of Theorem 3.6 and the connectedness and completeness of the factor.
 A further block of 11 statements (Bochner identity and `CD ⇔ Ric + Hess V ≥ ρ`, Riemannian `k₁` bounds and Poincaré/log-Sobolev, Fisher
 decay for all laws and its Dini form, Brownian scaling at the SDE level, the temperature SDE and cutoffs, W2 and entropy mixing times) is
@@ -186,7 +192,7 @@ proof-side lemmas (`IsEuclideanLangevinInf` in `Extra/SmoothLangevin.lean`).
 
 ## What is not formalized
 
-The 67 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`, `extra-status/` (worker and adversary reports of the 1 November 2026 rounds, and `extra-status/integration-round2.md`).
+The 68 theorems are not the whole paper. Details: `PALOMAR.md`, `HUMAN_REVIEW.md` section 3, `scope-status/SUMMARY.md`, `extra-status/` (worker and adversary reports of the 1 November 2026 rounds, and `extra-status/integration-round2.md`).
 
 - **Open or conjectural in the paper:** Question 1.10; `eq:loggradbound`.
 - **Attempted, blocked, partial or without a precise statement:**
@@ -214,7 +220,7 @@ for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fre
    ```sh
    python3 scripts/check-palomar.py --ready
    ```
-3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 67 endpoint theorems
+3. **Axioms.** `verification/Audit.lean` checks supporting results only. For the 68 endpoint theorems
    (`CutoffRigidity.Paper.*`), run a `#print axioms` on each from a scratch file importing `Solution`; each
    should depend only on `propext`, `Classical.choice`, `Quot.sound`. The Comparator in step 4 enforces the
    same permitted axioms.
@@ -240,6 +246,7 @@ for the Comparator step, `bwrap` (bubblewrap). Network access is needed on a fre
    ```sh
    python3 scripts/sync-statements.py   # CutoffRigidity/Statements.lean
    python3 scripts/gen-solution.py      # Solution.lean
+   python3 scripts/gen-palomar.py       # PalomarChallenge.lean, PalomarSolution.lean, comparator-palomar.json
    ```
 
 These checks establish that the Lean proofs are kernel-valid and match the Challenge statements. They do
@@ -272,10 +279,13 @@ is not part of the project sources.
 
 [PALOMAR.md](PALOMAR.md) records the official requirements and the detailed history.
 
-- **Challenge/Solution pair:** `Challenge.lean` states 67 theorems and 67 definitions; `Solution.lean` proves all of
-  them. `comparator.json` lists the 67 theorems and 66 definitions (the structure `CutCur.Form` is compared as a dependency).
-- **Comparator:** the sandboxed `lake comparator` accepts the pair (Lean kernel, nanoda and con-ron;
-  `verification/comparator-sandboxed.log`). Only `propext`, `Classical.choice` and `Quot.sound` are used.
+- **Proposed surface:** `PalomarChallenge.lean` / `PalomarSolution.lean` / `comparator-palomar.json` (15 theorems, 41 definitions),
+  generated by `scripts/gen-palomar.py`; `formalization.yaml` points its main results to this configuration.
+- **Full surface:** `Challenge.lean` states 68 theorems and 67 definitions; `Solution.lean` proves all of them.
+  `comparator.json` lists the 68 theorems and 66 definitions (the structure `CutCur.Form` is compared as a dependency).
+- **Comparator:** the sandboxed `lake comparator` accepts both pairs (Lean kernel, nanoda and con-ron;
+  `verification/comparator-palomar-sandboxed.log`, `verification/comparator-sandboxed.log`); run
+  `scripts/verify-comparator.sh [comparator.json | comparator-palomar.json]`. Only `propext`, `Classical.choice` and `Quot.sound` are used.
 - **Toolchain:** `leanprover/lean4:v4.35.0-rc2`, the minimum accepted by Palomar (`toolchains.json`, checked 20 November 2026),
   matching the pinned Mathlib.
 - **Metadata:** `formalization.yaml` validates against the official v0.4 schema; `python3 scripts/check-palomar.py --ready` passes.

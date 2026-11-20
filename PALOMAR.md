@@ -2,10 +2,14 @@
 
 **Current status (20 November 2026).** Not yet submitted. The reference version of the
 paper is arXiv:2412.15969v5 (25 October 2026; source archived in `paper/`), which includes
-the corrections of the erratum to the published article (CRAS 2025). `Challenge.lean` states
-67 theorems and 67 definitions; `Solution.lean` proves them all with `propext`,
-`Classical.choice` and `Quot.sound` only; `comparator.json` lists the 67 theorems and 66
-definitions and the sandboxed `lake comparator` accepts the pair. `formalization.yaml`
+the corrections of the erratum to the published article (CRAS 2025). The surface proposed
+for registration is `PalomarChallenge.lean` with `comparator-palomar.json` (15 theorems: the
+numbered results, the kernel = SDE law link, existence of the diffusion and of SDE solutions;
+41 definitions; 334 lines, 31 KB), generated verbatim from the full surface by
+`scripts/gen-palomar.py`. The full surface `Challenge.lean` states 68 theorems and 67
+definitions; `comparator.json` lists the 68 theorems and 66 definitions. Both Solutions use
+`propext`, `Classical.choice` and `Quot.sound` only and the sandboxed `lake comparator`
+accepts both pairs. `formalization.yaml`
 validates against the official v0.4 schema and names D. Chafaï as author and responsible
 maintainer. The toolchain `v4.35.0-rc2` is the minimum accepted by Palomar. Remaining steps,
 for humans only: the semantic review (`HUMAN_REVIEW.md`), the choice of the submitted
@@ -450,6 +454,14 @@ comparison of the type of every declaration of the old and new `Challenge` modul
 - `verification/SHA256SUMS` removed: it was a checksum snapshot of the first commit, referenced nowhere, and 15 of its
   286 entries no longer matched. The Git commit hash identifies the checked sources.
 - Palomar's `toolchains.json` gives `v4.35.0-rc2` as the minimum accepted toolchain; the project uses exactly this version.
+- Reduced Palomar surface: `scripts/gen-palomar.py` extracts from `Challenge.lean` the 15 theorems listed in `CORE` and the
+  transitive closure of the definitions they use (computed on code without docstrings), verbatim, into `PalomarChallenge.lean`,
+  the same theorems of `Solution.lean` into `PalomarSolution.lean`, and writes `comparator-palomar.json`. New statement
+  `exists_euclideanLangevin_of_convex` (68th theorem, also in the full surface): the kernel of `IsEuclideanLangevin` exists for
+  convex `C²` `V`. `check-palomar.py` checks every `comparator*.json`; `verify-comparator.sh` takes the configuration as argument.
+  Sandboxed Comparator: reduced pair accepted (con-ron 90935 declarations, nanoda, Lean kernel;
+  `verification/comparator-palomar-sandboxed.log`), full pair accepted (con-ron 92445; `verification/comparator-sandboxed.log`).
+  All `verification/*.log` files are now tracked.
 - AI audit N (`verification/audit-extra-N.md`) of the round-2 statements, the equality statements 51-52 and the `C²` clause:
   no defect; six minor docstring fixes applied in `Challenge.lean` (docstrings only, derived files regenerated).
 - `scripts/bwrap-home-symlink-wrapper.sh`: `lake comparator` now calls `bwrap` with an empty `HOME`; the wrapper falls back

@@ -58,6 +58,14 @@ def main():
     args = parser.parse_args()
     errors = []
     source_count = 0
+    # Every Comparator configuration at the root (comparator.json: full surface; comparator-palomar.json: reduced).
+    configs = {}
+    for config_path in sorted(ROOT.glob("comparator*.json")):
+        try:
+            configs[config_path.name] = json.loads(config_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as error:
+            errors.append(f"{config_path.name}: {error}")
+    challenges = {pathlib.Path(c["challenge_module"].replace(".", "/") + ".lean") for c in configs.values() if "challenge_module" in c}
     for path in ROOT.rglob("*.lean"):
         relative = path.relative_to(ROOT)
         if any(part in EXCLUDED for part in relative.parts):
@@ -77,9 +85,9 @@ def main():
             errors.append(f"{relative}: {lines} lines exceeds 10000")
         if path.name != "lakefile.lean" and not re.match(r"\s*module\b", code):
             errors.append(f"{relative}: missing initial module header")
-        if relative == pathlib.Path("Challenge.lean"):
+        if relative in challenges:
             if lines > 1000 or len(raw.encode("utf-8")) > 100 * 1024:
-                errors.append("Challenge.lean: exceeds statement surface limit")
+                errors.append(f"{relative}: exceeds statement surface limit")
             # Deliberate statement holes are allowed only in Challenge.
             forbidden = r"\b(?:axiom|native_decide|sorryAx|ofReduceBool)\b"
         else:
@@ -95,16 +103,19 @@ def main():
                 errors.append(f"missing {required}")
         if sum((ROOT / name).is_file() for name in ("lakefile.lean", "lakefile.toml")) != 1:
             errors.append("exactly one Lakefile is required")
-        try:
-            config = json.loads((ROOT / "comparator.json").read_text())
+        if "comparator.json" not in configs:
+            errors.append("missing comparator.json")
+        for name, config in configs.items():
+            for key in ("challenge_module", "solution_module"):
+                module_file = ROOT / (str(config.get(key, "")).replace(".", "/") + ".lean")
+                if not config.get(key) or not module_file.is_file():
+                    errors.append(f"{name}: {key} does not name a root Lean module")
             if not config.get("theorem_names"):
-                errors.append("Comparator has no advertised theorems")
+                errors.append(f"{name}: no advertised theorems")
             if set(config.get("permitted_axioms", [])) - {"propext", "Classical.choice", "Quot.sound"}:
-                errors.append("Comparator permits nonstandard axioms")
+                errors.append(f"{name}: nonstandard axioms permitted")
             if "external_kernels" in config:
-                errors.append("external_kernels is not a submitted configuration field")
-        except (OSError, ValueError) as error:
-            errors.append(f"comparator.json: {error}")
+                errors.append(f"{name}: external_kernels is not a submitted configuration field")
         try:
             import yaml
             metadata = yaml.safe_load((ROOT / "formalization.yaml").read_text())

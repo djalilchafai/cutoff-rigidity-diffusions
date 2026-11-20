@@ -29,6 +29,7 @@ TARGET.update({
 })
 # Statements with a short explicit proof (bridges between the Challenge definitions and the proof-side ones).
 CUSTOM = {
+    "exists_euclideanLangevin_of_convex": "  exact CutCur.C2U.exists_euclideanLangevin_C2 hV hHess hp",
     "ou_fisher_information": "  exact CutoffRigidity.Paper.ou_fisher_information_K hρ (CutoffRigidity.Paper.ouInf hL) x₀ ht",
     "ou_mean_start_cutoff": "  exact CutoffRigidity.Paper.ou_mean_start_cutoff_K hρ fun n hn => CutoffRigidity.Paper.ouInf (hL n hn)",
     "ou_lp_infty_fails": "  exact CutoffRigidity.Paper.ou_lp_infty_fails_K hρ (fun n hn => CutoffRigidity.Paper.ouInf (hL n hn)) hc",
