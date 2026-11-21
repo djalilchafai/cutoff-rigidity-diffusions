@@ -5,19 +5,19 @@ Companion files: `HUMAN_REVIEW.md` (full checklist), `PALOMAR.md`, `PAPER_AUDIT.
 
 Reference version of the paper: **arXiv:2412.15969v5** (archived in `paper/`; `cutcur-lean.tex` is the same text).
 
-**Human review (20 November 2026):** Djalil Chafaï checked the 16 statements of `PalomarChallenge.lean` and their definitions against arXiv v5 (`review.status: author-verified`). The other 53 statements of `Challenge.lean` have had AI audits only. Submitted to Palomar on
+**Human review (20 November 2026):** Djalil Chafaï checked the 9 statements of `PalomarChallenge.lean` and their definitions (and 7 further statements) against arXiv v5 (`review.status: author-verified`). The other 53 statements of `Challenge.lean` have had AI audits only. Submitted to Palomar on
 20 November 2026 by the responsible maintainer. Everything labelled "AI" below was done by language-model agents. This page says what you would be
 signing up to check.
 
 ## 0. What to review for the Palomar submission
-The proposed surface is `PalomarChallenge.lean` (335 lines): 16 theorems (nos. 1-12, 48, 49, 68 and 69 of `HUMAN_REVIEW.md` §2) and the 41
+The proposed surface is `PalomarChallenge.lean` (274 lines): the 9 theorems and corollaries of the paper (nos. 1, 3, 4, 6, 7, 8, 9, 34, 35 of `HUMAN_REVIEW.md` §2) and the 37
 definitions they use, copied verbatim from `Challenge.lean`. Reviewing it is enough for that submission (a few hours rather than a day);
 sections 2-7 below concern the full surface.
 
 ## 1. What is machine-checked
 - `Challenge.lean` has 69 theorems and 67 definitions (860 lines, 92 KB). `Solution.lean` proves each theorem with the same statement.
 - All 69 use only `propext`, `Classical.choice` and `Quot.sound`. There is no `sorry`, `axiom` or `native_decide`.
-- The reduced pair `PalomarChallenge.lean`/`PalomarSolution.lean` (16 theorems) is accepted by the sandboxed Comparator as well (con-ron 90935 declarations).
+- The reduced pair `PalomarChallenge.lean`/`PalomarSolution.lean` (9 theorems) is accepted by the sandboxed Comparator as well.
 - The sandboxed Comparator accepts the solution, with the Lean kernel, nanoda and con-ron (92445 declarations, 69-theorem pair, 20 November 2026).
 - Rebuild instructions are in the README section "How to rebuild and verify".
 
@@ -93,9 +93,9 @@ Lean does **not** certify that the statements and definitions mean what the manu
 ## 6. Suggested review plan (about a day)
 1. Run the README rebuild steps and record the commit hash (15 min).
 2. Read the definitions: Euclidean (`Challenge.lean` lines 1-150), the kernel definitions, and the Riemannian section from `mgrad` (about line 712).
-3. Go through the table in `HUMAN_REVIEW.md` §2 and tick each of the 69 statements against the manuscript (start with the 16 of the Palomar surface).
+3. Go through the table in `HUMAN_REVIEW.md` §2 and tick each of the 69 statements against the manuscript (start with the 9 of the Palomar surface).
 4. Decide on the convexity requirement hidden in the `C²` kernel statements, the two forms of Lemma 3.3 and the Thm 1.7 amendment, and whether the static Dyson statement plus the gap (nos. 53, 58) suffice, and whether the quadratic-only Gaussian isoperimetry (59-61), the abstract/finite Rothaus (62-64) and the model-form sphere (66-67) are acceptable scopes.
 5. Check the vendored code provenance (`vendor/README.md`).
-6. After the review (done on 20 November 2026 for the 16 statements): fill the `review` fields in `formalization.yaml` and decide on registry submission and attestation (humans only).
+6. After the review (done on 20 November 2026 for the Palomar surface): fill the `review` fields in `formalization.yaml` and decide on registry submission and attestation (humans only).
 
-Sign-off: Reviewer(s): Djalil Chafaï  Date: 20 November 2026  Scope: the 16 statements of `PalomarChallenge.lean` (nos. 1-12, 48, 49, 68, 69) and their 41 definitions, against arXiv v5; the other 53 statements of `Challenge.lean`: AI audits only.  Commit: the commit that records this sign-off.
+Sign-off: Reviewer(s): Djalil Chafaï  Date: 20 November 2026  Scope: the 9 statements of `PalomarChallenge.lean` (nos. 1, 3, 4, 6, 7, 8, 9, 34, 35) and their 37 definitions, and nos. 2, 5, 10, 48, 49, 68, 69, against arXiv v5; the other 53 statements of `Challenge.lean`: AI audits only.  Commit: the commit that records this sign-off.

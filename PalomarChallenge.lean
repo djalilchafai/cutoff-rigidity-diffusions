@@ -6,10 +6,9 @@ public import Mathlib
 # Cutoff via rigidity for high dimensional curved diffusions: main results
 
 Generated from `Challenge.lean` by `scripts/gen-palomar.py`. D. Chafaï and M. Fathi, CRAS 363 (2025)
-1103–1121, corrected version arXiv:2412.15969v5. Statements: Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6,
-Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25); for convex potentials, existence and
-uniqueness of the kernel and its identification with the law of the SDE (1.1). Definitions use Mathlib
-only; deviations from v5 are flagged in the docstrings. Full surface (69 statements): `Challenge.lean`. -/
+1103–1121, corrected version arXiv:2412.15969v5. Statements: the theorems and corollaries of the paper, Theorems 1.1, 1.5,
+1.7, 1.9, 3.1, 3.6 and Corollaries 1.3, 1.4, 1.6. Definitions use Mathlib only; deviations from v5 are flagged in the
+docstrings. Full surface (69 statements): `Challenge.lean`. -/
 
 open MeasureTheory ProbabilityTheory Filter Topology Set
 open scoped ENNReal NNReal ContDiff Manifold
@@ -54,24 +53,12 @@ def eigenLambda {d : ℕ} (V : Rd d → ℝ) (x₀ : Rd d) : ℝ≥0∞ := ⨆ (
 /-- The curvature condition (1.4) `Hess V ≥ λ₁ I_d` together with `λ₁ > 0`. -/
 def RigidCurvature {d : ℕ} (V : Rd d → ℝ) : Prop := 0 < spectralGap V ∧ ∀ x z : Rd d, spectralGap V * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ V) x z z
 
-/-- `B` is a standard Brownian motion on `ℝ^d`: independent real Brownian coordinates. -/
-def IsStdBrownian {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) : Prop :=
-  (∀ i, IsBrownianReal (fun t w => B t w i) P) ∧ iIndepFun (fun i w (t : ℝ≥0) => B t w i) P
-
-/-- `X` solves the SDE (1.1) `dXₜ = -∇V(Xₜ)dt + √2 dBₜ`, `X₀ = x₀`: almost surely the paths are continuous and satisfy the integral equation. -/
-def IsLangevinSolution {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (x₀ : Rd d) (X : ℝ≥0 → Ω → Rd d) : Prop :=
-  ∀ᵐ w ∂P, Continuous (fun t => X t w) ∧ ∀ t : ℝ≥0, X t w = x₀ - (∫ s in (0 : ℝ)..(t : ℝ), gradient V (X s.toNNReal w)) + Real.sqrt 2 • B t w
-
-/-- The standing assumptions of the Euclidean setting: `V` is `C²`, `μ = e^{-V}` is a probability measure, `B` is a standard Brownian motion and `X x₀` solves (1.1) from `x₀`. That this hypothesis is satisfiable (for convex `V`) is proved in `exists_langevin`. -/
-def IsLangevin {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} (V : Rd d → ℝ) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d) : Prop :=
-  ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsStdBrownian B P ∧ ∀ x₀, IsLangevinSolution V B P x₀ (X x₀)
-
-/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For convex `C²` `V` with probability Gibbs measure (the setting of every statement below) such a semigroup is unique (`euclideanDiffusion_unique_of_convex`). That it is the law of the solution of the SDE (1.1) is `isLangevinSolution_map_eq_kernel_of_convex`. -/
+/-- Brownian-free replacement of the Euclidean Langevin setting, kernel part: `Pt t x = Law(X_t^x)` is a Markov semigroup solving Kolmogorov's equation `Pₜf(x) = f(x) + ∫₀ᵗ Pₛ(𝓛f)(x) ds` for `f ∈ C_c^∞`, with `𝓛f = Δf - ⟨∇V, ∇f⟩`. For convex `C²` `V` with probability Gibbs measure (the setting of every statement below) such a semigroup is unique (`euclideanDiffusion_unique_of_convex` in `Challenge.lean`). That it is the law of the solution of the SDE (1.1) is `isLangevinSolution_map_eq_kernel_of_convex` in `Challenge.lean`. -/
 def IsEuclideanDiffusion {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop := (∀ t, IsMarkovKernel (Pt t)) ∧ (∀ s t, Pt (s + t) = Pt t ∘ₖ Pt s) ∧
   ∀ f : Rd d → ℝ, ContDiff ℝ ∞ f → HasCompactSupport f → ∀ (x : Rd d) (t : ℝ≥0),
   ∫ y, f y ∂Pt t x = f x + ∫ s in (0 : ℝ)..(t : ℝ), ∫ y, generator V f y ∂Pt s.toNNReal x
 
-/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for convex `C²` `V` with probability Gibbs measure: `exists_euclideanLangevin_of_convex`. -/
+/-- Brownian-free replacement of `IsLangevin`: `V` is `C²` (as in `IsLangevin`), `e^{-V}` is a probability density and `Pt` is the Euclidean diffusion semigroup with generator `Δ - ∇V·∇`. Satisfiable for convex `C²` `V` with probability Gibbs measure: `exists_euclideanLangevin_of_convex` in `Challenge.lean`. -/
 def IsEuclideanLangevin {d : ℕ} (V : Rd d → ℝ) (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) : Prop :=
   ContDiff ℝ 2 V ∧ IsProbabilityMeasure (gibbs V) ∧ IsEuclideanDiffusion V Pt
 
@@ -87,11 +74,6 @@ def fisherInfo {d : ℕ} (V : Rd d → ℝ) (ν : Measure (Rd d)) : ℝ≥0∞ :
   ∀ φ : Rd d → ℝ, ContDiff ℝ ∞ φ → HasCompactSupport φ → ∫ x, Real.sqrt (ν.rnDeriv (gibbs V) x).toReal • gradient φ x = -∫ x, φ x • G x),
   4 * ∫⁻ x, ‖G x‖ₑ ^ 2 ∂gibbs V
 
-/-- The relative density distance `‖dν/dμ - 1‖_{Lᵖ(μ)}` (paper (1.25)); `+∞` if `ν` is not absolutely continuous with respect to `μ`. -/
-def relLp {α : Type*} [MeasurableSpace α] (ν μ : Measure α) (p : ℝ≥0∞) : ℝ≥0∞ := by
-  classical
-  exact if ν ≪ μ then eLpNorm (fun x => (ν.rnDeriv μ x).toReal - 1) p μ else ⊤
-
 /-- Worst case over initial conditions `x₀ ∈ S` of a discrepancy `δ` of the transition law `Pₜ(x₀, ·)`; kernel version of the carrier-based `worst`. -/
 def worstK {d : ℕ} (Pt : ℝ≥0 → Kernel (Rd d) (Rd d)) (S : Set (Rd d)) (δ : Measure (Rd d) → ℝ≥0∞) (t : ℝ) : ℝ≥0∞ := ⨆ x₀ ∈ S, δ (Pt t.toNNReal x₀)
 
@@ -105,28 +87,6 @@ def meanBall {d : ℕ} (V : Rd d → ℝ) (c : ℝ) : Set (Rd d) := Metric.close
 /-- The cube `m + [-c, c]^d` around the mean `m` of `μ` (Corollary 1.6). -/
 def meanCube {d : ℕ} (V : Rd d → ℝ) (c : ℝ) : Set (Rd d) := {x | ∀ i, |x i - (∫ y, y ∂gibbs V) i| ≤ c}
 
-/-- Non-vacuity of the standing hypothesis `IsLangevin`: for a `C²` potential with nonnegative Hessian (that is, convex) and probability Gibbs measure there are a probability space, a Brownian motion and solutions of the Langevin SDE from every starting point. -/
-theorem exists_langevin (d : ℕ) (V : Rd d → ℝ) (hV : ContDiff ℝ 2 V) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-  (hgibbs : IsProbabilityMeasure (gibbs V)) : ∃ (Ω : Type) (_ : MeasurableSpace Ω) (B : ℝ≥0 → Ω → Rd d) (P : Measure Ω) (X : Rd d → ℝ≥0 → Ω → Rd d),
-  IsProbabilityMeasure P ∧ IsLangevin V B P X := by
-  sorry
-
-/-- **The kernel is the law of the SDE** (the kernel formulation is faithful): for a convex `C²` potential (`Hess V ≥ 0`), every solution `X` of (1.1) driven by a standard Brownian motion `B` (on any probability space) has `Law(Xₜ) = Pt t x₀` for the Euclidean Langevin semigroup `Pt`. Every kernel statement of this file assumes convexity, so this applies to all of them. -/
-theorem isLangevinSolution_map_eq_kernel_of_convex {Ω : Type*} [MeasurableSpace Ω] {d : ℕ} {V : Rd d → ℝ}
-  {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z) {B : ℝ≥0 → Ω → Rd d}
-  {P : Measure Ω} (hB : IsStdBrownian B P) {x₀ : Rd d} {X : ℝ≥0 → Ω → Rd d} (hX : IsLangevinSolution V B P x₀ X) (t : ℝ≥0) : P.map (X t) = Pt t x₀ := by
-  sorry
-
-/-- Non-vacuity of the standing hypothesis `IsEuclideanLangevin` of the kernel statements: for a `C²` potential with nonnegative Hessian (that is, convex) and probability Gibbs measure, a kernel family satisfying `IsEuclideanLangevin` exists. The hypotheses are weaker than the paper's (strict convexity is not required; `V → ∞` follows from convexity and integrability of `e^{-V}`). Uniqueness: `euclideanDiffusion_unique_of_convex`. -/
-theorem exists_euclideanLangevin_of_convex {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-  (hp : IsProbabilityMeasure (gibbs V)) : ∃ Pt : ℝ≥0 → Kernel (Rd d) (Rd d), IsEuclideanLangevin V Pt := by
-  sorry
-
-/-- Uniqueness of the kernel in the standing hypothesis: for a `C²` potential with nonnegative Hessian (that is, convex), two families of kernels satisfying `IsEuclideanDiffusion` coincide. No assumption on the Gibbs measure is needed. With `exists_euclideanLangevin_of_convex`, `Pt` in the kernel statements is the Euclidean Langevin semigroup. -/
-theorem euclideanDiffusion_unique_of_convex {d : ℕ} {V : Rd d → ℝ} (hV : ContDiff ℝ 2 V) (hHess : ∀ x z : Rd d, 0 ≤ fderiv ℝ (fderiv ℝ V) x z z)
-  {P₁ P₂ : ℝ≥0 → Kernel (Rd d) (Rd d)} (h₁ : IsEuclideanDiffusion V P₁) (h₂ : IsEuclideanDiffusion V P₂) : P₁ = P₂ := by
-  sorry
-
 /-- **Theorem 1.1** (main Wasserstein estimate), including the ball refinement; Brownian-free kernel form: `Pt t x₀ = Law(X_t^{x₀})` (`IsEuclideanLangevin`). -/
 theorem main_wasserstein_estimate {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V) (t : ℝ≥0) :
     let gap := spectralGap V
@@ -136,12 +96,6 @@ theorem main_wasserstein_estimate {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 →
     (∀ S : Set (Rd d), S.Nonempty → lower (⨆ x₀ ∈ S, eigenLambda V x₀) ≤ ⨆ x₀ ∈ S, W x₀ ∧
       ⨆ x₀ ∈ S, W x₀ ≤ ENNReal.ofReal q * ⨆ x₀ ∈ S, ∫⁻ x, edist x x₀ ^ 2 ∂gibbs V) ∧
     (∫ x, x ∂gibbs V = 0 → ∀ R : ℝ, 0 ≤ R → lower (ENNReal.ofReal (gap * R ^ 2)) ≤ ⨆ x₀ ∈ Metric.closedBall 0 R, W x₀) := by
-  sorry
-
-/-- **Remark 1.2**: `1 ≤ k₁ ≤ d`, and `Λ(x₀) = ∑ᵢ |fᵢ(x₀)|²` for every orthonormal basis of `E₁` (the supremum defining `Λ` is attained by every basis). -/
-theorem eigenspace_dim_and_lambda {d : ℕ} {V : Rd d → ℝ} (hV2 : ContDiff ℝ 2 V)
-  (hp : IsProbabilityMeasure (gibbs V)) (hV : RigidCurvature V) : 1 ≤ firstEigenDim V ∧ firstEigenDim V ≤ d ∧
-  ∀ f, IsEigenbasis V f → ∀ x₀, eigenLambda V x₀ = ENNReal.ofReal (∑ i, f i x₀ ^ 2) := by
   sorry
 
 /-- The standing assumptions of Corollaries 1.3 and 1.4 for kernels: the Euclidean Langevin setting `IsEuclideanLangevin` and the curvature condition (1.4) in every positive dimension, and `liminf λ₁⁽ⁿ⁾ > 0`. -/
@@ -165,12 +119,6 @@ theorem information_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Ke
     HasCutoff (fun n => worstK (Pt n) (S n) (fisherInfo (V n))) t ⊤ 0 ∧
     HasCutoff (fun n => worstK (Pt n) (S n) (InformationTheory.klDiv · (gibbs (V n)))) t ⊤ 0 ∧
     HasCutoff (fun n => worstK (Pt n) (S n) (fun ν => .ofReal (tvDist ν (gibbs (V n))))) t 1 0 := by
-  sorry
-
-/-- **Display (1.25)** (`Lᵖ` cutoff) under the assumptions of Corollary 1.4, for every finite `p ≥ 1`: the limit before the critical time is `2` for `p = 1` and `+∞` for `p > 1` (`p = ∞` fails, already for Ornstein–Uhlenbeck). Brownian-free kernel form. -/
-theorem lp_cutoff {V : ∀ n, Rd n → ℝ} {Pt : ∀ n, ℝ≥0 → Kernel (Rd n) (Rd n)} (h : IsRigidSequenceK V Pt)
-  (hsmall : (fun n => spectralGap (V n)) =o[atTop] (fun n : ℕ => Real.log n)) {c : ℝ} (hc : 0 < c) {p : ℝ≥0∞} (hp : 1 ≤ p) (hpt : p ≠ ⊤) :
-  HasCutoff (fun n => worstK (Pt n) (meanBall (V n) c) (relLp · (gibbs (V n)) p)) (fun n => criticalTime n (spectralGap (V n))) (if p = 1 then 2 else ⊤) 0 := by
   sorry
 
 /-- The diagonal direction `(1,…,1)` of `ℝ^d`. -/
@@ -229,15 +177,6 @@ theorem euclidean_gaussian_factorization {d : ℕ} {V : Rd d → ℝ} (hV2 : Con
   (∀ x z, (∀ i, i.val < firstEigenDim V → inner ℝ (e i) z = 0) → ρ * ‖z‖ ^ 2 ≤ fderiv ℝ (fderiv ℝ U) x z z) ∧
   ∀ f, IsEigenfunction V ρ f → ∃ a : Fin d → ℝ, (∀ i, firstEigenDim V ≤ i.val → a i = 0) ∧
   (∀ x, f x = ∑ i, a i * (inner ℝ (e i) x - m i)) ∧ ∑ i, a i ^ 2 = ρ * ∫ x, f x ^ 2 ∂gibbs V := by
-  sorry
-
-/-- **Lemma 3.3** (projection on an orthonormal multi-eigenfunction is an OU process), law form without Brownian motion: for an orthonormal basis `T = (f₁,…,f_{k₁})` of `E₁` under `λ₁ = ρ` and `ρ`-convexity, the law of `T(Xₜ)` from `x₀` (the pushforward of `Pt t x₀` by `T`) is the Ornstein–Uhlenbeck marginal `𝒩(e^{-ρt} T(x₀), (1 - e^{-2ρt}) I_{k₁})`, the time-`t` law of `dYₜ = -ρYₜ dt + √(2ρ) dβₜ`, `Y₀ = T x₀` (generator `ρΔ - ρ y·∇`); in particular it depends on `x₀` only through `T x₀`. Divergence: the pathwise statement with a Brownian `β` is replaced by this law form. -/
-theorem eigenmap_is_ou {d : ℕ} {V : Rd d → ℝ} {Pt : ℝ≥0 → Kernel (Rd d) (Rd d)} (hL : IsEuclideanLangevin V Pt) (hV : RigidCurvature V)
-  (T : Fin (firstEigenDim V) → Rd d → ℝ) (hT : IsEigenbasis V T) :
-    let ρ := spectralGap V
-    let Tv := fun x => (WithLp.toLp 2 fun i => T i x : Rd (firstEigenDim V))
-    ∀ (x₀ : Rd d) (t : ℝ≥0), (Pt t x₀).map Tv = multivariateGaussian (Real.exp (-ρ * (t : ℝ)) • Tv x₀) ((1 - Real.exp (-2 * ρ * (t : ℝ))) •
-      (1 : Matrix (Fin (firstEigenDim V)) (Fin (firstEigenDim V)) ℝ)) := by
   sorry
 
 section Riemannian

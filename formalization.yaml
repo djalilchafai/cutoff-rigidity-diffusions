@@ -8,12 +8,9 @@ project:
     dimensional curved diffusions" (Comptes Rendus Mathématique 363 (2025)
     1103-1121), in the corrected version arXiv:2412.15969v5. The submitted
     statement surface PalomarChallenge.lean (Comparator configuration
-    comparator-palomar.json) states the numbered results of the paper
-    (Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6, Corollaries 1.3, 1.4, 1.6, Lemma 3.3,
-    Remark 1.2, display (1.25)), the identification of the transition kernel
-    with the law of the SDE solution, and the existence of the diffusion and of
-    SDE solutions for convex potentials (non-vacuity of the standing
-    hypotheses) and the uniqueness of the kernel: 16 theorems. The repository also contains a larger surface,
+    comparator-palomar.json) states the theorems and corollaries of the paper
+    (Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6, Corollaries 1.3, 1.4, 1.6): 9
+    theorems. The repository also contains a larger surface,
     Challenge.lean with comparator.json (69 theorems: remarks, examples and
     Section 4 as well). Both are proved with the standard axioms only. Some statements are restricted or
     amended; every difference with arXiv v5 is listed in fidelity.divergences.
@@ -63,7 +60,7 @@ related_formalizations:
 status:
   scope: >-
     Two Comparator surfaces, both built from Mathlib-only definitions.
-    PalomarChallenge.lean (335 lines, 16 theorems, 41 definitions;
+    PalomarChallenge.lean (274 lines, 9 theorems, 37 definitions;
     comparator-palomar.json) is generated verbatim from Challenge.lean by
     scripts/gen-palomar.py and is the surface proposed for registration.
     Challenge.lean (860 lines, 69 theorems, 67 definitions; comparator.json) is
@@ -108,11 +105,6 @@ status:
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
       comparator_config: comparator-palomar.json
-    - declaration: CutCur.lp_cutoff  # Display (1.25) (L^p cutoff, finite p)
-      file: Solution.lean
-      sorry_count: 0
-      axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator-palomar.json
     - declaration: CutCur.convex_interaction  # Theorem 1.5 (convex interactions)
       file: Solution.lean
       sorry_count: 0
@@ -134,11 +126,6 @@ status:
       axioms: [propext, Classical.choice, Quot.sound]
       comparator_config: comparator-palomar.json
     - declaration: CutCur.euclidean_gaussian_factorization  # Theorem 3.1 (Euclidean Gaussian factorization)
-      file: Solution.lean
-      sorry_count: 0
-      axioms: [propext, Classical.choice, Quot.sound]
-      comparator_config: comparator-palomar.json
-    - declaration: CutCur.eigenmap_is_ou  # Lemma 3.3 (the eigenmap is an Ornstein-Uhlenbeck process)
       file: Solution.lean
       sorry_count: 0
       axioms: [propext, Classical.choice, Quot.sound]
@@ -254,9 +241,9 @@ review:
   status: author-verified
   reviewers: [Djalil Chafaï]
   notes: >-
-    Scope of the human review: the 16 statements of the submitted surface
+    Scope of the human review: the 9 statements of the submitted surface
     PalomarChallenge.lean (comparator-palomar.json) and the definitions they use
-    were checked against arXiv:2412.15969v5 by Djalil Chafaï, co-author of the paper,
+    (and 7 further statements of Challenge.lean) were checked against arXiv:2412.15969v5 by Djalil Chafaï, co-author of the paper,
     on 20 November 2026. The other 53 statements of the full surface Challenge.lean
     have had AI audits only. Every Challenge statement has been
     audited against the paper by at least one AI agent (verification/semantic-audit.md,

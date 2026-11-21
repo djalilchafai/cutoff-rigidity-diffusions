@@ -1,11 +1,11 @@
 # Palomar preparation status
 
-**Current status (20 November 2026).** Submitted to Palomar on 20 November 2026 (not yet registered). The reference version of the
+**Current status (20 November 2026).** A first submission (20 November 2026, 16 statements) was reviewed by Palomar, which asked for a documentation fix; the surface was then restricted to the theorems and corollaries of the paper, to be submitted again. The reference version of the
 paper is arXiv:2412.15969v5 (25 October 2026; source archived in `paper/`), which includes
 the corrections of the erratum to the published article (CRAS 2025). The surface proposed
-for registration is `PalomarChallenge.lean` with `comparator-palomar.json` (16 theorems: the
-numbered results, the kernel = SDE law link, existence of the diffusion and of SDE solutions,
-uniqueness of the kernel; 41 definitions; 335 lines, 32 KB), generated verbatim from the full surface by
+for registration is `PalomarChallenge.lean` with `comparator-palomar.json` (9 theorems: the
+theorems and corollaries of the paper, Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6 and Corollaries 1.3, 1.4, 1.6;
+37 definitions; 274 lines, 25 KB), generated verbatim from the full surface by
 `scripts/gen-palomar.py`. The full surface `Challenge.lean` states 69 theorems and 67
 definitions; `comparator.json` lists the 69 theorems and 66 definitions. Both Solutions use
 `propext`, `Classical.choice` and `Quot.sound` only and the sandboxed `lake comparator`
@@ -484,6 +484,14 @@ comparison of the type of every declaration of the old and new `Challenge` modul
 - `scripts/bwrap-home-symlink-wrapper.sh`: `lake comparator` now calls `bwrap` with an empty `HOME`; the wrapper falls back
   to the passwd entry of the user. Full `lake build` (9822 jobs) and the sandboxed `lake comparator` were rerun on the final
   sources: the Lean kernel, nanoda and con-ron accept (92444 declarations; `verification/comparator-sandboxed.log`).
+
+- Palomar submission `prwi8dwqniqk` (commit de51ec5, 16 statements): verification passed; the AI review found no mathematical
+  problem but blocked on inconsistent human-review statements (README and `HUMAN_REVIEW.md` still said none had taken place). Fixed
+  in commit 4235d3b. Then, at the author's request, the reduced surface was restricted to the theorems and corollaries of the paper:
+  `CORE` in `scripts/gen-palomar.py` now lists Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6 and Corollaries 1.3, 1.4, 1.6 (9 theorems, 37 definitions, 274 lines). Removed from it,
+  still in `Challenge.lean`: Remark 1.2, display (1.25), Lemma 3.3, `exists_langevin`, nos. 49, 68, 69. Docstrings of
+  `IsEuclideanDiffusion` and `IsEuclideanLangevin` now say these last statements are in `Challenge.lean`.
+  Sandboxed Comparator: reduced pair accepted (con-ron 90775 declarations, nanoda, Lean kernel), full pair accepted (con-ron 92445).
 
 ## Appendix: earlier metadata history (moved from formalization.yaml, 20 November 2026)
 

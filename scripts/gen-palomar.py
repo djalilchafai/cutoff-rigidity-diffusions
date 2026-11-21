@@ -17,35 +17,26 @@ import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# The main results of the paper, the link between the kernel and the SDE, and the
-# non-vacuity of the two standing Euclidean hypotheses.
+# The numbered theorems and corollaries of the paper, nothing else.
 CORE = [
-    "exists_euclideanLangevin_of_convex",
-    "euclideanDiffusion_unique_of_convex",
-    "exists_langevin",
-    "isLangevinSolution_map_eq_kernel_of_convex",
-    "main_wasserstein_estimate",
-    "eigenspace_dim_and_lambda",
-    "wasserstein_cutoff",
-    "information_cutoff",
-    "lp_cutoff",
-    "convex_interaction",
-    "convex_interaction_cutoff",
-    "product_condition_cutoff",
-    "euclidean_gaussian_factorization",
-    "eigenmap_is_ou",
-    "riemannian_wasserstein_estimate",
-    "riemannian_gaussian_splitting",
+    "main_wasserstein_estimate",         # Theorem 1.1
+    "wasserstein_cutoff",                # Corollary 1.3
+    "information_cutoff",                # Corollary 1.4
+    "convex_interaction",                # Theorem 1.5
+    "convex_interaction_cutoff",         # Corollary 1.6
+    "product_condition_cutoff",          # Theorem 1.7
+    "riemannian_wasserstein_estimate",   # Theorem 1.9
+    "euclidean_gaussian_factorization",  # Theorem 3.1 (with Remark 3.2)
+    "riemannian_gaussian_splitting",     # Theorem 3.6 (with Lemma 3.7)
 ]
 
 HEADER_DOC = """/-!
 # Cutoff via rigidity for high dimensional curved diffusions: main results
 
 Generated from `Challenge.lean` by `scripts/gen-palomar.py`. D. Chafaï and M. Fathi, CRAS 363 (2025)
-1103–1121, corrected version arXiv:2412.15969v5. Statements: Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6,
-Lemma 3.3, Remark 1.2, Corollaries 1.3, 1.4, 1.6, display (1.25); for convex potentials, existence and
-uniqueness of the kernel and its identification with the law of the SDE (1.1). Definitions use Mathlib
-only; deviations from v5 are flagged in the docstrings. Full surface (69 statements): `Challenge.lean`.
+1103–1121, corrected version arXiv:2412.15969v5. Statements: the theorems and corollaries of the paper, Theorems 1.1, 1.5,
+1.7, 1.9, 3.1, 3.6 and Corollaries 1.3, 1.4, 1.6. Definitions use Mathlib only; deviations from v5 are flagged in the
+docstrings. Full surface (69 statements): `Challenge.lean`.
 """
 
 DECL = re.compile(r"^(?:@\[[^\]]*\]\s*)?(?:noncomputable\s+|private\s+|protected\s+)*(theorem|def|abbrev|structure)\s+([^\s({\[:]+)", re.M)
