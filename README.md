@@ -6,6 +6,9 @@ diffusions*, Comptes Rendus Mathématique 363 (2025) 1103–1121 ([doi:10.5802/c
 corrections of the erratum to the published article. Its TeX source is archived in [`paper/`](paper/SOURCE.txt);
 [cutcur-lean.tex](cutcur-lean.tex) is the same text with a BibTeX bibliography. The numbering of results is the same in v4 and v5.
 
+**Registered on Palomar (21 November 2026): [PALOMAR-2026-11-21-000009](https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-21-000009&version=1)**, commit f3bf366, the 9 theorems and corollaries
+of the paper (`PalomarChallenge.lean`).
+
 **Palomar surface (20 November 2026).** [`PalomarChallenge.lean`](PalomarChallenge.lean) (274 lines, 9 theorems, 37 definitions; Comparator
 config [`comparator-palomar.json`](comparator-palomar.json)) is the surface proposed for registration: the theorems and corollaries of the
 paper, Theorems 1.1, 1.5, 1.7, 1.9, 3.1, 3.6 and Corollaries 1.3, 1.4, 1.6, and nothing else. It is

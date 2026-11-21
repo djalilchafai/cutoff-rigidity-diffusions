@@ -1,6 +1,6 @@
 # Palomar preparation status
 
-**Current status (20 November 2026).** A first submission (20 November 2026, 16 statements) was reviewed by Palomar, which asked for a documentation fix; the surface was then restricted to the theorems and corollaries of the paper, to be submitted again. The reference version of the
+**Current status (20 November 2026).** **Registered: [PALOMAR-2026-11-21-000009](https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-21-000009&version=1)** (21 November 2026, submission `apjums3px6l2`, commit f3bf366, 9 theorems; review without blocking problem, warning or comment). A first submission (20 November 2026, 16 statements) was reviewed by Palomar, which asked for a documentation fix, and was withdrawn; the surface was then restricted to the theorems and corollaries of the paper. The reference version of the
 paper is arXiv:2412.15969v5 (25 October 2026; source archived in `paper/`), which includes
 the corrections of the erratum to the published article (CRAS 2025). The surface proposed
 for registration is `PalomarChallenge.lean` with `comparator-palomar.json` (9 theorems: the
@@ -11,8 +11,8 @@ definitions; `comparator.json` lists the 69 theorems and 66 definitions. Both So
 `propext`, `Classical.choice` and `Quot.sound` only and the sandboxed `lake comparator`
 accepts both pairs. `formalization.yaml`
 validates against the official v0.4 schema and names D. Chafaï as author and responsible
-maintainer. The toolchain `v4.35.0-rc2` is the minimum accepted by Palomar. Remaining steps,
-for humans only: the registration decision. The semantic review of the submitted surface was
+maintainer. The toolchain `v4.35.0-rc2` is the minimum accepted by Palomar. Registered on 21 November 2026 (see above).
+The semantic review of the submitted surface was
 done by D. Chafaï on 20 November 2026 (`review.status: author-verified`); M. Fathi agreed to
 the registration. The new project code uses Apache-2.0; the
 downloaded paper sources retain CC-BY-4.0.
@@ -492,6 +492,10 @@ comparison of the type of every declaration of the old and new `Challenge` modul
   still in `Challenge.lean`: Remark 1.2, display (1.25), Lemma 3.3, `exists_langevin`, nos. 49, 68, 69. Docstrings of
   `IsEuclideanDiffusion` and `IsEuclideanLangevin` now say these last statements are in `Challenge.lean`.
   Sandboxed Comparator: reduced pair accepted (con-ron 90775 declarations, nanoda, Lean kernel), full pair accepted (con-ron 92445).
+
+- 21 November 2026: submission `prwi8dwqniqk` withdrawn; new submission `apjums3px6l2` of commit f3bf366 (9 theorems):
+  verification passed, AI review with no blocking problem, no warning and no comment; registered by the author as
+  [PALOMAR-2026-11-21-000009](https://palomar-registry.org/entry.html?id=PALOMAR-2026-11-21-000009&version=1).
 
 ## Appendix: earlier metadata history (moved from formalization.yaml, 20 November 2026)
 
